@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.micropico
+.vscode/
+GitHub_Metadata.md
