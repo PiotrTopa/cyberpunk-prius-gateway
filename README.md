@@ -17,16 +17,26 @@ This Gateway is a core component of a comprehensive "Cyberpunk" retro-modding pr
 *   **Hardware Offloading:** PIO State Machines handle microsecond-perfect signal timing.
 *   **Zero-Allocation:** Static memory architecture prevents `ENOMEM` / heap fragmentation.
 *   **Smart Error Correction:** Auto-corrects bit-shifts caused by physical signal imperfectons.
+*   **CAN Integration:** Dedicated SPI-based CAN controller (MCP2515) integration.
 
 ## 🔌 Hardware Interface
 
 Designed for **RP2040-Zero**.
 
+**AVC-LAN (IEBus):**
 | Signal | Pin | Direction | Notes |
 | :--- | :--- | :--- | :--- |
 | **RX** | **GP0** | Input | From Comparator (e.g., LM339) |
 | **TX** | **GP1** | Output | To Transistor Driver |
-| **GND** | GND | - | Common Ground |
+
+**CAN Bus (MCP2515):**
+| Signal | Pin | Type | Notes |
+| :--- | :--- | :--- | :--- |
+| **CS** | **GP5** | SPI CS | Chip Select |
+| **INT** | **GP6** | Input | Interrupt |
+| **SPI** | **GP2,3,4**| SPI0 | SCK, MOSI, MISO |
+
+*Full wiring details: [docs/wiring.md](docs/wiring.md)*
 
 ## 📡 Host Communication Protocol
 
@@ -40,6 +50,7 @@ All messages follow the root structure:
 {
   "id": <int>,      // Device ID (0=Sys, 1=CAN, 2=AVC-LAN, >5=Sat)
   "ts": <int>,      // Timestamp (ms)
+  "seq": <int>,     // Sequence Counter (Optional, continuity check)
   "d":  <any>       // Payload
 }
 ```
@@ -61,7 +72,7 @@ All messages follow the root structure:
 
 *   [x] **Gateway Core:** Architecture, USB CDC, Zero-Alloc loop.
 *   [x] **AVC-LAN:** Hardware-offloaded (PIO) Sniffer & Injector.
-*   [ ] **Car CAN:** OBDII / Body CAN integration.
+*   [x] **Car CAN:** OBDII / Body CAN integration (MCP2515).
 *   [ ] **RS485:** Satellite network protocol & physical layer.
 
 ## ⚠️ Disclaimer

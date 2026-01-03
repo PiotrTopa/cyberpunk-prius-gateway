@@ -57,32 +57,31 @@ class MCP2515:
         self.cs.value(1)
 
     def set_bitrate(self, baudrate):
-        # Crystal 8MHz. Config for 500kbps (Toyota standard)
-        # BRP=0, SJW=1, Prop=2, Ph1=7, Ph2=6 -> TQ=16. 8M/16 = 500k.
-        # Check http://www.bittiming.can-wiki.info/
-        # 8MHz, 500kbps: CNF1=0x00, CNF2=0x90, CNF3=0x02
-        # 16MHz, 500kbps: CNF1=0x00 (BRP=0 means /2 -> 8M?), Wait.
-        # Let's assume 8MHz crystal standard on cheap modules.
-        # 500kbps @ 8MHz:
-        # TQ = 2 * (BRP + 1) / Fosc.
-        # For 500k, we need 16 TQ. 8000000 / 500000 = 16.
-        # TQ=1 -> BRP=0.
-        # CNF1 = 0x00 (SJW=1, BRP=0)
-        # CNF2 = 0x90 (BTLMODE=1, SAM=0, PH1=1, PRSEG=0) -> No.
-        # Let's use standard calculated values.
-        # 500kbps @ 8MHz: CNF1=0x00, CNF2=0x90, CNF3=0x02 ?
-        # Actually, let's just implement 500k fixed for now or minimal set.
+        # Configuration for 8MHz Crystal
+        # http://www.bittiming.can-wiki.info/
+        # Target: 500kbps (Toyota standard)
+        # 8MHz / 500kbps = 16 TQ.
+        # TQ = 16
+        # PropSeg + PhaseSeg1 >= PhaseSeg2
+        # PhaseSeg2 >= SJW
         
         if baudrate == 500000:
-            # 8MHz crystal
+            # 500kbps @ 8MHz
+            # TQ = 16
+            # Sync(1) + Prop(2) + Ph1(7) + Ph2(6) = 16.
+            # CNF1 = 0x00 (SJW=1, BRP=0)
+            # CNF2 = 0xB1 (BTL=1, SAM=0, PH1=6->7TQ, PR=1->2TQ) => 1011 0001
+            # CNF3 = 0x05 (PH2=5->6TQ) => 0000 0101
+            
             self.write_reg(CNF1, 0x00)
-            self.write_reg(CNF2, 0x90)
-            self.write_reg(CNF3, 0x02)
+            self.write_reg(CNF2, 0xB1)
+            self.write_reg(CNF3, 0x05)
+            
         elif baudrate == 250000:
+            # 250kbps @ 8MHz (BRP=1 -> /2)
             self.write_reg(CNF1, 0x01)
-            self.write_reg(CNF2, 0x90)
-            self.write_reg(CNF3, 0x02)
-        # Add more if needed
+            self.write_reg(CNF2, 0xB1)
+            self.write_reg(CNF3, 0x05)
 
     def set_normal_mode(self):
         self.modify_reg(CANCTRL, 0xE0, 0x00)
@@ -104,7 +103,7 @@ class MCP2515:
         self.write_reg(CNF1, test_val)
         read_val = self.read_reg(CNF1)
         if read_val != test_val:
-            return False # SPI fail or Chip fail
+            raise RuntimeError("MCP2515 Init Failed: Wrote 0x55, Read 0x{:02X}".format(read_val))
             
         self.set_bitrate(baudrate)
         
@@ -114,6 +113,9 @@ class MCP2515:
         # Configure RX buffers (Turn off filters/masks -> Receive All)
         self.write_reg(RXB0CTRL, 0x60) # RXM=11 (Any msg), BUKT=0
         self.modify_reg(RXB0CTRL, 0x04, 0x04) # BUKT=1 (Rollover)
+        
+        if not self.set_normal_mode():
+            raise RuntimeError("MCP2515 Init Failed: Could not enter Normal Mode")
         
         return True
 
@@ -192,3 +194,9 @@ class MCP2515:
             self.modify_reg(CANINTF, 0x02, 0x00)
             
         return (rx_id, data, ext)
+
+    def get_errors(self):
+        tec = self.read_reg(0x1C)
+        rec = self.read_reg(0x1D)
+        eflg = self.read_reg(0x2D)
+        return (tec, rec, eflg)

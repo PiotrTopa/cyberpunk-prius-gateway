@@ -17,6 +17,7 @@ To maximize throughput, property names are minimized.
 {
   "id": <int>,      // Device ID / Channel
   "ts": <int>,      // Timestamp (ms), optional in TX
+  "seq": <int>,     // Sequence Counter (0-65535), optional RX only
   "d":  <any>       // Payload Data (Object, Array, or Value)
 }
 ```
@@ -25,6 +26,7 @@ To maximize throughput, property names are minimized.
 | :--- | :--- | :--- | :--- |
 | `id` | **Device ID** | `int` | Routing channel (see Device Map). |
 | `ts` | **Timestamp** | `int` | Gateway uptime in milliseconds. |
+| `seq`| **Sequence**  | `int` | (Optional) Cyclic counter (0-65535) for checking data continuity. Enable via config. |
 | `d` | **Data** | `any` | Protocol-specific payload. |
 
 ---
@@ -48,13 +50,18 @@ Used for lifecycle events, errors, and configuration.
 
 **RX (Gateway -> Host):**
 ```json
-{"id":0, "ts":100, "d": {"msg": "READY", "ver": "2.4.0"}}
+{"id":0, "d": {"msg": "GATEWAY_READY", "ver": "2.6.0", "can": "CAN_READY"}}
 {"id":0, "ts":105, "d": {"err": "RX_OVERFLOW"}}
 {"id":0, "ts":110, "d": {"ack": true}}
+// Configuration Update Response
+{"id":0, "d": {"msg": "CFG_UPDATED", "seq": true}}
 ```
 
-**TX (Host -> Gateway):**
-*Currently reserved for configuration (e.g., setting baud rates).*
+**TX (Host -> Gateway) - Configuration:**
+Enable Sequence Counter (continuity check):
+```json
+{"id":0, "d": {"seq": true}}
+```
 
 ### ID 1: CAN (Vehicle Bus)
 

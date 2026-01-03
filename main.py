@@ -13,7 +13,7 @@ import mcp2515
 RX_PIN = 0
 TX_PIN = 1
 BAUDRATE = 1000000
-FW_VERSION = "2.5.0-can-alpha"
+FW_VERSION = "2.6.0"
 
 # CAN CONFIG
 CAN_BAUDRATE = 500000
@@ -23,10 +23,18 @@ PIN_MISO = 4
 PIN_CS = 5
 PIN_INT = 6
 
+# SPI FREQUENCY
+# 750kHz is safe for most Logic Level Converters (e.g., BSS138 based)
+# while fast enough for CAN throughput.
+SPI_BAUDRATE = 1000000 
+
 # --- DATA ARCHITECTURE ---
 DEV_ID_GATEWAY = 0
 DEV_ID_CAN     = 1
 DEV_ID_AVCLAN  = 2
+
+# CONFIG FLAGS
+ENABLE_SEQ_COUNTER = True # Adds "seq": <int> to all RX frames for continuity check
 
 gc.collect()
 
@@ -108,14 +116,57 @@ sm_tx = rp2.StateMachine(4, avclan_tx, freq=BAUDRATE, sideset_base=tx_phy, out_s
 sm_tx.active(1)
 
 # --- SETUP CAN ---
-spi = SPI(0, baudrate=10000000, sck=Pin(PIN_SCK), mosi=Pin(PIN_MOSI), miso=Pin(PIN_MISO))
+spi = SPI(0, baudrate=SPI_BAUDRATE, sck=Pin(PIN_SCK), mosi=Pin(PIN_MOSI), miso=Pin(PIN_MISO))
 can = mcp2515.MCP2515(spi, PIN_CS)
 can_int = Pin(PIN_INT, Pin.IN)
 
+def debug_mcp2515_connection(spi, cs_pin):
+    try:
+        cs = Pin(cs_pin, Pin.OUT, value=1)
+        # RESET
+        cs.value(0)
+        spi.write(b'\xC0')
+        cs.value(1)
+        utime.sleep_ms(10)
+        
+        # Write CNF1 (0x2A) -> 0x55
+        cs.value(0)
+        spi.write(b'\x02\x2A\x55')
+        cs.value(1)
+        
+        # Read CNF1
+        cs.value(0)
+        spi.write(b'\x03\x2A')
+        val = spi.read(1)[0]
+        cs.value(1)
+        return val
+    except Exception as e:
+        return -1
+
 can_ready = False
-if can.init(CAN_BAUDRATE):
-    can_ready = True
+# Retry loop for initialization
+for i in range(5):
+    try:
+        if can.init(CAN_BAUDRATE):
+            can_ready = True
+            break
+        else:
+            # Handle case where init returns False (e.g. old library version)
+            val = debug_mcp2515_connection(spi, PIN_CS)
+            sys.stdout.write(f'{{"id":0,"d":{{"log":"CAN init returned False. Debug Read: 0x{val:02X}"}}}}\n')
+    except Exception as e:
+        sys.stdout.write(f'{{"id":0,"d":{{"log":"CAN init error: {str(e)}"}}}}\n')
+        # Also try debug check if exception occurred
+        val = debug_mcp2515_connection(spi, PIN_CS)
+        sys.stdout.write(f'{{"id":0,"d":{{"log":"Debug Read: 0x{val:02X}"}}}}\n')
+
+    if not can_ready:
+        sys.stdout.write(f'{{"id":0,"d":{{"log":"CAN init failed, retrying... ({i+1}/5)"}}}}\n')
+        utime.sleep_ms(200)
+
+if can_ready:
     # Can message is printed later with GATEWAY_READY
+    pass
 else:
     can_ready = False
 
@@ -126,6 +177,15 @@ rx_buffer = array.array('I', [0] * RX_BUF_SIZE)
 serial_poll = uselect.poll()
 serial_poll.register(sys.stdin, uselect.POLLIN)
 input_buffer = ""
+
+# Sequence Counter (Cyclic 0-65535)
+tx_seq_counter = 0
+
+def get_next_seq():
+    global tx_seq_counter
+    seq = tx_seq_counter
+    tx_seq_counter = (tx_seq_counter + 1) & 0xFFFF
+    return seq
 
 # --- LOGIC ---
 def get_bits_static(buf, start_bit, count):
@@ -148,6 +208,9 @@ def check_parity_fast(val, width, parity_bit):
 def print_avclan_frame(ts, m, s, c, data_bytes, cnt):
     sys.stdout.write('{"id":2,"ts":')
     sys.stdout.write(str(ts))
+    if ENABLE_SEQ_COUNTER:
+        sys.stdout.write(',"seq":')
+        sys.stdout.write(str(get_next_seq()))
     sys.stdout.write(',"d":{"m":"')
     sys.stdout.write('{:03X}'.format(m))
     sys.stdout.write('","s":"')
@@ -166,6 +229,9 @@ def print_can_frame(ts, can_id, data, ext):
     # {"id":1,"ts":...,"d":{"i":"0x123","d":[...]}}
     sys.stdout.write('{"id":1,"ts":')
     sys.stdout.write(str(ts))
+    if ENABLE_SEQ_COUNTER:
+        sys.stdout.write(',"seq":')
+        sys.stdout.write(str(get_next_seq()))
     sys.stdout.write(',"d":{"i":"')
     sys.stdout.write("0x{:X}".format(can_id))
     sys.stdout.write('","d":[')
@@ -241,6 +307,16 @@ def process_usb_command(json_line):
         if not clean_line: return
         cmd = ujson.loads(clean_line)
         dev_id = cmd.get("id")
+        
+        # System Commands (Configuration)
+        if dev_id == DEV_ID_GATEWAY:
+            cfg = cmd.get("d")
+            if cfg and "seq" in cfg:
+                global ENABLE_SEQ_COUNTER
+                ENABLE_SEQ_COUNTER = bool(cfg["seq"])
+                sys.stdout.write('{"id":0,"d":{"msg":"CFG_UPDATED","seq":' + str(ENABLE_SEQ_COUNTER).lower() + '}}\n')
+            return
+
         data = cmd.get("d")
         if not data: return
 
