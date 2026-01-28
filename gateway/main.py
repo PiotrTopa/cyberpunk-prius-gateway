@@ -1,5 +1,5 @@
 import rp2
-from machine import Pin, SPI
+from machine import Pin, SPI, UART
 import utime
 import gc
 import array
@@ -16,17 +16,23 @@ BAUDRATE = 1000000
 FW_VERSION = "2.6.0"
 
 # CAN CONFIG
-CAN_BAUDRATE = 500000
+CAN_BAUDRATE = 500000   # Prius Gen2 OBD-II uses 500kbps
+CAN_CRYSTAL = 16000000  # 16MHz crystal (many modules marked 8MHz are actually 16MHz!)
 PIN_SCK = 2
 PIN_MOSI = 3
 PIN_MISO = 4
 PIN_CS = 5
 PIN_INT = 6
 
+# RS485 CONFIG
+RS485_BAUDRATE = 115200
+PIN_RS485_TX = 8
+PIN_RS485_RX = 9
+PIN_RS485_EN = 7
+
 # SPI FREQUENCY
-# 750kHz is safe for most Logic Level Converters (e.g., BSS138 based)
-# while fast enough for CAN throughput.
-SPI_BAUDRATE = 1000000 
+# 1MHz is safe for MCP2515, need speed to prevent RX overflow
+SPI_BAUDRATE = 1000000  # 1MHz - faster to prevent overflow 
 
 # --- DATA ARCHITECTURE ---
 DEV_ID_GATEWAY = 0
@@ -116,9 +122,41 @@ sm_tx = rp2.StateMachine(4, avclan_tx, freq=BAUDRATE, sideset_base=tx_phy, out_s
 sm_tx.active(1)
 
 # --- SETUP CAN ---
-spi = SPI(0, baudrate=SPI_BAUDRATE, sck=Pin(PIN_SCK), mosi=Pin(PIN_MOSI), miso=Pin(PIN_MISO))
+# MCP2515 requires SPI Mode 0,0 (CPOL=0, CPHA=0)
+spi = SPI(0, baudrate=SPI_BAUDRATE, polarity=0, phase=0, sck=Pin(PIN_SCK), mosi=Pin(PIN_MOSI), miso=Pin(PIN_MISO))
 can = mcp2515.MCP2515(spi, PIN_CS)
 can_int = Pin(PIN_INT, Pin.IN)
+
+# --- SETUP RS485 ---
+rs485 = None
+rs485_en = None
+rs485_ready = False
+
+try:
+    rs485_en = Pin(PIN_RS485_EN, Pin.OUT, value=0)
+    rs485 = UART(1, baudrate=RS485_BAUDRATE, tx=Pin(PIN_RS485_TX), rx=Pin(PIN_RS485_RX))
+    rs485_ready = True
+except Exception as e:
+    sys.stdout.write(f'{{"id":0,"d":{{"log":"RS485 init error: {str(e)}"}}}}\n')
+
+def rs485_send(data_str):
+    if not rs485 or not rs485_ready: return
+    try:
+        rs485_en.value(1)
+        # Ensure data ends with newline for NDJSON
+        payload = data_str + '\n'
+        rs485.write(payload)
+        
+        # Blocking wait for TX complete (approximate)
+        # 10 bits per char (Start + 8 Data + Stop)
+        # Calculate us: bits * 1000000 / baud
+        bits = len(payload) * 10
+        wait_us = int(bits * 1000000 / RS485_BAUDRATE) + 100 # +100us margin
+        utime.sleep_us(wait_us)
+        
+        rs485_en.value(0)
+    except Exception as e:
+        sys.stdout.write(f'{{"id":0,"d":{{"err":"RS485_TX_FAIL: {str(e)}"}}}}\n')
 
 def debug_mcp2515_connection(spi, cs_pin):
     try:
@@ -147,7 +185,7 @@ can_ready = False
 # Retry loop for initialization
 for i in range(5):
     try:
-        if can.init(CAN_BAUDRATE):
+        if can.init(CAN_BAUDRATE, CAN_CRYSTAL):
             can_ready = True
             break
         else:
@@ -165,8 +203,12 @@ for i in range(5):
         utime.sleep_ms(200)
 
 if can_ready:
-    # Can message is printed later with GATEWAY_READY
-    pass
+    # Print CAN diagnostic info
+    try:
+        status = can.get_status_debug()
+        sys.stdout.write(f'{{"id":0,"d":{{"log":"CAN Mode: {status["mode"]}, EFLG: 0x{status["eflg"]:02X}"}}}}\n')
+    except:
+        pass
 else:
     can_ready = False
 
@@ -357,19 +399,36 @@ def process_usb_command(json_line):
                 sys.stdout.write('{"id":0,"d":{"msg":"TX_ACK"}}\n')
             else:
                 sys.stdout.write('{"id":0,"d":{"err":"CAN_TX_FULL"}}\n')
+        
+        elif dev_id > 5:
+            # RS485 Forwarding
+            if not rs485_ready:
+                sys.stdout.write('{"id":0,"d":{"err":"RS485_OFFLINE"}}\n')
+                return
+            
+            # Forward the original command object as NDJSON
+            # We use ujson.dumps to ensure it's a valid JSON string
+            msg = ujson.dumps(cmd)
+            rs485_send(msg)
+            sys.stdout.write('{"id":0,"d":{"msg":"TX_ACK"}}\n')
 
     except:
         sys.stdout.write('{"id":0,"d":{"err":"JSON_PARSE"}}\n')
 
 # Initial Status Report
 can_msg = "CAN_READY" if can_ready else "CAN_INIT_FAIL"
-print('{"id":0,"d":{"msg":"GATEWAY_READY","ver":"' + FW_VERSION + '","can":"' + can_msg + '"}}')
+rs485_msg = "READY" if rs485_ready else "FAIL"
+print('{"id":0,"d":{"msg":"GATEWAY_READY","ver":"' + FW_VERSION + '","can":"' + can_msg + '","rs485":"' + rs485_msg + '"}}')
 
 rx_idx = 0
 last_rx_time = utime.ticks_ms()
 pending_tuple = None
 pending_count = 0
 FLUSH_TIMEOUT = 50
+
+# CAN diagnostic timer
+can_diag_last = utime.ticks_ms()
+CAN_DIAG_INTERVAL = 5000  # Print CAN diagnostic every 5 seconds
 
 while True:
     # 1. USB Poll
@@ -395,18 +454,57 @@ while True:
 
     current_time = utime.ticks_ms()
 
-    # 3. CAN RX Poll
-    if can_ready and can_int.value() == 0:
-        # Loop limit to prevent starvation
+    # 3. CAN RX Poll - Check both interrupt pin AND poll directly
+    if can_ready:
         can_loops = 0
-        while can_int.value() == 0 and can_loops < 10:
+        # Poll RX even if interrupt pin is high (more reliable for sniffing)
+        while can_loops < 10:
             res = can.recv()
             if res:
                 c_id, c_data, c_ext = res
                 print_can_frame(current_time, c_id, c_data, c_ext)
-            can_loops += 1
+                can_loops += 1
+            else:
+                break
+        
+        # Periodic CAN diagnostic
+        if utime.ticks_diff(current_time, can_diag_last) > CAN_DIAG_INTERVAL:
+            can_diag_last = current_time
+            try:
+                tec, rec, eflg = can.get_errors()
+                rx_stat = can.rx_status()
+                mode = can.get_mode()
+                sys.stdout.write(f'{{"id":0,"d":{{"can_diag":{{"mode":"{mode}","tec":{tec},"rec":{rec},"eflg":"{eflg:02X}","rxs":"{rx_stat:02X}"}}}}}}\n')
+            except Exception as e:
+                sys.stdout.write(f'{{"id":0,"d":{{"err":"CAN_DIAG: {e}"}}}}\n')
 
-    # 4. AVC-LAN Processing
+    # 4. RS485 RX Poll
+    if rs485_ready:
+        while rs485.any():
+            try:
+                line = rs485.readline()
+                if line:
+                    # Try to decode and forward
+                    try:
+                        line_str = line.decode('utf-8').strip()
+                        if line_str:
+                            obj = ujson.loads(line_str)
+                            
+                            # Inject Metadata if missing
+                            if "ts" not in obj:
+                                obj["ts"] = current_time
+                            if ENABLE_SEQ_COUNTER and "seq" not in obj:
+                                obj["seq"] = get_next_seq()
+                                
+                            # Re-serialize to Stdout
+                            sys.stdout.write(ujson.dumps(obj) + '\n')
+                    except ValueError:
+                        # Malformed JSON or garbage on bus - ignore
+                        pass
+            except Exception:
+                pass
+
+    # 5. AVC-LAN Processing
     should_process = (rx_idx > (RX_BUF_SIZE * 0.75)) or (rx_idx > 0 and utime.ticks_diff(current_time, last_rx_time) > 15)
 
     if should_process:

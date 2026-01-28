@@ -2,14 +2,9 @@
 
 High-performance, hardware-offloaded bridge for Toyota/Lexus AVC-LAN (IEBus) multimedia networks using Raspberry Pi Pico (RP2040).
 
-## 🌃 Project Context: Cyberpunk Prius Gen 2
+## 🌃 Project Context
 
-This Gateway is a core component of a comprehensive "Cyberpunk" retro-modding project for the **Toyota Prius Gen 2**. The system aims to modernize the vehicle's capabilities while retaining OEM aesthetics.
-
-**System Goals:**
-*   **OEM Integration:** Reutilize the original dashboard display for custom telemetry and interfaces.
-*   **Distributed Control:** Custom RS485 satellite network for decentralized control of vehicular functions (lighting, sensors, actuators).
-*   **Deep Telemetry:** Real-time state analysis (button presses, vehicle status) via AVC-LAN and CAN bus interception.
+This Gateway is a core component of the **[Cyberpunk Prius Gen 2 Project](../README.md)**.
 
 ## ⚡ Features
 
@@ -42,7 +37,7 @@ Designed for **RP2040-Zero**.
 
 The Gateway communicates via USB Serial using **NDJSON** (Newline Delimited JSON).
 
-**Full Specification:** [docs/PROTOCOL.md](docs/PROTOCOL.md)
+**Full Specification:** [../PROTOCOL.md](../PROTOCOL.md)
 
 **Quick Summary:**
 All messages follow the root structure:

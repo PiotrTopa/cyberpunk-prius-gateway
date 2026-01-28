@@ -50,7 +50,7 @@ Used for lifecycle events, errors, and configuration.
 
 **RX (Gateway -> Host):**
 ```json
-{"id":0, "d": {"msg": "GATEWAY_READY", "ver": "2.6.0", "can": "CAN_READY"}}
+{"id":0, "d": {"msg": "GATEWAY_READY", "ver": "2.6.0", "can": "CAN_READY", "rs485": "READY"}}
 {"id":0, "ts":105, "d": {"err": "RX_OVERFLOW"}}
 {"id":0, "ts":110, "d": {"ack": true}}
 // Configuration Update Response

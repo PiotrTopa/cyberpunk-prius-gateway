@@ -29,3 +29,21 @@ The MCP2515 module typically runs at 5V. The RP2040 is 3.3V.
     *   **IN CAR (OBDII/Tap):** **REMOVE** (Open). The vehicle bus is already terminated. Adding it may corrupt the bus.
     *   **ON DESK (Bench Test):** **INSTALL** (Closed) if you only have 2 devices.
 *   **H / L:** These are the **Signal Terminals** (CAN High / CAN Low), not jumpers. Connect them to the twisted pair in the vehicle.
+
+## 3. RS485 (Module: EN, VCC, RXD, TXD, GND, A, B)
+We use **UART1** on the RP2040-Zero.
+
+| Module Pin | RP2040-Zero Pin | Function | Notes |
+| :--- | :--- | :--- | :--- |
+| **VCC** | 3.3V | Power | Ensure module supports 3.3V logic. |
+| **GND** | GND | Ground | |
+| **RXD** | **GP9** | UART1 RX | Data to MCU (RO) |
+| **TXD** | **GP8** | UART1 TX | Data from MCU (DI) |
+| **EN** | **GP7** | GPIO | Direction Control |
+| **A** | Bus A | RS485 + | Non-inverting signal |
+| **B** | Bus B | RS485 - | Inverting signal |
+
+### 📝 Control Logic (EN Pin)
+*   **GP7 Low (0):** Receive Mode (RX Enabled, TX Disabled).
+*   **GP7 High (1):** Transmit Mode (RX Disabled, TX Enabled).
+*   **Termination:** RS485 requires a 120Ω termination resistor between A and B at both ends of the bus.
