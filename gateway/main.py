@@ -13,11 +13,15 @@ import mcp2515
 RX_PIN = 0
 TX_PIN = 1
 BAUDRATE = 1000000
-FW_VERSION = "2.6.0"
+FW_VERSION = "2.24.1"  # AVC-LAN latency fix: drain FIFO during CAN waits, lower processing threshold
 
 # CAN CONFIG
 CAN_BAUDRATE = 500000   # Prius Gen2 OBD-II uses 500kbps
-CAN_CRYSTAL = 16000000  # 16MHz crystal (many modules marked 8MHz are actually 16MHz!)
+# !!! DO NOT CHANGE CAN_CRYSTAL OR BITRATE REGISTERS IN mcp2515.py !!!
+# 8MHz crystal is CONFIRMED WORKING with this module.
+# Changing to 16MHz or modifying CNF1/CNF2/CNF3 values BREAKS ALL CAN communication.
+# Tested and confirmed on 2026-02-17.
+CAN_CRYSTAL = 8000000   # 8MHz crystal (marked 8.000) - CONFIRMED WORKING, DO NOT CHANGE
 PIN_SCK = 2
 PIN_MOSI = 3
 PIN_MISO = 4
@@ -31,8 +35,10 @@ PIN_RS485_RX = 9
 PIN_RS485_EN = 7
 
 # SPI FREQUENCY
-# 1MHz is safe for MCP2515, need speed to prevent RX overflow
-SPI_BAUDRATE = 1000000  # 1MHz - faster to prevent overflow 
+# MCP2515 supports up to 10MHz SPI on ideal PCB traces, but prototype
+# wiring (jumper wires, breadboard) corrupts data above ~5MHz.
+# 4MHz is 4x faster than original 1MHz while staying reliable.
+SPI_BAUDRATE = 4000000  # 4MHz - safe for prototype wiring
 
 # --- DATA ARCHITECTURE ---
 DEV_ID_GATEWAY = 0
@@ -41,6 +47,30 @@ DEV_ID_AVCLAN  = 2
 
 # CONFIG FLAGS
 ENABLE_SEQ_COUNTER = True # Adds "seq": <int> to all RX frames for continuity check
+ENABLE_ISOTP_DEBUG = False  # Enable ISO-TP state machine debug logging
+
+# CAN MODE FLAGS
+CAN_TX_ENABLED = False  # Start in listen-only mode (passive sniffing)
+
+# --- CAN SUBSCRIPTION MANAGER ---
+# Subscriptions allow periodic polling of OBD-II PIDs or custom CAN requests.
+# Each subscription is a dict:
+#   {
+#       "slot": int,           # Unique slot ID (0-15)
+#       "req_id": int,         # Request CAN ID (e.g., 0x7DF for OBD broadcast)
+#       "req_data": bytes,     # Request payload (e.g., [0x02, 0x01, 0x0C] for RPM)
+#       "resp_ids": list,      # Expected response IDs (e.g., [0x7E8])
+#       "interval_ms": int,    # Polling interval in milliseconds
+#       "last_poll": int,      # Timestamp of last poll
+#       "timeout_ms": int,     # Response timeout (default 100ms)
+#       "ext": bool,           # Extended frame flag
+#       "isotp": bool          # Use ISO-TP multi-frame reassembly
+#   }
+CAN_SUBSCRIPTIONS = {}  # slot_id -> subscription dict
+MAX_SUBSCRIPTIONS = 16
+
+# OBD-II Standard Response IDs (ECUs respond on 0x7E8-0x7EF)
+OBD2_RESPONSE_IDS = [0x7E8, 0x7E9, 0x7EA, 0x7EB, 0x7EC, 0x7ED, 0x7EE, 0x7EF]
 
 gc.collect()
 
@@ -124,8 +154,8 @@ sm_tx.active(1)
 # --- SETUP CAN ---
 # MCP2515 requires SPI Mode 0,0 (CPOL=0, CPHA=0)
 spi = SPI(0, baudrate=SPI_BAUDRATE, polarity=0, phase=0, sck=Pin(PIN_SCK), mosi=Pin(PIN_MOSI), miso=Pin(PIN_MISO))
-can = mcp2515.MCP2515(spi, PIN_CS)
-can_int = Pin(PIN_INT, Pin.IN)
+can = mcp2515.MCP2515(spi, PIN_CS, PIN_INT)
+can_int = can.int_pin  # Use the same pin object
 
 # --- SETUP RS485 ---
 rs485 = None
@@ -216,6 +246,10 @@ else:
 RX_BUF_SIZE = 512
 rx_buffer = array.array('I', [0] * RX_BUF_SIZE)
 
+# --- CAN DIAGNOSTICS (periodic, from Core 0 main loop) ---
+can_diag_last = 0
+CAN_DIAG_INTERVAL = 5000  # ms
+
 serial_poll = uselect.poll()
 serial_poll.register(sys.stdin, uselect.POLLIN)
 input_buffer = ""
@@ -248,41 +282,16 @@ def check_parity_fast(val, width, parity_bit):
     return ((count + parity_bit) % 2) != 0
 
 def print_avclan_frame(ts, m, s, c, data_bytes, cnt):
-    sys.stdout.write('{"id":2,"ts":')
-    sys.stdout.write(str(ts))
-    if ENABLE_SEQ_COUNTER:
-        sys.stdout.write(',"seq":')
-        sys.stdout.write(str(get_next_seq()))
-    sys.stdout.write(',"d":{"m":"')
-    sys.stdout.write('{:03X}'.format(m))
-    sys.stdout.write('","s":"')
-    sys.stdout.write('{:03X}'.format(s))
-    sys.stdout.write('","c":')
-    sys.stdout.write(str(c))
-    sys.stdout.write(',"d":[')
-    first = True
-    for b in data_bytes:
-        if not first: sys.stdout.write(',')
-        sys.stdout.write('"{:02X}"'.format(b))
-        first = False
-    sys.stdout.write('],"cnt":' + str(cnt) + '}}\n')
+    # Single sys.stdout.write() to minimize USB CDC packet fragmentation
+    d_str = ','.join('"{:02X}"'.format(b) for b in data_bytes)
+    seq_str = ',"seq":' + str(get_next_seq()) if ENABLE_SEQ_COUNTER else ''
+    sys.stdout.write('{"id":2,"ts":' + str(ts) + seq_str + ',"d":{"m":"' + '{:03X}'.format(m) + '","s":"' + '{:03X}'.format(s) + '","c":' + str(c) + ',"d":[' + d_str + '],"cnt":' + str(cnt) + '}}\n')
 
 def print_can_frame(ts, can_id, data, ext):
-    # {"id":1,"ts":...,"d":{"i":"0x123","d":[...]}}
-    sys.stdout.write('{"id":1,"ts":')
-    sys.stdout.write(str(ts))
-    if ENABLE_SEQ_COUNTER:
-        sys.stdout.write(',"seq":')
-        sys.stdout.write(str(get_next_seq()))
-    sys.stdout.write(',"d":{"i":"')
-    sys.stdout.write("0x{:X}".format(can_id))
-    sys.stdout.write('","d":[')
-    first = True
-    for b in data:
-        if not first: sys.stdout.write(',')
-        sys.stdout.write(str(b))
-        first = False
-    sys.stdout.write(']}}\n')
+    # Single sys.stdout.write() to minimize USB CDC packet fragmentation
+    d_str = ','.join(str(b) for b in data)
+    seq_str = ',"seq":' + str(get_next_seq()) if ENABLE_SEQ_COUNTER else ''
+    sys.stdout.write('{"id":1,"ts":' + str(ts) + seq_str + ',"d":{"i":"0x' + '{:X}'.format(can_id) + '","d":[' + d_str + ']}}\n')
 
 # Helper function for frame decoding (used in retry loop)
 def try_decode(buf, ptr):
@@ -344,19 +353,32 @@ def tx_push(val, w, acc, fill):
     return acc, fill
 
 def process_usb_command(json_line):
+    global CAN_TX_ENABLED, CAN_SUBSCRIPTIONS
     try:
         clean_line = json_line.strip()
         if not clean_line: return
         cmd = ujson.loads(clean_line)
         dev_id = cmd.get("id")
         
+        # Debug: echo received command type for diagnostics
+        data_peek = cmd.get("d", {})
+        action_peek = data_peek.get("a", "") if isinstance(data_peek, dict) else ""
+        sys.stdout.write('{"id":0,"d":{"log":"USB_RX","dev":' + str(dev_id) + ',"a":"' + str(action_peek) + '"}}\n')
+        
         # System Commands (Configuration)
         if dev_id == DEV_ID_GATEWAY:
             cfg = cmd.get("d")
-            if cfg and "seq" in cfg:
+            if not cfg: return
+            
+            if "seq" in cfg:
                 global ENABLE_SEQ_COUNTER
                 ENABLE_SEQ_COUNTER = bool(cfg["seq"])
                 sys.stdout.write('{"id":0,"d":{"msg":"CFG_UPDATED","seq":' + str(ENABLE_SEQ_COUNTER).lower() + '}}\n')
+            
+            if "isotp_debug" in cfg:
+                global ENABLE_ISOTP_DEBUG
+                ENABLE_ISOTP_DEBUG = bool(cfg["isotp_debug"])
+                sys.stdout.write('{"id":0,"d":{"msg":"CFG_UPDATED","isotp_debug":' + str(ENABLE_ISOTP_DEBUG).lower() + '}}\n')
             return
 
         data = cmd.get("d")
@@ -379,26 +401,190 @@ def process_usb_command(json_line):
                 acc, fill = tx_push(b, 8, acc, fill)
                 acc, fill = tx_push(p, 1, acc, fill)
             if fill > 0: sm_tx.put(acc << (32 - fill))
-            sys.stdout.write('{"id":0,"d":{"msg":"TX_ACK"}}\n')
 
         elif dev_id == DEV_ID_CAN:
             if not can_ready:
                 sys.stdout.write('{"id":0,"d":{"err":"CAN_OFFLINE"}}\n')
                 return
             
-            can_id_str = data.get("i")
-            if isinstance(can_id_str, str):
-                can_id = int(can_id_str, 16)
-            else:
-                can_id = int(can_id_str)
-                
-            can_data = data.get("d", [])
-            is_ext = data.get("e", False) # Extended frame flag, optional
+            action = data.get("a", "tx")  # Default action is "tx" (send frame)
             
-            if can.send(can_id, can_data, is_ext):
-                sys.stdout.write('{"id":0,"d":{"msg":"TX_ACK"}}\n')
+            # --- ACTION: tx (Send raw CAN frame, legacy behavior) ---
+            if action == "tx":
+                can_id_str = data.get("i")
+                if isinstance(can_id_str, str):
+                    can_id = int(can_id_str, 16)
+                else:
+                    can_id = int(can_id_str)
+                    
+                can_data = data.get("d", [])
+                is_ext = data.get("e", False)
+                
+                # Enable TX mode if not already
+                if not CAN_TX_ENABLED:
+                    if can.enable_tx():
+                        CAN_TX_ENABLED = True
+                    else:
+                        sys.stdout.write('{"id":0,"d":{"err":"CAN_MODE_SWITCH_FAIL"}}\n')
+                        return
+                
+                if not can.send(can_id, can_data, is_ext):
+                    sys.stdout.write('{"id":0,"d":{"err":"CAN_TX_FULL"}}\n')
+            
+            # --- ACTION: req (Single request-response query) ---
+            elif action == "req":
+                # Request format:
+                # {"id":1,"d":{"a":"req","i":"0x7DF","d":[2,1,12],"r":["0x7E8"],"t":100}}
+                # For multi-frame (ISO-TP) responses, add "isotp":true
+                can_id_str = data.get("i")
+                if isinstance(can_id_str, str):
+                    can_id = int(can_id_str, 16)
+                else:
+                    can_id = int(can_id_str)
+                    
+                can_data = data.get("d", [])
+                is_ext = data.get("e", False)
+                timeout = data.get("t", 100)  # Default 100ms timeout
+                use_isotp = data.get("isotp", False)  # Use ISO-TP reassembly
+                
+                # Auto-enable ISO-TP for longer timeout (likely multi-frame response)
+                if timeout >= 300 and not use_isotp:
+                    use_isotp = True
+                
+                # Parse response IDs
+                resp_ids_raw = data.get("r", OBD2_RESPONSE_IDS)
+                resp_ids = []
+                for rid in resp_ids_raw:
+                    if isinstance(rid, str):
+                        resp_ids.append(int(rid, 16))
+                    else:
+                        resp_ids.append(int(rid))
+                
+                # Perform request-response (with optional ISO-TP reassembly)
+                # Enable TX mode if not already
+                if not CAN_TX_ENABLED:
+                    if can.enable_tx():
+                        CAN_TX_ENABLED = True
+                    else:
+                        sys.stdout.write('{"id":0,"d":{"err":"CAN_MODE_SWITCH_FAIL"}}\n')
+                        return
+                
+                if use_isotp:
+                    result = can.send_and_wait_isotp(can_id, can_data, resp_ids, timeout, is_ext, ENABLE_ISOTP_DEBUG)
+                else:
+                    result = can.send_and_wait(can_id, can_data, resp_ids, timeout, is_ext)
+                
+                if result:
+                    resp_id, resp_data = result
+                    # Single write for USB CDC efficiency
+                    d_str = ','.join(str(b) for b in resp_data)
+                    seq_str = ',"seq":' + str(get_next_seq()) if ENABLE_SEQ_COUNTER else ''
+                    sys.stdout.write('{"id":1,"ts":' + str(utime.ticks_ms()) + seq_str + ',"d":{"a":"resp","i":"0x' + '{:X}'.format(resp_id) + '","d":[' + d_str + ']}}\n')
+                else:
+                    sys.stdout.write('{"id":1,"d":{"a":"resp","err":"TIMEOUT"}}\n')
+            
+            # --- ACTION: sub (Subscribe to periodic polling) ---
+            elif action == "sub":
+                # Subscribe format:
+                # {"id":1,"d":{"a":"sub","slot":0,"i":"0x7DF","d":[2,1,12],"r":["0x7E8"],"int":500,"t":100}}
+                slot = data.get("slot")
+                if slot is None or slot < 0 or slot >= MAX_SUBSCRIPTIONS:
+                    sys.stdout.write('{"id":0,"d":{"err":"INVALID_SLOT"}}\n')
+                    return
+                
+                can_id_str = data.get("i")
+                if isinstance(can_id_str, str):
+                    can_id = int(can_id_str, 16)
+                else:
+                    can_id = int(can_id_str)
+                
+                can_data = bytes(data.get("d", []))
+                interval = data.get("int", 1000)  # Default 1 second
+                timeout = data.get("t", 100)
+                is_ext = data.get("e", False)
+                use_isotp = data.get("isotp", False)  # Use ISO-TP multi-frame reassembly
+                
+                # Auto-enable ISO-TP for longer timeout (likely multi-frame response)
+                if timeout >= 300 and not use_isotp:
+                    use_isotp = True
+                
+                # Parse response IDs
+                resp_ids_raw = data.get("r", OBD2_RESPONSE_IDS)
+                resp_ids = []
+                for rid in resp_ids_raw:
+                    if isinstance(rid, str):
+                        resp_ids.append(int(rid, 16))
+                    else:
+                        resp_ids.append(int(rid))
+                
+                # Create subscription
+                CAN_SUBSCRIPTIONS[slot] = {
+                    "slot": slot,
+                    "req_id": can_id,
+                    "req_data": can_data,
+                    "resp_ids": resp_ids,
+                    "interval_ms": interval,
+                    "last_poll": 0,  # Will trigger immediately
+                    "timeout_ms": timeout,
+                    "ext": is_ext,
+                    "isotp": use_isotp,
+                }
+                
+                # Enable TX mode if not already
+                if not CAN_TX_ENABLED:
+                    if can.enable_tx():
+                        CAN_TX_ENABLED = True
+                    else:
+                        sys.stdout.write('{"id":0,"d":{"err":"CAN_MODE_SWITCH_FAIL"}}\n')
+                        del CAN_SUBSCRIPTIONS[slot]
+                        return
+                
+                sys.stdout.write('{"id":0,"d":{"msg":"SUB_OK","slot":' + str(slot) + '}}\n')
+            
+            # --- ACTION: unsub (Unsubscribe from slot) ---
+            elif action == "unsub":
+                slot = data.get("slot")
+                if slot is not None and slot in CAN_SUBSCRIPTIONS:
+                    del CAN_SUBSCRIPTIONS[slot]
+                    sys.stdout.write('{"id":0,"d":{"msg":"UNSUB_OK","slot":' + str(slot) + '}}\n')
+                elif slot == "all":
+                    CAN_SUBSCRIPTIONS.clear()
+                    sys.stdout.write('{"id":0,"d":{"msg":"UNSUB_ALL"}}\n')
+                else:
+                    sys.stdout.write('{"id":0,"d":{"err":"SLOT_NOT_FOUND"}}\n')
+            
+            # --- ACTION: mode (Switch CAN mode) ---
+            elif action == "mode":
+                mode = data.get("m", "listen")
+                if mode == "normal" or mode == "tx":
+                    if can.enable_tx():
+                        CAN_TX_ENABLED = True
+                        sys.stdout.write('{"id":0,"d":{"msg":"CAN_MODE","m":"NORMAL"}}\n')
+                    else:
+                        sys.stdout.write('{"id":0,"d":{"err":"MODE_SWITCH_FAIL"}}\n')
+                elif mode == "listen":
+                    if can.disable_tx():
+                        CAN_TX_ENABLED = False
+                        CAN_SUBSCRIPTIONS.clear()  # Clear subscriptions when going passive
+                        sys.stdout.write('{"id":0,"d":{"msg":"CAN_MODE","m":"LISTEN"}}\n')
+                    else:
+                        sys.stdout.write('{"id":0,"d":{"err":"MODE_SWITCH_FAIL"}}\n')
+                else:
+                    sys.stdout.write('{"id":0,"d":{"err":"INVALID_MODE"}}\n')
+            
+            # --- ACTION: subs (List active subscriptions) ---
+            elif action == "subs":
+                subs_list = []
+                for slot, sub in CAN_SUBSCRIPTIONS.items():
+                    subs_list.append({
+                        "slot": slot,
+                        "i": "0x{:X}".format(sub["req_id"]),
+                        "int": sub["interval_ms"]
+                    })
+                sys.stdout.write('{"id":0,"d":{"subs":' + ujson.dumps(subs_list) + '}}\n')
+            
             else:
-                sys.stdout.write('{"id":0,"d":{"err":"CAN_TX_FULL"}}\n')
+                sys.stdout.write('{"id":0,"d":{"err":"UNKNOWN_ACTION"}}\n')
         
         elif dev_id > 5:
             # RS485 Forwarding
@@ -410,7 +596,6 @@ def process_usb_command(json_line):
             # We use ujson.dumps to ensure it's a valid JSON string
             msg = ujson.dumps(cmd)
             rs485_send(msg)
-            sys.stdout.write('{"id":0,"d":{"msg":"TX_ACK"}}\n')
 
     except:
         sys.stdout.write('{"id":0,"d":{"err":"JSON_PARSE"}}\n')
@@ -418,17 +603,34 @@ def process_usb_command(json_line):
 # Initial Status Report
 can_msg = "CAN_READY" if can_ready else "CAN_INIT_FAIL"
 rs485_msg = "READY" if rs485_ready else "FAIL"
-print('{"id":0,"d":{"msg":"GATEWAY_READY","ver":"' + FW_VERSION + '","can":"' + can_msg + '","rs485":"' + rs485_msg + '"}}')
+print('{"id":0,"d":{"msg":"GATEWAY_READY","ver":"' + FW_VERSION + '","can":"' + can_msg + '","rs485":"' + rs485_msg + '","cores":1}}')
 
 rx_idx = 0
 last_rx_time = utime.ticks_ms()
 pending_tuple = None
 pending_count = 0
-FLUSH_TIMEOUT = 50
+FLUSH_TIMEOUT = 20
+last_gc_time = utime.ticks_ms()
+GC_INTERVAL_MS = 2000  # GC at most every 2 seconds (was every idle cycle)
 
-# CAN diagnostic timer
-can_diag_last = utime.ticks_ms()
-CAN_DIAG_INTERVAL = 5000  # Print CAN diagnostic every 5 seconds
+# Helper: Output subscription response frame
+def print_sub_response(ts, slot, resp_id, resp_data):
+    # Single sys.stdout.write() to minimize USB CDC packet fragmentation
+    d_str = ','.join(str(b) for b in resp_data)
+    seq_str = ',"seq":' + str(get_next_seq()) if ENABLE_SEQ_COUNTER else ''
+    sys.stdout.write('{"id":1,"ts":' + str(ts) + seq_str + ',"d":{"a":"sub","slot":' + str(slot) + ',"i":"0x' + '{:X}'.format(resp_id) + '","d":[' + d_str + ']}}\n')
+
+# AVC-LAN drain callback: called during blocking CAN waits to prevent PIO FIFO overflow.
+# The RP2040 PIO FIFO is only 8 entries deep. At AVC-LAN data rates, it fills in ~2ms.
+# Without draining, any CAN send_and_wait (100-500ms) causes total AVC-LAN data loss.
+def drain_avclan_fifo():
+    global rx_idx, last_rx_time
+    while sm_rx.rx_fifo() > 0:
+        val = sm_rx.get()
+        if rx_idx < RX_BUF_SIZE:
+            rx_buffer[rx_idx] = val
+            rx_idx += 1
+        last_rx_time = utime.ticks_ms()
 
 while True:
     # 1. USB Poll
@@ -454,29 +656,30 @@ while True:
 
     current_time = utime.ticks_ms()
 
-    # 3. CAN RX Poll - Check both interrupt pin AND poll directly
+    # 3. CAN RX - Direct polling on Core 0 (burst read up to 8 frames)
+    # MCP2515 has 2 RX buffers. Burst read catches new frames that arrive
+    # while processing. No lock needed — single-core, no thread contention.
     if can_ready:
-        can_loops = 0
-        # Poll RX even if interrupt pin is high (more reliable for sniffing)
-        while can_loops < 10:
-            res = can.recv()
+        for _ in range(8):
+            res = can.recv_fast()
             if res:
                 c_id, c_data, c_ext = res
-                print_can_frame(current_time, c_id, c_data, c_ext)
-                can_loops += 1
+                print_can_frame(current_time, c_id, tuple(c_data), c_ext)
             else:
                 break
         
-        # Periodic CAN diagnostic
+        # Periodic CAN diagnostics (every 5 seconds)
         if utime.ticks_diff(current_time, can_diag_last) > CAN_DIAG_INTERVAL:
             can_diag_last = current_time
             try:
                 tec, rec, eflg = can.get_errors()
                 rx_stat = can.rx_status()
                 mode = can.get_mode()
-                sys.stdout.write(f'{{"id":0,"d":{{"can_diag":{{"mode":"{mode}","tec":{tec},"rec":{rec},"eflg":"{eflg:02X}","rxs":"{rx_stat:02X}"}}}}}}\n')
-            except Exception as e:
-                sys.stdout.write(f'{{"id":0,"d":{{"err":"CAN_DIAG: {e}"}}}}\n')
+                stats = can.get_rx_stats()
+                overflow = stats.get("rx_overflow", 0)
+                sys.stdout.write('{\"id\":0,\"d\":{\"can_diag\":{\"mode\":\"' + mode + '\",\"tec\":' + str(tec) + ',\"rec\":' + str(rec) + ',\"eflg\":\"' + '{:02X}'.format(eflg) + '\",\"rxs\":\"' + '{:02X}'.format(rx_stat) + '\",\"ovf\":' + str(overflow) + '}}}\n')
+            except:
+                pass
 
     # 4. RS485 RX Poll
     if rs485_ready:
@@ -504,8 +707,52 @@ while True:
             except Exception:
                 pass
 
-    # 5. AVC-LAN Processing
-    should_process = (rx_idx > (RX_BUF_SIZE * 0.75)) or (rx_idx > 0 and utime.ticks_diff(current_time, last_rx_time) > 15)
+    # 5. CAN Subscription Polling (Periodic OBD-II/Diagnostic Queries)
+    # ALL subscriptions use BLOCKING send_and_wait() for reliability.
+    # Single-core: no thread contention, just blocks the main loop briefly.
+    if CAN_TX_ENABLED and CAN_SUBSCRIPTIONS:
+        # Find ONE subscription that needs polling
+        sub_to_poll = None
+        for slot, sub in list(CAN_SUBSCRIPTIONS.items()):
+            if utime.ticks_diff(current_time, sub["last_poll"]) >= sub["interval_ms"]:
+                sub_to_poll = (slot, sub)
+                break
+        
+        if sub_to_poll:
+            slot, sub = sub_to_poll
+            try:
+                if sub.get("isotp", False):
+                    result = can.send_and_wait_isotp(
+                        sub["req_id"],
+                        sub["req_data"],
+                        sub["resp_ids"],
+                        sub["timeout_ms"],
+                        sub["ext"],
+                        ENABLE_ISOTP_DEBUG,
+                        poll_cb=drain_avclan_fifo
+                    )
+                else:
+                    result = can.send_and_wait(
+                        sub["req_id"],
+                        sub["req_data"],
+                        sub["resp_ids"],
+                        sub["timeout_ms"],
+                        sub["ext"],
+                        poll_cb=drain_avclan_fifo
+                    )
+            except Exception as e:
+                result = None
+                sys.stdout.write('{"id":0,"d":{"err":"SUB_POLL_ERR","slot":' + str(slot) + '}}\n')
+            
+            CAN_SUBSCRIPTIONS[slot]["last_poll"] = current_time
+            if result:
+                resp_id, resp_data = result
+                print_sub_response(current_time, slot, resp_id, resp_data)
+
+    # 6. AVC-LAN Processing
+    # Process as soon as we have data and a brief silence (frame boundary).
+    # Low threshold to minimize UI delay for button presses, track changes, etc.
+    should_process = (rx_idx > 0 and utime.ticks_diff(current_time, last_rx_time) > 8)
 
     if should_process:
         total_bits = rx_idx * 32
@@ -528,4 +775,9 @@ while True:
             print_avclan_frame(current_time, *pending_tuple, pending_count)
             pending_tuple = None
             pending_count = 0
-        gc.collect()
+
+    # Run GC only periodically during idle (was every idle cycle, now every 2s)
+    if rx_idx == 0 and pending_tuple is None:
+        if utime.ticks_diff(current_time, last_gc_time) > GC_INTERVAL_MS:
+            gc.collect()
+            last_gc_time = current_time
