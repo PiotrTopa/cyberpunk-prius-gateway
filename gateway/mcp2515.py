@@ -488,9 +488,24 @@ class MCP2515:
         in error handling. This is REQUIRED for request/response communication
         (OBD-II, UDS, etc.) but changes bus behavior from passive sniffing.
         
+        Clears accumulated error counters before switching to ensure a clean
+        start. Error counters can accumulate in Listen-Only mode from noise
+        or bus issues, and would immediately put Normal mode into error-passive.
+        
         Returns:
             bool: True if mode switch successful, False otherwise.
         """
+        # Enter config mode first to clear error counters
+        self.modify_reg(CANCTRL, 0xE0, 0x80)  # CONFIG mode
+        for _ in range(10):
+            if (self.read_reg(CANSTAT) & 0xE0) == 0x80: break
+            time.sleep_ms(1)
+        # Clear error flags and counters
+        self.write_reg(EFLG, 0x00)
+        self.write_reg(0x1C, 0x00)  # TEC = 0
+        self.write_reg(0x1D, 0x00)  # REC = 0
+        self.write_reg(CANINTF, 0x00)  # Clear all interrupt flags
+        # Now switch to normal mode
         return self.set_normal_mode()
 
     def disable_tx(self):
@@ -739,13 +754,13 @@ class MCP2515:
         log("Response TIMEOUT")
         return None  # Timeout, no matching response
 
-    def init(self, baudrate=500000, crystal=16000000):
+    def init(self, baudrate=500000, crystal=8000000):
         """Initialize MCP2515 CAN controller.
         
         Args:
             baudrate: CAN bus speed (500000, 250000, 125000)
-            crystal: Crystal frequency in Hz (16000000 or 8000000)
-                     Most cheap modules use 16MHz crystal!
+            crystal: Crystal frequency in Hz (8000000 or 16000000)
+                     Our module uses 8MHz crystal (marked 8.000).
         """
         self.reset()
         

@@ -13,7 +13,7 @@ import mcp2515
 RX_PIN = 0
 TX_PIN = 1
 BAUDRATE = 1000000
-FW_VERSION = "2.24.1"  # AVC-LAN latency fix: drain FIFO during CAN waits, lower processing threshold
+FW_VERSION = "2.27.0"  # AVC-LAN: drain PIO FIFO during CAN RX burst, diagnostics, and RS485 reads
 
 # CAN CONFIG
 CAN_BAUDRATE = 500000   # Prius Gen2 OBD-II uses 500kbps
@@ -68,6 +68,7 @@ CAN_TX_ENABLED = False  # Start in listen-only mode (passive sniffing)
 #   }
 CAN_SUBSCRIPTIONS = {}  # slot_id -> subscription dict
 MAX_SUBSCRIPTIONS = 16
+can_sub_rr = 0  # Round-robin index for fair subscription polling
 
 # OBD-II Standard Response IDs (ECUs respond on 0x7E8-0x7EF)
 OBD2_RESPONSE_IDS = [0x7E8, 0x7E9, 0x7EA, 0x7EB, 0x7EC, 0x7ED, 0x7EE, 0x7EF]
@@ -281,11 +282,11 @@ def check_parity_fast(val, width, parity_bit):
     while v: v &= (v - 1); count += 1
     return ((count + parity_bit) % 2) != 0
 
-def print_avclan_frame(ts, m, s, c, data_bytes, cnt):
+def print_avclan_frame(ts, m, s, c, data_bytes):
     # Single sys.stdout.write() to minimize USB CDC packet fragmentation
-    d_str = ','.join('"{:02X}"'.format(b) for b in data_bytes)
+    d_str = ','.join('"' + '{:02X}'.format(b) + '"' for b in data_bytes)
     seq_str = ',"seq":' + str(get_next_seq()) if ENABLE_SEQ_COUNTER else ''
-    sys.stdout.write('{"id":2,"ts":' + str(ts) + seq_str + ',"d":{"m":"' + '{:03X}'.format(m) + '","s":"' + '{:03X}'.format(s) + '","c":' + str(c) + ',"d":[' + d_str + '],"cnt":' + str(cnt) + '}}\n')
+    sys.stdout.write('{"id":2,"ts":' + str(ts) + seq_str + ',"d":{"m":"' + '{:03X}'.format(m) + '","s":"' + '{:03X}'.format(s) + '","c":' + str(c) + ',"d":[' + d_str + ']}}\n')
 
 def print_can_frame(ts, can_id, data, ext):
     # Single sys.stdout.write() to minimize USB CDC packet fragmentation
@@ -607,9 +608,6 @@ print('{"id":0,"d":{"msg":"GATEWAY_READY","ver":"' + FW_VERSION + '","can":"' + 
 
 rx_idx = 0
 last_rx_time = utime.ticks_ms()
-pending_tuple = None
-pending_count = 0
-FLUSH_TIMEOUT = 20
 last_gc_time = utime.ticks_ms()
 GC_INTERVAL_MS = 2000  # GC at most every 2 seconds (was every idle cycle)
 
@@ -659,8 +657,10 @@ while True:
     # 3. CAN RX - Direct polling on Core 0 (burst read up to 8 frames)
     # MCP2515 has 2 RX buffers. Burst read catches new frames that arrive
     # while processing. No lock needed — single-core, no thread contention.
+    # drain_avclan_fifo() between SPI reads prevents PIO FIFO overflow.
     if can_ready:
         for _ in range(8):
+            drain_avclan_fifo()
             res = can.recv_fast()
             if res:
                 c_id, c_data, c_ext = res
@@ -672,9 +672,13 @@ while True:
         if utime.ticks_diff(current_time, can_diag_last) > CAN_DIAG_INTERVAL:
             can_diag_last = current_time
             try:
+                drain_avclan_fifo()
                 tec, rec, eflg = can.get_errors()
+                drain_avclan_fifo()
                 rx_stat = can.rx_status()
+                drain_avclan_fifo()
                 mode = can.get_mode()
+                drain_avclan_fifo()
                 stats = can.get_rx_stats()
                 overflow = stats.get("rx_overflow", 0)
                 sys.stdout.write('{\"id\":0,\"d\":{\"can_diag\":{\"mode\":\"' + mode + '\",\"tec\":' + str(tec) + ',\"rec\":' + str(rec) + ',\"eflg\":\"' + '{:02X}'.format(eflg) + '\",\"rxs\":\"' + '{:02X}'.format(rx_stat) + '\",\"ovf\":' + str(overflow) + '}}}\n')
@@ -684,6 +688,7 @@ while True:
     # 4. RS485 RX Poll
     if rs485_ready:
         while rs485.any():
+            drain_avclan_fifo()
             try:
                 line = rs485.readline()
                 if line:
@@ -710,13 +715,19 @@ while True:
     # 5. CAN Subscription Polling (Periodic OBD-II/Diagnostic Queries)
     # ALL subscriptions use BLOCKING send_and_wait() for reliability.
     # Single-core: no thread contention, just blocks the main loop briefly.
+    # Round-robin: scan from can_sub_rr to prevent lower slots from starving
+    # higher ones. Each cycle starts where the previous one left off.
     if CAN_TX_ENABLED and CAN_SUBSCRIPTIONS:
-        # Find ONE subscription that needs polling
+        # Find ONE subscription that needs polling (round-robin)
         sub_to_poll = None
-        for slot, sub in list(CAN_SUBSCRIPTIONS.items()):
-            if utime.ticks_diff(current_time, sub["last_poll"]) >= sub["interval_ms"]:
-                sub_to_poll = (slot, sub)
-                break
+        for i in range(MAX_SUBSCRIPTIONS):
+            slot = (can_sub_rr + i) % MAX_SUBSCRIPTIONS
+            if slot in CAN_SUBSCRIPTIONS:
+                sub = CAN_SUBSCRIPTIONS[slot]
+                if utime.ticks_diff(current_time, sub["last_poll"]) >= sub["interval_ms"]:
+                    sub_to_poll = (slot, sub)
+                    can_sub_rr = (slot + 1) % MAX_SUBSCRIPTIONS
+                    break
         
         if sub_to_poll:
             slot, sub = sub_to_poll
@@ -760,24 +771,14 @@ while True:
         while ptr < total_bits - 40:
             frame_tuple, bit_len = decode_smart_static(rx_buffer, ptr, rx_idx)
             if frame_tuple:
-                if pending_tuple == frame_tuple:
-                    pending_count += 1
-                else:
-                    if pending_tuple is not None:
-                        print_avclan_frame(current_time, *pending_tuple, pending_count)
-                    pending_tuple = frame_tuple
-                    pending_count = 1
+                print_avclan_frame(current_time, *frame_tuple)
                 ptr += bit_len
             else:
                 ptr += 1
         rx_idx = 0
-        if pending_tuple and utime.ticks_diff(current_time, last_rx_time) > FLUSH_TIMEOUT:
-            print_avclan_frame(current_time, *pending_tuple, pending_count)
-            pending_tuple = None
-            pending_count = 0
 
     # Run GC only periodically during idle (was every idle cycle, now every 2s)
-    if rx_idx == 0 and pending_tuple is None:
+    if rx_idx == 0:
         if utime.ticks_diff(current_time, last_gc_time) > GC_INTERVAL_MS:
             gc.collect()
             last_gc_time = current_time
