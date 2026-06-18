@@ -174,18 +174,21 @@ def rs485_send(data_str):
     if not rs485 or not rs485_ready: return
     try:
         rs485_en.value(1)
+        utime.sleep_us(50)  # Let EN settle before TX
         # Ensure data ends with newline for NDJSON
-        payload = data_str + '\n'
-        rs485.write(payload)
+        payload = (data_str + '\n').encode('utf-8')
+        written = rs485.write(payload)
         
         # Blocking wait for TX complete (approximate)
         # 10 bits per char (Start + 8 Data + Stop)
         # Calculate us: bits * 1000000 / baud
         bits = len(payload) * 10
-        wait_us = int(bits * 1000000 / RS485_BAUDRATE) + 100 # +100us margin
+        wait_us = int(bits * 1000000 / RS485_BAUDRATE) + 200 # +200us margin
         utime.sleep_us(wait_us)
         
         rs485_en.value(0)
+        if written != len(payload):
+            sys.stdout.write('{"id":0,"d":{"err":"RS485_TX_SHORT","wrote":' + str(written) + ',"expected":' + str(len(payload)) + '}}\n')
     except Exception as e:
         sys.stdout.write(f'{{"id":0,"d":{{"err":"RS485_TX_FAIL: {str(e)}"}}}}\n')
 
@@ -380,6 +383,20 @@ def process_usb_command(json_line):
                 global ENABLE_ISOTP_DEBUG
                 ENABLE_ISOTP_DEBUG = bool(cfg["isotp_debug"])
                 sys.stdout.write('{"id":0,"d":{"msg":"CFG_UPDATED","isotp_debug":' + str(ENABLE_ISOTP_DEBUG).lower() + '}}\n')
+            
+            # RS485 test: {"id":0,"d":{"test":"rs485"}}
+            if cfg.get("test") == "rs485":
+                if not rs485_ready:
+                    sys.stdout.write('{"id":0,"d":{"test":"rs485","err":"NOT_INIT"}}\n')
+                else:
+                    # Send 50 bytes of 0x55 (~4.3ms at 115200) - clear alternating pattern on scope
+                    rs485_en.value(1)
+                    utime.sleep_us(50)
+                    pat = b'\x55' * 50
+                    w = rs485.write(pat)
+                    utime.sleep_ms(10)
+                    rs485_en.value(0)
+                    sys.stdout.write('{"id":0,"d":{"test":"rs485","w":' + str(w) + ',"ok":true}}\n')
             return
 
         data = cmd.get("d")
@@ -597,9 +614,10 @@ def process_usb_command(json_line):
             # We use ujson.dumps to ensure it's a valid JSON string
             msg = ujson.dumps(cmd)
             rs485_send(msg)
+            sys.stdout.write('{"id":0,"d":{"log":"RS485_TX","len":' + str(len(msg)) + ',"to":' + str(dev_id) + '}}\n')
 
-    except:
-        sys.stdout.write('{"id":0,"d":{"err":"JSON_PARSE"}}\n')
+    except Exception as e:
+        sys.stdout.write('{"id":0,"d":{"err":"CMD_ERR","msg":"' + str(e) + '"}}\n')
 
 # Initial Status Report
 can_msg = "CAN_READY" if can_ready else "CAN_INIT_FAIL"
@@ -610,6 +628,7 @@ rx_idx = 0
 last_rx_time = utime.ticks_ms()
 last_gc_time = utime.ticks_ms()
 GC_INTERVAL_MS = 2000  # GC at most every 2 seconds (was every idle cycle)
+rs485_rx_buf = b""
 
 # Helper: Output subscription response frame
 def print_sub_response(ts, slot, resp_id, resp_data):
@@ -687,30 +706,34 @@ while True:
 
     # 4. RS485 RX Poll
     if rs485_ready:
-        while rs485.any():
+        n = rs485.any()
+        if n:
             drain_avclan_fifo()
             try:
-                line = rs485.readline()
-                if line:
-                    # Try to decode and forward
-                    try:
-                        line_str = line.decode('utf-8').strip()
-                        if line_str:
-                            obj = ujson.loads(line_str)
-                            
-                            # Inject Metadata if missing
-                            if "ts" not in obj:
-                                obj["ts"] = current_time
-                            if ENABLE_SEQ_COUNTER and "seq" not in obj:
-                                obj["seq"] = get_next_seq()
-                                
-                            # Re-serialize to Stdout
-                            sys.stdout.write(ujson.dumps(obj) + '\n')
-                    except ValueError:
-                        # Malformed JSON or garbage on bus - ignore
-                        pass
+                raw = rs485.read()
+                if raw:
+                    rs485_rx_buf += raw
             except Exception:
                 pass
+        # Process complete lines from buffer
+        while b'\n' in rs485_rx_buf:
+            line, rs485_rx_buf = rs485_rx_buf.split(b'\n', 1)
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                line_str = line.decode('utf-8')
+                obj = ujson.loads(line_str)
+                if "ts" not in obj:
+                    obj["ts"] = current_time
+                if ENABLE_SEQ_COUNTER and "seq" not in obj:
+                    obj["seq"] = get_next_seq()
+                sys.stdout.write(ujson.dumps(obj) + '\n')
+            except ValueError:
+                pass
+        # Prevent buffer overflow
+        if len(rs485_rx_buf) > 1024:
+            rs485_rx_buf = rs485_rx_buf[-256:]
 
     # 5. CAN Subscription Polling (Periodic OBD-II/Diagnostic Queries)
     # ALL subscriptions use BLOCKING send_and_wait() for reliability.

@@ -201,15 +201,20 @@ class LightController:
     def read_current(self):
         """
         Read current from both ADC channels.
+        Averages samples over 2 PWM periods to avoid aliasing with PWM signal.
         Updates self.current_amps and returns (ch1_amps, ch2_amps).
         """
-        # RP2040 ADC returns 16-bit value (0-65535) in MicroPython
-        raw1 = self.adc_ch1.read_u16()
-        raw2 = self.adc_ch2.read_u16()
+        # Sample over 2 full PWM periods (2ms at 1kHz) for stable average
+        num_samples = 50
+        sum1 = 0
+        sum2 = 0
+        for _ in range(num_samples):
+            sum1 += self.adc_ch1.read_u16()
+            sum2 += self.adc_ch2.read_u16()
 
-        # Convert 16-bit to 12-bit equivalent for our formula
-        adc_val1 = raw1 >> 4  # 65535 -> 4095
-        adc_val2 = raw2 >> 4
+        # Average and convert 16-bit to 12-bit equivalent for our formula
+        adc_val1 = (sum1 // num_samples) >> 4
+        adc_val2 = (sum2 // num_samples) >> 4
 
         self.current_amps[0] = round(adc_val1 * ADC_TO_AMPS, 2)
         self.current_amps[1] = round(adc_val2 * ADC_TO_AMPS, 2)
@@ -501,6 +506,7 @@ def main():
             status = hw.get_status()
             status["cmd"] = "STATUS"
             rs485.send(status)
+            print(f"BCAST: {status}")
             last_broadcast = now
 
         # --- 5. Heartbeat LED ---
