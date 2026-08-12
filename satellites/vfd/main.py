@@ -175,20 +175,18 @@ class Canvas:
 
 class CyberSplash:
     """
-    Animated idle screen: 2x-scaled 'CYBER SECURITY' with sweeping scanline,
-    corner brackets and occasional glitch slices. The scaled text is
-    pre-rendered once into an off-screen framebuffer, so a frame costs only
-    a fill + blit + a few small ops.
+    Idle screen: terminal-style '> Cyber Security' prompt (2x-scaled,
+    pre-rendered once into a blit buffer) with a blinking block cursor.
     """
 
-    TEXT = "CYBER SECURITY"
+    TEXT = "> CyberSecurity"
 
     def __init__(self, fb):
         import framebuf
         self.fb = fb
         self.frame = 0
 
-        # Pre-render 2x-scaled text: 14 chars * 8px = 112px -> 224x16
+        # Pre-render 2x-scaled text: 15 chars * 8px = 120px -> 240x16
         w1, h1 = len(self.TEXT) * 8, 8
         small = framebuf.FrameBuffer(bytearray(w1 * ((h1 + 7) // 8)), w1, h1,
                                      framebuf.MONO_VLSB)
@@ -203,63 +201,21 @@ class CyberSplash:
                 if small.pixel(x, y):
                     self.tfb.fill_rect(x * 2, y * 2, 2, 2, 1)
 
-        self.tx = (256 - self.tw) // 2
+        # Center text + cursor as a group (cursor: 4px gap + 10px block)
+        self.tx = (256 - (self.tw + 14)) // 2
         self.ty = (48 - self.th) // 2
-        self._rng = 12345
-
-    def _rand(self, n):
-        # Tiny LCG (avoids pulling in urandom)
-        self._rng = (self._rng * 1103515245 + 12345) & 0x7FFFFFFF
-        return self._rng % n
 
     def render(self):
         fb = self.fb
         self.frame += 1
-        f = self.frame
 
         fb.fill(0)
         fb.blit(self.tfb, self.tx, self.ty)
 
-        # Glitch: occasionally shift one 8px band of the text horizontally
-        if self._rand(20) == 0:
-            self._glitch_band()
-
-        # Sweeping vertical scanline across the full screen (XOR column)
-        sx = (f * 3) % 300
-        if sx < 256:
-            for y in range(0, 48, 2):
-                fb.pixel(sx, y, 1 - fb.pixel(sx, y))
-
-        # Corner brackets with subtle breathing (grow/shrink by 1px)
-        g = 6 + (1 if (f // 25) % 2 else 0)
-        for cx, cy, dx, dy in ((2, 2, 1, 1), (253, 2, -1, 1),
-                               (2, 45, 1, -1), (253, 45, -1, -1)):
-            fb.hline(cx if dx > 0 else cx - g + 1, cy, g, 1)
-            fb.vline(cx, cy if dy > 0 else cy - g + 1, g, 1)
-
-        # Blinking underline cursor after the text
-        if (f // 12) % 2:
-            fb.fill_rect(self.tx + self.tw + 4, self.ty + self.th - 3, 8, 3, 1)
-
-        # Status ticker at the bottom
-        dots = "." * ((f // 15) % 4)
-        draw_text_3x5(fb, 98, 41, "STANDBY" + dots, 1)
-
-    def _glitch_band(self):
-        """Shift one 8px-tall band of the text region horizontally."""
-        buf = self.fb.buffer
-        yb = (self.ty // 8) + self._rand(2)  # byte-rows covered by the text
-        dx = self._rand(7) - 3
-        if dx == 0:
-            dx = 2
-        base = yb * 256
-        row = bytes(buf[base:base + 256])
-        if dx > 0:
-            buf[base + dx:base + 256] = row[:256 - dx]
-            buf[base:base + dx] = b"\x00" * dx
-        else:
-            buf[base:base + 256 + dx] = row[-dx:]
-            buf[base + 256 + dx:base + 256] = b"\x00" * (-dx)
+        # Blinking block cursor after the text
+        if (self.frame // 12) % 2:
+            fb.fill_rect(self.tx + self.tw + 4, self.ty + 2,
+                         10, self.th - 4, 1)
 
 
 # ==============================================================================
