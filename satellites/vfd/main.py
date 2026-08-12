@@ -49,6 +49,11 @@ STATUS_BROADCAST_INTERVAL_MS = 5000
 SPLASH_DURATION_MS = 5000         # Boot splash time
 FADE_STEP = 5                     # Fade %-points per frame (~1s full fade at 20 FPS)
 
+# --- Idle screen (parked / hybrid system off) ---
+# "clock" = small date+time in top-right corner, "dark" = fully off.
+IDLE_MODE = "clock"
+IDLE_FADE_PCT = 35                # Idle brightness (% of configured brightness)
+
 # Brightness mapping: protocol 0-100% -> GP1294AI raw value
 BRIGHTNESS_MAX_RAW = 0x50
 
@@ -220,6 +225,44 @@ class CyberSplash:
 
 
 # ==============================================================================
+# Idle clock — small date + time in the top-right corner (parked screen)
+# ==============================================================================
+
+class IdleClock:
+    """
+    Parked/idle screen: HH:MM (8x8) with DD.MM.YYYY (3x5) underneath,
+    top-right corner. Time comes from the RP2040 RTC, synced by the host
+    via "K" messages ({"t":"K","y","mo","d","h","mi","s"}).
+    """
+
+    def __init__(self, fb):
+        self.fb = fb
+        self.synced = False
+
+    def handle_sync(self, m):
+        try:
+            machine.RTC().datetime((m["y"], m["mo"], m["d"], 0,
+                                    m["h"], m["mi"], m.get("s", 0), 0))
+            self.synced = True
+            return True
+        except (KeyError, TypeError, OSError):
+            return False
+
+    def render(self):
+        fb = self.fb
+        fb.fill(0)
+        if self.synced:
+            y, mo, d, h, mi = time.localtime()[0:5]
+            tstr = "%02d:%02d" % (h, mi)
+            dstr = "%02d.%02d.%d" % (d, mo, y)
+        else:
+            tstr, dstr = "--:--", ""
+        fb.text(tstr, 254 - len(tstr) * 8, 2, 1)
+        if dstr:
+            draw_text_3x5(fb, 255 - len(dstr) * 4, 13, dstr)
+
+
+# ==============================================================================
 # Main
 # ==============================================================================
 
@@ -264,6 +307,7 @@ def main():
     canvas_dirty = False
     frame_count = 0
     splash = CyberSplash(fb)
+    idle = IdleClock(fb)
     boot_time = time.ticks_ms()
     fade_pct = 100           # 100 = full brightness, 0 = dark (parked)
 
@@ -286,6 +330,8 @@ def main():
                 dashboard.handle_reset(m)
                 mode = MODE_DASHBOARD
                 fb.fill(0)
+            elif t == "K":
+                idle.handle_sync(m)
             elif t in ("T", "D", "B"):
                 mode = MODE_CANVAS
                 canvas_dirty = True
@@ -312,11 +358,19 @@ def main():
                 driving = dashboard.ready and dashboard.gear != "P"
 
                 # Fade toward full brightness when driving (or in splash),
-                # toward dark when parked or hybrid system off.
-                target = 100 if (driving or in_splash) else 0
+                # toward the idle level (clock) or dark when parked.
+                if driving or in_splash:
+                    target = 100
+                elif IDLE_MODE == "clock":
+                    target = IDLE_FADE_PCT
+                else:
+                    target = 0
                 if fade_pct != target:
                     step = FADE_STEP if target > fade_pct else -FADE_STEP
-                    fade_pct = max(0, min(100, fade_pct + step))
+                    if abs(target - fade_pct) < FADE_STEP:
+                        fade_pct = target
+                    else:
+                        fade_pct += step
                     apply_brightness(brightness_pct * fade_pct // 100)
                     if fade_pct == 0:
                         # Fully dark: blank the screen too
@@ -326,8 +380,10 @@ def main():
                 if fade_pct > 0:
                     if in_splash:
                         splash.render()
-                    else:
+                    elif driving:
                         dashboard.render()
+                    else:
+                        idle.render()
                     fb.show()
                     frame_count += 1
             elif canvas_dirty:
