@@ -310,10 +310,11 @@ def main():
         # --- 2. Render frame ---
         if time.ticks_diff(now, last_frame) >= FRAME_INTERVAL_MS:
             if mode == MODE_DASHBOARD:
-                # Dashboard only while the car is in driving mode (READY)
-                # and data is fresh; otherwise the CYBER SECURITY splash.
+                # Dashboard only in driving mode (READY and gear != P)
+                # with fresh data; otherwise the CyberSecurity splash.
                 have_data = last_data and time.ticks_diff(now, last_data) < DATA_TIMEOUT_MS
-                if dashboard.ready and have_data:
+                driving = dashboard.ready and dashboard.gear != "P"
+                if driving and have_data:
                     dashboard.render()
                 else:
                     splash.render()
