@@ -46,7 +46,6 @@ SPI_BAUDRATE = 4_000_000
 # --- Timing ---
 FRAME_INTERVAL_MS = 50            # 20 FPS render (measured: render ~38ms + show ~10ms)
 STATUS_BROADCAST_INTERVAL_MS = 5000
-DATA_TIMEOUT_MS = 10000           # No E-messages -> treat as parked/dark
 SPLASH_DURATION_MS = 5000         # Boot splash time
 FADE_STEP = 5                     # Fade %-points per frame (~1s full fade at 20 FPS)
 
@@ -262,7 +261,6 @@ def main():
 
     last_frame = time.ticks_ms()
     last_broadcast = time.ticks_ms()
-    last_data = 0            # ticks of last E/T/D/B message, 0 = never
     canvas_dirty = False
     frame_count = 0
     splash = CyberSplash(fb)
@@ -277,7 +275,6 @@ def main():
             t = m.get("t")
             if t == "E":
                 dashboard.handle_energy(m)
-                last_data = now
             elif t == "S":
                 dashboard.handle_state(m)
             elif t == "C":
@@ -292,7 +289,6 @@ def main():
             elif t in ("T", "D", "B"):
                 mode = MODE_CANVAS
                 canvas_dirty = True
-                last_data = now
                 # Canvas content always wakes the display
                 if fade_pct < 100:
                     fade_pct = 100
@@ -313,11 +309,10 @@ def main():
         if time.ticks_diff(now, last_frame) >= FRAME_INTERVAL_MS:
             if mode == MODE_DASHBOARD:
                 in_splash = time.ticks_diff(now, boot_time) < SPLASH_DURATION_MS
-                have_data = last_data and time.ticks_diff(now, last_data) < DATA_TIMEOUT_MS
-                driving = dashboard.ready and dashboard.gear != "P" and have_data
+                driving = dashboard.ready and dashboard.gear != "P"
 
                 # Fade toward full brightness when driving (or in splash),
-                # toward dark when parked / not ready / stale data.
+                # toward dark when parked or hybrid system off.
                 target = 100 if (driving or in_splash) else 0
                 if fade_pct != target:
                     step = FADE_STEP if target > fade_pct else -FADE_STEP
