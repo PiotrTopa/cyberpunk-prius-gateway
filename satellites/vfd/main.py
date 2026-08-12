@@ -46,7 +46,9 @@ SPI_BAUDRATE = 4_000_000
 # --- Timing ---
 FRAME_INTERVAL_MS = 50            # 20 FPS render (measured: render ~38ms + show ~10ms)
 STATUS_BROADCAST_INTERVAL_MS = 5000
-DATA_TIMEOUT_MS = 10000           # No E-messages -> standby screen
+DATA_TIMEOUT_MS = 10000           # No E-messages -> treat as parked/dark
+SPLASH_DURATION_MS = 5000         # Boot splash time
+FADE_STEP = 5                     # Fade %-points per frame (~1s full fade at 20 FPS)
 
 # Brightness mapping: protocol 0-100% -> GP1294AI raw value
 BRIGHTNESS_MAX_RAW = 0x50
@@ -264,6 +266,8 @@ def main():
     canvas_dirty = False
     frame_count = 0
     splash = CyberSplash(fb)
+    boot_time = time.ticks_ms()
+    fade_pct = 100           # 100 = full brightness, 0 = dark (parked)
 
     while True:
         now = time.ticks_ms()
@@ -280,46 +284,57 @@ def main():
                 bri = dashboard.handle_config(m)
                 if bri is not None:
                     brightness_pct = bri
-                    apply_brightness(brightness_pct)
+                    apply_brightness(brightness_pct * fade_pct // 100)
             elif t == "R":
                 dashboard.handle_reset(m)
                 mode = MODE_DASHBOARD
                 fb.fill(0)
-            elif t == "T":
+            elif t in ("T", "D", "B"):
                 mode = MODE_CANVAS
-                canvas.handle_text(m)
                 canvas_dirty = True
                 last_data = now
-            elif t == "D":
-                mode = MODE_CANVAS
-                n = canvas.handle_draw(m)
-                canvas_dirty = True
-                last_data = now
-                if m.get("ack"):
-                    rs485.send({"res": "OK", "t": "D", "ops": n})
-            elif t == "B":
-                mode = MODE_CANVAS
-                ok = canvas.handle_bitmap(m)
-                canvas_dirty = True
-                last_data = now
-                if not ok:
-                    rs485.send({"err": "BAD_BITMAP"})
+                # Canvas content always wakes the display
+                if fade_pct < 100:
+                    fade_pct = 100
+                    apply_brightness(brightness_pct)
+                if t == "T":
+                    canvas.handle_text(m)
+                elif t == "D":
+                    n = canvas.handle_draw(m)
+                    if m.get("ack"):
+                        rs485.send({"res": "OK", "t": "D", "ops": n})
+                else:
+                    if not canvas.handle_bitmap(m):
+                        rs485.send({"err": "BAD_BITMAP"})
             elif m.get("cmd") == "STATUS":
                 rs485.send(_status(mode, brightness_pct, frame_count))
 
         # --- 2. Render frame ---
         if time.ticks_diff(now, last_frame) >= FRAME_INTERVAL_MS:
             if mode == MODE_DASHBOARD:
-                # Dashboard only in driving mode (READY and gear != P)
-                # with fresh data; otherwise the CyberSecurity splash.
+                in_splash = time.ticks_diff(now, boot_time) < SPLASH_DURATION_MS
                 have_data = last_data and time.ticks_diff(now, last_data) < DATA_TIMEOUT_MS
-                driving = dashboard.ready and dashboard.gear != "P"
-                if driving and have_data:
-                    dashboard.render()
-                else:
-                    splash.render()
-                fb.show()
-                frame_count += 1
+                driving = dashboard.ready and dashboard.gear != "P" and have_data
+
+                # Fade toward full brightness when driving (or in splash),
+                # toward dark when parked / not ready / stale data.
+                target = 100 if (driving or in_splash) else 0
+                if fade_pct != target:
+                    step = FADE_STEP if target > fade_pct else -FADE_STEP
+                    fade_pct = max(0, min(100, fade_pct + step))
+                    apply_brightness(brightness_pct * fade_pct // 100)
+                    if fade_pct == 0:
+                        # Fully dark: blank the screen too
+                        fb.fill(0)
+                        fb.show()
+
+                if fade_pct > 0:
+                    if in_splash:
+                        splash.render()
+                    else:
+                        dashboard.render()
+                    fb.show()
+                    frame_count += 1
             elif canvas_dirty:
                 fb.show()
                 frame_count += 1
