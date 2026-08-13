@@ -22,6 +22,7 @@ class RS485:
         self.de_pin.value(0)  # Start in RX mode (listen)
         self.dev_id = dev_id
         self.buffer = b""
+        self._has_flush = hasattr(self.uart, "flush")
 
     def send(self, payload):
         """Sends a JSON-encoded payload over RS485."""
@@ -29,19 +30,23 @@ class RS485:
             return
 
         cmd = {"id": self.dev_id, "d": payload}
-        data = ujson.dumps(cmd).encode("utf-8")
+        data = ujson.dumps(cmd).encode("utf-8") + b"\n"
 
-        self.de_pin.value(1)  # Enable transmission
-        time.sleep_ms(2)  # Wait 2ms for DE line to stabilize properly
-        
+        self.de_pin.value(1)  # Enable transmission (driver on)
+        time.sleep_ms(2)      # Let DE settle before clocking data out
+
         self.uart.write(data)
-        self.uart.write(b"\n")
-        
-        # Wait for hardware TX buffer to flush
-        # 10 bits per byte at 8N1, plus margin
-        wait_ms = int(len(data) * 10000 / self.baudrate) + 2
-        time.sleep_ms(wait_ms)
-        
+
+        # Keep DE asserted until the LAST bit (incl. the "\n" terminator) is
+        # physically on the wire, or a receiver may miss the frame delimiter.
+        # flush() blocks until the TX shift register is empty (exact); fall
+        # back to a byte-time estimate on ports without it.
+        if self._has_flush:
+            self.uart.flush()
+        else:
+            wait_ms = int(len(data) * 10000 / self.baudrate) + 2
+            time.sleep_ms(wait_ms)
+
         self.de_pin.value(0)  # Return to receive mode
 
     def read(self):
