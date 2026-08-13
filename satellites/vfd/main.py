@@ -50,8 +50,9 @@ SPLASH_DURATION_MS = 5000         # Boot splash time
 FADE_STEP = 5                     # Fade %-points per frame (~1s full fade at 20 FPS)
 
 # --- Idle screen (parked / hybrid system off) ---
-# "clock" = small date+time in top-right corner, "dark" = fully off.
-IDLE_MODE = "clock"
+# "prompt" = terminal prompt top-left, "clock" = small date+time top-right,
+# "dark" = fully off.
+IDLE_MODE = "prompt"
 IDLE_FADE_PCT = 35                # Idle brightness (% of configured brightness)
 
 # Brightness mapping: protocol 0-100% -> GP1294AI raw value
@@ -263,6 +264,32 @@ class IdleClock:
 
 
 # ==============================================================================
+# Idle prompt — fake terminal prompt in the top-left corner (parked screen)
+# ==============================================================================
+
+class IdlePrompt:
+    """
+    Parked/idle screen: 'secmon@prius:/var/logs/security$' prompt (8x8),
+    top-left. The 32-char prompt fills the full 256px line, so the blinking
+    block cursor wraps to the next line — just like a real terminal.
+    """
+
+    TEXT = "secmon@prius:/var/logs/security$"
+
+    def __init__(self, fb):
+        self.fb = fb
+        self.frame = 0
+
+    def render(self):
+        fb = self.fb
+        self.frame += 1
+        fb.fill(0)
+        fb.text(self.TEXT, 0, 2, 1)
+        if (self.frame // 12) % 2:
+            fb.fill_rect(0, 12, 7, 8, 1)
+
+
+# ==============================================================================
 # Main
 # ==============================================================================
 
@@ -307,7 +334,8 @@ def main():
     canvas_dirty = False
     frame_count = 0
     splash = CyberSplash(fb)
-    idle = IdleClock(fb)
+    clock = IdleClock(fb)
+    idle = IdlePrompt(fb) if IDLE_MODE == "prompt" else clock
     boot_time = time.ticks_ms()
     fade_pct = 100           # 100 = full brightness, 0 = dark (parked)
 
@@ -331,7 +359,7 @@ def main():
                 mode = MODE_DASHBOARD
                 fb.fill(0)
             elif t == "K":
-                idle.handle_sync(m)
+                clock.handle_sync(m)
             elif t in ("T", "D", "B"):
                 mode = MODE_CANVAS
                 canvas_dirty = True
@@ -358,10 +386,10 @@ def main():
                 driving = dashboard.ready and dashboard.gear != "P"
 
                 # Fade toward full brightness when driving (or in splash),
-                # toward the idle level (clock) or dark when parked.
+                # toward the idle level (prompt/clock) or dark when parked.
                 if driving or in_splash:
                     target = 100
-                elif IDLE_MODE == "clock":
+                elif IDLE_MODE != "dark":
                     target = IDLE_FADE_PCT
                 else:
                     target = 0
