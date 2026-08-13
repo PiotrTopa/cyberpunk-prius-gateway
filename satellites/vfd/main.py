@@ -16,6 +16,7 @@ import machine
 import time
 import ubinascii
 from rs485 import RS485
+from ota import OTA
 from vfd_framebuffer import VFDFramebuffer
 from dashboard import Dashboard, draw_text_3x5
 
@@ -301,6 +302,7 @@ def main():
           (SPI_ID, SCK_PIN, MOSI_PIN, CS_PIN, RST_PIN, FIL_EN_PIN))
 
     rs485 = RS485(UART_ID, BAUD_RATE, TX_PIN, RX_PIN, DE_PIN, DEV_ID)
+    ota = OTA(rs485)
     print("RS485: Ready")
 
     fb = VFDFramebuffer(
@@ -344,6 +346,8 @@ def main():
 
         # --- 1. Process RS485 messages ---
         for m in rs485.read():
+            if ota.handle(m):
+                continue
             t = m.get("t")
             if t == "E":
                 dashboard.handle_energy(m)
@@ -379,8 +383,8 @@ def main():
             elif m.get("cmd") == "STATUS":
                 rs485.send(_status(mode, brightness_pct, frame_count))
 
-        # --- 2. Render frame ---
-        if time.ticks_diff(now, last_frame) >= FRAME_INTERVAL_MS:
+        # --- 2. Render frame (paused during an OTA transfer) ---
+        if not ota.active and time.ticks_diff(now, last_frame) >= FRAME_INTERVAL_MS:
             if mode == MODE_DASHBOARD:
                 in_splash = time.ticks_diff(now, boot_time) < SPLASH_DURATION_MS
                 driving = dashboard.ready and dashboard.gear != "P"
@@ -421,6 +425,7 @@ def main():
             last_frame = now
 
         # --- 3. Periodic status broadcast ---
+        ota.tick(now)
         if time.ticks_diff(now, last_broadcast) >= STATUS_BROADCAST_INTERVAL_MS:
             rs485.send(_status(mode, brightness_pct, frame_count))
             last_broadcast = now

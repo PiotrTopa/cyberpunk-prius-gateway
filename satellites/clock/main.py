@@ -5,6 +5,7 @@ import random
 from ssd1306 import SSD1306_I2C
 from ds3231 import DS3231
 from rs485 import RS485
+from ota import OTA
 
 # Import fonts directly
 try:
@@ -179,6 +180,7 @@ def main():
     # Initialize RS485
     print(f"Initializing RS485 on UART{UART_ID} (TX=GP{TX_PIN}, RX=GP{RX_PIN}, DE=GP{DE_PIN})")
     rs485 = RS485(UART_ID, BAUD_RATE, TX_PIN, RX_PIN, DE_PIN, DEV_ID)
+    ota = OTA(rs485)
     
     # Initialize I2C
     print(f"Initializing I2C{I2C_ID} on SDA=GP{SDA_PIN}, SCL=GP{SCL_PIN}")
@@ -245,6 +247,8 @@ def main():
         # --- 1. Process RS485 ---
         msgs = rs485.read()
         for m in msgs:
+            if ota.handle(m):
+                continue
             cmd = m.get("cmd")
             if cmd == "SET_TIME":
                 # args: [2026, 1, 6, 18, 55, 0]
@@ -278,6 +282,7 @@ def main():
 
         # --- 2. Broadcast (Every 10s) ---
         now_ms = time.ticks_ms()
+        ota.tick(now_ms)
         if time.ticks_diff(now_ms, last_broadcast) > 10000:
             t = rtc.get_time()
             temp = rtc.get_temperature()

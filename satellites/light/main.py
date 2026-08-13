@@ -1,33 +1,38 @@
 import machine
 import time
 from rs485 import RS485
+from ota import OTA
 from easing import EasingEngine, EASING_FUNCTIONS
 
 # ==============================================================================
 # Configuration
 # ==============================================================================
 
-DEV_ID = 7  # Satellite address on RS485 bus
+DEV_ID = 106  # Satellite address on RS485 bus
 
 # --- RS485 (UART1) ---
 UART_ID = 1
 TX_PIN = 8
 RX_PIN = 9
-DE_PIN = 14
+DE_PIN = 10
 BAUD_RATE = 115200
 
 # --- PWM Channels (HW-039 / BTS7960 half-bridges) ---
-PWM_CH1_PIN = 0   # RPWM -> Right headlight BiLED
-PWM_CH2_PIN = 1   # LPWM -> Left headlight BiLED
-PWM_ENABLE_PIN = 6 # L_EN + R_EN tied together
+PWM_CH1_PIN = 6   # RPWM -> Right headlight BiLED
+PWM_CH2_PIN = 7   # LPWM -> Left headlight BiLED
+PWM_ENABLE_R_PIN = 5 # R_EN
+PWM_ENABLE_L_PIN = 4 # L_EN
 PWM_FREQ = 1000    # 1 kHz base frequency
 
 # --- Relay Module (HW-316, Active Low) ---
-RELAY_PINS = [2, 3, 4, 5]  # GP2=R1, GP3=R2, GP4=R3, GP5=R4
+RELAY_PINS = [3, 2, 1, 0]  # GP3=R1, GP2=R2, GP1=R3, GP0=R4
 
 # --- ADC Current Sense ---
 ADC_CH1_PIN = 26  # R_IS (right channel)
 ADC_CH2_PIN = 27  # L_IS (left channel)
+
+# --- Digital Inputs ---
+INPUT_PINS = [11, 12, 13, 14]  # GP11=IN1, GP12=IN2, GP13=IN3, GP14=IN4 (Active Low 12V sense)
 
 # Current conversion constant:
 # I_load = ADC_val * 0.0038 [A]
@@ -64,7 +69,8 @@ class LightController:
         print("INIT: Relays OFF (Active Low, pins HIGH)")
 
         # --- Initialize PWM Enable (LOW = disabled, safe) ---
-        self.pwm_enable_pin = machine.Pin(PWM_ENABLE_PIN, machine.Pin.OUT, value=0)
+        self.pwm_enable_r_pin = machine.Pin(PWM_ENABLE_R_PIN, machine.Pin.OUT, value=0)
+        self.pwm_enable_l_pin = machine.Pin(PWM_ENABLE_L_PIN, machine.Pin.OUT, value=0)
         self.pwm_enabled = False
         print("INIT: PWM power stage DISABLED")
 
@@ -85,6 +91,16 @@ class LightController:
         self.adc_ch2 = machine.ADC(machine.Pin(ADC_CH2_PIN))
         self.current_amps = [0.0, 0.0]  # Last measured current [A]
         print("INIT: ADC current sense ready")
+
+        # --- Initialize Digital Inputs ---
+        self.inputs = []
+        for pin_num in INPUT_PINS:
+            # Active Low: 2n7000 pulls to GND when 12V is present
+            pin = machine.Pin(pin_num, machine.Pin.IN, machine.Pin.PULL_UP)
+            self.inputs.append(pin)
+        self.input_states = [False] * len(INPUT_PINS)
+        self.input_debounce = [0] * len(INPUT_PINS)
+        print(f"INIT: Digital inputs ready on {INPUT_PINS}")
 
         # --- Easing Engine ---
         self.easing = EasingEngine(num_channels=2)
@@ -119,7 +135,9 @@ class LightController:
 
     def set_pwm_enable(self, enabled):
         """Enable/disable the PWM power stage (hardware safety gate)."""
-        self.pwm_enable_pin.value(1 if enabled else 0)
+        val = 1 if enabled else 0
+        self.pwm_enable_r_pin.value(val)
+        self.pwm_enable_l_pin.value(val)
         self.pwm_enabled = enabled
         if not enabled:
             # When disabling, also zero out PWM signals for clean state
@@ -196,6 +214,23 @@ class LightController:
             self.set_pwm_duty(channel, duty_val)
         return self.easing.any_active()
 
+    def update_inputs(self):
+        """
+        Poll inputs and debounce them.
+        Returns True if any input state changed.
+        """
+        changed = False
+        raw_states = [pin.value() == 0 for pin in self.inputs]
+        for i in range(len(self.inputs)):
+            if raw_states[i] != self.input_states[i]:
+                self.input_debounce[i] += 1
+                if self.input_debounce[i] >= 5:  # 5 ticks of 10ms = 50ms stable
+                    self.input_states[i] = raw_states[i]
+                    changed = True
+            else:
+                self.input_debounce[i] = 0
+        return changed
+
     # --- Current Sensing ---
 
     def read_current(self):
@@ -269,6 +304,7 @@ class LightController:
             "amps": [self.current_amps[0], self.current_amps[1]],
             "ocp": self.ocp_tripped,
             "easing": [self.easing.is_active(0), self.easing.is_active(1)],
+            "inputs": self.input_states[:],
         }
 
 
@@ -449,12 +485,14 @@ def test_adc(hw):
 def main():
     print(f"BOOT: Satellite Light (ID={DEV_ID}) starting...")
     print(f"  RS485: UART{UART_ID} TX=GP{TX_PIN} RX=GP{RX_PIN} DE=GP{DE_PIN}")
-    print(f"  PWM:   CH1=GP{PWM_CH1_PIN} CH2=GP{PWM_CH2_PIN} EN=GP{PWM_ENABLE_PIN}")
+    print(f"  PWM:   CH1=GP{PWM_CH1_PIN} CH2=GP{PWM_CH2_PIN} EN_R=GP{PWM_ENABLE_R_PIN} EN_L=GP{PWM_ENABLE_L_PIN}")
     print(f"  Relay: GP{RELAY_PINS}")
     print(f"  ADC:   CH1=GP{ADC_CH1_PIN} CH2=GP{ADC_CH2_PIN}")
+    print(f"  Inputs: GP{INPUT_PINS}")
 
     # Initialize RS485
     rs485 = RS485(UART_ID, BAUD_RATE, TX_PIN, RX_PIN, DE_PIN, DEV_ID)
+    ota = OTA(rs485)
     print("RS485: Ready")
 
     # Initialize Hardware
@@ -479,6 +517,8 @@ def main():
         # --- 1. Process RS485 Commands ---
         msgs = rs485.read()
         for m in msgs:
+            if ota.handle(m):
+                continue
             print(f"RX: {m}")
             response = process_command(hw, m)
             if response:
@@ -488,6 +528,14 @@ def main():
         # --- 2. Easing Engine Tick ---
         if time.ticks_diff(now, last_easing_tick) >= EASING_TICK_INTERVAL_MS:
             hw.update_easing()
+            
+            if hw.update_inputs():
+                rs485.send({
+                    "evt": "INPUTS",
+                    "val": hw.input_states[:]
+                })
+                print(f"INPUTS CHANGED: {hw.input_states}")
+                
             last_easing_tick = now
 
         # --- 3. Current Sensing & OCP ---
@@ -502,6 +550,7 @@ def main():
             last_adc_read = now
 
         # --- 4. Periodic Status Broadcast ---
+        ota.tick(now)
         if time.ticks_diff(now, last_broadcast) >= STATUS_BROADCAST_INTERVAL_MS:
             status = hw.get_status()
             status["cmd"] = "STATUS"
