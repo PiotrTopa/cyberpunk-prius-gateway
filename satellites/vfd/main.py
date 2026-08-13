@@ -270,12 +270,11 @@ class IdleClock:
 
 class IdlePrompt:
     """
-    Parked/idle screen: 'secmon@prius:/var/logs/security$' prompt (8x8),
-    top-left. The 32-char prompt fills the full 256px line, so the blinking
-    block cursor wraps to the next line — just like a real terminal.
+    Parked/idle screen: 'security@prius:/var/logs$' prompt (8x8), top-left,
+    with a blinking block cursor right after it.
     """
 
-    TEXT = "secmon@prius:/var/logs/security$"
+    TEXT = "security@prius:/var/logs$"
 
     def __init__(self, fb):
         self.fb = fb
@@ -287,7 +286,7 @@ class IdlePrompt:
         fb.fill(0)
         fb.text(self.TEXT, 0, 2, 1)
         if (self.frame // 12) % 2:
-            fb.fill_rect(0, 12, 7, 8, 1)
+            fb.fill_rect(len(self.TEXT) * 8 + 2, 2, 7, 8, 1)
 
 
 # ==============================================================================
@@ -387,7 +386,7 @@ def main():
         if not ota.active and time.ticks_diff(now, last_frame) >= FRAME_INTERVAL_MS:
             if mode == MODE_DASHBOARD:
                 in_splash = time.ticks_diff(now, boot_time) < SPLASH_DURATION_MS
-                driving = dashboard.ready and dashboard.gear != "P"
+                driving = dashboard.ready
 
                 # Fade toward full brightness when driving (or in splash),
                 # toward the idle level (prompt/clock) or dark when parked.
