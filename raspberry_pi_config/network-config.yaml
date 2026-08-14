@@ -1,0 +1,17 @@
+network:
+  version: 2
+  ethernets:
+    usb0:
+      match:
+        name: usb0
+      addresses:
+        - 192.168.100.2/24
+      optional: true
+  wifis:
+    wlan0:
+      dhcp4: true
+      regulatory-domain: "PL"
+      access-points:
+        "YOUR_SSID_HERE":
+          password: "YOUR_PASSWORD_HERE"
+      optional: true
