@@ -40,13 +40,17 @@ Power: 5V (VBUS) + GND for the VFD module.
 
 ```
 satellites/vfd/
-├── main.py             # Main loop, protocol dispatch, standby screen
+├── main.py             # Main loop, protocol dispatch, splash + idle screens
 ├── dashboard.py        # Energy dashboard components (port of pygame vfd_satellite)
-├── vfd_framebuffer.py  # framebuf wrapper + viper GRAM converter (~25 FPS)
+├── vfd_framebuffer.py  # framebuf wrapper + viper GRAM converter
 ├── gp1294ai.py         # Low-level GP1294AI SPI driver
-├── rs485.py            # RS485 half-duplex NDJSON driver (shared with light)
+├── rs485.py -> ../common/rs485.py   # symlink: shared bus driver
+├── ota.py   -> ../common/ota.py     # symlink: shared OTA module
 └── README.md           # This file
 ```
+
+`rs485.py` and `ota.py` are symlinks into `../common/` — edit them there, never
+in place. Both `mpremote fs cp` and `satellite_ota.py sync` follow the links.
 
 ---
 
@@ -55,7 +59,7 @@ satellites/vfd/
 ### Dashboard mode (default)
 
 Driven by the host's `VFDDisplayRule` + `vfd_output.py` egress
-(`E`/`S`/`C`/`R` messages, see
+(`E`/`S`/`C`/`R`/`K` messages, see
 `cyberpank-prius-gen2-computer/docs/VFD_SATELLITE_PROTOCOL.md`):
 
 ```
@@ -63,8 +67,39 @@ Driven by the host's `VFDDisplayRule` + `vfd_output.py` egress
 │  PTR LPG BTT    │  ICE→BAT→MG   │ assist/regen  │  MG  fuel  │
 ```
 
-Before the first `E` message (or after 10 s without one) a standby
-screen with the satellite ID is shown.
+What is on screen in dashboard mode depends on **READY** (`rdy` in the `S`
+message), not on gear:
+
+| When | Screen | Brightness |
+|:-----|:-------|:-----------|
+| First 5 s after boot (`SPLASH_DURATION_MS`) | Boot splash — 2×-scaled `> Cyber Security` prompt | full |
+| READY on | Energy dashboard | full |
+| READY off (parked) | Idle screen | `IDLE_FADE_PCT` = 35 % |
+
+Brightness ramps between the two levels at `FADE_STEP` = 5 %-points per frame
+(~1 s at 20 FPS). `IDLE_MODE` selects the idle screen:
+
+- `"prompt"` (default) — `security@prius:/var/logs$` in the top-left, 8×8 font
+- `"clock"` — small date + time, top-right
+- `"dark"` — fades to 0 and blanks the framebuffer
+
+Canvas content (`T`/`D`/`B`) always jumps straight back to full brightness.
+
+#### Host → satellite message types
+
+Every frame is `{"id":110,"d":{"t":<type>,...}}`. Field-level definitions live in
+`cyberpank-prius-gen2-computer/docs/VFD_SATELLITE_PROTOCOL.md`.
+
+| `t` | Purpose | Example payload |
+|:----|:--------|:----------------|
+| `E` | Energy data — drives the dashboard | `{"t":"E","mg":0.4,"fl":0.3,"br":0,"spd":0.5,"soc":0.6,"ptr":25,"lpg":40,"ice":true}` |
+| `S` | Vehicle state; `rdy` selects dashboard vs idle | `{"t":"S","rdy":true,"gear":"P","fuel":"OFF"}` |
+| `C` | Config; returns brightness 0–100 % | `{"t":"C","bri":80}` |
+| `R` | Reset — clear screen, back to dashboard mode | `{"t":"R"}` |
+| `K` | Clock sync for the `"clock"` idle screen | `{"t":"K","y":2026,"mo":8,"d":14,"h":19,"mi":30,"s":0}` |
+| `T` `D` `B` | Canvas text / draw ops / bitmap (below) | — |
+
+A bare `{"cmd":"STATUS"}` (no `t`) triggers an immediate status reply.
 
 ### Canvas mode ("show anything")
 
@@ -124,14 +159,58 @@ Status broadcast (every 5 s, also on `{"cmd":"STATUS"}` request):
 
 ---
 
+## Updating firmware
+
+Normal path is OTA over RS485 — no physical access needed. Inside a maintenance
+window (see [`../README.md`](../README.md#maintenance-window)):
+
+```bash
+tools/satellite_ota.py --port "$GW" --dev 110 sync satellites/vfd/
+```
+
+This sends only changed `.py` files (symlinked `rs485.py` / `ota.py` included),
+commits atomically, reboots the satellite and re-verifies the manifest.
+A full-file push is ~700–750 B/s, so a 3.7 KB file takes ~5 s.
+
+Over USB instead (board on a bench machine, e.g. nokia1 `/dev/ttyACM0`):
+
+```bash
+python3 -m mpremote connect /dev/ttyACM0 fs cp main.py :main.py
+python3 -m mpremote connect /dev/ttyACM0 reset
+```
+
+A bare `mpremote repl` needs a TTY and fails over ssh — use `fs cp`/`run`/`reset`,
+or pyserial with `\x03` to interrupt `main.py` and `\x04` to soft-reboot it.
+`exec`/`run` interrupt the running `main.py`, so soft-reboot afterwards to
+resume it. When pasting into the REPL, send single-line statements or one
+`exec("...\n...")` string — a multi-line block leaves the REPL in `...`
+continuation mode and silently swallows what follows.
+
+---
+
 ## Hardware Bring-Up Checklist
 
 1. Flash MicroPython (RPI_PICO build) to the RP2040
-2. Upload `main.py`, `dashboard.py`, `vfd_framebuffer.py`, `gp1294ai.py`, `rs485.py`
-3. Verify boot banner: `BOOT: Satellite VFD (ID=110) starting...`
-4. Standby screen appears ("PRIUS VFD SATELLITE / ID 110 WAITING")
-5. Send a canvas test over the bus:
+2. Upload `main.py`, `dashboard.py`, `vfd_framebuffer.py`, `gp1294ai.py`,
+   `rs485.py`, `ota.py`
+3. Verify the boot banner on USB:
+   ```
+   BOOT: Satellite VFD (ID=110) starting...
+     RS485: UART1 TX=GP8 RX=GP9 DE=GP10 @ 115200
+     VFD:   SPI0 SCK=GP2 MOSI=GP3 CS=GP1 RST=GP4 FIL=GP0
+   RS485: Ready
+   VFD: Initialized
+   READY: Satellite VFD (ID=110) running
+   ```
+4. Boot splash (`> Cyber Security`) shows for 5 s, then the idle prompt
+   `security@prius:/var/logs$` at 35 % brightness
+5. Confirm `VFD_READY` and a `STATUS` broadcast every 5 s on the bus
+6. Send a canvas test over the bus:
    `{"id":110,"d":{"t":"T","s":"TEST","x":100,"y":20,"clr":true}}`
-6. Send demo energy data and confirm dashboard renders:
-   `{"id":110,"d":{"t":"E","mg":0.4,"fl":0.3,"br":0,"spd":0.5,"soc":0.6,"ptr":25,"lpg":40,"ice":true}}`
-7. Confirm `VFD_READY` and periodic `STATUS` on the bus
+7. Enter READY and send demo energy data, confirm the dashboard renders:
+   ```json
+   {"id":110,"d":{"t":"S","rdy":true,"gear":"P","fuel":"OFF"}}
+   {"id":110,"d":{"t":"E","mg":0.4,"fl":0.3,"br":0,"spd":0.5,"soc":0.6,"ptr":25,"lpg":40,"ice":true}}
+   ```
+8. Confirm the backend sees it: node `110` `online: true` with `last_seen`
+   advancing every ~5 s in `/api/v1/state`

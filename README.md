@@ -9,8 +9,12 @@ This monorepo contains the following components:
 *   **[Gateway](./gateway/)** (`dev_id=0-2`)
     *   RP2040-based bridge for AVC-LAN and CAN networks.
     *   Handles USB communication with the Host.
-*   **[Satellites](./satellites/)** (`dev_id=6-255`)
+*   **[Satellites](./satellites/)** (`dev_id>5`)
     *   Distributed RS485 modules for controlling vehicle functions.
+    *   Bus overview, device map, maintenance and OTA procedures:
+        **[satellites/README.md](./satellites/README.md)**
+    *   **[VFD](./satellites/vfd/)** (`dev_id=110`): 256×48 GP1294AI energy dashboard + canvas.
+    *   **[Light](./satellites/light/)** (`dev_id=106`): DRL & BiLED headlight control.
     *   **[Clock](./satellites/clock/)** (`dev_id=6`): Custom digital clock replacement.
 
 ## 📡 Protocol

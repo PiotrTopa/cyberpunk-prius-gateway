@@ -4,10 +4,17 @@ RS485-connected digital clock module for the Cyberpunk Prius Gen 2 project.
 
 ## 📋 Specifications
 
-*   **Device ID:** `6`
-*   **Bus:** RS485
+*   **Device ID:** `6` (predates the "satellites use ≥ 100" convention — see [`../README.md`](../README.md#device-map))
+*   **Bus:** RS485 — [bus overview, maintenance and OTA procedures](../README.md)
 *   **Protocol:** [Project NDJSON](../../PROTOCOL.md)
 *   **Hardware:** RP2040 (e.g., Raspberry Pi Pico) + OLED 0.91" (128x32, SSD1306)
+
+Firmware updates go over the bus (`rs485.py` and `ota.py` are symlinks into
+`../common/`):
+
+```bash
+tools/satellite_ota.py --port "$GW" --dev 6 sync satellites/clock/
+```
 
 ## 🔌 Wiring
 

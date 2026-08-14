@@ -1,6 +1,6 @@
 # Satellite: Light Controller
 
-**Device ID:** `7`  
+**Device ID:** `106`  
 **MCU:** RP2040 (MicroPython)  
 **Role:** DRL & BiLED headlight control via relays and PWM with current monitoring.
 
@@ -39,14 +39,26 @@
 ```
 satellites/light/
 ├── main.py       # Main satellite logic, command processor, main loop
-├── rs485.py      # RS485 half-duplex UART driver
 ├── easing.py     # PWM transition engine with easing functions
+├── rs485.py -> ../common/rs485.py   # symlink: shared bus driver
+├── ota.py   -> ../common/ota.py     # symlink: shared OTA module
 └── README.md     # This file
+```
+
+`rs485.py` and `ota.py` are symlinks into `../common/` — edit them there, never
+in place.
+
+## Updating firmware
+
+OTA over RS485, inside a maintenance window (see [`../README.md`](../README.md)):
+
+```bash
+tools/satellite_ota.py --port "$GW" --dev 106 sync satellites/light/
 ```
 
 ---
 
-## RS485 Protocol (ID = 7)
+## RS485 Protocol (ID = 106)
 
 All commands are sent as NDJSON: `{"id": 7, "d": { ... }}`
 
@@ -54,15 +66,15 @@ All commands are sent as NDJSON: `{"id": 7, "d": { ... }}`
 
 #### RELAY — Toggle a relay
 ```json
-{"id":7, "d":{"cmd":"RELAY", "ch":1, "val":true}}
+{"id":106, "d":{"cmd":"RELAY", "ch":1, "val":true}}
 ```
 - `ch`: 1–4
 - `val`: `true` = ON, `false` = OFF
 
 #### PWM — Set BiLED brightness
 ```json
-{"id":7, "d":{"cmd":"PWM", "ch":1, "val":80}}
-{"id":7, "d":{"cmd":"PWM", "ch":1, "val":80, "dur":1000, "ease":"in_out"}}
+{"id":106, "d":{"cmd":"PWM", "ch":1, "val":80}}
+{"id":106, "d":{"cmd":"PWM", "ch":1, "val":80, "dur":1000, "ease":"in_out"}}
 ```
 - `ch`: 1 (right) or 2 (left)
 - `val`: 0–100 (%)
@@ -82,44 +94,44 @@ Available easing functions:
 
 #### PWM_EN — Enable/disable power stage
 ```json
-{"id":7, "d":{"cmd":"PWM_EN", "val":true}}
+{"id":106, "d":{"cmd":"PWM_EN", "val":true}}
 ```
 Must be enabled before PWM has any effect on load. Acts as hardware safety gate.
 
 #### STATUS — Request current state
 ```json
-{"id":7, "d":{"cmd":"STATUS"}}
+{"id":106, "d":{"cmd":"STATUS"}}
 ```
 
 #### STOP — Emergency stop all outputs
 ```json
-{"id":7, "d":{"cmd":"STOP"}}
+{"id":106, "d":{"cmd":"STOP"}}
 ```
 
 #### OCP_RESET — Reset over-current protection flag
 ```json
-{"id":7, "d":{"cmd":"OCP_RESET"}}
+{"id":106, "d":{"cmd":"OCP_RESET"}}
 ```
 After OCP trip, PWM_EN remains OFF. Send `OCP_RESET`, then `PWM_EN` to resume.
 
 #### TEST — Hardware verification
 ```json
-{"id":7, "d":{"cmd":"TEST", "what":"relay"}}
-{"id":7, "d":{"cmd":"TEST", "what":"pwm"}}
-{"id":7, "d":{"cmd":"TEST", "what":"adc"}}
-{"id":7, "d":{"cmd":"TEST", "what":"all"}}
+{"id":106, "d":{"cmd":"TEST", "what":"relay"}}
+{"id":106, "d":{"cmd":"TEST", "what":"pwm"}}
+{"id":106, "d":{"cmd":"TEST", "what":"adc"}}
+{"id":106, "d":{"cmd":"TEST", "what":"all"}}
 ```
 
 ### Responses (Satellite → Host)
 
 #### Command ACK
 ```json
-{"id":7, "d":{"res":"OK", "cmd":"PWM", "ch":1, "val":80, "dur":1000, "ease":"in_out"}}
+{"id":106, "d":{"res":"OK", "cmd":"PWM", "ch":1, "val":80, "dur":1000, "ease":"in_out"}}
 ```
 
 #### Status Broadcast (every 5s)
 ```json
-{"id":7, "d":{
+{"id":106, "d":{
   "cmd": "STATUS",
   "pwm_en": true,
   "pwm": [80.0, 50.0],
@@ -132,7 +144,7 @@ After OCP trip, PWM_EN remains OFF. Send `OCP_RESET`, then `PWM_EN` to resume.
 
 #### Over-Current Event
 ```json
-{"id":7, "d":{"evt":"OCP", "amps":[15.2, 0.5]}}
+{"id":106, "d":{"evt":"OCP", "amps":[15.2, 0.5]}}
 ```
 
 ---
@@ -141,25 +153,25 @@ After OCP trip, PWM_EN remains OFF. Send `OCP_RESET`, then `PWM_EN` to resume.
 
 ### 1. Power & Basic Boot
 - [ ] Flash MicroPython to RP2040
-- [ ] Upload `main.py`, `rs485.py`, `easing.py`
-- [ ] Verify serial output: `BOOT: Satellite Light (ID=7) starting...`
+- [ ] Upload `main.py`, `easing.py`, `rs485.py`, `ota.py`
+- [ ] Verify serial output: `BOOT: Satellite Light (ID=106) starting...`
 - [ ] Confirm onboard LED blinks (heartbeat)
 
 ### 2. Relays
-- [ ] Send `{"id":7, "d":{"cmd":"TEST", "what":"relay"}}`
+- [ ] Send `{"id":106, "d":{"cmd":"TEST", "what":"relay"}}`
 - [ ] Listen for relay clicks (R1→R2→R3→R4)
-- [ ] Verify individual: `{"id":7, "d":{"cmd":"RELAY", "ch":1, "val":true}}`
+- [ ] Verify individual: `{"id":106, "d":{"cmd":"RELAY", "ch":1, "val":true}}`
 - [ ] Confirm Active Low logic: relay ON when pin reads LOW
 
 ### 3. PWM + BiLED
-- [ ] Send `{"id":7, "d":{"cmd":"PWM_EN", "val":true}}` — enable power stage
-- [ ] Send `{"id":7, "d":{"cmd":"PWM", "ch":1, "val":10}}` — dim right
+- [ ] Send `{"id":106, "d":{"cmd":"PWM_EN", "val":true}}` — enable power stage
+- [ ] Send `{"id":106, "d":{"cmd":"PWM", "ch":1, "val":10}}` — dim right
 - [ ] Gradually increase to verify smooth control
-- [ ] Test easing: `{"id":7, "d":{"cmd":"PWM", "ch":1, "val":100, "dur":2000, "ease":"in_out"}}`
-- [ ] Send `{"id":7, "d":{"cmd":"PWM_EN", "val":false}}` — verify hard stop
+- [ ] Test easing: `{"id":106, "d":{"cmd":"PWM", "ch":1, "val":100, "dur":2000, "ease":"in_out"}}`
+- [ ] Send `{"id":106, "d":{"cmd":"PWM_EN", "val":false}}` — verify hard stop
 
 ### 4. Current Sensing
-- [ ] With load connected, send `{"id":7, "d":{"cmd":"TEST", "what":"adc"}}`
+- [ ] With load connected, send `{"id":106, "d":{"cmd":"TEST", "what":"adc"}}`
 - [ ] Verify readings correlate with known load
 - [ ] Test OCP: ramp duty while monitoring `amps` in STATUS broadcasts
 
