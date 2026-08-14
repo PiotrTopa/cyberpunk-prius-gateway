@@ -13,7 +13,7 @@ import mcp2515
 RX_PIN = 0
 TX_PIN = 1
 BAUDRATE = 1000000
-FW_VERSION = "2.28.0"  # Continuous GW_HB liveness heartbeat + unified whoami/IDENT
+FW_VERSION = "2.31.0"  # Always-on; RS485 rx/txbuf 2048 carries large satellite frames
 
 # CAN CONFIG
 CAN_BAUDRATE = 500000   # Prius Gen2 OBD-II uses 500kbps
@@ -174,7 +174,12 @@ rs485_ready = False
 
 try:
     rs485_en = Pin(PIN_RS485_EN, Pin.OUT, value=0)
-    rs485 = UART(1, baudrate=RS485_BAUDRATE, tx=Pin(PIN_RS485_TX), rx=Pin(PIN_RS485_RX))
+    # rxbuf must hold the largest satellite reply in one piece: the OTA
+    # FW_INFO manifest is ~700 B (one sha256 per .py file). MicroPython's
+    # 256 B default silently drops everything past the first buffer-full,
+    # which passes STATUS (~130 B) but loses every FW_INFO reply.
+    rs485 = UART(1, baudrate=RS485_BAUDRATE, tx=Pin(PIN_RS485_TX),
+                 rx=Pin(PIN_RS485_RX), rxbuf=2048, txbuf=2048)
     rs485_ready = True
 except Exception as e:
     sys.stdout.write(f'{{"id":0,"d":{{"log":"RS485 init error: {str(e)}"}}}}\n')
@@ -186,8 +191,23 @@ def rs485_send(data_str):
         utime.sleep_ms(2)  # Let EN settle before TX
         # Ensure data ends with newline for NDJSON
         payload = (data_str + '\n').encode('utf-8')
-        written = rs485.write(payload)
-        
+        # write() only queues what fits in txbuf (+FIFO); anything beyond that
+        # is dropped, and a truncated frame has no terminator so the satellite
+        # discards it whole. OTA FW_DATA frames run ~730 B, so keep feeding
+        # until every byte is queued.
+        mv = memoryview(payload)
+        written = 0
+        give_up = utime.ticks_add(utime.ticks_ms(), 1000)
+        while written < len(payload):
+            n = rs485.write(mv[written:])
+            if n:
+                written += n
+            elif utime.ticks_diff(give_up, utime.ticks_ms()) <= 0:
+                break
+            else:
+                utime.sleep_ms(1)
+
+
         # Blocking wait for TX complete (approximate)
         # 10 bits per char (Start + 8 Data + Stop)
         # Calculate us: bits * 1000000 / baud
@@ -774,9 +794,11 @@ while True:
                 sys.stdout.write(ujson.dumps(obj) + '\n')
             except ValueError:
                 pass
-        # Prevent buffer overflow
-        if len(rs485_rx_buf) > 1024:
-            rs485_rx_buf = rs485_rx_buf[-256:]
+        # Prevent buffer overflow. The cap must stay well clear of the largest
+        # legitimate frame (~700 B OTA FW_INFO manifest), or a reply split
+        # across polls gets truncated mid-flight and never parses.
+        if len(rs485_rx_buf) > 4096:
+            rs485_rx_buf = rs485_rx_buf[-1024:]
 
     # 5. CAN Subscription Polling (Periodic OBD-II/Diagnostic Queries)
     # ALL subscriptions use BLOCKING send_and_wait() for reliability.

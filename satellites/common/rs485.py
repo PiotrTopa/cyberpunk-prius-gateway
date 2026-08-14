@@ -17,6 +17,11 @@ class RS485:
             tx=machine.Pin(tx_pin),
             rx=machine.Pin(rx_pin),
             rxbuf=2048,  # big enough for one OTA chunk frame during a busy loop
+            # write() only queues what fits in txbuf (+ the 32 B FIFO) and
+            # discards the rest. The default 256 truncated every reply over
+            # ~290 B — notably the ~570 B OTA FW_INFO manifest, which then
+            # lost its "\n" and was dropped by every receiver.
+            txbuf=2048,
         )
         self.de_pin = machine.Pin(de_pin, machine.Pin.OUT)
         self.de_pin.value(0)  # Start in RX mode (listen)
@@ -35,7 +40,20 @@ class RS485:
         self.de_pin.value(1)  # Enable transmission (driver on)
         time.sleep_ms(2)      # Let DE settle before clocking data out
 
-        self.uart.write(data)
+        # A single write() can still come up short if the frame outgrows txbuf,
+        # and a partial frame has no terminator, so the receiver drops it
+        # whole. Keep feeding until every byte is queued.
+        mv = memoryview(data)
+        sent = 0
+        deadline = time.ticks_add(time.ticks_ms(), 1000)
+        while sent < len(data):
+            n = self.uart.write(mv[sent:])
+            if n:
+                sent += n
+            elif time.ticks_diff(deadline, time.ticks_ms()) <= 0:
+                break
+            else:
+                time.sleep_ms(1)
 
         # Keep DE asserted until the LAST bit (incl. the "\n" terminator) is
         # physically on the wire, or a receiver may miss the frame delimiter.
