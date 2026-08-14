@@ -13,7 +13,7 @@ import mcp2515
 RX_PIN = 0
 TX_PIN = 1
 BAUDRATE = 1000000
-FW_VERSION = "2.27.0"  # AVC-LAN: drain PIO FIFO during CAN RX burst, diagnostics, and RS485 reads
+FW_VERSION = "2.28.0"  # Continuous GW_HB liveness heartbeat + unified whoami/IDENT
 
 # CAN CONFIG
 CAN_BAUDRATE = 500000   # Prius Gen2 OBD-II uses 500kbps
@@ -48,6 +48,15 @@ DEV_ID_AVCLAN  = 2
 # CONFIG FLAGS
 ENABLE_SEQ_COUNTER = True # Adds "seq": <int> to all RX frames for continuity check
 ENABLE_ISOTP_DEBUG = False  # Enable ISO-TP state machine debug logging
+
+# Liveness heartbeat. The gateway is power-cycled with ACC (ignition) for power
+# saving, so it appears and disappears on the USB-CDC link. A one-shot
+# GATEWAY_READY/IDENT can be missed if the host opens the port mid-stream, which
+# leaves the host showing "disconnected" even though the link is alive. We emit a
+# lightweight rolling heartbeat on the system channel (id 0) at this cadence so
+# the host can detect presence/liveness continuously and re-attach safely after
+# every ACC power cycle without needing the boot banner.
+GW_HEARTBEAT_MS = 1000
 
 # CAN MODE FLAGS
 CAN_TX_ENABLED = False  # Start in listen-only mode (passive sniffing)
@@ -174,7 +183,7 @@ def rs485_send(data_str):
     if not rs485 or not rs485_ready: return
     try:
         rs485_en.value(1)
-        utime.sleep_us(50)  # Let EN settle before TX
+        utime.sleep_ms(2)  # Let EN settle before TX
         # Ensure data ends with newline for NDJSON
         payload = (data_str + '\n').encode('utf-8')
         written = rs485.write(payload)
@@ -391,12 +400,19 @@ def process_usb_command(json_line):
                 else:
                     # Send 50 bytes of 0x55 (~4.3ms at 115200) - clear alternating pattern on scope
                     rs485_en.value(1)
-                    utime.sleep_us(50)
+                    utime.sleep_ms(2)
                     pat = b'\x55' * 50
                     w = rs485.write(pat)
                     utime.sleep_ms(10)
                     rs485_en.value(0)
                     sys.stdout.write('{"id":0,"d":{"test":"rs485","w":' + str(w) + ',"ok":true}}\n')
+
+            # Unified identify ("whoami"): {"id":0,"d":{"a":"whoami"}}
+            # Lets the host discover which USB-CDC port is the gateway vs the
+            # powerbox regardless of enumeration order. Shared shape across both
+            # devices: {"msg":"IDENT","role":<role>,"ver":<version>}.
+            if cfg.get("a") in ("whoami", "identify", "id"):
+                sys.stdout.write('{"id":0,"d":{"msg":"IDENT","role":"gateway","ver":"' + FW_VERSION + '"}}\n')
             return
 
         data = cmd.get("d")
@@ -622,13 +638,40 @@ def process_usb_command(json_line):
 # Initial Status Report
 can_msg = "CAN_READY" if can_ready else "CAN_INIT_FAIL"
 rs485_msg = "READY" if rs485_ready else "FAIL"
-print('{"id":0,"d":{"msg":"GATEWAY_READY","ver":"' + FW_VERSION + '","can":"' + can_msg + '","rs485":"' + rs485_msg + '","cores":1}}')
+print('{"id":0,"d":{"msg":"GATEWAY_READY","ver":"' + FW_VERSION + '","role":"gateway","can":"' + can_msg + '","rs485":"' + rs485_msg + '","cores":1}}')
 
 rx_idx = 0
 last_rx_time = utime.ticks_ms()
 last_gc_time = utime.ticks_ms()
 GC_INTERVAL_MS = 2000  # GC at most every 2 seconds (was every idle cycle)
 rs485_rx_buf = b""
+
+# The gateway runs unconditionally whenever it is powered. Its 5 V rail is
+# switched by the host (powerbox relay ch4), so power saving is handled by
+# cutting VBUS, not by idling the firmware.
+
+# Liveness heartbeat state. boot_ms anchors uptime; hb_counter is a rolling
+# 0-255 "automotive" counter the host watches to confirm the firmware is still
+# advancing (not just the CDC line being open).
+boot_ms = utime.ticks_ms()
+last_hb_time = utime.ticks_ms()
+hb_counter = 0
+
+# Emit the rolling liveness heartbeat on the system channel (id 0). Shape mirrors
+# the powerbox so the host treats both devices uniformly:
+#   {"id":0,"d":{"msg":"GW_HB","role":"gateway","ver":..,"n":0-255,"up":<s>,
+#                "can":0/1,"rs485":0/1}}
+def print_heartbeat(now):
+    global hb_counter
+    hb_counter = (hb_counter + 1) & 0xFF
+    up_s = utime.ticks_diff(now, boot_ms) // 1000
+    sys.stdout.write(
+        '{"id":0,"d":{"msg":"GW_HB","role":"gateway","ver":"' + FW_VERSION
+        + '","n":' + str(hb_counter)
+        + ',"up":' + str(up_s)
+        + ',"can":' + ('1' if can_ready else '0')
+        + ',"rs485":' + ('1' if rs485_ready else '0') + '}}\n'
+    )
 
 # Helper: Output subscription response frame
 def print_sub_response(ts, slot, resp_id, resp_data):
@@ -659,7 +702,7 @@ while True:
                 input_buffer = ""
             else:
                 input_buffer += ch
-    
+
     # 2. AVC-LAN RX Poll
     loops = 0
     while sm_rx.rx_fifo() > 0:
@@ -799,6 +842,13 @@ while True:
             else:
                 ptr += 1
         rx_idx = 0
+
+    # 7. Liveness heartbeat (rolling counter) on the system channel. Cheap and
+    # paced so it never competes with AVC-LAN/CAN bursts; gives the host a
+    # continuous presence signal that survives ACC power-cycle reconnects.
+    if utime.ticks_diff(current_time, last_hb_time) >= GW_HEARTBEAT_MS:
+        last_hb_time = current_time
+        print_heartbeat(current_time)
 
     # Run GC only periodically during idle (was every idle cycle, now every 2s)
     if rx_idx == 0:

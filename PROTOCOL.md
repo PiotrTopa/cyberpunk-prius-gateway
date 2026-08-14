@@ -50,11 +50,13 @@ Used for lifecycle events, errors, and configuration.
 
 **RX (Gateway -> Host):**
 ```json
-{"id":0, "d": {"msg": "GATEWAY_READY", "ver": "2.6.0", "can": "CAN_READY", "rs485": "READY"}}
+{"id":0, "d": {"msg": "GATEWAY_READY", "ver": "2.6.0", "role": "gateway", "can": "CAN_READY", "rs485": "READY"}}
 {"id":0, "ts":105, "d": {"err": "RX_OVERFLOW"}}
 {"id":0, "ts":110, "d": {"ack": true}}
 // Configuration Update Response
 {"id":0, "d": {"msg": "CFG_UPDATED", "seq": true}}
+// Identify reply (see "Device Identification" below)
+{"id":0, "d": {"msg": "IDENT", "role": "gateway", "ver": "2.27.0"}}
 ```
 
 **TX (Host -> Gateway) - Configuration:**
@@ -62,6 +64,26 @@ Enable Sequence Counter (continuity check):
 ```json
 {"id":0, "d": {"seq": true}}
 ```
+
+#### Device Identification (`whoami`)
+
+The gateway and the powerbox share this NDJSON envelope **and both use ids 1 and
+2 for different buses**, so the numeric id can NOT tell the two USB-CDC devices
+apart. Identity is therefore carried on the SYSTEM channel (id 0). The host
+discovers which `/dev/ttyACM*` is which by sending a unified identify request and
+reading the role from the reply (or from the boot `*_READY` banner, which now
+also carries `role`):
+
+```json
+// Host -> device
+{"id":0, "d": {"a": "whoami"}}
+// Device -> host
+{"id":0, "d": {"msg": "IDENT", "role": "gateway",  "ver": "2.27.0"}}
+{"id":0, "d": {"msg": "IDENT", "role": "powerbox", "ver": "1.1.0"}}
+```
+
+`role` is one of `"gateway"` or `"powerbox"`. The backend binds each role to its
+stable `/dev/serial/by-id/...-if00` path so it survives re-enumeration/replug.
 
 ### ID 1: CAN (Vehicle Bus)
 
