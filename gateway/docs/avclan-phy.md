@@ -9,14 +9,36 @@ AVC-LAN is Toyota's IEBus variant: a differential two-wire bus, pulse-width
 encoded, dominant state = Data+ pulled above Data−. The PHY has two
 independent halves sharing the bus connector H1.
 
-## Connector
+## Connector — ⚠ LABEL BUG IN THE ORIGINAL SCHEMATIC
 
-| H1 pin | Signal |
-|--------|--------|
-| 1      | Data − |
-| 2      | Data + |
+The original EasyEDA schematic prints "Data −" on H1's TOP pin and
+"Data +" on the BOTTOM pin, but the netlist proves those text labels are
+**swapped relative to electrical function**:
 
-No GND pin on H1 — ground is common through the 12V supply input.
+- the TOP pin is the one Q2 *sources toward 5 V* during dominant and the
+  one feeding the comparator's INVERTING input — that is the bus **Data+**
+  (IEBus dominant = Data+ pulled above Data−);
+- the BOTTOM pin is sunk to GND during dominant and feeds IN+ — that is
+  **Data−**.
+
+Both RX polarity (firmware needs GP0 idle-HIGH / dominant-LOW, which
+requires Data+ → IN−) and TX drive direction confirm this. The built
+board works, so the car harness is attached per FUNCTION, not per the
+printed labels.
+
+**For the rebuild, wire by function and verify, don't trust the old
+silk/labels:**
+
+| H1 pin (top/bottom in schematic) | Electrical function | Connects to |
+|----------------------------------|---------------------|-------------|
+| TOP ("Data −" printed — wrong)   | **Data +**          | R1 → LM339 IN− (4); D1+R7 from Q2 |
+| BOTTOM ("Data +" printed — wrong)| **Data −**          | R2 → LM339 IN+ (5); D2+R8 from Q1 |
+
+Sanity checks after wiring: (1) with the bus connected and idle, **GP0
+must sit HIGH**; if it idles low or chatters, the pair is swapped.
+(2) On a scope, the line that pulses upward during bus traffic is Data+.
+
+No GND pin on H1 — ground is common through the 12 V supply input.
 
 ## Power rails
 
