@@ -38,18 +38,13 @@ Sanity checks after wiring: (1) with the bus connected and idle, **GP0
 must sit HIGH**; if it idles low or chatters, the pair is swapped.
 (2) On a scope, the line that pulses upward during bus traffic is Data+.
 
-No GND pin on H1 — ground is common through the 12 V supply input.
+No GND pin on H1 — ground is common with board GND (RP2040 GND).
 
 ## Power rails
 
-- **U3: buck converter 12 V → 5 V.** Feeds ONLY the analog rail: LM339 VCC
-  (pin 3), Q2 emitter, and R6. The buck input is car 12 V (ACC).
-- **RP2040-Zero is powered from USB.** Its 5V pin (23) is NOT connected in
-  the schematic. All grounds (buck GND, LM339 pin 12, Q1 emitter, RP2040
-  GND) are one net.
-- **Bench gotcha:** with USB only (no 12 V), the MCU enumerates but the
-  AVC-LAN front-end is completely dead — both RX comparator and TX driver
-  run from the buck's 5 V rail.
+- **Shared 5V rail:** The LM339 VCC (pin 3), Q2 emitter, and R6 pull-up are powered directly from the same 5 V rail as the RP2040 (RP2040 5V / USB 5V). There is **no separate buck converter** for the LM339 front-end.
+- **Bench operation:** Powering the RP2040 via USB automatically powers the entire AVC-LAN PHY (both LM339 RX comparator and discrete push-pull TX driver). No external 12V bench supply is needed for the PHY to operate.
+- All grounds (LM339 pin 12, Q1 emitter, RP2040 GND) are one common ground.
 
 ## RX: LM339 differential comparator (unit 1 of 4)
 
@@ -80,29 +75,40 @@ LM339 OUT1 (pin 2) ──┬──► RP2040 GP0
 ## TX: discrete push-pull dominant driver, high-Z recessive
 
 ```
-GP1 ──R4 4.7k──► Q1 base (BC547 NPN), Q1 emitter ──► GND
-Q1 collector ──┬──R5 1k──► Q2 base (BC327 PNP)
-               │           Q2 base ──R6 10k──► 5 V rail   (holds Q2 off)
-               └──D2 1N4007W──R8 47Ω──► Data− (H1.1)
+GP1 ──R4 2.2k──► Q1 base (BC547 NPN), Q1 emitter ──► GND
+Q1 collector ──┬──R5 2.2k──► Q2 base (BC327 PNP)
+               │             Q2 base ──R6 1k──► 5 V rail   (holds Q2 off)
+               └──|◄── D2 BAT54 ──R8 68Ω── Data− (H1.1)   [Cathode to Q1, Anode to R8]
 Q2 emitter ──► 5 V rail
-Q2 collector ──D1 1N4007W──R7 47Ω──► Data+ (H1.2)
+Q2 collector ──►|── D1 BAT54 ──R7 68Ω──► Data+ (H1.2)
 ```
+
+![AVC-LAN PHY Rebuild Schematic](avclan-phy-rebuild.png)
+
+### ⚠ Critical Physical Fix: D2 Orientation
+
+Because Q1 is an NPN transistor sinking current to ground during dominant state, current flows **from** Data− **into** Q1 collector. Therefore:
+- **D2 Cathode must connect to Q1 collector, Anode to R8 / Data−** (`Data− ── R8 ──►|── Q1 collector`).
+- If D2 is installed with cathode toward Data− (as appeared in earlier rebuild diagrams), Q1 is blocked from sinking Data−, disabling dominant drive on Data−.
+
+### Component Tuning & Upgrades:
+- **D1, D2 (BAT54 / 1N4148W / BAS16):** Replace slow 1N4007W power rectifiers ($t_{rr} \sim \mu\text{s}$) with fast Schottky diodes (**BAT54**, $t_{rr} < 5\text{ ns}$, $V_f \approx 0.35\text{ V}$) or fast silicon switching diodes (**1N4148W / BAS16**, $t_{rr} < 4\text{ ns}$). Eliminates reverse-recovery charge trapping and pulse width distortion.
+- **R4 (4.7 kΩ → 2.2 kΩ):** Guarantees hard saturation of Q1 from 3.3 V logic ($I_B \approx 1.2\text{ mA}$).
+- **R5 (1 kΩ → 2.2 kΩ):** Prevents excessive overdrive/saturation of Q2, lowering stored base charge.
+- **R6 (10 kΩ → 1 kΩ):** Strong base pull-up for Q2 to the 5 V rail; provides rapid base charge sweep-out when Q1 turns off, eliminating the turn-off tail.
+- **R7, R8 (47 Ω → 68 Ω or 82 Ω):** Calibrates the differential drive voltage $V_{diff}$ across vehicle IEBus termination to nominal $\approx 0.8\text{ V} - 1.0\text{ V}$.
 
 Operation:
 - **GP1 HIGH = drive dominant.** Q1 saturates → its collector goes low,
   which (a) sinks Data− toward GND through D2+R8, and (b) pulls Q2's base
   low through R5, turning the PNP on so it sources Data+ toward 5 V
   through D1+R7. Differential drive ≈ 5 V − 2·V(diode) − V(ce,sat)×2 across
-  ~94 Ω of series resistance.
+  ~136 Ω (or ~164 Ω) of driver series resistance.
 - **GP1 LOW = recessive/high-Z.** Q1 off; R6 holds Q2 off; both diodes
   block back-feed from the bus, so the driver presents no load. The bus
   idles at the head unit's own bias.
 - Firmware: `tx_phy = Pin(TX_PIN, Pin.OUT, value=0)` — GP1 idles LOW ✓,
   the PIO TX state machine (sideset on GP1) generates the pulse widths.
-- Rebuild note: 1N4007 is a slow rectifier and still works at IEBus pulse
-  widths (tens of µs), but 1N4148 (or BAT54 Schottky for lower drop /
-  slightly hotter drive) is the better choice in a new build. Keep the
-  47 Ω values — they set the drive impedance the bus expects.
 
 ## RP2040 firmware contract (what the PHY must satisfy)
 
@@ -119,7 +125,7 @@ Operation:
 | Function | RP2040-Zero pin |
 |----------|-----------------|
 | AVC-LAN RX (from LM339) | GP0 |
-| AVC-LAN TX (to Q1 base via 4.7k) | GP1 |
+| AVC-LAN TX (to Q1 base via 2.2k) | GP1 |
 | MCP2515 SCK / MOSI / MISO / CS / INT | GP2 / GP3 / GP4 / GP5 / GP6 |
 | RS485 EN / TX / RX (UART1, 115200) | GP7 / GP8 / GP9 |
 
@@ -128,17 +134,16 @@ MCP2515 at 5 V needs the MISO divider/level shifter (see wiring.md); CAN
 
 ## BOM (AVC-LAN PHY only)
 
-| Ref | Part | Value/Type |
-|-----|------|-----------|
-| U2  | LM339 (1 unit used) | quad comparator, SOP-14 |
-| U3  | Buck module | 12 V → 5 V |
-| Q1  | BC547 | NPN |
-| Q2  | BC327 | PNP |
-| D1, D2 | 1N4007W (SOD-123) | rectifier (1N4148 recommended in rebuild) |
-| R1, R2 | 100 kΩ | comparator input series |
-| R3  | 4.7 kΩ | GP0 pull-up to 3V3 |
-| R4  | 4.7 kΩ | GP1 → Q1 base |
-| R5  | 1 kΩ | Q1 collector → Q2 base |
-| R6  | 10 kΩ | Q2 base pull-up to 5 V |
-| R7, R8 | 47 Ω | bus drive series |
-| H1  | 2-pin header | Data−, Data+ |
+| Ref | Part | Value/Type | Notes |
+|-----|------|------------|-------|
+| U2  | LM339 (1 unit used) | quad comparator, SOP-14 | Powered from 5V rail (shared with RP2040), 100 nF decoupling |
+| Q1  | BC547 | NPN (SOT-23 / TO-92) | dominant sink driver |
+| Q2  | BC327 | PNP (TO-92 / SOT-23) | dominant source driver |
+| D1, D2 | BAT54 (or 1N4148W / BAS16) | Schottky / fast switching ($t_{rr} < 4\text{ ns}$) | SOD-123 / SOT-23. D2 Cathode → Q1 collector, Anode → R8 |
+| R1, R2 | 100 kΩ | 0603 | comparator input series / ESD protection |
+| R3  | 4.7 kΩ | 0603 | GP0 pull-up to 3V3 |
+| R4  | 2.2 kΩ | 0603 | GP1 → Q1 base (hard saturation) |
+| R5  | 2.2 kΩ | 0603 | Q1 collector → Q2 base (saturation control) |
+| R6  | 1 kΩ | 0603 | Q2 base pull-up to 5 V (rapid charge sweep-out) |
+| R7, R8 | 68 Ω (or 82 Ω) | 0603 | bus drive impedance ($V_{diff} \approx 0.8\text{ V} - 1.0\text{ V}$) |
+| H1  | 2-pin header | Data+, Data− | Wire by function (pin labels on v1 silk were swapped) |

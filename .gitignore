@@ -3,3 +3,5 @@ __pycache__/
 .micropico
 .vscode/
 GitHub_Metadata.md
+gateway-rp2350/build-*/
+gateway-rp2350/build-test/

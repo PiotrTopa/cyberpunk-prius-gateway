@@ -6,9 +6,10 @@ Comprehensive retro-modding project for the **Toyota Prius Gen 2**, modernizing 
 
 This monorepo contains the following components:
 
-*   **[Gateway](./gateway/)** (`dev_id=0-2`)
-    *   RP2040-based bridge for AVC-LAN and CAN networks.
-    *   Handles USB communication with the Host.
+*   **[Gateway v3](./gateway-rp2350/)** (`dev_id=0-2`) — current firmware
+    *   RP2350-Zero, C / pico-sdk. Immediate AVC-LAN frame delivery, solicited-only CAN, RS485 tunnel.
+*   **[Gateway v2.x](./gateway/)** — previous MicroPython firmware (RP2040-Zero), kept for reference.
+    *   Wiring and AVC-LAN PHY documentation in `gateway/docs/` still applies to v3 (same pinout).
 *   **[Satellites](./satellites/)** (`dev_id>5`)
     *   Distributed RS485 modules for controlling vehicle functions.
     *   Bus overview, device map, maintenance and OTA procedures:

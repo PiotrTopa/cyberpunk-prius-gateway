@@ -4,6 +4,11 @@ This document defines the **NDJSON (Newline Delimited JSON)** protocol used for 
 
 ## 1. General Architecture
 
+> Gateway firmware **v3** (`gateway-rp2350/`) keeps this protocol unchanged and adds a few
+> optional members and system actions; see
+> [gateway-rp2350/README.md — Protocol: what changed](./gateway-rp2350/README.md#protocol-what-changed).
+> Passive CAN frames (section "ID 1" RX) are no longer emitted by v3.
+
 *   **Transport:** USB CDC (Serial).
 *   **Baudrate:** 1,000,000 (Recommended).
 *   **Format:** NDJSON. Each line is a valid JSON object.

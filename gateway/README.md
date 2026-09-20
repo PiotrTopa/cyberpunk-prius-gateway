@@ -1,4 +1,8 @@
-# RP2040 AVC-LAN Gateway
+# RP2040 AVC-LAN Gateway (v2.x, MicroPython — superseded)
+
+> **Superseded by [gateway-rp2350/](../gateway-rp2350/)** (v3, C/pico-sdk, RP2350-Zero,
+> same pinout). This directory is kept for reference; `docs/wiring.md` and
+> `docs/avclan-phy.md` remain the hardware reference for both.
 
 High-performance, hardware-offloaded bridge for Toyota/Lexus AVC-LAN (IEBus) multimedia networks using Raspberry Pi Pico (RP2040).
 
