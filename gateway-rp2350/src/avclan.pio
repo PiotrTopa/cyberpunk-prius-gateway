@@ -1,0 +1,79 @@
+; AVC-LAN (IEBus) PIO programs.
+;
+; Both programs see the bus through one GPIO each. The RX pin is expected to be
+; DOMINANT = HIGH; avclan.c applies the GPIO input inverter when the comparator
+; idles high (dominant = low), so the program never needs to know the polarity.
+
+; ------------------------------------------------------------------------------
+; RX: pulse-width capture. One 32-bit word per edge:
+;   dominant ended  -> word = dominant length   (bit 31 clear)
+;   dominant began  -> word = ~gap length       (bit 31 set)
+; Length unit = one loop iteration = 2 PIO cycles (0.5 us at the 4 MHz clock
+; avclan.c configures). The dominant word is pushed the moment the dominant
+; level ends (after a ~1 us debounce), which is what makes the CPU able to
+; finish a frame on its last bit without waiting for bus silence.
+;
+; Setup: in pins base + jmp pin = RX gpio; in_shiftdir LEFT, autopush off;
+;        RX FIFO joined; OSR pre-loaded with 0xFFFFFFFF (pio_sm_exec mov osr,~null).
+; ------------------------------------------------------------------------------
+.program avclan_rx
+.wrap_target
+    wait 1 pin 0            ; dominant starts
+    mov x, osr              ; x = 0xFFFFFFFF
+hi_loop:
+    jmp pin hi_cont         ; still dominant -> keep counting
+    nop [2]                 ; debounce: re-check ~1 us later
+    jmp pin hi_cont
+    jmp hi_done
+hi_cont:
+    jmp x-- hi_loop         ; 2 cycles per iteration
+hi_done:
+    mov isr, ~x             ; iterations elapsed while dominant
+    push noblock
+    mov y, osr              ; y = 0xFFFFFFFF
+lo_loop:
+    jmp pin lo_chk          ; dominant again?
+    jmp y-- lo_loop         ; 2 cycles per iteration
+    jmp lo_done             ; (never in practice: ~35 min gap)
+lo_chk:
+    nop [2]                 ; debounce
+    jmp pin lo_done
+    jmp lo_loop
+lo_done:
+    mov isr, y              ; ~gap  (bit 31 set marks a gap word)
+    push noblock
+.wrap
+
+; ------------------------------------------------------------------------------
+; TX: generates the start bit and the pulse-width coded bit stream.
+;   1 MHz PIO clock (1 cycle = 1 us). Side-set pin = TX gpio, HIGH = dominant.
+;   TX FIFO: word0 = nbits-1, then the bits MSB-first (autopull, shift left).
+;   Timing per IEBus: start 166/19 us, '1' 20/19 us, '0' 32/7 us.
+;   Every recessive period below includes the fetch overhead of the next bit
+;   (out + jmp = 2 cycles, the jmp already driving the next dominant).
+; ------------------------------------------------------------------------------
+.program avclan_tx
+.side_set 1
+    out y, 32           side 0      ; y = nbits - 1; autopull loads word 0 from FIFO
+    set x, 15           side 1      ; ---- start bit: dominant 166 us
+s1: jmp x-- s1 [9]      side 1      ;      16 x 10
+    nop [4]             side 1      ;      1 + 160 + 5 = 166
+    set x, 16           side 0      ; ---- start bit: recessive 19 us
+s2: jmp x-- s2          side 0      ;      1 + 17 + out(1) = 19
+bit:
+    out x, 1            side 0
+    jmp !x zbit         side 1      ; dominant begins here
+    set x, 8            side 1      ; ---- ONE: dominant 20 us  (1 + 1 + 9x2)
+o1: jmp x-- o1 [1]      side 1
+    set x, 14           side 0      ; ---- ONE: recessive 19 us (1 + 15 + 1 + 1 + out)
+o2: jmp x-- o2          side 0
+    jmp tail            side 0
+zbit:
+    set x, 14           side 1      ; ---- ZERO: dominant 32 us (1 + 1 + 15x2)
+z1: jmp x-- z1 [1]      side 1
+    set x, 3            side 0      ; ---- ZERO: recessive 7 us (1 + 4 + 1 + out)
+z2: jmp x-- z2          side 0
+tail:
+    jmp y-- bit         side 0
+done:
+    jmp done            side 0
