@@ -1,0 +1,7 @@
+15:05:13 drive3_can started (AVC + CAN sniff all, fw 3.1.0); user: 'it in ready'
+15:07:52 user: 'done'; recorder stopped
+analysis: 268726 CAN frames, 0 overflows (fw 3.1.0 sniff). Shift B4: 84 -> 04 -> 0C at 15:05:29.5 (04 = transit through R/N), back 15:07:36.4.
+CAN engine speed found by search: 0x3C8 bytes 2-3 (BE16)/8 = rpm (scaling assumed; ~960 at cranking, 1000-2400 driving), ~15 Hz. (0x348 b2-3 and 0x526 b1-2 also track it.)
+AVC E4 5F B9 byte1 6C/00 vs CAN rpm, 9 ON + 9 OFF transitions:
+  ON : flag within -0.28..+0.06 s of rpm leaving 0 (= engine start, limited by the ~2 Hz B9 cadence)
+  OFF: flag drops while rpm still 990-2370; rpm reaches 0 1.1-2.8 s later (flag = engine stops delivering power / fuel cut, then spin-down)

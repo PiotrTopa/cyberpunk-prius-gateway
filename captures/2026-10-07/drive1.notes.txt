@@ -1,0 +1,3 @@
+14:15:11 drive1 started; user: 'lets do small drive, so it will be data changin on energy monitor, how about that?'
+14:17:38 user: done (back and parked)
+14:18:18 recorder stopped. Drive window per data: shift out of P 14:15:16 (B4 84->0C), back to P 14:17:24 (B4 0C->84).

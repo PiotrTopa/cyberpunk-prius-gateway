@@ -42,6 +42,12 @@ static uint32_t s_filter_ids[CAN_MAX_SUBS * CAN_MAX_RESP_IDS + CAN_MAX_RESP_IDS]
 static int      s_filter_n = -1;
 static bool     s_filter_all;
 
+/* ---- sniff (opt-in pass-through) ---------------------------------------- */
+static uint32_t s_sn_ids[CAN_SNIFF_MAX_IDS];
+static int      s_sn_n;                      /* 0 = every id */
+static uint8_t  s_sn_last[2048][9];          /* [std id] = dlc+1 (0 = unseen), data */
+static uint32_t s_sn_eflg_ms;
+
 /* ------------------------------------------------------------------------ */
 
 static void ilog(const char *fmt, ...) __attribute__((format(printf, 1, 2)));
@@ -67,6 +73,14 @@ static bool ensure_tx_enabled(void)
 static void refresh_filters(bool force, const can_query_t *extra)
 {
     if (!g_can.ready) return;
+    if (g_can.sniff) {             /* pass-through: hardware accepts everything */
+        if (force || !s_filter_all || s_filter_n != 0) {
+            s_filter_n = 0;
+            s_filter_all = true;
+            mcp_set_filters(NULL, 0, true);
+        }
+        return;
+    }
     uint32_t ids[sizeof(s_filter_ids) / sizeof(s_filter_ids[0])];
     int n = 0;
     bool all = false;
@@ -299,9 +313,56 @@ static void handle_frame(const can_frame_t *f)
     }
 }
 
+static bool sniff_wanted(const can_frame_t *f)
+{
+    if (s_sn_n > 0) {
+        bool hit = false;
+        for (int i = 0; i < s_sn_n; i++) if (s_sn_ids[i] == f->id) { hit = true; break; }
+        if (!hit) return false;
+    }
+    if (g_can.sniff_chg && !f->ext && f->id < 2048) {
+        uint8_t *last = s_sn_last[f->id];
+        if (last[0] == f->dlc + 1 && memcmp(last + 1, f->data, f->dlc) == 0) return false;
+        last[0] = (uint8_t)(f->dlc + 1);
+        memcpy(last + 1, f->data, f->dlc);
+    }
+    return true;
+}
+
+static void sniff_emit(const can_frame_t *f)
+{
+    char buf[128];
+    int n = snprintf(buf, sizeof(buf), "{\"id\":1,\"ts\":%lu", (unsigned long)now_ms());
+    n += out_seq_field(buf + n, sizeof(buf) - (size_t)n);
+    n += snprintf(buf + n, sizeof(buf) - (size_t)n, ",\"d\":{\"a\":\"sniff\",\"t\":%lu,\"i\":\"0x%lX\"%s,\"x\":\"",
+                  (unsigned long)time_us_32(), (unsigned long)f->id, f->ext ? ",\"e\":true" : "");
+    for (int i = 0; i < f->dlc; i++) n += snprintf(buf + n, sizeof(buf) - (size_t)n, "%02X", f->data[i]);
+    n += snprintf(buf + n, sizeof(buf) - (size_t)n, "\"}}");
+    if (out_line(buf, (size_t)n)) g_can.sniff_out++;
+}
+
+static void sniff_task(void)
+{
+    can_frame_t f;
+    for (int i = 0; i < 8; i++) {
+        if (!mcp_read_rx(0, &f) && !mcp_read_rx(1, &f)) break;
+        g_can.sniff_rx++;
+        if (sniff_wanted(&f)) sniff_emit(&f);
+    }
+    uint32_t now = now_ms();
+    if (now - s_sn_eflg_ms >= 100) {            /* overflow / error flags, 10 Hz */
+        s_sn_eflg_ms = now;
+        uint8_t eflg = mcp_read_reg(0x2D /*EFLG*/);
+        if (eflg & 0xC0) { g_can.sniff_ovr++; mcp_bit_modify(0x2D, 0xC0, 0x00); }
+        if (mcp_int_asserted() && !mcp_read_rx(0, &f) && !mcp_read_rx(1, &f))
+            mcp_bit_modify(0x2C /*CANINTF*/, 0xFC, 0x00);
+    }
+}
+
 void can_sol_task(void)
 {
     if (!g_can.ready) return;
+    if (g_can.sniff) { sniff_task(); return; }
     uint32_t now = now_ms();
 
     switch (s_eng.state) {
@@ -364,6 +425,7 @@ void can_sol_task(void)
 
 void can_sol_action_tx(const can_frame_t *f)
 {
+    if (g_can.sniff) { out_sys_err("CAN_SNIFF_ACTIVE"); return; }
     if (!ensure_tx_enabled()) return;
     if (!mcp_tx(TXB_RAW, f)) { out_sys_err("CAN_TX_FULL"); return; }
     g_can.raw_tx++;
@@ -372,6 +434,7 @@ void can_sol_action_tx(const can_frame_t *f)
 
 void can_sol_action_req(const can_query_t *q)
 {
+    if (g_can.sniff) { out_sys_err("CAN_SNIFF_ACTIVE"); return; }
     if (!ensure_tx_enabled()) return;
     uint8_t next = (uint8_t)((s_reqq_head + 1) % CAN_REQ_QUEUE);
     if (next == s_reqq_tail) { out_sys_err("CAN_REQ_QUEUE_FULL"); return; }
@@ -382,6 +445,7 @@ void can_sol_action_req(const can_query_t *q)
 void can_sol_action_sub(int slot, const can_query_t *q, uint32_t interval_ms)
 {
     if (slot < 0 || slot >= CAN_MAX_SUBS) { out_sys_err("INVALID_SLOT"); return; }
+    if (g_can.sniff) { out_sys_err("CAN_SNIFF_ACTIVE"); return; }
     if (!ensure_tx_enabled()) return;
     can_sub_t *s = &g_can_subs[slot];
     s->q = *q;
@@ -444,6 +508,35 @@ void can_sol_action_mode(bool normal)
     }
 }
 
+void can_sol_action_sniff(bool on, bool chg, const uint32_t *ids, int n)
+{
+    if (!g_can.ready) { out_sys_err("CAN_OFFLINE"); return; }
+    if (on) {
+        /* same teardown as "mode listen": abandon jobs, drop subscriptions */
+        s_eng.state = ENG_IDLE;
+        s_reqq_head = s_reqq_tail = 0;
+        for (int i = 0; i < CAN_MAX_SUBS; i++) g_can_subs[i].used = false;
+        if (!mcp_set_mode(MCP_MODE_LISTEN)) { out_sys_err("MODE_SWITCH_FAIL"); return; }
+        g_can.tx_enabled = false;
+        if (n > CAN_SNIFF_MAX_IDS) n = CAN_SNIFF_MAX_IDS;
+        s_sn_n = n > 0 ? n : 0;
+        for (int i = 0; i < s_sn_n; i++) s_sn_ids[i] = ids[i];
+        memset(s_sn_last, 0, sizeof(s_sn_last));
+        g_can.sniff_chg = chg;
+        g_can.sniff_rx = g_can.sniff_out = g_can.sniff_ovr = 0;
+        g_can.sniff = true;
+        refresh_filters(true, NULL);
+        mcp_flush_rx();
+    } else {
+        g_can.sniff = false;
+        s_filter_n = -1;
+        refresh_filters(true, NULL);
+        mcp_flush_rx();
+    }
+    out_json("{\"id\":0,\"d\":{\"msg\":\"CAN_SNIFF\",\"on\":%s,\"chg\":%s,\"ids\":%d}}",
+             g_can.sniff ? "true" : "false", g_can.sniff_chg ? "true" : "false", s_sn_n);
+}
+
 void can_sol_emit_diag(void)
 {
     if (!g_can.ready) return;
@@ -457,4 +550,7 @@ void can_sol_emit_diag(void)
              (unsigned long)g_can.requests, (unsigned long)g_can.responses, (unsigned long)g_can.timeouts,
              (unsigned long)g_can.tx_errors, (unsigned long)g_can.isotp_errors, (unsigned long)g_can.rx_other,
              nsubs, (int)s_eng.state);
+    if (g_can.sniff)
+        out_json("{\"id\":0,\"d\":{\"can_sniff\":{\"rx\":%lu,\"out\":%lu,\"ovr\":%lu}}}",
+                 (unsigned long)g_can.sniff_rx, (unsigned long)g_can.sniff_out, (unsigned long)g_can.sniff_ovr);
 }

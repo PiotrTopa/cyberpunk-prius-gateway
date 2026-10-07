@@ -217,6 +217,20 @@ static void handle_can(const json_t *j, int d)
         else out_sys_err("SLOT_NOT_FOUND");
     } else if (json_str_eq(j, a, "subs")) {
         can_sol_action_list();
+    } else if (json_str_eq(j, a, "sniff")) {
+        bool on = true, chg = false;
+        json_get_bool(j, json_obj_get(j, d, "on"), &on);
+        json_get_bool(j, json_obj_get(j, d, "chg"), &chg);
+        uint32_t ids[CAN_SNIFF_MAX_IDS];
+        int n = 0;
+        int arr = json_obj_get(j, d, "ids");
+        int cnt = arr >= 0 ? json_count(j, arr) : 0;
+        for (int i = 0; i < cnt && n < CAN_SNIFF_MAX_IDS; i++) {
+            uint32_t v;
+            if (!json_get_hexint(j, json_array_item(j, arr, i), &v) || v > 0x1FFFFFFF) { out_sys_err("BAD_CAN_ID"); return; }
+            ids[n++] = v;
+        }
+        can_sol_action_sniff(on, chg, ids, n);
     } else if (json_str_eq(j, a, "mode")) {
         int m = json_obj_get(j, d, "m");
         if (json_str_eq(j, m, "normal") || json_str_eq(j, m, "tx")) can_sol_action_mode(true);

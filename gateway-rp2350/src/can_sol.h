@@ -1,6 +1,7 @@
 /*
  * Solicited-only CAN: request/response queries and periodic subscriptions,
- * with ISO 15765-2 (ISO-TP) reassembly. Nothing is streamed passively.
+ * with ISO 15765-2 (ISO-TP) reassembly. Nothing is streamed passively unless
+ * the host opts in with the "sniff" action (listen-only pass-through).
  * Fully non-blocking; call can_sol_task() from the main loop.
  */
 #pragma once
@@ -48,7 +49,15 @@ typedef struct {
     uint8_t  isotp_retries;     /* default 1 */
     uint16_t inter_request_gap_ms; /* default 5 */
     bool     isotp_debug;
+    /* opt-in passive pass-through ("sniff"); off by default */
+    bool     sniff;
+    bool     sniff_chg;         /* emit a frame only when its payload changed */
+    uint32_t sniff_rx;          /* frames read from the controller */
+    uint32_t sniff_out;         /* frames emitted to the host */
+    uint32_t sniff_ovr;         /* controller receive-buffer overflows */
 } can_sol_stats_t;
+
+#define CAN_SNIFF_MAX_IDS 32
 
 extern can_sol_stats_t g_can;
 extern can_sub_t       g_can_subs[CAN_MAX_SUBS];
@@ -63,6 +72,9 @@ void can_sol_action_sub(int slot, const can_query_t *q, uint32_t interval_ms);
 void can_sol_action_unsub(int slot);          /* slot < 0: all */
 void can_sol_action_list(void);
 void can_sol_action_mode(bool normal);
+/* Passive pass-through: listen-only, accept all (or only `ids`), stream every
+ * frame as {"id":1,"d":{"a":"sniff",...}}. Disables req/sub/tx while on. */
+void can_sol_action_sniff(bool on, bool chg, const uint32_t *ids, int n);
 
 /* Periodic diagnostics line ({"can_diag":...}). */
 void can_sol_emit_diag(void);

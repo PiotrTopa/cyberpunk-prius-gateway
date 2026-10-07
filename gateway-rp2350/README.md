@@ -144,6 +144,16 @@ Subscription timeouts stay silent (counted in `subs`, which now includes
 (`can_cfg`). A one-shot request queue holds 8 entries; subscriptions are
 polled round-robin, one job at a time, 5 ms apart.
 
+Opt-in pass-through (3.1.0, off by default — nothing changes unless sent):
+`{"id":1,"d":{"a":"sniff","on":true,"chg":false,"ids":["0x3C8"]}}` drops
+subscriptions/queued requests, forces listen-only, accepts every id (or only
+`ids`, max 32) and streams each frame as
+`{"id":1,"ts":ms,"d":{"a":"sniff","t":µs,"i":"0x3C8","x":"0011…"}}`
+(`"e":true` for extended ids). `chg:true` emits a standard-id frame only when
+its payload changed. `req`/`sub`/`tx` answer `CAN_SNIFF_ACTIVE` while it is
+on; `{"a":"sniff","on":false}` restores the normal filters. While on,
+`can_diag` is followed by `{"can_sniff":{"rx","out","ovr"}}`.
+
 **System (id 0)** — `GW_HB` gains `avc` (frames delivered), `avc_err`,
 `avc_lvl`, `drop` (lines the host did not read). `GATEWAY_READY` gains
 `fw`, `board`, `avc_pol`. New actions:

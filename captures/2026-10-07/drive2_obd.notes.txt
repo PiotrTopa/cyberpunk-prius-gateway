@@ -1,0 +1,5 @@
+14:54:54 drive2_obd started (OBD 500 ms: rpm, speed, coolant, load); user: 'done, started, lets do this rund'
+14:58:20 user: 'back and parked'; recorder stopped
+analysis: drive 14:55:13 (B4 84->0C) .. 14:58:06 (B4 ->84). OBD answered only 148/1653 requests (t=100ms, 4 subs @500ms; median 2.5-6.5 s between answers per PID).
+RPM vs AVC E4 5F B9 byte1 (6C = engine): 23 agree / 5 mismatch; all 5 mismatches are rpm>0 within 0.8-1.8 s after B9 went 6C->00 (engine spinning down / decoupled). B9 never showed 6C with rpm=0.
+E4 5F 97 tracks engine speed loosely (1000-1180 at 1400-2260 rpm), not equal to RPM. Coolant OBD 52->76 C while E4 5F 96 went 106->154 -> 96 is not coolant.

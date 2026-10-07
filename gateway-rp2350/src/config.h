@@ -1,7 +1,7 @@
 /* Build-time configuration: pins, bus parameters, protocol constants. */
 #pragma once
 
-#define FW_VERSION      "3.0.0"
+#define FW_VERSION      "3.1.0"
 #define FW_ROLE         "gateway"
 
 #ifndef PICO_BOARD

@@ -1,0 +1,1 @@
+15:12:10 dashboard1 started (avc_dashboard.py --can-sniff, CAN filtered to 0x3C8)

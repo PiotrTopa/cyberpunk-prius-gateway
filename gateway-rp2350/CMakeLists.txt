@@ -58,6 +58,6 @@ pico_enable_stdio_usb(prius_gateway 0)
 pico_enable_stdio_uart(prius_gateway 0)
 
 pico_set_program_name(prius_gateway "prius_gateway")
-pico_set_program_version(prius_gateway "3.0.0")
+pico_set_program_version(prius_gateway "3.1.0")
 
 pico_add_extra_outputs(prius_gateway)
