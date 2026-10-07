@@ -13,6 +13,7 @@ Source: `map3_marked.ndjson` + `map3_marked.notes.txt` (markers with the user's 
 | b1 bit 0x20 | 23, A3, 22 | **recirculation** (mark4 recirc press 43→23) |
 | b1 bit 0x02 | 22↔20 on A/C button (mark8) | **A/C (compressor) on** |
 | b1 bit 0x01 | set with b2 = 00 | **face-only vent** (mark9: face press → 23 00); AUTO states C3/A3 also show face |
+| b1 bit 0x08 | AB vs A3 | **rear window heater** (drive home 15:29:38–15:29:55) |
 | b2 vent mode | 80 / 40 / 20 / 00 | **face+foot / foot / windscreen+foot / face (with b1 bit 0x01)** (mark7–9) |
 | b3 0x04 | one frame after each press | button-accepted pulse |
 | b6 >> 5 | 0x20…0xE0 | **fan speed 1…7** (mark7: 1→7 one step each); 0 when the climate system is OFF (mark3: F3 = 41 00 00 00 00 00) |
@@ -58,13 +59,17 @@ Source: `map3_marked.ndjson` + `map3_marked.notes.txt` (markers with the user's 
 | `110->FFF 12 01 60 XX 05 00 05` | active screen (user-confirmed): 58 nav, 5F energy flow / trip info, 5D climate, 5E audio (radio side not working — stock JBL head unit removed), 56 info |
 | `110->178 00 25 58 84 KK 00` | hardware buttons to nav: menu 01, dest 04, map 02, release 00 |
 | `110->178 00 21 24 78 X Y X Y` | touch coordinates to nav, 00 00 00 00 = release |
-| `1C6->110 00 E0 5D F7 TT` (1 Hz, always, nav or not) | **outside temperature** candidate: TT − 48 °C (0x44 = 20 °C all day, 0x45 = 21 °C from 14:57:32). User: outside temp is sent always, not only with nav. Formula to confirm against a different reading. |
+| `1C6->110 00 E0 5D F7 TT` (1 Hz, always) | **outside temperature = TT − 48 °C** — confirmed at 20, 21, 22 °C against the car's screen |
 | `110->178 00 56 58 F0 49 3C 44` | display → nav (run 1 only); last byte 44 = same raw outside temp as F7; 49 / 3C unknown (earlier −40 reading of 3C was wrong) |
 | `110->FFF 01 01 5B 40` / `01 01 5A 80` | **lights on → display dims / lights off** (mark9: one event for parking→low→high, one at off; map2 same). Fog lights and indicators: nothing on AVC. |
 | (audio) | aftermarket radio + its amp on/off button, volume, mode: **no AVC frames** (mark10) — radio/amp not on AVC; amp likely switched by a wire |
 | `1C6/110 … 12 01 20 xx`, `E5 01 9C 57 42 4C 41 45 4E` | 60 s periodic re-registration (not user events) |
 
-## Energy monitor (drive1.ndjson, 14:15–14:17, provisional — needs the user's drive narrative)
+## Energy monitor
+
+Flow arrows `E4 5F B9 F1 F2 00` (dashboard, directions corrected live by the user on the drive home): F1 ≠ 0 engine running; F2 0x20 battery link with 0x40 = battery → motor and 0x80 = → battery; 0x04 wheel link with 0x10 = → wheels and 0x08 = wheels → (regen). `00 74` = battery → wheels (user-confirmed). Engine combinations (6C 6C / 6C 60 / 6C 0C) not yet confirmed against the screen.
+
+### Earlier provisional notes (drive1.ndjson, 14:15–14:17)
 
 | Frame | Observation | Candidate |
 |---|---|---|
@@ -73,7 +78,7 @@ Source: `map3_marked.ndjson` + `map3_marked.notes.txt` (markers with the user's 
 | `E5 5F D8 HH LL 40` | signed 16-bit, 0 in EV, +40…+600 with engine pulling, −2 while engine idles parked | engine power / torque-like |
 | `E4 5F B4 XX` | 84 parked → 0C at 14:15:16 → 84 at 14:17:24; drive3: 84 → 04 → 0C and back via 04 | **shift position** (84 = P, 04 = R/N in transit, 0C = D) |
 | `E5 5F DC 2F NN 80` | NN 94 → 99 during the drive only, constant while parked | **distance counter**, 0.1 km steps? |
-| `E4 5F B8 00 00 XX 00 00` | 81 ↔ 89 (bit 0x08) toggles | brake pedal? |
+| `E4 5F B8 00 00 XX YY 00` | XX & 0x07 + 1 = **battery bars** (confirmed 4→3→4→5 on the drive home); XX bit 0x08 toggles every few s (unknown); YY bit 0x40 = **EV mode active**, bit 0x80 = **EV cancelled** notice (~3.5 s) | confirmed by user live |
 
 ## Cross-check vs host repo (cyberpank-prius-gen2-computer), 2026-10-07
 

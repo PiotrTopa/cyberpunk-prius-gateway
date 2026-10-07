@@ -12,3 +12,4 @@
 15:44:29 dashboard restarted (EV mode = E4 5F B8 byte4 bit 0x40 added; ~3 s gap). EV toggles seen 15:42:47/56, 15:43:50.6/51.5/52.2/52.8
 15:45:29 user: 'works, now i turned it off by overthotling, can we fetch this event?' (EV mode auto-cancelled by throttle)
 15:45:53 dashboard restarted (EV cancel bit 0x80 added; ~3 s gap). EV on 15:44:44.4, cancel (C0) 15:44:59.9, off 15:45:03.4
+15:46:57 user: 'i am home, close it, save it, all works very well' - recording stopped
