@@ -1,0 +1,14 @@
+15:21:38 drive_home started: avc_dashboard.py (AVC only) logging all gateway lines; sleep/lid-switch inhibited. User: 'tell me when it ready and recorded so i can drive home' (office -> home)
+15:27:33 user (mid drive): 'still arrwos shows wheels -> battery when its battery-> wheels'
+15:27:51 dashboard restarted with inverted battery/wheel direction bits (~3 s gap in the log); same file appended
+15:30:35 user: 'read wwindow heater on then 30s off on 1530' (rear window heater ON ~15:30, OFF ~30 s later)
+15:32:26 user: '4bars on batt out 22C' (battery gauge 4 bars, outside temp shown 22 C)
+15:36:10 user: '3bars'
+15:37:31 user: '4agn' (battery back to 4 bars)
+15:37:58 dashboard restarted (battery bars + rear heater added; ~3 s gap)
+15:43:01 user: 'ev on off just now' (EV mode button on then off)
+15:43:30 user: '5bars' (answer: battery 5 bars now)
+15:44:07 user: 'ev on off again 2times'
+15:44:29 dashboard restarted (EV mode = E4 5F B8 byte4 bit 0x40 added; ~3 s gap). EV toggles seen 15:42:47/56, 15:43:50.6/51.5/52.2/52.8
+15:45:29 user: 'works, now i turned it off by overthotling, can we fetch this event?' (EV mode auto-cancelled by throttle)
+15:45:53 dashboard restarted (EV cancel bit 0x80 added; ~3 s gap). EV on 15:44:44.4, cancel (C0) 15:44:59.9, off 15:45:03.4

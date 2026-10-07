@@ -1,1 +1,2 @@
 15:19:21 dashboard2 started (AVC only, user: 'the dashboard i want to be avc data only, energy monitor included,only avc data')
+15:21:32 dashboard2 stopped (before drive home)

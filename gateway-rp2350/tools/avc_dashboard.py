@@ -59,6 +59,7 @@ def on_avc(d):
             c.update(system="OFF", auto=False, ac=False, fan=0)
         else:
             c.update(system="on", auto=bool(b1 & 0x80), ac=bool(b1 & 0x02), fan=b6 >> 5,
+                     rear_heat=bool(b1 & 0x08),
                      air="recirc" if b1 & 0x20 else "fresh" if b1 & 0x40 else "?",
                      vent=VENT.get(b2, "face" if (b2 == 0 and b1 & 0x01) else f"0x{b2:02X}"))
         c["raw"] = " ".join(b[4:])
@@ -76,16 +77,31 @@ def on_avc(d):
         f1, f2 = int(b[4], 16), int(b[5], 16)
         p.update(engine=eng, flow=f"{b[4]} {b[5]}", arrows={
             "eng": f1 != 0,                      # engine -> power split
-            "bat_out": bool(f2 & 0x80),          # battery -> motor
-            "bat_in": bool(f2 & 0x40),           # motor -> battery (charging / regen)
-            "whl_out": bool(f2 & 0x08),          # -> wheels
-            "whl_in": bool(f2 & 0x10),           # wheels -> (regen)
+            # directions corrected live by the user (2026-10-07 drive home):
+            # 00 74 = battery -> wheels on the car's screen
+            "bat_out": bool(f2 & 0x40),          # battery -> motor
+            "bat_in": bool(f2 & 0x80),           # motor -> battery (charging / regen)
+            "whl_out": bool(f2 & 0x10),          # -> wheels
+            "whl_in": bool(f2 & 0x08),           # wheels -> (regen)
         })
     elif b[1:4] == ["E4", "5F", "B4"] and len(b) >= 5:
         sh = SHIFT.get(b[4], b[4])
         if p.get("shift") not in (None, sh):
             event("shift " + sh)
         p["shift"] = sh
+    elif b[1:4] == ["E4", "5F", "B8"] and len(b) >= 7:
+        bars = (int(b[6], 16) & 0x07) + 1          # confirmed 3<->4 bars, drive home
+        if p.get("bars") not in (None, bars):
+            event(f"battery {bars} bars")
+        p["bars"] = bars
+        ev = bool(int(b[7], 16) & 0x40) if len(b) >= 8 else False   # EV mode (drive home)
+        if p.get("ev") is not None and p["ev"] != ev:
+            event("EV mode " + ("ON" if ev else "off"))
+        p["ev"] = ev
+        evx = bool(int(b[7], 16) & 0x80) if len(b) >= 8 else False  # EV cancel notice
+        if evx and not p.get("ev_cancel"):
+            event("EV mode CANCELLED")
+        p["ev_cancel"] = evx
     elif b[1:4] == ["E4", "5F", "97"] and len(b) >= 6:
         p["v97"] = int(b[4] + b[5], 16)
     elif b[1:4] == ["E5", "5F", "D8"] and len(b) >= 6:
@@ -107,7 +123,7 @@ def on_avc(d):
     elif b[1:4] == ["21", "24", "78"] and len(b) >= 8 and b[4:8] != ["00"] * 4:
         event("touch x=%d y=%d" % (int(b[4], 16), int(b[5], 16)))
     elif b[1:4] == ["E0", "5D", "F7"] and len(b) >= 5:
-        disp["outside"] = f"{int(b[4], 16) - 48} °C (F7 {b[4]}, formula provisional)"
+        disp["outside"] = f"{int(b[4], 16) - 48} °C"
     if m == "178":
         disp["nav"] = "present"
 
@@ -152,13 +168,13 @@ es.onmessage=e=>{const s=JSON.parse(e.data),c=s.climate,p=s.power,d=s.display;
 document.getElementById('st').textContent=`${s.stats.avc} frames · ${s.stats.avc_s.toFixed(0)} AVC/s`;
 document.getElementById('sp').textContent=c.system==='OFF'?'A/C OFF':(c.setpoint??'–');
 let [a,ac]=yn(c.auto),[b,bc]=yn(c.ac);
-document.getElementById('cl').innerHTML=row('AUTO',a,ac)+row('A/C',b,bc)+row('air',c.air)+row('vent',c.vent)+row('fan',c.fan)+row('raw F3',c.raw,'off');
+document.getElementById('cl').innerHTML=row('AUTO',a,ac)+row('A/C',b,bc)+row('rear window heater',c.rear_heat===undefined?'–':c.rear_heat?'ON':'off',c.rear_heat?'on':'off')+row('air',c.air)+row('vent',c.vent)+row('fan',c.fan)+row('raw F3',c.raw,'off');
 document.getElementById('fan').innerHTML=[1,2,3,4,5,6,7].map(i=>`<span class="${i<=(c.fan||0)?'l':''}"></span>`).join('');
 const A=p.arrows||{},lit=(id,on,col)=>{const el=document.getElementById(id);el.setAttribute('stroke',col);el.style.color=col;el.style.display=on?'':'none'};
 lit('a_eng',A.eng,'#ffb340');lit('a_bout',A.bat_out,'#33e0d0');lit('a_bin',A.bat_in,'#4cff9a');lit('a_wout',A.whl_out,'#33e0d0');lit('a_win',A.whl_in,'#4cff9a');
 document.getElementById('emtxt').textContent=[A.eng&&'engine',A.bat_out&&'battery→',A.bat_in&&'→battery',A.whl_out&&'→wheels',A.whl_in&&'wheels→(regen)'].filter(Boolean).join(' · ')||'no flow';
 const eg=document.getElementById('eng');eg.textContent=p.engine===undefined?'–':p.engine?'ENGINE ON':'engine off';eg.className='big '+(p.engine?'on':'off');
-document.getElementById('pw').innerHTML=row('shift',p.shift)+row('flow arrows (B9)',p.flow)+row('97 (engine-related)',p.v97)+row('D8 (signed)',p.vD8)+row('distance counter DC',p.dist)+row('96 (unknown, rising)',p.v96);
+document.getElementById('pw').innerHTML=row('battery',p.bars?('▮'.repeat(p.bars)+'▯'.repeat(8-p.bars)+' '+p.bars+'/8'):'–')+row('EV mode',p.ev===undefined?'–':p.ev_cancel?'CANCELLED':p.ev?'ON':'off',p.ev_cancel?'warn':p.ev?'on':'off')+row('shift',p.shift)+row('flow arrows (B9)',p.flow)+row('97 (engine-related)',p.v97)+row('D8 (signed)',p.vD8)+row('distance counter DC',p.dist)+row('96 (unknown, rising)',p.v96);
 document.getElementById('dp').innerHTML=row('active screen',d.screen)+row('lights',d.lights)+row('outside temp',d.outside)+row('nav ECU',d.nav??'not heard');
 document.getElementById('ev').innerHTML=s.events.map(x=>`<div>${x}</div>`).join('');
 const ks=Object.keys(s.frames).sort();document.getElementById('fr').innerHTML=ks.map(k=>{const f=s.frames[k],n=seen[k]!==undefined&&seen[k]!==f.x;seen[k]=f.x;
