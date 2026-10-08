@@ -35,7 +35,9 @@ silk/labels:**
 | BOTTOM ("Data +" printed — wrong)| **Data −**          | R2 → LM339 IN+ (5); D2+R8 from Q1 |
 
 Sanity checks after wiring: (1) with the bus connected and idle, **GP0
-must sit HIGH**; if it idles low or chatters, the pair is swapped.
+must sit HIGH**; if it idles low or chatters, the pair is swapped — valid
+only once the RX threshold bias (below) is fitted; without it the idle level
+is undefined and this check misleads (it did, 2026-10-07/08).
 (2) On a scope, the line that pulses upward during bus traffic is Data+.
 
 No GND pin on H1 — ground is common with board GND (RP2040 GND).
@@ -68,9 +70,41 @@ LM339 OUT1 (pin 2) ──┬──► RP2040 GP0
   input protection). It works because IEBus dominant differential is
   ~120 mV+ and the bus common mode sits inside the LM339 input range
   (0 … VCC−1.5 V).
-- Optional rebuild improvements (not present in the original, both safe):
-  ~1 MΩ positive feedback from OUT1 to pin 5 for a few mV of hysteresis;
-  100 nF decoupling at LM339 VCC (do add this one).
+- ⚠ **Measured 2026-10-08 (see "RX threshold bias" below): a zero-threshold
+  compare does NOT work reliably.** With |Vdiff| ≤ 20 mV at idle the output
+  rests wherever offset and bias current put it, which on the built board
+  happened to be the *dominant* level in half of the wiring combinations
+  ("pinned" / "deaf" receiver, loopback never passing). A recessive bias of
+  ~100–160 mV is required.
+- Hysteresis, if ever added: with the 100 k series inputs a feedback resistor
+  R_h from OUT (3.3 V swing) gives ΔV ≈ 3.3 V · 100 k / (R_h + 100 k). 1 MΩ
+  is ≈300 mV (far too much); ~11 MΩ for 30 mV. 100 nF decoupling at LM339
+  VCC: do add.
+
+### RX threshold bias (required) and acceptance test — measured 2026-10-08
+
+On the built board the comparator in use is **LM339 unit 2: IN− = pin 6,
+IN+ = pin 7, OUT = pin 1** (not unit 1 as drawn above). The line Q2 sources
+(TX Data+, the *left* H1 pin with the connector facing down) feeds **pin 6
+(IN−)**; the line Q1 sinks feeds **pin 7 (IN+)**. Our own dominant therefore
+drives OUT **low** → firmware `pol lo`.
+
+Fix: **2 MΩ from 3V3 to pin 7 (IN+)** → +160 mV on IN+ through the 100 k
+series resistor (4.7–10 MΩ from 5 V, 100–50 mV, also fine). Idle then reads
+recessive (OUT high) by design, a dominant from the bus *or from our own
+driver* reads OUT low.
+
+Acceptance test (bench, H1 off the car, load GND–1 k–left–1 k–right–1 k–GND,
+no scope probe on pins 6/7 — 15 pF there delays the release edge by ~5 µs):
+`{"a":"cfg","test":"avc"}` must return `rx_idle=0, rx_drive=1, rx_after=0`
+with `pol lo`. Without the bias it returns no change (0,0,0 or 1,1,1).
+After `tx_high`/`tx_low` holds, `reset` the gateway (stale TX FIFO word).
+
+Known timing (bench, 4 V swing): TX releases ~2 µs late (Q2 tail), RX output
+rises ~3 µs after the line falls (input RC + LM339 at low overdrive); the
+car's own frames decode with 7 µs gaps intact. Candidate improvements, not
+yet applied: R6 → 1 k + 100 pF across R5 (TX tail); R1/R2 → 10 k with the
+bias resistor scaled to ~200 k (RX delay).
 
 ## TX: discrete push-pull dominant driver, high-Z recessive
 

@@ -3,11 +3,11 @@
 avc_dashboard — live view of decoded AVC-LAN state (AVC data only), to
 compare against what the car's display shows.
 
-  avc_dashboard.py [--port P] [--http 8765] [--log FILE.ndjson]
+  avc_dashboard.py [--port P] [--http 8765] [--log FILE.ndjson] [--pol lo|hi]
 
 Open http://localhost:8765 . Decoding follows captures/2026-10-07/AVC_MAP.md.
 Holds the gateway port (stop other gwctl/capture tools first). Forces AVC
-polarity "lo" at start.
+polarity at start (--pol, default "lo"; the PHY board fixed on 2026-10-08 needs "hi").
 """
 import argparse
 import http.server
@@ -216,6 +216,7 @@ def main():
     ap.add_argument("--port")
     ap.add_argument("--http", type=int, default=8765)
     ap.add_argument("--log")
+    ap.add_argument("--pol", choices=["lo", "hi"], default="lo")
     args = ap.parse_args()
 
     def on_term(*_):
@@ -231,7 +232,7 @@ def main():
 
     log = open(args.log, "a", buffering=1) if args.log else None
     with open_port(find_port(args.port)) as ser:
-        send(ser, {"id": 0, "d": {"a": "avc_cfg", "pol": "lo"}})
+        send(ser, {"id": 0, "d": {"a": "avc_cfg", "pol": args.pol}})
         n_avc = 0
         t_rate = time.monotonic()
         while not stop:

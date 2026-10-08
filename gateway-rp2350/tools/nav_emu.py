@@ -2,7 +2,7 @@
 """
 nav_emu — stand in for the Prius nav ECU (AVC-LAN 178, logical 58) through the gateway.
 
-  nav_emu.py LOG.ndjson [--port P] [--no-burst] [--no-btn-ack] [--announce]
+  nav_emu.py LOG.ndjson [--port P] [--pol lo|hi] [--no-burst] [--no-btn-ack] [--announce]
 
 Start it BEFORE the car wakes the bus: the display (110) only talks to a nav that
 answers its startup roll call. Replies are replayed from captures/2026-10-07/run1_nav
@@ -191,6 +191,8 @@ def main():
     ap.add_argument("--no-btn-ack", action="store_true", help="do not answer button presses")
     ap.add_argument("--announce", action="store_true",
                     help="bus already awake: send roll-call answers + heartbeats unsolicited")
+    ap.add_argument("--pol", choices=["lo", "hi"], default="lo",
+                    help="AVC RX polarity (PHY board fixed 2026-10-08 needs hi)")
     ap.add_argument("--blind", action="store_true",
                     help="RX unusable (H1 in TX-correct orientation): transmit on a timer, start once the car is ON")
     args = ap.parse_args()
@@ -204,8 +206,8 @@ def main():
     with open_port(find_port(args.port)) as ser, open(args.log, "a", buffering=1) as log:
         ser.timeout = 0.002
         emu = Emu(ser, log, burst=not args.no_burst, btn_ack=not args.no_btn_ack)
-        send(ser, {"id": 0, "d": {"a": "avc_cfg", "pol": "lo"}})
-        emu.say("nav_emu up (pol lo); waiting for the display's roll call")
+        send(ser, {"id": 0, "d": {"a": "avc_cfg", "pol": args.pol}})
+        emu.say(f"nav_emu up (pol {args.pol}); waiting for the display's roll call")
         if args.blind:
             emu.blind()
         elif args.announce:
@@ -235,7 +237,10 @@ def main():
                 if obj.get("id") == 2:
                     d = obj["d"]
                     if d.get("echo"):
-                        if d.get("nak"):
+                        emu.n_echo = getattr(emu, "n_echo", 0) + 1
+                        if emu.n_echo <= 3:
+                            emu.say("our TX echoed OK" + (" (NAK)" if d.get("nak") else "") + ": " + " ".join(d.get("d", [])))
+                        elif d.get("nak"):
                             emu.say("our TX NAKed: " + " ".join(d.get("d", [])))
                         continue
                     if d.get("s") == ME and d.get("nak"):
@@ -243,7 +248,7 @@ def main():
                     emu.on_frame(d)
                 elif obj.get("id") == 0 and "err" in obj.get("d", {}):
                     emu.say("gateway error: " + json.dumps(obj["d"]))
-        emu.say(f"stopping; tx={emu.n_tx}, display->178 NAKed={naks}")
+        emu.say(f"stopping; tx={emu.n_tx}, echoes={getattr(emu, 'n_echo', 0)}, display->178 NAKed={naks}")
 
 
 if __name__ == "__main__":
