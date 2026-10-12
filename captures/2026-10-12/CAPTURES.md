@@ -1,0 +1,10 @@
+# Capture log — 2026-10-12 (car, after bench fix: bias 2 MΩ 3V3→pin 7, pol lo)
+
+| File | Time | Setup | What the user did (user said) | Notes |
+|---|---|---|---|---|
+| `emu_car1.ndjson` | 14:26:27– | nav_emu.py --pol lo, car off at arm time, nav unplugged (assumed) | "ok, connected again, can we test if you see the boad and tell me when to start enigne" | car-off loopback 1,1,1 (dead bus reads dominant, as on 10-07) |
+| (raw, scratchpad) | 14:3x–14:4x | car ON (CAN 1.7k fr/s) | first attempt: AVC 0 pulses both polarities, comparator pinned low — user: "check again pls, the same polarity but wiring fixed" (a bus wire was not making contact) | after the wiring fix: **pol hi decodes** (20/34/170, gaps 18/6, 31 frames/2 s, 0 parity); pol lo inverted → car Data+ on the RIGHT pin = TX reversed in this orientation; loopback no reaction. Next: flip H1 → expect pol lo + loopback 0,1,0. |
+| `emu_blind_brownleft.ndjson` | 15:07:29 | brown left / white right (RX decodes with pol hi), nav_emu --blind 60 s | user: 'lest to spam test' (no scope at the car) | watching whether the display reacts; expected NOT if TX is reversed here |
+| `emu_blind_whiteleft.ndjson` | 15:09:49 | white left / brown right (comparator pinned), nav_emu --blind 60 s, pol lo | control for the TX-direction test | expected: display reacts here if TX is reversed in the other orientation |
+
+**Result 15:07–15:11:** brown-left spam (228 frames): display unaffected (to be confirmed by user); white-left spam: user: "on the white left the display is spammed, it actually stoped working and getting any data" ⇒ **white = car Data+, TX correct with white on the LEFT pin**. RX only decodes with brown on the left (pol hi). Reproducible 4/4 per orientation after the contact fix. Working hypothesis: the board lifts the LEFT line at idle (Q2→D1→R7 leakage, >160 mV into the bus idle impedance) ⇒ Data+ on the left reads as permanent dominant. Bench check: 100 kΩ left pin→GND, measure DC; fix: 10 kΩ bleeder Q2 collector→GND (or replace Q2). Do NOT cross R7/R8 (would move the leak onto Data+).
