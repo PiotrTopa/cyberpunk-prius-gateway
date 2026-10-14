@@ -125,3 +125,11 @@ Live viewer: `gateway-rp2350/tools/touch_console.py LOG.ndjson` (tails the emula
 | `110->178 00 56 58 8E` → `00 58 56 9E 00 03 01 HH MM SS FF` | time request; HH MM SS BCD (run1: 23:29:25 … 23:31:03) |
 | `110->178 00 25 58 80 40 00 00` | language button on the display's settings screen (display expects a list from the nav; reply unknown — UI fell back to Dutch) |
 | `110->178 00 32 58 F0 00 00 00 02`, `00 34 58 F0 00 01` | display status notifications; real nav replied `00 58 56 B7 06` to the former, nothing to the latter |
+
+## Remote climate control — verified in the car 2026-10-14
+
+Sending the display's touch frames from the gateway works: `gwctl.py avc 110 1C6 F 00 25 E0 84 B1 B2 B3 B4 B5 B6`
+(press) followed ≈150 ms later by the release `… 84 00 00 00 00 00 00`. Verified live (user: "fan started
+blowing at 5th stage", then recirculation + fan 7 + A/C off, then AUTO), each confirmed by the next
+`E0 5D F3` status. Not reachable this way: **temperature setpoint** and **rear window heater** — both are
+hardware paths; the display sends no frame when they change (mark1/mark2 of map3, drive home).
