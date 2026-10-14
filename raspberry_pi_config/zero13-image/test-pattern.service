@@ -1,0 +1,13 @@
+[Unit]
+Description=Test Pattern on fb0
+After=multi-user.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/bin/python3 /home/piotr/test_pattern.py
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

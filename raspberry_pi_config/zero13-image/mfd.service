@@ -1,0 +1,25 @@
+[Unit]
+Description=CyberPunk Prius Gen 2 - MFD Frontend
+After=network.target
+
+[Service]
+Type=simple
+User=piotr
+WorkingDirectory=/home/piotr/cyberpunk_computer
+Environment="PYTHONUNBUFFERED=1"
+Environment="SDL_NO_SIGNAL_HANDLERS=1"
+Environment="SDL_VIDEODRIVER=dummy"
+Environment="SDL_FBDEV=/dev/fb0"
+Environment="SDL_NOMOUSE=1"
+Environment="SDL_AUDIODRIVER=dummy"
+Environment="FRAMEBUFFER=/dev/fb0"
+ExecStartPre=/bin/sh -c '> /var/log/cyberpunk_computer/app.log'
+ExecStart=/home/piotr/cyberpunk_computer/.venv/bin/python -m cyberpunk_computer.frontend --host 192.168.100.1 --fullscreen --scale 1 --production
+Restart=always
+RestartSec=5
+TimeoutStopSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

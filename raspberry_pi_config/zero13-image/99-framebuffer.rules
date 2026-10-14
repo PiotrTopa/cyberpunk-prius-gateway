@@ -1,0 +1,1 @@
+KERNEL=="fb0", MODE="0666"

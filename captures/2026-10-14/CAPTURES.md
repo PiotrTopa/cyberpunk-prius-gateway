@@ -80,3 +80,17 @@ wheels, engine > mg, mg > wheel, mg > battery" (6C 6C) and "engine > wheel, engi
 35,227 AVC frames (273 our echoes, 0 NAK), 4.15 M CAN frames. Head unit: Android 9 "android-trunk-p0",
 model B9520B, kernel 4.14.116, build-number tap does nothing; 70mai hotspot `70mai_S410_814b` (pw given),
 port scan not finished — next time, with laptop internet access planned.
+
+## Evening: the MFD Pi (user said)
+
+The Pi plugged into the laptop never enumerated (no USB event at all, two cables). Board identified as a
+**Pi Zero v1.3** ("its 1.3V ubfortunatelly"), the Zero 2 W is dead ("i bjrned it bybmistake") and
+unobtainable (Oct 2026 shortage). Decision: "so the only downside really is boot time. lets fo it. card
+in reader. backup 2w for.when i will.be able to source it below 400pln... make sure to copy all the
+important configuration from vga666 setup (there was real finding regarding color modes etc) from old
+image - and i am not fully sure all of that is in config file. check in rpi repo changes first to make
+sure we got all. then build new image with all inside there." → old card backed up
+(`~/backups/prius-pi-zero2w-2026-10-14.img.zst`), config inventoried from the card itself (the repos
+disagreed on `dpi_output_format`; the card's `0x05` is right, see
+`raspberry_pi_config/README.md`), new 32-bit image built (`raspberry_pi_config/zero13-image/`).
+Architecture reminder from the user: "pi is only a display driver, real computer is Poco F1".
