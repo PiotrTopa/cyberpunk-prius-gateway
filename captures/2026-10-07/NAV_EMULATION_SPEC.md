@@ -149,8 +149,14 @@ the board, or an external receiver on GP0. Firmware also needs: fixed `pol=lo`, 
 - Time reply today `00 58 56 9E 00 01 01 00 00 17 FF` (run1 `00 03 01 23 29 25 FF`); the clock counted from
   00:00:00 when the nav page was first opened. `--time-fmt new|old` in nav_emu.
 - 60 s ping answered `00 01 12 30 XX FF`.
-- **Language: not on the bus.** Real nav boots the display in Dutch; the user chose English blind on the nav's
-  language page (touch at raw 4D AC) and the UI switched with no non-routine frame before or after. The same
-  button + touch against the emulator leaves Dutch. The emulator's cold start with today's identification and
-  time format still gives Dutch. Remaining unknown: the real nav's cold-start dialogue today (recorder was
-  killed by a concurrent port access) — to be recorded end to end.
+- **Language = `00 58 56 B7 LL`**, the nav's reply to the display's `00 56 58 F0 49 3C 44` (and to
+  `00 32 58 F0 00 00 00 02`) during setup; the display echoes it as `110->FFF 56 01 B9 LL 00 FF`.
+  LL = 06 Dutch (run1 2026-10-07, what the emulator replayed), **02 English** (real nav 2026-10-14,
+  `realnav_full.ndjson` 15:07:10; emulator cold start with 02 → English from the first second, emu11).
+  The "magic" switch seen with the real nav: it was still booting at the roll call (truncated answers,
+  `00 58 56 9E 8F 01 99 74 00 00 D2`), the display set up in its default Dutch, then 20 s later the nav
+  broadcast `178->1FF 01 12 13 58 24 85`, the display re-ran the setup (`00 12 01 03` …) and got B7 02.
+  Earlier guesses (identification bytes, time format, local touch handling) are ruled out by this capture.
+- Nav traffic with units other than the display, all captures: only the climate subscriptions
+  (`178->1C6 00 85 E0 E0/E4/E6`, answered `1C6->178 00 E0 85 F0/F4/F6 …`) and its two broadcasts. Nothing
+  else on the bus depends on 178 → the nav box can be removed once the emulator runs.

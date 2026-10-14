@@ -54,3 +54,17 @@ Acceptance, car on: loopback `0,1,0` ×2 (one sample hit a bus frame), 130 frame
 
 Display UI language after our emulator: Dutch ("verbruik, actueel, verbinding"). User: "i dont really care
 that much… I would rather spend time now on figuring out the screen touch button calibration".
+
+## Afternoon: climate remote control, real nav re-observed, language (files as named)
+
+| File | Time | What | Result (user said) |
+|---|---|---|---|
+| `climate_setpoint_touch.ndjson`, `climate_windshield_touch.ndjson`, `climate_off_touch.ndjson` | 14:37–14:42 | on-screen temp up/down, rear heater, front defrost, OFF | codes in AVC_MAP; "fan started blowing at 5th stage"; "says 20 and auto" |
+| `emu9_language_check.ndjson` | 14:43 | emulator announced on the live bus after the user set GB with no nav | "instancly switched to Dutch, but nav works" |
+| `realnav_language_part0_killed.ndjson`, `realnav_language.ndjson` | 14:45–14:58 | real nav reconnected (video cables already cut); recorder killed once by a concurrent port access | "started in dutch"; "clicked blindly on the screen and it is on english"; items: "maintanence, INFO to get back, Telephone (… MFD bultin), Calendar, language" |
+| `emu10_cold_english.ndjson` | 15:00 | emulator with today's identification bytes | "Dutc"; blind touch on the language page: "no, still dutch" |
+| `realnav_full.ndjson` | 15:06–15:08 | real nav cold start, end to end, gateway passive | "booted duch" → "it now just magically switch to english without me touching anything" = nav ready 20 s after boot, re-setup, `B7 02` |
+| `emu11_cold_lang02.ndjson` | 15:09 | emulator with `B7 02` | **"english!"** |
+
+Decision: nav computer can be removed (user: "Can i remove the nav computer now?"); nothing on the bus
+depends on 178 besides the display dialogue and the climate subscriptions, both emulated.

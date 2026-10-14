@@ -54,3 +54,4 @@
 15:04:09 TOUCH 00 00 00 00
 15:04:13 display screen -> 5F
 15:04:22 our TX NAKed: 00 01 12 30 C4 FF
+15:05:43 stopping; tx=144, echoes=146, display->178 NAKed=0

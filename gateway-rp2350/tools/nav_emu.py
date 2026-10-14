@@ -50,6 +50,7 @@ class Emu:
         self.ack_release = True
         self.ident = IDENT_EN
         self.time_fmt = "new"
+        self.lang = "02"
         self.periodic_on = False
         self.n_tx = 0
 
@@ -143,7 +144,7 @@ class Emu:
             self.tx(DISP, "00 01 12 10 58 24 85")
             self.tx(DISP, "00 58 32 F0 C9 00 00 01", delay=0.02)
             self.tx(DISP, "00 58 6E F0 C9 00 00 01", delay=0.04)
-            self.tx(DISP, "00 58 56 B7 06", delay=0.06)
+            self.tx(DISP, "00 58 56 B7 %s" % self.lang, delay=0.06)
             self.tx(DISP, "00 58 56 9E " + self.time_reply(), delay=0.08)
             self.at(5.0, steady)
 
@@ -192,8 +193,10 @@ class Emu:
             self.tx(DISP, "00 58 32 F0 C9 00 00 01")
         elif data == "00 6E 58 E0":
             self.tx(DISP, "00 58 6E F0 C9 00 00 01")
-        elif data == "00 56 58 F0 49 3C 44":
-            self.tx(DISP, "00 58 56 B7 06")
+        elif data.startswith("00 56 58 F0"):       # display settings query; reply B7 LL = UI language (06 Dutch, 02 English)
+            self.tx(DISP, "00 58 56 B7 %s" % self.lang)
+        elif data == "00 32 58 F0 00 00 00 02":     # run1 nav answered this with B7 06 as well
+            self.tx(DISP, "00 58 56 B7 %s" % self.lang)
         elif data == "00 56 58 8E":                # time/status request every 5 s on the nav screen
             self.tx(DISP, "00 58 56 9E " + self.time_reply())
         elif data == "00 12 58 42 02 01":          # screen request granted
@@ -240,6 +243,8 @@ def main():
                     help="bus already awake: send roll-call answers + heartbeats unsolicited")
     ap.add_argument("--pol", choices=["lo", "hi"], default="lo",
                     help="AVC RX polarity (PHY board fixed 2026-10-08 needs hi)")
+    ap.add_argument("--lang", default="02",
+                    help="display UI language code sent in 00 58 56 B7 LL: 02 English (real nav 2026-10-14), 06 Dutch (run1)")
     ap.add_argument("--time-fmt", choices=["old", "new"], default="new",
                     help="time reply header: old = 00 03 01 (run1 2026-10-07), new = 00 01 01 (real nav 2026-10-14)")
     ap.add_argument("--ident", default=IDENT_EN,
@@ -276,6 +281,7 @@ def main():
         emu.ack_release = not args.no_release_ack
         emu.ident = args.ident
         emu.time_fmt = args.time_fmt
+        emu.lang = args.lang
         if args.fw_auto:
             for slot, match, reply in (
                 (0, ["12", "01", "00"], h("00 01 12 10 58 24 85")),

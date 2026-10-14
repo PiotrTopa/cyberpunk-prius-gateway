@@ -129,7 +129,8 @@ Live viewer: `gateway-rp2350/tools/touch_console.py LOG.ndjson` (tails the emula
 | `110->178 00 12 58 43 02 00` | **screen release request** when leaving the nav screen; display retries 1/s for ≈3.5 s then switches anyway. Reply `00 58 12 53 02 00` (inferred from the 42/52 pair) removes the delay (user: "1s max") |
 | `178->1FF 58 31 F1 02 00`, `178->FFF 58 01 DB 00…` (5 s) | sent by the real nav **only while the display is on screen 58**. Sent on another screen the display answers each with `43 02 00` and shows "external device not working correctly" |
 | `110->178 00 56 58 8E` → `00 58 56 9E 00 03 01 HH MM SS FF` | time request; HH MM SS BCD (run1: 23:29:25 … 23:31:03) |
-| `110->178 00 25 58 80 40 00 00` | language button on the display's settings screen (display expects a list from the nav; reply unknown — UI fell back to Dutch) |
+| `110->178 00 25 58 80 KK 00 00` | info-screen soft buttons to the nav: 01 maintenance, 08 calendar, 40 language (nav draws the page; ack `00 58 12 50 02 01`) |
+| `110->178 00 56 58 F0 49 3C 44` → `178->110 00 58 56 B7 LL` | **display UI language** set by the nav at setup: 06 Dutch, 02 English; display echoes `56 01 B9 LL 00 FF` |
 | `110->178 00 32 58 F0 00 00 00 02`, `00 34 58 F0 00 01` | display status notifications; real nav replied `00 58 56 B7 06` to the former, nothing to the latter |
 
 ## Remote climate control — verified in the car 2026-10-14
