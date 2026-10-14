@@ -29,6 +29,7 @@ Source: `map3_marked.ndjson` + `map3_marked.notes.txt` (markers with the user's 
 | Button | Bytes after `84` |
 |---|---|
 | AUTO | `08 00 00 00 00 00` |
+| OFF (climate system off) | `04 00 00 00 00 00` (2026-10-14; F3 → `41 00 00 00 00 00`, fan 0, setpoint F5 = 39; AUTO restores the previous setpoint) |
 | recirculation | `02 00 00 00 00 00` |
 | windscreen+foot | `00 01 00 00 00 00` |
 | foot | `00 02 00 00 00 00` |
