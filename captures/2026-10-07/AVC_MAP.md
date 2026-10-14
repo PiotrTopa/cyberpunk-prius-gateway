@@ -41,6 +41,9 @@ Source: `map3_marked.ndjson` + `map3_marked.notes.txt` (markers with the user's 
 | fan 5 | `00 00 00 00 08 00` |
 | fan 6 | `00 00 00 00 04 00` |
 | fan 7 | `00 00 08 00 00 00` |
+| temperature up (+0.5 °C, on-screen) | `80 00 00 00 00 00` (2026-10-14; held ≈0.6 s = 2 steps, auto-repeat) |
+| temperature down (−0.5 °C, on-screen) | `40 00 00 00 00 00` (2026-10-14) |
+| rear window heater toggle (on-screen) | `00 80 00 00 00 00` (2026-10-14; F3 b1 bit 0x08 follows) |
 
 ## Engine / energy (provisional)
 
@@ -131,5 +134,7 @@ Live viewer: `gateway-rp2350/tools/touch_console.py LOG.ndjson` (tails the emula
 Sending the display's touch frames from the gateway works: `gwctl.py avc 110 1C6 F 00 25 E0 84 B1 B2 B3 B4 B5 B6`
 (press) followed ≈150 ms later by the release `… 84 00 00 00 00 00 00`. Verified live (user: "fan started
 blowing at 5th stage", then recirculation + fan 7 + A/C off, then AUTO), each confirmed by the next
-`E0 5D F3` status. Not reachable this way: **temperature setpoint** and **rear window heater** — both are
-hardware paths; the display sends no frame when they change (mark1/mark2 of map3, drive home).
+`E0 5D F3` status. The physical temperature buttons and the physical rear-heater button send no frame (mark1/mark2 of map3,
+drive home), but the **on-screen** buttons for both exist and work remotely (`climate_setpoint_touch.ndjson`,
+2026-10-14): temp up `80 00 …`, temp down `40 00 …`, rear heater `00 80 …`; press ≈150 ms then release, one
+step per press (a 0.6 s hold auto-repeats). Verified: 18.5 → 20.0 °C with three remote presses.

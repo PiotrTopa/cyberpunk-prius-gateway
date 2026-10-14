@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/piotr/projects/cyberpunk-prius-gateway/gateway-rp2350/tools/avc_capture.py", line 103, in <module>
+    main()
+    ~~~~^^
+  File "/home/piotr/projects/cyberpunk-prius-gateway/gateway-rp2350/tools/avc_capture.py", line 81, in main
+    raw = ser.readline()
+  File "/usr/lib/python3/dist-packages/serial/serialposix.py", line 595, in read
+    raise SerialException(
+        'device reports readiness to read but returned no data '
+        '(device disconnected or multiple access on port?)')
+serial.serialutil.SerialException: device reports readiness to read but returned no data (device disconnected or multiple access on port?)
