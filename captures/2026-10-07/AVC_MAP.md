@@ -101,7 +101,10 @@ speed 0x0B4, throttle 0x244, battery current 0x03B; − = charging):
 | 00 74 | battery→MG, MG→wheels (EV) | 0 | 8 | 21 | +8 |
 | 00 AC | wheels→MG, MG→battery (regen) | 250 | 25 | brake | −20…−73 |
 
-Engine running = F1 ≠ 0 (0C included: CAN ICE flag 1, 1280 rpm at standstill). The 2026-10-07 reading
+Engine running = F1 ≠ 0 (0C included: CAN ICE flag 1, 1280 rpm at standstill). All ~20 stationary engine
+runs during the 2026-10-14 car tests (13:44–15:10, battery at 2–3 bars) were `0C 0C` for their whole
+duration, 4–52 s each, i.e. engine→MG→battery charging and nothing else; no other engine state appears
+while parked. The 2026-10-07 reading
 (F2 0x40 = "battery →", 0x08 = "wheels →") was wrong and is superseded; `tools/avc_dashboard.py` implements
 this table. Source: `captures/2026-10-14/drive2_emu_avc.ndjson` (AVC) and the local full log with CAN.
 
