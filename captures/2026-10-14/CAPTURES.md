@@ -68,3 +68,15 @@ that much… I would rather spend time now on figuring out the screen touch butt
 
 Decision: nav computer can be removed (user: "Can i remove the nav computer now?"); nothing on the bus
 depends on 178 besides the display dialogue and the climate subscriptions, both emulated.
+
+## Drive home 15:23–16:05 (`drive2_emu_avc.ndjson`; full AVC+CAN log `drive2_emu_can.ndjson.gz` local only, 151 MB)
+
+Emulator (`--fw-auto --fw-ack --can-sniff`, English) + dashboard tailing the log. User: "just record the
+drive". Live corrections of the energy monitor against the MFD: "engine -> wheels arrow on the graph is
+missing"; "when engine is on, wheels arrow shows reversed"; the steady-cruise state "does not show any
+arrows from / to electric engine"; two MFD states had merged on the dashboard; final wording: "engine >
+wheels, engine > mg, mg > wheel, mg > battery" (6C 6C) and "engine > wheel, engine > mg, mg > battery"
+(6C 0C, just before the 16:00 engine stop); "loos good". CAN correlation table and bit model in AVC_MAP.md.
+35,227 AVC frames (273 our echoes, 0 NAK), 4.15 M CAN frames. Head unit: Android 9 "android-trunk-p0",
+model B9520B, kernel 4.14.116, build-number tap does nothing; 70mai hotspot `70mai_S410_814b` (pw given),
+port scan not finished — next time, with laptop internet access planned.

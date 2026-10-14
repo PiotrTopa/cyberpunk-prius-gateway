@@ -71,9 +71,39 @@ Source: `map3_marked.ndjson` + `map3_marked.notes.txt` (markers with the user's 
 | (audio) | aftermarket radio + its amp on/off button, volume, mode: **no AVC frames** (mark10) — radio/amp not on AVC; amp likely switched by a wire |
 | `1C6/110 … 12 01 20 xx`, `E5 01 9C 57 42 4C 41 45 4E` | 60 s periodic re-registration (not user events) |
 
-## Energy monitor
+## Energy monitor — confirmed on the MFD, 2026-10-14 drive (CAN-correlated, user-verified arrows)
 
-Flow arrows `E4 5F B9 F1 F2 00` (dashboard, directions corrected live by the user on the drive home): F1 ≠ 0 engine running; F2 0x20 battery link with 0x40 = battery → motor and 0x80 = → battery; 0x04 wheel link with 0x10 = → wheels and 0x08 = wheels → (regen). `00 74` = battery → wheels (user-confirmed). Engine combinations (6C 6C / 6C 60 / 6C 0C) not yet confirmed against the screen.
+`1C6->110 00 E4 5F B9 F1 F2 00`. The MFD draws an MG node; there is no direct engine→battery arrow,
+charging is always drawn engine→MG→battery. One bit per arrow:
+
+| Byte | Bit | Arrow on the MFD |
+|---|---|---|
+| F1 | 0x40 | engine → wheels |
+| F1 | 0x08 | engine → MG (generator) |
+| F1 | 0x20, 0x04 | link flags (always with the above) |
+| F2 | 0x40 | MG → wheels (motor driving) |
+| F2 | 0x80 | wheels → MG (regen) |
+| F2 | 0x10 | battery → MG (discharging) |
+| F2 | 0x08 | MG → battery (charging: generator or regen) |
+| F2 | 0x20, 0x04 | link flags (MG–wheels, MG–battery) |
+
+States seen, with the CAN averages of the same seconds (rpm from 0x3C8 bytes 2–3 ÷ 8, ICE flag 0x038,
+speed 0x0B4, throttle 0x244, battery current 0x03B; − = charging):
+
+| F1 F2 | MFD arrows (user) | rpm | km/h | throttle | battery A |
+|---|---|---|---|---|---|
+| 00 00 | none | 0 | 0 | 0 | ≈0 |
+| 0C 0C | engine→MG, MG→battery (idling, charging) | 1280 | 0 | 0 | −14 |
+| 6C 0C | engine→wheels, engine→MG, MG→battery (steady cruise) | 1540 | 35 | 33 | −18 |
+| 6C 6C | engine→wheels, engine→MG, MG→wheels, MG→battery | 1830 | 28 | 60 | −16 |
+| 6C 60 | engine→wheels, engine→MG, MG→wheels | 1980 | 30 | 71 | ≈0 |
+| 6C 74 | engine→wheels, engine→MG, battery→MG, MG→wheels | 1820 | 21 | 82 | +18…+61 |
+| 00 74 | battery→MG, MG→wheels (EV) | 0 | 8 | 21 | +8 |
+| 00 AC | wheels→MG, MG→battery (regen) | 250 | 25 | brake | −20…−73 |
+
+Engine running = F1 ≠ 0 (0C included: CAN ICE flag 1, 1280 rpm at standstill). The 2026-10-07 reading
+(F2 0x40 = "battery →", 0x08 = "wheels →") was wrong and is superseded; `tools/avc_dashboard.py` implements
+this table. Source: `captures/2026-10-14/drive2_emu_avc.ndjson` (AVC) and the local full log with CAN.
 
 ### Earlier provisional notes (drive1.ndjson, 14:15–14:17)
 

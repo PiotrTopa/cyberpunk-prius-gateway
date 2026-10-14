@@ -71,18 +71,29 @@ def on_avc(d):
         if hits:
             event("climate touch: " + ", ".join(hits))
     elif b[1:4] == ["E4", "5F", "B9"] and len(b) >= 6:
-        eng = b[4] == "6C"
+        f1, f2 = int(b[4], 16), int(b[5], 16)
+        eng = f1 != 0                            # 0C = engine running at standstill (CAN: 1280 rpm, ice=1)
         if p.get("engine") is not None and p["engine"] != eng:
             event("ENGINE " + ("ON" if eng else "OFF (stops delivering power)"))
-        f1, f2 = int(b[4], 16), int(b[5], 16)
+        # Bit model from the CAN correlation of the 2026-10-14 drive (battery current sign, rpm, speed):
+        #   F2: 0x80 wheels->MG (regen)  0x40 MG->wheels (motor drive)  0x20 MG-wheels link
+        #       0x10 battery-> (discharge) 0x08 ->battery (charge)      0x04 battery link
+        #   F1: 0x40 engine->wheels  0x08 engine->generator (charging path)  0x20/0x04 links
+        # 00 74 battery->wheels, 00 AC wheels->battery, 6C 6C engine->wheels + ->battery (charging -15 A),
+        # 0C 0C engine idling, ->battery only, 6C 60 engine->wheels only, 6C 74 engine + battery -> wheels.
+        # MFD arrows confirmed by the user on the 2026-10-14 drive (MG is a node; no direct engine->battery):
+        #   0C 0C = engine->MG, MG->battery (idling, charging)
+        #   6C 0C = engine->wheels, engine->MG, MG->battery (steady cruise)
+        #   6C 6C = engine->wheels, engine->MG, MG->wheels, MG->battery
+        #   00 74 = battery->MG, MG->wheels (EV)      00 AC = wheels->MG, MG->battery (regen)
         p.update(engine=eng, flow=f"{b[4]} {b[5]}", arrows={
-            "eng": f1 != 0,                      # engine -> power split
-            # directions corrected live by the user (2026-10-07 drive home):
-            # 00 74 = battery -> wheels on the car's screen
-            "bat_out": bool(f2 & 0x40),          # battery -> motor
-            "bat_in": bool(f2 & 0x80),           # motor -> battery (charging / regen)
-            "whl_out": bool(f2 & 0x10),          # -> wheels
-            "whl_in": bool(f2 & 0x08),           # wheels -> (regen)
+            "eng": bool(f1 & 0x08),          # engine -> MG
+            "eng_whl": bool(f1 & 0x40),      # engine -> wheels
+            "eng_bat": False,                # not drawn by the MFD
+            "bat_out": bool(f2 & 0x10),      # battery -> MG
+            "bat_in": bool(f2 & 0x08),       # MG -> battery (generator charging or regen)
+            "whl_out": bool(f2 & 0x40),      # MG -> wheels
+            "whl_in": bool(f2 & 0x80),       # wheels -> MG (regen)
         })
     elif b[1:4] == ["E4", "5F", "B4"] and len(b) >= 5:
         sh = SHIFT.get(b[4], b[4])
@@ -147,9 +158,11 @@ table{width:100%;font-size:12px;border-collapse:collapse}td{padding:1px 4px;whit
 <rect x=20 y=140 width=80 height=34 rx=6 fill="#1b262d"/><text x=60 y=162>WHEELS</text>
 <rect x=200 y=140 width=80 height=34 rx=6 fill="#1b262d"/><text x=240 y=162>BATTERY</text>
 <circle cx=150 cy=95 r=22 fill="#1b262d"/><text x=150 y=99>MG</text></g>
-<g stroke-width=5 fill=none stroke="#22323a"><path d="M75 46 L135 78"/><path d="M75 140 L133 110"/><path d="M167 110 L225 140"/></g>
+<g stroke-width=5 fill=none stroke="#22323a"><path d="M75 46 L135 78"/><path d="M75 140 L133 110"/><path d="M167 110 L225 140"/><path d="M60 46 L60 140"/></g>
 <g stroke-width=5 fill=none>
 <path id=a_eng d="M75 46 L135 78" marker-end="url(#ah)"/>
+<path id=a_ew d="M60 46 L60 140" marker-end="url(#ah)"/>
+
 <path id=a_bout d="M225 140 L167 110" marker-end="url(#ah)"/>
 <path id=a_bin d="M167 110 L225 140" marker-end="url(#ah)"/>
 <path id=a_wout d="M133 110 L75 140" marker-end="url(#ah)"/>
@@ -171,8 +184,8 @@ let [a,ac]=yn(c.auto),[b,bc]=yn(c.ac);
 document.getElementById('cl').innerHTML=row('AUTO',a,ac)+row('A/C',b,bc)+row('rear window heater',c.rear_heat===undefined?'–':c.rear_heat?'ON':'off',c.rear_heat?'on':'off')+row('air',c.air)+row('vent',c.vent)+row('fan',c.fan)+row('raw F3',c.raw,'off');
 document.getElementById('fan').innerHTML=[1,2,3,4,5,6,7].map(i=>`<span class="${i<=(c.fan||0)?'l':''}"></span>`).join('');
 const A=p.arrows||{},lit=(id,on,col)=>{const el=document.getElementById(id);el.setAttribute('stroke',col);el.style.color=col;el.style.display=on?'':'none'};
-lit('a_eng',A.eng,'#ffb340');lit('a_bout',A.bat_out,'#33e0d0');lit('a_bin',A.bat_in,'#4cff9a');lit('a_wout',A.whl_out,'#33e0d0');lit('a_win',A.whl_in,'#4cff9a');
-document.getElementById('emtxt').textContent=[A.eng&&'engine',A.bat_out&&'battery→',A.bat_in&&'→battery',A.whl_out&&'→wheels',A.whl_in&&'wheels→(regen)'].filter(Boolean).join(' · ')||'no flow';
+lit('a_eng',A.eng,'#ffb340');lit('a_ew',A.eng_whl,'#ffb340');lit('a_bout',A.bat_out,'#33e0d0');lit('a_bin',A.bat_in,'#4cff9a');lit('a_wout',A.whl_out,'#33e0d0');lit('a_win',A.whl_in,'#4cff9a');
+document.getElementById('emtxt').textContent=[A.eng_whl&&'engine→wheels',A.eng&&'engine→MG',A.bat_in&&'MG→battery',A.whl_out&&'MG→wheels',A.whl_in&&'wheels→MG'].filter(Boolean).join(' · ')||'no flow';
 const eg=document.getElementById('eng');eg.textContent=p.engine===undefined?'–':p.engine?'ENGINE ON':'engine off';eg.className='big '+(p.engine?'on':'off');
 document.getElementById('pw').innerHTML=row('battery',p.bars?('▮'.repeat(p.bars)+'▯'.repeat(8-p.bars)+' '+p.bars+'/8'):'–')+row('EV mode',p.ev===undefined?'–':p.ev_cancel?'CANCELLED':p.ev?'ON':'off',p.ev_cancel?'warn':p.ev?'on':'off')+row('shift',p.shift)+row('flow arrows (B9)',p.flow)+row('97 (engine-related)',p.v97)+row('D8 (signed)',p.vD8)+row('distance counter DC',p.dist)+row('96 (unknown, rising)',p.v96);
 document.getElementById('dp').innerHTML=row('active screen',d.screen)+row('lights',d.lights)+row('outside temp',d.outside)+row('nav ECU',d.nav??'not heard');
@@ -217,6 +230,8 @@ def main():
     ap.add_argument("--http", type=int, default=8765)
     ap.add_argument("--log")
     ap.add_argument("--pol", choices=["lo", "hi"], default="lo")
+    ap.add_argument("--tail", help="follow a nav_emu.py / avc_capture.py log instead of opening the serial port "
+                                   "(use when the emulator owns the port)")
     args = ap.parse_args()
 
     def on_term(*_):
@@ -231,8 +246,30 @@ def main():
     print(f"dashboard on http://localhost:{args.http}", flush=True)
 
     log = open(args.log, "a", buffering=1) if args.log else None
-    with open_port(find_port(args.port)) as ser:
-        send(ser, {"id": 0, "d": {"a": "avc_cfg", "pol": args.pol}})
+
+    class _Tail:
+        """readline() over a growing log file; yields the gateway line stored in the record's 'raw'."""
+        def __init__(self, path):
+            self.f = open(path)
+            self.f.seek(0, 2)
+        def readline(self):
+            line = self.f.readline()
+            if not line:
+                time.sleep(0.02)
+                return b""
+            try:
+                rec = json.loads(line)
+            except ValueError:
+                return b""
+            raw = rec.get("raw")
+            return (raw + "\n").encode() if isinstance(raw, str) else b""
+        def __enter__(self): return self
+        def __exit__(self, *a): self.f.close()
+
+    src = _Tail(args.tail) if args.tail else open_port(find_port(args.port))
+    with src as ser:
+        if not args.tail:
+            send(ser, {"id": 0, "d": {"a": "avc_cfg", "pol": args.pol}})
         n_avc = 0
         t_rate = time.monotonic()
         while not stop:

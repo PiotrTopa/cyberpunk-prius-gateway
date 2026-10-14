@@ -5,3 +5,6 @@ __pycache__/
 GitHub_Metadata.md
 gateway-rp2350/build-*/
 gateway-rp2350/build-test/
+
+# 2026-10-14 full AVC+CAN drive log (151 MB gz, over the GitHub limit) — kept locally only; AVC-only extract is committed
+captures/2026-10-14/drive2_emu_can.ndjson.gz

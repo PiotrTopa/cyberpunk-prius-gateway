@@ -251,6 +251,8 @@ def main():
                     help="bytes after 00 58 12 9F in the identification reply (default: the 2026-10-14 English set)")
     ap.add_argument("--no-release-ack", action="store_true",
                     help="do not answer 00 12 58 43 02 00 with 00 58 12 53 02 00 (inferred reply, 2026-10-14)")
+    ap.add_argument("--can-sniff", action="store_true",
+                    help="fw>=3.1.0: also stream every CAN frame into the log (sniff on; off again at exit)")
     ap.add_argument("--raw", action="store_true",
                     help="also stream raw pulse widths into the log (avc_raw on) to see aborted/unACKed frames")
     ap.add_argument("--fw-ack", action="store_true",
@@ -295,6 +297,8 @@ def main():
             send(ser, {"id": 0, "d": {"a": "avc_raw", "on": True}})
         if args.fw_ack:
             send(ser, {"id": 0, "d": {"a": "avc_cfg", "ack": ME}})
+        if args.can_sniff:
+            send(ser, {"id": 1, "d": {"a": "sniff", "on": True}})
         emu.say(f"nav_emu up (pol {args.pol}); waiting for the display's roll call")
         if args.blind:
             emu.blind()
@@ -345,6 +349,8 @@ def main():
             send(ser, {"id": 0, "d": {"a": "avc_raw", "on": False}})
         if args.fw_ack:
             send(ser, {"id": 0, "d": {"a": "avc_cfg", "ack": "000"}})
+        if args.can_sniff:
+            send(ser, {"id": 1, "d": {"a": "sniff", "on": False}})
         if args.fw_auto:
             for slot in (0, 1):
                 send(ser, {"id": 2, "d": {"a": "auto", "slot": slot, "on": False}})
