@@ -147,6 +147,11 @@ static void handle_sys(const json_t *j, int d)
     } else if (json_str_eq(j, a, "avc_cfg")) {
         long v;
         int pol = json_obj_get(j, d, "pol");
+        if ((t = json_obj_get(j, d, "ack")) >= 0) {
+            uint32_t a = 0;
+            if (json_get_hexint(j, t, &a) && a <= 0xFFF) avclan_set_ack_addr((uint16_t)a);
+            else avclan_set_ack_addr(0);
+        }
         if ((t = json_obj_get(j, d, "glitch")) >= 0 && json_get_long(j, t, &v) && v > 0 && v < 100) g_avc_thr.glitch_us = (uint16_t)v;
         if ((t = json_obj_get(j, d, "t1")) >= 0 && json_get_long(j, t, &v) && v > 0 && v < 200)     g_avc_thr.one_max_us = (uint16_t)v;
         if ((t = json_obj_get(j, d, "t0")) >= 0 && json_get_long(j, t, &v) && v > 0 && v < 1000)    g_avc_thr.zero_max_us = (uint16_t)v;
@@ -156,9 +161,9 @@ static void handle_sys(const json_t *j, int d)
             else if (json_str_eq(j, pol, "hi"))  avclan_set_polarity(AVC_POL_DOMINANT_HIGH);
             else if (json_str_eq(j, pol, "lo"))  avclan_set_polarity(AVC_POL_DOMINANT_LOW);
         }
-        out_json("{\"id\":0,\"d\":{\"msg\":\"CFG_UPDATED\",\"avc_cfg\":{\"pol\":\"%s\",\"glitch\":%u,\"t1\":%u,\"t0\":%u,\"tstart\":%u}}}",
+        out_json("{\"id\":0,\"d\":{\"msg\":\"CFG_UPDATED\",\"avc_cfg\":{\"pol\":\"%s\",\"glitch\":%u,\"t1\":%u,\"t0\":%u,\"tstart\":%u,\"ack\":\"%03X\"}}}",
                  g_avc.dominant_low ? "lo" : "hi", g_avc_thr.glitch_us, g_avc_thr.one_max_us,
-                 g_avc_thr.zero_max_us, g_avc_thr.start_max_us);
+                 g_avc_thr.zero_max_us, g_avc_thr.start_max_us, g_avc.ack_addr);
     } else if (json_str_eq(j, a, "can_cfg")) {
         long v;
         if ((t = json_obj_get(j, d, "stmin")) >= 0 && json_get_long(j, t, &v) && v >= 0 && v <= 127)   g_can.isotp_stmin_ms = (uint8_t)v;
@@ -245,35 +250,93 @@ static void handle_can(const json_t *j, int d)
 /* id 2: AVC-LAN transmit                                                    */
 /* ------------------------------------------------------------------------ */
 
-static void handle_avc(const json_t *j, int d)
+static bool parse_avc_frame(const json_t *j, int d, avc_frame_t *f)
 {
-    avc_frame_t f;
-    memset(&f, 0, sizeof(f));
+    memset(f, 0, sizeof(*f));
     uint32_t m, s, c;
     if (!json_get_hexint(j, json_obj_get(j, d, "m"), &m) || m > 0xFFF ||
         !json_get_hexint(j, json_obj_get(j, d, "s"), &s) || s > 0xFFF ||
         !json_get_int_base(j, json_obj_get(j, d, "c"), 10, &c) || c > 0xF) {
         out_sys_err("BAD_AVC_HEADER");
-        return;
+        return false;
     }
-    f.master = (uint16_t)m;
-    f.slave = (uint16_t)s;
-    f.control = (uint8_t)c;
+    f->master = (uint16_t)m;
+    f->slave = (uint16_t)s;
+    f->control = (uint8_t)c;
 
     int arr = json_obj_get(j, d, "d");
     int n = json_count(j, arr);
-    if (arr < 0 || n > AVC_MAX_DATA) { out_sys_err("BAD_AVC_DATA"); return; }
+    if (arr < 0 || n > AVC_MAX_DATA) { out_sys_err("BAD_AVC_DATA"); return false; }
     for (int i = 0; i < n; i++) {
         uint32_t v;
-        if (!json_get_hexint(j, json_array_item(j, arr, i), &v) || v > 255) { out_sys_err("BAD_AVC_DATA"); return; }
-        f.data[i] = (uint8_t)v;
+        if (!json_get_hexint(j, json_array_item(j, arr, i), &v) || v > 255) { out_sys_err("BAD_AVC_DATA"); return false; }
+        f->data[i] = (uint8_t)v;
     }
-    f.len = (uint8_t)n;
+    f->len = (uint8_t)n;
 
     bool b = (s == 0xFFF);
     json_get_bool(j, json_obj_get(j, d, "b"), &b);
-    f.broadcast = b;
+    f->broadcast = b;
+    return true;
+}
 
+/* {"id":2,"d":{"a":"auto","slot":0,"on":true,"m":"110","s":"FFF","d":["12","01","00"],
+ *               "tx":{"m":"178","s":"110","c":15,"d":[...]}}}   set a slot
+ * {"id":2,"d":{"a":"auto","slot":0,"on":false}}                 clear a slot
+ * {"id":2,"d":{"a":"auto"}}                                     report the table */
+static void handle_avc_auto(const json_t *j, int d)
+{
+    long slot = -1;
+    json_get_long(j, json_obj_get(j, d, "slot"), &slot);
+    bool on = true;
+    json_get_bool(j, json_obj_get(j, d, "on"), &on);
+
+    if (slot < 0) {
+        char buf[512]; char *p = buf;
+        p += sprintf(p, "{\"id\":2,\"d\":{\"auto\":[");
+        for (int i = 0; i < AVC_AUTO_SLOTS; i++) {
+            const avc_auto_t *a = avclan_auto_get(i);
+            p += sprintf(p, "%s{\"slot\":%d,\"on\":%s,\"hits\":%lu}", i ? "," : "", i,
+                         a->on ? "true" : "false", (unsigned long)a->hits);
+        }
+        p += sprintf(p, "]}}");
+        out_line(buf, (size_t)(p - buf));
+        return;
+    }
+    if (slot >= AVC_AUTO_SLOTS) { out_sys_err("BAD_AUTO_SLOT"); return; }
+    if (!on) {
+        avclan_auto_set((int)slot, NULL);
+        out_json("{\"id\":2,\"d\":{\"auto\":%ld,\"on\":false}}", slot);
+        return;
+    }
+    avc_auto_t a;
+    memset(&a, 0, sizeof(a));
+    a.on = true;
+    uint32_t v;
+    int t;
+    a.master = 0xFFFF; a.slave = 0xFFFF;
+    if ((t = json_obj_get(j, d, "m")) >= 0) { if (!json_get_hexint(j, t, &v) || v > 0xFFF) { out_sys_err("BAD_AVC_HEADER"); return; } a.master = (uint16_t)v; }
+    if ((t = json_obj_get(j, d, "s")) >= 0) { if (!json_get_hexint(j, t, &v) || v > 0xFFF) { out_sys_err("BAD_AVC_HEADER"); return; } a.slave = (uint16_t)v; }
+    int arr = json_obj_get(j, d, "d");
+    int n = arr >= 0 ? json_count(j, arr) : 0;
+    if (n > AVC_AUTO_PREFIX) { out_sys_err("BAD_AVC_DATA"); return; }
+    for (int i = 0; i < n; i++) {
+        if (!json_get_hexint(j, json_array_item(j, arr, i), &v) || v > 255) { out_sys_err("BAD_AVC_DATA"); return; }
+        a.prefix[i] = (uint8_t)v;
+    }
+    a.plen = (uint8_t)n;
+    int tx = json_obj_get(j, d, "tx");
+    if (tx < 0 || !parse_avc_frame(j, tx, &a.reply)) return;
+    if (!avclan_auto_set((int)slot, &a)) { out_sys_err("BAD_AVC_DATA"); return; }
+    out_json("{\"id\":2,\"d\":{\"auto\":%ld,\"on\":true}}", slot);
+}
+
+static void handle_avc(const json_t *j, int d)
+{
+    int a = json_obj_get(j, d, "a");
+    if (a >= 0 && json_str_eq(j, a, "auto")) { handle_avc_auto(j, d); return; }
+    avc_frame_t f;
+    if (!parse_avc_frame(j, d, &f)) return;
     if (!avclan_send(&f)) out_sys_err("AVC_TX_QUEUE_FULL");
 }
 
@@ -347,7 +410,7 @@ void sys_emit_stats(void)
 {
     out_json("{\"id\":0,\"d\":{\"stats\":{"
              "\"avc\":{\"frames\":%lu,\"echo\":%lu,\"parity\":%lu,\"length\":%lu,\"aborted\":%lu,\"timeouts\":%lu,"
-             "\"stray\":%lu,\"glitch\":%lu,\"ring_ovf\":%lu,\"words\":%lu,\"tx\":%lu,\"tx_deferred\":%lu,\"tx_qfull\":%lu,\"pol\":\"%s\"},"
+             "\"stray\":%lu,\"glitch\":%lu,\"ring_ovf\":%lu,\"words\":%lu,\"tx\":%lu,\"tx_deferred\":%lu,\"tx_qfull\":%lu,\"tx_auto\":%lu,\"acks\":%lu,\"ack\":\"%03X\",\"pol\":\"%s\"},"
              "\"can\":{\"ready\":%d,\"tx_en\":%d,\"req\":%lu,\"resp\":%lu,\"to\":%lu,\"txerr\":%lu,\"isotp_err\":%lu,\"other\":%lu,\"raw_tx\":%lu},"
              "\"rs485\":{\"tx_lines\":%lu,\"tx_bytes\":%lu,\"tx_full\":%lu,\"rx_lines\":%lu,\"rx_bad\":%lu,\"rx_ovr\":%lu},"
              "\"usb\":{\"lines\":%lu,\"dropped\":%lu,\"rx_lines\":%lu,\"rx_overlong\":%lu,\"connected\":%d}}}}",
@@ -356,7 +419,7 @@ void sys_emit_stats(void)
              (unsigned long)g_avc_rx.aborted, (unsigned long)g_avc.timeouts,
              (unsigned long)g_avc_rx.stray_bits, (unsigned long)g_avc_rx.glitches,
              (unsigned long)g_avc.ring_overflow, (unsigned long)g_avc.fifo_words,
-             (unsigned long)g_avc.tx_frames, (unsigned long)g_avc.tx_deferred, (unsigned long)g_avc.tx_queue_full,
+             (unsigned long)g_avc.tx_frames, (unsigned long)g_avc.tx_deferred, (unsigned long)g_avc.tx_queue_full, (unsigned long)g_avc.tx_auto, (unsigned long)g_avc.acks, g_avc.ack_addr,
              g_avc.dominant_low ? "lo" : "hi",
              g_can.ready, g_can.tx_enabled, (unsigned long)g_can.requests, (unsigned long)g_can.responses,
              (unsigned long)g_can.timeouts, (unsigned long)g_can.tx_errors, (unsigned long)g_can.isotp_errors,

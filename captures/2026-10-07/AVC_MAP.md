@@ -58,7 +58,7 @@ Source: `map3_marked.ndjson` + `map3_marked.notes.txt` (markers with the user's 
 |---|---|
 | `110->FFF 12 01 60 XX 05 00 05` | active screen (user-confirmed): 58 nav, 5F energy flow / trip info, 5D climate, 5E audio (radio side not working — stock JBL head unit removed), 56 info |
 | `110->178 00 25 58 84 KK 00` | hardware buttons to nav: menu 01, dest 04, map 02, release 00 |
-| `110->178 00 21 24 78 X Y X Y` | touch coordinates to nav, 00 00 00 00 = release |
+| `110->178 00 21 24 78 X Y X Y` | touch coordinates to nav (calibrated 2026-10-14, see below), 00 00 00 00 = release |
 | `1C6->110 00 E0 5D F7 TT` (1 Hz, always) | **outside temperature = TT − 48 °C** — confirmed at 20, 21, 22 °C against the car's screen |
 | `110->178 00 56 58 F0 49 3C 44` | display → nav (run 1 only); last byte 44 = same raw outside temp as F7; 49 / 3C unknown (earlier −40 reading of 3C was wrong) |
 | `110->FFF 01 01 5B 40` / `01 01 5A 80` | **lights on → display dims / lights off** (mark9: one event for parking→low→high, one at off; map2 same). Fog lights and indicators: nothing on AVC. |
@@ -91,3 +91,37 @@ Flow arrows `E4 5F B9 F1 F2 00` (dashboard, directions corrected live by the use
   fuel flow 0x520, outside temp OBD PID 0x46. In drive3_can: CAN 0x038 byte1 = 0x1F–0x22 while the AVC
   engine flag is on, 0x00 while off → consistent with the AVC flag. CAN 0x3B6 (host's flow-arrow source)
   is NOT present on the bus the gateway taps.
+
+## Touch panel calibration — measured 2026-10-14 (emu8_release_ack.ndjson, 12 strokes)
+
+Frame `110->178 00 21 24 78 X Y X Y` while the display is on the nav screen (58); bytes 6–7 always
+repeat 4–5; ≈10–15 frames/s while the finger is down; `00 00 00 00` on release.
+
+| Touch | X | Y |
+|---|---|---|
+| top-left corner | 4–13 | 245–255 |
+| top-right corner | 246–249 | 249–255 |
+| bottom-right corner | 244–246 | 9–19 |
+| bottom-left corner | 5–9 | 9–15 |
+| drag left → right (middle) | 4 → 248 | ≈135 |
+| drag top → bottom (middle) | ≈128 | 253 → 13 |
+
+**X grows left → right, Y grows bottom → top** (origin bottom-left). For the 480×240 native picture
+(`cyberpank-prius-gen2-computer/docs/MFD_VIDEO_TIMINGS.md`):
+
+    px = (X − 4) · 480 / 245      (≈ 1.96 px per count)
+    py = (255 − Y) · 240 / 246    (≈ 0.98 px per count)
+
+Live viewer: `gateway-rp2350/tools/touch_console.py LOG.ndjson` (tails the emulator log, port 8766).
+
+## Nav protocol additions — 2026-10-14
+
+| Frame | Meaning |
+|---|---|
+| `110->FFF 12 01 20 XX` (60 s) | re-registration ping; each unit answers `00 01 12 30 XX FF` (nav) / `… 00` (1C6) |
+| `110->178 00 12 58 42 02 01` → `178->110 00 58 12 52 02 01` + `178->1FF 58 31 F1 02 00` | screen request / grant; display then switches to screen 58 |
+| `110->178 00 12 58 43 02 00` | **screen release request** when leaving the nav screen; display retries 1/s for ≈3.5 s then switches anyway. Reply `00 58 12 53 02 00` (inferred from the 42/52 pair) removes the delay (user: "1s max") |
+| `178->1FF 58 31 F1 02 00`, `178->FFF 58 01 DB 00…` (5 s) | sent by the real nav **only while the display is on screen 58**. Sent on another screen the display answers each with `43 02 00` and shows "external device not working correctly" |
+| `110->178 00 56 58 8E` → `00 58 56 9E 00 03 01 HH MM SS FF` | time request; HH MM SS BCD (run1: 23:29:25 … 23:31:03) |
+| `110->178 00 25 58 80 40 00 00` | language button on the display's settings screen (display expects a list from the nav; reply unknown — UI fell back to Dutch) |
+| `110->178 00 32 58 F0 00 00 00 02`, `00 34 58 F0 00 01` | display status notifications; real nav replied `00 58 56 B7 06` to the former, nothing to the latter |

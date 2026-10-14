@@ -81,7 +81,55 @@ LM339 OUT1 (pin 2) ──┬──► RP2040 GP0
   is ≈300 mV (far too much); ~11 MΩ for 30 mV. 100 nF decoupling at LM339
   VCC: do add.
 
-### RX threshold bias (required) and acceptance test — measured 2026-10-08
+### ⚠ The built board is NOT the schematic above — measured 2026-10-14 (scope + meter)
+
+Superseded parts of the two sections above are kept for history; this is the authoritative state.
+
+| Item | Doc / assumed | Built board (measured) |
+|---|---|---|
+| R1, R2 series input resistors | 100 kΩ | **10 kΩ** (9.62 k / 9.87 k) |
+| hysteresis | none | **470 kΩ pin 1 → pin 7**, on the board since the first revision — **removed 2026-10-14** |
+| bias | none (2 MΩ 3V3 → pin 7 added 10-08, moved to pin 6 10-13) | **220 kΩ pin 6 → GND**, undocumented — **GND end moved to LM339 pin 3 (5 V) 2026-10-14** |
+| comparator unit | unit 1 | unit 2 (pins 6/7/1) |
+| input hookup | — | H1 **left (T, Q2-driven) → pin 7 IN+**, H1 right → pin 6 IN− (user's cross of 10-12 kept) |
+| car bus | — | common mode ≈2.6 V; idle white − brown ≈ +50 mV; dominant: brown (Data−) −0.5 V, white (Data+) +0.1 V |
+
+Why nothing worked before (numbers with 10 k inputs, car line ≈2.6 V):
+
+| Element | Shift on its pin, car | Bench (line ≈0 V) |
+|---|---|---|
+| 2 MΩ from 3V3 into pin 6 | +3.5 mV | +16 mV |
+| 220 kΩ to GND on pin 6 | **−113 mV** | 0 |
+| 470 kΩ feedback on pin 7, OUT high / low | +17 / −52 mV | +69 / 0 mV |
+| 10x scope probe on a pin | −2.6 mV | 0 |
+
+The 2 MΩ "bias" never decided anything. The idle state was the pull-down plus the feedback latch, so
+the receiver only ever worked with Data− on pin 7 (the dominant dip on Data− is the only thing that
+could flip it), and our own driver, which raises T, was invisible in loopback in that orientation.
+The 10-12 "lift" hypothesis (Q2/D1 leak) was wrong; the 12 kΩ bleeder BC327 collector → GND added
+2026-10-13 is harmless and left in place. Yesterday's bench pass was the 470 kΩ (+69 mV at 0 V) pointing
+the same way as the test.
+
+**Correct configuration (as of 2026-10-14, in the car, RX and TX both pass):**
+
+```
+H1 left  = T  = car WHITE (Data+) ──R1 10k──► LM339 pin 7 (IN+)
+H1 right = T̄  = car BROWN (Data−) ──R2 10k──► LM339 pin 6 (IN−) ◄──220k── pin 3 (5 V)
+LM339 pin 1 (OUT) ──4k7── 3V3, ──► GP0;   no feedback resistor;   firmware pol = hi
+```
+
+Pin 6 idles ≈ +105 mV above Data− in the car (+215 mV on the bench), so OUT idles low; a dominant (Data+
+up, Data− down, ≈0.6 V differential) or our own 4.5 V drive on T flips OUT high. Margin at idle: the car's
+own idle offset (≈50 mV, white above brown) must stay below ≈105 mV; a 150 kΩ instead of 220 kΩ gives
+150 mV if that ever proves tight. Acceptance in the car: `avc_cfg pol:hi`, `cfg test avc` → `0,1,0`
+(a sample may read 1,1,1 if a bus frame is in flight), car frames decode with 0 errors, own TX echoes.
+
+How it was found (keep for the next board): comparator pins measured against their own H1 lines at
+50 mV/div with both scope channels first checked on the same point (CH2 read +50 mV high); then the
+bare board (H1 unplugged) showed pin 6 at 0.52 V where ≈2.7 V was expected; then 208 kΩ pin 6 → GND
+with the LM339 out of its socket.
+
+### RX threshold bias (required) and acceptance test — measured 2026-10-08 (superseded above)
 
 On the built board the comparator in use is **LM339 unit 2: IN− = pin 6,
 IN+ = pin 7, OUT = pin 1** (not unit 1 as drawn above). The line Q2 sources

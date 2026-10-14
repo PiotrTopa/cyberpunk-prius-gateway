@@ -64,6 +64,38 @@ static uint32_t    s_tx_end_us;
 static avc_frame_t s_tx_last;
 static bool        s_tx_last_valid;
 
+/* ---- auto-reply table -------------------------------------------------- */
+static avc_auto_t s_auto[AVC_AUTO_SLOTS];
+
+bool avclan_auto_set(int slot, const avc_auto_t *a)
+{
+    if (slot < 0 || slot >= AVC_AUTO_SLOTS) return false;
+    if (!a) { memset(&s_auto[slot], 0, sizeof(s_auto[slot])); return true; }
+    uint32_t tmp[AVC_TX_MAX_WORDS];
+    if (avc_encode(&a->reply, tmp) == 0) return false;
+    s_auto[slot] = *a;
+    s_auto[slot].hits = 0;
+    return true;
+}
+
+const avc_auto_t *avclan_auto_get(int slot)
+{
+    if (slot < 0 || slot >= AVC_AUTO_SLOTS) return NULL;
+    return &s_auto[slot];
+}
+
+static void auto_reply(const avc_frame_t *f)
+{
+    for (int i = 0; i < AVC_AUTO_SLOTS; i++) {
+        avc_auto_t *a = &s_auto[i];
+        if (!a->on) continue;
+        if (a->master != 0xFFFF && a->master != f->master) continue;
+        if (a->slave  != 0xFFFF && a->slave  != f->slave)  continue;
+        if (a->plen > f->len || memcmp(a->prefix, f->data, a->plen) != 0) continue;
+        if (avclan_send(&a->reply)) { a->hits++; g_avc.tx_auto++; }
+    }
+}
+
 /* ------------------------------------------------------------------------ */
 /* IRQ: PIO RX FIFO not empty                                                */
 /* ------------------------------------------------------------------------ */
@@ -74,6 +106,27 @@ static inline void raw_push(int32_t v)
     if (next == s_raw_tail) { s_raw_dropped++; return; }
     s_raw[s_raw_head] = v;
     s_raw_head = next;
+}
+
+/* ---- ACK generation ----------------------------------------------------- */
+#define ACK_SLOT_US     39      /* bit period: ACK slot starts 39 us after the parity bit started */
+#define ACK_DRIVE_AT_US 6       /* drive from 6 us into the slot (master's own pulse covers 0..20) */
+#define ACK_RELEASE_US  30      /* release at 30 us (+~2 us driver tail = 32 us = '0') */
+
+void avclan_set_ack_addr(uint16_t addr) { g_avc.ack_addr = addr; }
+
+static inline void __time_critical_func(ack_stretch)(uint32_t pulse_end_us, uint32_t width_us)
+{
+    uint32_t slot = pulse_end_us + (width_us < ACK_SLOT_US ? ACK_SLOT_US - width_us : 0);
+    gpio_init(PIN_AVC_TX);
+    gpio_set_dir(PIN_AVC_TX, GPIO_OUT);
+    gpio_put(PIN_AVC_TX, 0);
+    while ((int32_t)(time_us_32() - (slot + ACK_DRIVE_AT_US)) < 0) tight_loop_contents();
+    gpio_put(PIN_AVC_TX, 1);
+    while ((int32_t)(time_us_32() - (slot + ACK_RELEASE_US)) < 0) tight_loop_contents();
+    gpio_put(PIN_AVC_TX, 0);
+    pio_gpio_init(AVC_TX_PIO, PIN_AVC_TX);
+    g_avc.acks++;
 }
 
 static void __isr __time_critical_func(avc_rx_irq)(void)
@@ -96,6 +149,11 @@ static void __isr __time_critical_func(avc_rx_irq)(void)
         if (g_avc.raw_enabled) raw_push((int32_t)us);
 
         avc_rx_result_t r = avc_rx_feed(&g_avc_rx, avc_classify(&g_avc_thr, us));
+        if (r == AVC_RX_NONE && g_avc.ack_addr && g_avc_rx.sub == 2 && !s_tx_active &&
+            g_avc_rx.state != AVC_F_MASTER && g_avc_rx.state != AVC_F_IDLE && g_avc_rx.state != AVC_F_BCAST &&
+            !g_avc_rx.f.broadcast && g_avc_rx.f.slave == g_avc.ack_addr) {
+            ack_stretch(now, us);
+        }
         if (r == AVC_RX_FRAME) {
             uint8_t next = (uint8_t)((s_ring_head + 1) % FRAME_RING);
             if (next == s_ring_tail) {
@@ -419,6 +477,7 @@ void avclan_task(void)
     while (s_ring_tail != s_ring_head) {
         frame_slot_t s = s_ring[s_ring_tail];
         s_ring_tail = (uint8_t)((s_ring_tail + 1) % FRAME_RING);
+        auto_reply(&s.f);          /* queue first: tx_tick() below starts it after bus silence */
         emit_frame(&s);
     }
 

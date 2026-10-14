@@ -61,6 +61,9 @@ CAN: 500 kbps, 8 MHz crystal, SPI 4 MHz — the CNF register values that were
 verified on this module are transcribed unchanged (`mcp2515.c`, `set_bit_timing`).
 Remember the 5 V MCP2515 module needs the MISO divider.
 
+**PHY as built (2026-10-14):** 10 kΩ inputs, 220 kΩ from 5 V into IN− (pin 6), no feedback, car
+white (Data+) on the left/T pin → `pol hi`. See `../gateway/docs/avclan-phy.md`.
+
 **RX polarity is detected at boot**: GP0 is sampled for ~60 ms and the
 majority level is taken as idle; the opposite is dominant. With the LM339
 front end from the PHY doc that yields idle-high/dominant-low, and the GPIO
@@ -153,6 +156,19 @@ subscriptions/queued requests, forces listen-only, accepts every id (or only
 its payload changed. `req`/`sub`/`tx` answer `CAN_SNIFF_ACTIVE` while it is
 on; `{"a":"sniff","on":false}` restores the normal filters. While on,
 `can_diag` is followed by `{"can_sniff":{"rx","out","ovr"}}`.
+
+**AVC-LAN nav emulation helpers (3.2.0, both off by default):**
+
+- `{"id":0,"d":{"a":"avc_cfg","ack":"178"}}` — stretch every ACK slot of individual frames addressed
+  to that slave (`"000"` = off). Done in the RX interrupt: 6 µs into the slot GP1 is driven dominant
+  until 30 µs, so the master sees a '0' (ACK). Without it the display's unicasts to the emulated nav
+  die at the address field (2026-10-14: 464 aborted headers in 40 s). Counted in `stats.avc.acks`.
+- `{"id":2,"d":{"a":"auto","slot":0,"on":true,"m":"110","s":"FFF","d":["12","01","00"],
+  "tx":{"m":"178","s":"110","c":15,"d":[…]}}}` — auto-reply table (4 slots): when a received frame
+  matches master/slave/data prefix, the reply is queued from the main loop and leaves ≈0.3 ms after
+  the frame (the real nav answers the roll call in 0.5 ms; a host round trip is ≈2.5 ms and collides
+  with the climate ECU). `{"a":"auto","slot":0,"on":false}` clears, `{"a":"auto"}` lists hits.
+  `tools/nav_emu.py --fw-auto --fw-ack` uses both.
 
 **System (id 0)** — `GW_HB` gains `avc` (frames delivered), `avc_err`,
 `avc_lvl`, `drop` (lines the host did not read). `GATEWAY_READY` gains

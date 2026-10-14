@@ -1,0 +1,53 @@
+14:06:49 auto slot 0 set
+14:06:49 auto slot 1 set
+14:06:49 nav_emu up (pol hi); waiting for the display's roll call
+14:06:53 our TX echoed OK: 00 01 12 12 58 28 29 32 60 74 A4 56
+14:06:53 our TX echoed OK: 00 01 00 17
+14:09:25 roll call 12 01 00 (gateway auto-reply slot 0 answers)
+14:09:25 our TX echoed OK: 00 01 12 10 58 24 85
+14:09:26 setup done -> initial burst
+14:09:26 periodic heartbeats on
+14:09:26 our TX NAKed: 00 58 34 E0
+14:09:27 our TX NAKed: 00 58 34 E0
+14:09:35 BUTTON 01
+14:09:35 BUTTON 00 (release)
+14:09:35 BUTTON 04
+14:09:35 BUTTON 00 (release)
+14:09:35 BUTTON 02
+14:09:35 BUTTON 00 (release)
+14:09:38 BUTTON 01
+14:09:38 BUTTON 00 (release)
+14:09:38 BUTTON 04
+14:09:38 BUTTON 00 (release)
+14:09:38 BUTTON 02
+14:09:38 BUTTON 00 (release)
+14:09:43 TOUCH 00 00 00 00
+14:10:14 BUTTON 01
+14:10:14 BUTTON 00 (release)
+14:10:17 BUTTON 04
+14:10:17 BUTTON 00 (release)
+14:10:17 BUTTON 02
+14:10:17 BUTTON 00 (release)
+14:10:18 TOUCH 00 00 00 00
+14:10:22 TOUCH 00 00 00 00
+14:10:30 TOUCH 00 00 00 00
+14:10:32 BUTTON 01
+14:10:33 BUTTON 00 (release)
+14:10:34 BUTTON 04
+14:10:34 BUTTON 00 (release)
+14:10:34 BUTTON 02
+14:10:34 BUTTON 00 (release)
+14:10:34 BUTTON 04
+14:10:34 BUTTON 00 (release)
+14:10:35 BUTTON 01
+14:10:35 BUTTON 00 (release)
+14:10:35 BUTTON 04
+14:10:35 BUTTON 00 (release)
+14:10:35 BUTTON 02
+14:10:35 BUTTON 00 (release)
+14:10:54 TOUCH 00 00 00 00
+14:10:58 TOUCH 00 00 00 00
+14:11:42 BUTTON 02
+14:11:42 BUTTON 00 (release)
+14:12:15 TOUCH 00 00 00 00
+14:15:11 stopping; tx=251, echoes=255, display->178 NAKed=1

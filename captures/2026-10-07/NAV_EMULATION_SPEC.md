@@ -116,3 +116,24 @@ but we are deaf (the comparator idles at the same level as a reversed dominant).
 Full emulation needs RX and TX agreeing: cross R1/R2 (comparator inputs) or R7/R8 (TX legs) on
 the board, or an external receiver on GP0. Firmware also needs: fixed `pol=lo`, slave ACK for
 178 (display's unicasts are NAKed otherwise), and ideally the roll-call replies in firmware.
+
+## Resolved on-car 2026-10-14 (fw 3.2.0, PHY fixed) — what actually makes the display accept a nav
+
+1. **The nav must ACK.** The display's first unicast (`00 12 58 8F`) is attempted 1.12 s after the roll
+   call and aborts at the slave-address ACK slot if nobody stretches it; the display retries every
+   25 ms (464 header-only frames in 40 s) and never shows the nav menu. fw 3.2.0: `{"a":"avc_cfg","ack":"178"}`
+   makes the gateway stretch every ACK slot of frames addressed to 178 in the RX interrupt (opt-in).
+2. **Answer the roll call first.** The real nav answers `12 01 00` within 0.5 ms; the climate ECU starts
+   its answer ≈2.5 ms after the roll call, which is exactly the host round-trip latency, so a host-side
+   answer collides (NAK) or lands second. fw 3.2.0 auto-reply table (`{"id":2,"d":{"a":"auto",…}}`)
+   answers `12 01 00` / `12 01 01` from the gateway at 5 ms frame end, identical to the real nav.
+   (A late-but-clean answer at +20 ms registered the nav but the display still skipped the setup
+   dialogue — because of 1, not the timing.)
+3. **Broadcast `58 31 F1 02 00` / `58 01 DB …` only while the display is on screen 58** (after a
+   `42 02 01` grant). Unconditional heartbeats trigger `43 02 00` requests and an error message.
+4. Reply to `43 02 00` (screen release) with `00 58 12 53 02 00` — inferred, removes the 3.5 s delay.
+5. Reply to the 60 s ping `12 01 20 XX` with `00 01 12 30 XX FF`.
+6. Open: language list request (`00 25 58 80 40 00 00`), display fell back to Dutch. Needs one capture
+   with the real nav while the language menu is used.
+
+`nav_emu.py --pol hi --fw-auto --fw-ack` implements 1–5. Emulator logs: `captures/2026-10-14/`.

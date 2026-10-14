@@ -8,8 +8,10 @@ Start it BEFORE the car wakes the bus: the display (110) only talks to a nav tha
 answers its startup roll call. Replies are replayed from captures/2026-10-07/run1_nav
 (see NAV_EMULATION_SPEC.md). Everything received/sent is logged like avc_capture.py.
 
-Limitation: gateway v3 cannot ACK frames addressed to 178 (passive RX), so the
-display's unicast requests to 178 will show up NAKed. Watch whether it carries on.
+fw 3.2.0: --fw-ack makes the gateway stretch the ACK slots of frames addressed to
+178 and --fw-auto lets it answer the roll call itself (<1 ms, before the climate ECU).
+Without --fw-ack the display's requests to 178 die unACKed at the address field and
+never reach the host (2026-10-14: 464 aborted 110->178 headers in 40 s).
 """
 import argparse
 import json
@@ -40,6 +42,8 @@ class Emu:
         self.ser, self.log = ser, log
         self.burst, self.btn_ack = burst, btn_ack
         self.timers = []          # (due_monotonic, fn)
+        self.screen = None        # display's active screen from 110->FFF 12 01 60 XX
+        self.ack_release = True
         self.periodic_on = False
         self.n_tx = 0
 
@@ -79,8 +83,12 @@ class Emu:
         def beat():
             if stop:
                 return
-            self.tx("1FF", "58 31 F1 02 00", bcast=True)
-            self.tx("FFF", "58 01 DB 00 00 00 00 00 00", bcast=True, delay=0.6)
+            # run1_nav (2026-10-07): the real nav broadcasts these only while the display is on
+            # the nav screen (12 01 60 58 ..). Sending 58 31 F1 02 00 while another screen is
+            # up makes the display ask 00 12 58 43 02 00 every second (emu6, 2026-10-14).
+            if self.screen == "58":
+                self.tx("1FF", "58 31 F1 02 00", bcast=True)
+                self.tx("FFF", "58 01 DB 00 00 00 00 00 00", bcast=True, delay=0.6)
             self.at(5.0, beat)
         self.at(1.0, beat)
 
@@ -134,12 +142,24 @@ class Emu:
         m, s, data = d.get("m"), d.get("s"), " ".join(d.get("d", []))
         if m != DISP:
             return
+        if data.startswith("12 01 60 ") and len(d["d"]) >= 4:
+            if d["d"][3] != self.screen:
+                self.screen = d["d"][3]
+                self.say(f"display screen -> {self.screen}")
+        # 60 s re-registration ping 12 01 20 XX: every device answers 00 01 12 30 XX (run1: nav FF, 1C6 00)
+        if data.startswith("12 01 20 ") and len(d["d"]) == 4:
+            self.tx(DISP, "00 01 12 30 %s FF" % d["d"][3])
+            return
         # roll call (broadcast)
         if data == "12 01 00":
-            self.say("roll call 12 01 00 -> announcing 58 24 85")
-            self.tx(DISP, "00 01 12 10 58 24 85")
+            if self.fw_auto:
+                self.say("roll call 12 01 00 (gateway auto-reply slot 0 answers)")
+            else:
+                self.say("roll call 12 01 00 -> announcing 58 24 85 (delay %.0f ms)" % (self.rc_delay * 1000))
+                self.tx(DISP, "00 01 12 10 58 24 85", delay=self.rc_delay)
         elif data == "12 01 01":
-            self.tx(DISP, "00 01 12 12 58 28 29 32 60 74 A4 56")
+            if not self.fw_auto:
+                self.tx(DISP, "00 01 12 12 58 28 29 32 60 74 A4 56")
         elif data == "00 01 07":
             self.tx(DISP, "00 01 00 17")
         elif s != ME:
@@ -154,7 +174,6 @@ class Emu:
         elif data.startswith("00 12 01 02 11 00 17 82"):
             self.say("setup done -> initial burst")
             self.initial_burst()
-            self.start_periodic()
         elif data == "00 32 58 E0":
             self.tx(DISP, "00 58 32 F0 C9 00 00 01")
         elif data == "00 6E 58 E0":
@@ -163,10 +182,18 @@ class Emu:
             self.tx(DISP, "00 58 56 B7 06")
         elif data == "00 56 58 8E":
             self.tx(DISP, "00 58 56 9E 00 03 01 23 31 %s FF" % bcd(int(time.time()) % 60))
-            self.start_periodic()
-        elif data == "00 12 58 42 02 01":
+        elif data == "00 12 58 42 02 01":          # screen request granted
             self.tx(DISP, "00 58 12 52 02 01")
             self.tx("1FF", "58 31 F1 02 00", bcast=True, delay=0.004)
+            self.screen = "58"
+            self.start_periodic()
+        elif data == "00 12 58 43 02 00":          # screen release request (sent when leaving the nav screen;
+            # the display retries 1/s for ~3 s then switches anyway - emu7). Reply by analogy with 42->52.
+            if self.ack_release:
+                self.tx(DISP, "00 58 12 53 02 00")
+            else:
+                self.say("display asks 12 58 43 02 00 (screen release) - not answered (--no-release-ack)")
+            self.screen = None
         elif data.startswith("00 25 58 84"):
             key = d["d"][4]
             self.say(f"BUTTON {key}" + ("" if key != "00" else " (release)"))
@@ -193,6 +220,19 @@ def main():
                     help="bus already awake: send roll-call answers + heartbeats unsolicited")
     ap.add_argument("--pol", choices=["lo", "hi"], default="lo",
                     help="AVC RX polarity (PHY board fixed 2026-10-08 needs hi)")
+    ap.add_argument("--no-release-ack", action="store_true",
+                    help="do not answer 00 12 58 43 02 00 with 00 58 12 53 02 00 (inferred reply, 2026-10-14)")
+    ap.add_argument("--raw", action="store_true",
+                    help="also stream raw pulse widths into the log (avc_raw on) to see aborted/unACKed frames")
+    ap.add_argument("--fw-ack", action="store_true",
+                    help="fw>=3.2.0: gateway stretches the ACK slots of frames addressed to 178 (avc_cfg ack)")
+    ap.add_argument("--fw-auto", action="store_true",
+                    help="fw>=3.2.0: let the gateway answer 12 01 00 / 12 01 01 itself (~0.3 ms, before the climate ECU)")
+    ap.add_argument("--rc-delay", type=float, default=0.0,
+                    help="ms to wait before answering 12 01 00 (2026-10-14: our USB-latency answer at ~2.5 ms "
+                         "collides with the climate ECU's; the real nav answers within 0.5 ms)")
+    ap.add_argument("--rc-retries", type=int, default=3,
+                    help="resend the roll-call answer this many times if the display NAKs it")
     ap.add_argument("--blind", action="store_true",
                     help="RX unusable (H1 in TX-correct orientation): transmit on a timer, start once the car is ON")
     args = ap.parse_args()
@@ -206,7 +246,23 @@ def main():
     with open_port(find_port(args.port)) as ser, open(args.log, "a", buffering=1) as log:
         ser.timeout = 0.002
         emu = Emu(ser, log, burst=not args.no_burst, btn_ack=not args.no_btn_ack)
+        emu.rc_retries = 0
+        emu.rc_delay = args.rc_delay / 1000.0
+        emu.fw_auto = args.fw_auto
+        emu.ack_release = not args.no_release_ack
+        if args.fw_auto:
+            for slot, match, reply in (
+                (0, ["12", "01", "00"], h("00 01 12 10 58 24 85")),
+                (1, ["12", "01", "01"], h("00 01 12 12 58 28 29 32 60 74 A4 56")),
+            ):
+                line = send(ser, {"id": 2, "d": {"a": "auto", "slot": slot, "on": True, "m": DISP, "s": "FFF", "d": match,
+                                                 "tx": {"m": ME, "s": DISP, "c": 15, "d": reply}}})
+                emu.say(f"auto slot {slot} set")
         send(ser, {"id": 0, "d": {"a": "avc_cfg", "pol": args.pol}})
+        if args.raw:
+            send(ser, {"id": 0, "d": {"a": "avc_raw", "on": True}})
+        if args.fw_ack:
+            send(ser, {"id": 0, "d": {"a": "avc_cfg", "ack": ME}})
         emu.say(f"nav_emu up (pol {args.pol}); waiting for the display's roll call")
         if args.blind:
             emu.blind()
@@ -242,12 +298,24 @@ def main():
                             emu.say("our TX echoed OK" + (" (NAK)" if d.get("nak") else "") + ": " + " ".join(d.get("d", [])))
                         elif d.get("nak"):
                             emu.say("our TX NAKed: " + " ".join(d.get("d", [])))
+                        # roll-call answer not acknowledged by the display: resend at once (2026-10-14 cold start: first answer NAKed, never retried)
+                        if d.get("nak") and " ".join(d.get("d", [])) == "00 01 12 10 58 24 85" and emu.rc_retries < args.rc_retries:
+                            emu.rc_retries += 1
+                            emu.say(f"roll-call answer NAKed -> retry {emu.rc_retries}")
+                            emu.tx(DISP, "00 01 12 10 58 24 85")
                         continue
                     if d.get("s") == ME and d.get("nak"):
                         naks += 1
                     emu.on_frame(d)
                 elif obj.get("id") == 0 and "err" in obj.get("d", {}):
                     emu.say("gateway error: " + json.dumps(obj["d"]))
+        if args.raw:
+            send(ser, {"id": 0, "d": {"a": "avc_raw", "on": False}})
+        if args.fw_ack:
+            send(ser, {"id": 0, "d": {"a": "avc_cfg", "ack": "000"}})
+        if args.fw_auto:
+            for slot in (0, 1):
+                send(ser, {"id": 2, "d": {"a": "auto", "slot": slot, "on": False}})
         emu.say(f"stopping; tx={emu.n_tx}, echoes={getattr(emu, 'n_echo', 0)}, display->178 NAKed={naks}")
 
 

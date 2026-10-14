@@ -1,0 +1,8 @@
+14:01:44 auto slot 0 set
+14:01:44 auto slot 1 set
+14:01:44 nav_emu up (pol hi); waiting for the display's roll call
+14:03:31 roll call 12 01 00 (gateway auto-reply slot 0 answers)
+14:03:31 our TX echoed OK: 00 01 12 10 58 24 85
+14:03:33 our TX echoed OK: 00 01 12 12 58 28 29 32 60 74 A4 56
+14:03:33 our TX echoed OK: 00 01 00 17
+14:04:20 stopping; tx=1, echoes=3, display->178 NAKed=0

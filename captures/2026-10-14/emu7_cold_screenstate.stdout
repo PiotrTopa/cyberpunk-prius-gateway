@@ -1,0 +1,39 @@
+14:15:17 auto slot 0 set
+14:15:17 auto slot 1 set
+14:15:17 nav_emu up (pol hi); waiting for the display's roll call
+14:15:18 display screen -> 5F
+14:16:30 roll call 12 01 00 (gateway auto-reply slot 0 answers)
+14:16:30 our TX echoed OK: 00 01 12 10 58 24 85
+14:16:31 our TX echoed OK: 00 01 12 12 58 28 29 32 60 74 A4 56
+14:16:31 display screen -> 00
+14:16:31 our TX echoed OK: 00 58 12 9F 02 F9 D1 3D 0A 58 A6 E4 80 8C
+14:16:31 setup done -> initial burst
+14:16:34 display screen -> 5F
+14:16:38 display screen -> 56
+14:16:43 BUTTON 01
+14:16:43 BUTTON 00 (release)
+14:16:43 periodic heartbeats on
+14:16:45 BUTTON 04
+14:16:45 BUTTON 00 (release)
+14:16:46 BUTTON 02
+14:16:46 BUTTON 00 (release)
+14:16:46 display asks 12 58 43 02 00 (screen release?) - no reply known
+14:16:47 display asks 12 58 43 02 00 (screen release?) - no reply known
+14:16:48 display asks 12 58 43 02 00 (screen release?) - no reply known
+14:16:49 display asks 12 58 43 02 00 (screen release?) - no reply known
+14:16:49 display screen -> 56
+14:16:50 TOUCH 00 00 00 00
+14:16:59 display screen -> 5D
+14:17:01 BUTTON 01
+14:17:01 display screen -> 00
+14:17:01 BUTTON 00 (release)
+14:17:06 display asks 12 58 43 02 00 (screen release?) - no reply known
+14:17:06 display screen -> 00
+14:17:07 display asks 12 58 43 02 00 (screen release?) - no reply known
+14:17:08 display asks 12 58 43 02 00 (screen release?) - no reply known
+14:17:09 display asks 12 58 43 02 00 (screen release?) - no reply known
+14:17:09 display screen -> 5D
+14:17:09 TOUCH 00 00 00 00
+14:17:26 display screen -> 56
+14:17:28 display screen -> 5F
+14:19:23 stopping; tx=84, echoes=86, display->178 NAKed=0

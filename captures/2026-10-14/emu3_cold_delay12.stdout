@@ -1,0 +1,6 @@
+13:50:39 nav_emu up (pol hi); waiting for the display's roll call
+13:51:22 roll call 12 01 00 -> announcing 58 24 85 (delay 12 ms)
+13:51:22 our TX echoed OK: 00 01 12 10 58 24 85
+13:51:23 our TX echoed OK: 00 01 12 12 58 28 29 32 60 74 A4 56
+13:51:24 our TX echoed OK: 00 01 00 17
+13:54:34 stopping; tx=3, echoes=3, display->178 NAKed=0
