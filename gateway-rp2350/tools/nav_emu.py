@@ -23,6 +23,10 @@ sys.path.insert(0, __import__("os").path.dirname(__file__))
 from gwctl import find_port, open_port, send  # noqa: E402
 
 ME = "178"
+# reply to 00 12 58 8F. Real nav 2026-10-07 (display UI came up Dutch when replayed) vs 2026-10-14 after
+# English was selected in the nav's language menu: bytes 4, 8 and 10 differ.
+IDENT_NL = "02 F9 D1 3D 0A 58 A6 E4 80 8C"
+IDENT_EN = "02 F9 D1 13 0A 58 A6 9A 80 80"
 DISP = "110"
 AUDIO = "1C6"
 
@@ -44,6 +48,8 @@ class Emu:
         self.timers = []          # (due_monotonic, fn)
         self.screen = None        # display's active screen from 110->FFF 12 01 60 XX
         self.ack_release = True
+        self.ident = IDENT_EN
+        self.time_fmt = "new"
         self.periodic_on = False
         self.n_tx = 0
 
@@ -74,6 +80,14 @@ class Emu:
         self.write({"note": msg})
 
     # --- behaviour ---
+    def time_reply(self):
+        """run1 (2026-10-07) nav: 00 03 01 23 29 25 FF (hh mm ss BCD, clock running);
+        2026-10-14 nav: 00 01 01 00 00 17 FF (clock counting from 00:00:00 since the nav page opened).
+        --time-fmt old|new selects the two leading bytes (00 03 vs 00 01)."""
+        lt = time.localtime()
+        hh, mm, ss = bcd(lt.tm_hour), bcd(lt.tm_min), bcd(lt.tm_sec)
+        return ("00 03 01 " if self.time_fmt == "old" else "00 01 01 ") + f"{hh} {mm} {ss} FF"
+
     def start_periodic(self):
         if self.periodic_on:
             return
@@ -116,7 +130,7 @@ class Emu:
                 return
             self.tx(DISP, "00 01 12 10 58 24 85")
             self.tx(DISP, "00 01 12 12 58 28 29 32 60 74 A4 56", delay=0.02)
-            self.tx(DISP, "00 58 12 9F 02 F9 D1 3D 0A 58 A6 E4 80 8C", delay=0.04)
+            self.tx(DISP, "00 58 12 9F " + self.ident, delay=0.04)
             self.tx(DISP, "00 01 12 12 27 58 40 64 62 61 55 6E 6D", delay=0.06)
             self.tx(DISP, "00 01 12 12 34 A2 58 43 63 65 44 45 E0", delay=0.08)
             self.tx(DISP, "00 01 00 17", delay=0.10)
@@ -130,7 +144,7 @@ class Emu:
             self.tx(DISP, "00 58 32 F0 C9 00 00 01", delay=0.02)
             self.tx(DISP, "00 58 6E F0 C9 00 00 01", delay=0.04)
             self.tx(DISP, "00 58 56 B7 06", delay=0.06)
-            self.tx(DISP, "00 58 56 9E 00 03 01 23 31 %s FF" % bcd(int(time.time()) % 60), delay=0.08)
+            self.tx(DISP, "00 58 56 9E " + self.time_reply(), delay=0.08)
             self.at(5.0, steady)
 
         fast()
@@ -165,8 +179,8 @@ class Emu:
         elif s != ME:
             return
         # unicast to 178
-        elif data == "00 12 58 8F":
-            self.tx(DISP, "00 58 12 9F 02 F9 D1 3D 0A 58 A6 E4 80 8C")
+        elif data == "00 12 58 8F":               # identification / settings, polled every 30 s
+            self.tx(DISP, "00 58 12 9F " + self.ident)
         elif data.startswith("00 12 01 02 17 80"):
             self.tx(DISP, "00 01 12 12 27 58 40 64 62 61 55 6E 6D")
         elif data.startswith("00 12 01 02 17 81"):
@@ -180,8 +194,8 @@ class Emu:
             self.tx(DISP, "00 58 6E F0 C9 00 00 01")
         elif data == "00 56 58 F0 49 3C 44":
             self.tx(DISP, "00 58 56 B7 06")
-        elif data == "00 56 58 8E":
-            self.tx(DISP, "00 58 56 9E 00 03 01 23 31 %s FF" % bcd(int(time.time()) % 60))
+        elif data == "00 56 58 8E":                # time/status request every 5 s on the nav screen
+            self.tx(DISP, "00 58 56 9E " + self.time_reply())
         elif data == "00 12 58 42 02 01":          # screen request granted
             self.tx(DISP, "00 58 12 52 02 01")
             self.tx("1FF", "58 31 F1 02 00", bcast=True, delay=0.004)
@@ -191,9 +205,15 @@ class Emu:
             # the display retries 1/s for ~3 s then switches anyway - emu7). Reply by analogy with 42->52.
             if self.ack_release:
                 self.tx(DISP, "00 58 12 53 02 00")
+                self.tx("1FF", "58 31 F1 00 00", bcast=True, delay=0.002)   # real nav: "my screen is off"
             else:
                 self.say("display asks 12 58 43 02 00 (screen release) - not answered (--no-release-ack)")
             self.screen = None
+        elif data.startswith("00 25 58 80"):      # info-screen soft buttons: 01 maintenance, 08 calendar, 40 language
+            key = d["d"][4]
+            self.say(f"SOFT BUTTON {key} ({ {'01': 'maintenance', '08': 'calendar', '40': 'language'}.get(key, '?') })")
+            if self.btn_ack:
+                self.tx(DISP, "00 58 12 50 02 01")
         elif data.startswith("00 25 58 84"):
             key = d["d"][4]
             self.say(f"BUTTON {key}" + ("" if key != "00" else " (release)"))
@@ -220,6 +240,10 @@ def main():
                     help="bus already awake: send roll-call answers + heartbeats unsolicited")
     ap.add_argument("--pol", choices=["lo", "hi"], default="lo",
                     help="AVC RX polarity (PHY board fixed 2026-10-08 needs hi)")
+    ap.add_argument("--time-fmt", choices=["old", "new"], default="new",
+                    help="time reply header: old = 00 03 01 (run1 2026-10-07), new = 00 01 01 (real nav 2026-10-14)")
+    ap.add_argument("--ident", default=IDENT_EN,
+                    help="bytes after 00 58 12 9F in the identification reply (default: the 2026-10-14 English set)")
     ap.add_argument("--no-release-ack", action="store_true",
                     help="do not answer 00 12 58 43 02 00 with 00 58 12 53 02 00 (inferred reply, 2026-10-14)")
     ap.add_argument("--raw", action="store_true",
@@ -250,6 +274,8 @@ def main():
         emu.rc_delay = args.rc_delay / 1000.0
         emu.fw_auto = args.fw_auto
         emu.ack_release = not args.no_release_ack
+        emu.ident = args.ident
+        emu.time_fmt = args.time_fmt
         if args.fw_auto:
             for slot, match, reply in (
                 (0, ["12", "01", "00"], h("00 01 12 10 58 24 85")),

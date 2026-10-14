@@ -1,0 +1,56 @@
+15:00:10 auto slot 0 set
+15:00:10 auto slot 1 set
+15:00:10 nav_emu up (pol hi); waiting for the display's roll call
+15:00:21 roll call 12 01 00 (gateway auto-reply slot 0 answers)
+15:00:21 our TX echoed OK: 00 01 12 10 58 24 85
+15:00:22 our TX echoed OK: 00 01 12 12 58 28 29 32 60 74 A4 56
+15:00:22 display screen -> 00
+15:00:22 our TX echoed OK: 00 58 12 9F 02 F9 D1 13 0A 58 A6 9A 80 80
+15:00:22 setup done -> initial burst
+15:00:22 our TX NAKed: 00 58 34 E0
+15:00:28 display screen -> 5F
+15:01:25 BUTTON 01
+15:01:26 periodic heartbeats on
+15:01:26 BUTTON 00 (release)
+15:01:27 display screen -> 56
+15:01:28 TOUCH 00 00 00 00
+15:01:30 display screen -> 5F
+15:02:22 our TX NAKed: 00 01 12 30 C2 FF
+15:02:45 display screen -> 5D
+15:02:46 display screen -> 56
+15:02:47 SOFT BUTTON 40 (language)
+15:02:47 TOUCH 45 AA 45 AA
+15:02:48 TOUCH 46 A9 46 A9
+15:02:48 TOUCH 00 00 00 00
+15:02:52 TOUCH 24 A3 24 A3
+15:02:52 TOUCH 23 A1 23 A1
+15:02:52 TOUCH 00 00 00 00
+15:02:53 display screen -> 56
+15:02:53 TOUCH 00 00 00 00
+15:03:48 display screen -> 56
+15:03:48 TOUCH 00 00 00 00
+15:03:50 display screen -> 5F
+15:04:03 display screen -> 56
+15:04:04 SOFT BUTTON 40 (language)
+15:04:05 TOUCH 46 94 46 94
+15:04:05 TOUCH 46 95 46 95
+15:04:05 TOUCH 47 96 47 96
+15:04:05 TOUCH 47 95 47 95
+15:04:05 TOUCH 00 00 00 00
+15:04:05 TOUCH 59 9B 59 9B
+15:04:05 TOUCH 5A 9C 5A 9C
+15:04:05 TOUCH 00 00 00 00
+15:04:06 TOUCH 51 93 51 93
+15:04:06 TOUCH 51 91 51 91
+15:04:06 TOUCH 00 00 00 00
+15:04:06 TOUCH 45 8B 45 8B
+15:04:06 TOUCH 42 89 42 89
+15:04:06 TOUCH 00 00 00 00
+15:04:06 TOUCH 47 9F 47 9F
+15:04:06 TOUCH 00 00 00 00
+15:04:06 TOUCH 57 8E 57 8E
+15:04:06 TOUCH 00 00 00 00
+15:04:08 display screen -> 56
+15:04:09 TOUCH 00 00 00 00
+15:04:13 display screen -> 5F
+15:04:22 our TX NAKed: 00 01 12 30 C4 FF

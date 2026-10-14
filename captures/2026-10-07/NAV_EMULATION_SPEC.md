@@ -137,3 +137,20 @@ the board, or an external receiver on GP0. Firmware also needs: fixed `pol=lo`, 
    with the real nav while the language menu is used.
 
 `nav_emu.py --pol hi --fw-auto --fw-ack` implements 1–5. Emulator logs: `captures/2026-10-14/`.
+
+## Real nav observed again 2026-10-14 14:45–14:58 (`captures/2026-10-14/realnav_language.ndjson`, cold start lost)
+
+- Screen release confirmed: `110->178 00 12 58 43 02 00` → `178->110 00 58 12 53 02 00` + `178->1FF 58 31 F1 00 00`
+  (F1 XX 00 = "my screen is XX": 02 on, 00 off).
+- Info-screen soft buttons `110->178 00 25 58 80 KK 00 00`: 01 maintenance, 08 calendar, 40 language; nav acks
+  `00 58 12 50 02 01`, display then requests the screen (42 02 01). Telephone = display's own screen 55.
+- Identification `00 12 58 8F` is polled every 30 s; today's reply `00 58 12 9F 02 F9 D1 13 0A 58 A6 9A 80 80`
+  (run1: `… 3D … E4 80 8C`); both before and after the language change → not the language.
+- Time reply today `00 58 56 9E 00 01 01 00 00 17 FF` (run1 `00 03 01 23 29 25 FF`); the clock counted from
+  00:00:00 when the nav page was first opened. `--time-fmt new|old` in nav_emu.
+- 60 s ping answered `00 01 12 30 XX FF`.
+- **Language: not on the bus.** Real nav boots the display in Dutch; the user chose English blind on the nav's
+  language page (touch at raw 4D AC) and the UI switched with no non-routine frame before or after. The same
+  button + touch against the emulator leaves Dutch. The emulator's cold start with today's identification and
+  time format still gives Dutch. Remaining unknown: the real nav's cold-start dialogue today (recorder was
+  killed by a concurrent port access) — to be recorded end to end.

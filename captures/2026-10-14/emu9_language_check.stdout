@@ -1,0 +1,22 @@
+14:43:54 auto slot 0 set
+14:43:54 auto slot 1 set
+14:43:54 nav_emu up (pol hi); waiting for the display's roll call
+14:43:54 periodic heartbeats on
+14:43:54 our TX echoed OK: 00 01 12 10 58 24 85
+14:43:54 our TX echoed OK: 00 01 12 12 58 28 29 32 60 74 A4 56
+14:43:54 our TX echoed OK: 00 01 12 12 58 28 29 32 60 74 A4 56
+14:43:54 setup done -> initial burst
+14:43:54 our TX NAKed: 00 58 34 E0
+14:43:54 our TX NAKed: 00 85 E0 E4
+14:43:54 setup done -> initial burst
+14:43:54 our TX NAKed: 00 58 34 E0
+14:43:54 our TX NAKed: 00 85 E0 E4
+14:43:54 our TX NAKed: 00 01 00 17
+14:43:57 display screen -> 00
+14:44:00 display screen -> 5F
+14:44:03 BUTTON 01
+14:44:03 BUTTON 00 (release)
+14:45:06 display screen -> 56
+14:45:06 TOUCH 00 00 00 00
+14:45:07 display screen -> 5F
+14:45:19 stopping; tx=95, echoes=96, display->178 NAKed=0
