@@ -14,6 +14,7 @@ Source: `map3_marked.ndjson` + `map3_marked.notes.txt` (markers with the user's 
 | b1 bit 0x02 | 22↔20 on A/C button (mark8) | **A/C (compressor) on** |
 | b1 bit 0x01 | set with b2 = 00 | **face-only vent** (mark9: face press → 23 00); AUTO states C3/A3 also show face |
 | b1 bit 0x08 | AB vs A3 | **rear window heater** (drive home 15:29:38–15:29:55) |
+| b1 bit 0x10 | 52 | **front windshield defrost** (2026-10-14 on-screen button; comes with A/C on, AUTO off, fan 2) |
 | b2 vent mode | 80 / 40 / 20 / 00 | **face+foot / foot / windscreen+foot / face (with b1 bit 0x01)** (mark7–9) |
 | b3 0x04 | one frame after each press | button-accepted pulse |
 | b6 >> 5 | 0x20…0xE0 | **fan speed 1…7** (mark7: 1→7 one step each); 0 when the climate system is OFF (mark3: F3 = 41 00 00 00 00 00) |
@@ -44,6 +45,7 @@ Source: `map3_marked.ndjson` + `map3_marked.notes.txt` (markers with the user's 
 | temperature up (+0.5 °C, on-screen) | `80 00 00 00 00 00` (2026-10-14; held ≈0.6 s = 2 steps, auto-repeat) |
 | temperature down (−0.5 °C, on-screen) | `40 00 00 00 00 00` (2026-10-14) |
 | rear window heater toggle (on-screen) | `00 80 00 00 00 00` (2026-10-14; F3 b1 bit 0x08 follows) |
+| front windshield blower / defrost toggle (on-screen) | `01 00 00 00 00 00` (2026-10-14; F3 goes `C3 00 … 20` → `52 00 … 40`: AUTO off, **b1 bit 0x10 = front defrost**, A/C on, fan 2; second press returns to AUTO) |
 
 ## Engine / energy (provisional)
 
@@ -136,5 +138,5 @@ Sending the display's touch frames from the gateway works: `gwctl.py avc 110 1C6
 blowing at 5th stage", then recirculation + fan 7 + A/C off, then AUTO), each confirmed by the next
 `E0 5D F3` status. The physical temperature buttons and the physical rear-heater button send no frame (mark1/mark2 of map3,
 drive home), but the **on-screen** buttons for both exist and work remotely (`climate_setpoint_touch.ndjson`,
-2026-10-14): temp up `80 00 …`, temp down `40 00 …`, rear heater `00 80 …`; press ≈150 ms then release, one
-step per press (a 0.6 s hold auto-repeats). Verified: 18.5 → 20.0 °C with three remote presses.
+2026-10-14): temp up `80 00 …`, temp down `40 00 …`, rear heater `00 80 …`; press ≈100 ms then release from ONE serial connection, one
+step per press (a 0.6 s hold auto-repeats; two separate `gwctl.py avc` invocations are too slow and auto-repeat). Verified: 18.5 → 20.0 °C with three remote presses.
