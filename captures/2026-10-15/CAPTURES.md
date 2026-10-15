@@ -87,3 +87,32 @@ fails at port reset, before any device descriptor is read. The Pi does react to 
 attempts ≈6 s and ≈54 s after power returned), so the SoC boots; the USB data link does not negotiate.
 Pending: different cable / different laptop port; ACT LED pattern at power-up; `journalctl -b -1` on the Pi
 around 14:50:46 once the link is back (persistent journal enabled 10:1x).
+
+**Resolution (18:22–18:47).** User: "its not physical - nothing changed as I told you. no physicsl changes of any
+kindz not even a draft. something in the config caused that." Then: "this is powerfull p52 usb port, reliable
+cable, 1.3V dont rven have eifi to blame for high current... make sure and try to find 5hr csuse" and (moved the
+Pi to another laptop port) "it shoes all thebs9gns of booing looking at the let, it id bkinking fast, then dtoped
+eithbsolid light".
+
+Pi-side journal (persistent, boot d827369f = 13:19:24 → 18:22:08): the Pi never crashed. The frontend logged
+FRONTEND ALIVE at 30 fps every 30 s from 13:19 until the replug at 18:22. At 14:50:47 it saw only `usb0: Lost
+carrier` followed by a storm of `dwc2 20980000.usb: new device is high-speed/full-speed` (bus resets from the
+host every ~200 ms, 14:50:47–14:50:50), the same storm at 17:06:10–13, nothing else — no OOM, no dwc2 error,
+zram 256 MB with 0 used. Fresh boot on the same laptop port (boot 543200ee, 18:20): g_ether bound at 21 s, 19
+resets answered at high speed in 21–23 s, never a `new address` — the host never completed enumeration;
+further reset bursts at 323–326 s and 377–378 s (laptop port power cycles via sysfs; VBUS evidently not cut,
+the Pi did not reboot). Fresh boot on laptop port 1-6 (boot a82496b4, 18:33): 3 resets then `new address 41`
+at 20 s, usb0 carrier at 26 s, SSH fine. Laptop side: `usb usb1-port2: disabled by hub (EMI?)` is the first such
+line on this laptop since at least 1 Sep (all boots); the gadget was never autosuspended (power/control=on,
+runtime_suspended_time=0); no xhci error lines. Conclusion: the laptop's xHCI (Cannon Lake 8086:a36d, kernel
+7.0.0-38) port 2 went into a state where it issues resets but never enables the port; the Pi, its config and
+the cable answered every reset. At 18:41:47 the xHCI controller was unbound/rebound (all ports reset, Pi back
+on 1-6 after 2 s). Whether port 2 works again after that reset is untested (needs a device plugged into it).
+Trigger of the 14:50:46 port error: not recorded on either side.
+
+Deploy of host-repo main c723c41 to the Pi (18:36): mfd restarted, 20 fps without backend, "--" placeholders
+on IN/OUT/ICE/INV/kW/V/A (fb0 dump). Navigation check with a synthetic gateway-v3 capture replayed by the
+laptop backend (`00 25 58 84 04 00` DEST press/release, then touch `00 21 24 78 7f 2f 7f 2f` = screen
+(240,203) = engine-menu row 6, release): frontend logged `MFD button 'dest' -> engine_menu`, the AVC-LAN STATUS
+screen opened on fb0 showing TOUCH UP 241,203 / LAST BTN DEST / STALE 28s / all signals "--". Engine-menu rows:
+first_y 34, stride 31, row_h 28 (a tap at y=180 hits row 5 = SOLICITED MONITOR).
