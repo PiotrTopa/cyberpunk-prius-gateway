@@ -44,3 +44,29 @@ mask `wpa_supplicant`/`bluetooth`/`rpi-resize-swap-file`/`console-setup`/`keyboa
 Housekeeping applied over SSH (also applied to the stored image): `/etc/cloud/cloud-init.disabled`
 (cloud-init 28 s per boot, unused), persistent journal (`journald.conf.d/persistent.conf`, Pi OS default is
 volatile), removed `sshd_config.d/rename_user.conf` (userconf banner).
+
+## Afternoon: backend AVC rewrite, touch-as-mouse, boot tuning (user said)
+
+"reimplement backend avc completely to prioritise usage of avc data wherever available (test with recorded
+data) and implement full touch support to work identically as mouse events. this includes also missing
+external temperature, not working climate controls, etc. … also check if boot time could be significantly
+improved, we will not have keyboard, other network than gadget, etc. why gadget network takes this long?";
+later: "the board can use readonly system, we will not be persisting anything on sd, if that could help";
+"give me some of those on a filedrop" → gallery https://claude.ai/artifact/WRzMKMTJKQPxCnY72LsM3R.
+
+Host repo `cyberpank-prius-gen2-computer` main (b9cea45): `comm/avc/` package (decoder, touch calibration,
+nav emulator, climate remote, scheduler), `io/avc_ingest.py` (AVC priority over CAN/OBD with freshness),
+pointer model (`ui/pointer.py`, `ui/hw_buttons.py`) feeding mouse (dev) and backend `touch`/`button` events;
+138 tests. Verified against these captures: outside temp 22 °C at 15:32:26 (drive_home), 20 °C (map3),
+13–15 °C (drive2); all 8 energy states of AVC_MAP in drive2; emu8 touch strokes → four screen corners
+(≤25 px) and the two drags; nav replies byte-identical to nav_emu.py's recorded TX (emu11, emu8).
+
+Bench on the Pi Zero v1.3 (laptop backend replaying `drive2_emu_avc.ndjson`): climate panel OUT 14° / SET 20°
+from AVC, energy arrows from AVC (`flow_source: avc`). Replaying `emu8_release_ack.ndjson`: 511 touch/button
+events received by the frontend, taps opened Audio Settings, put AMBIENT in quick-edit, changed SET 20→19
+(7 commands back to the backend); fb0 dumps in the gallery. Frame rate 14–30 fps during touch handling.
+
+Boot: 130 s → 60 s to first frames (`raspberry_pi_config/README.md`, `zero13-image/boot-tune.sh`). Gadget
+network was slow because NetworkManager (40 s start, 22 s of it in its netplan generator) only configured
+usb0 at the end of its startup; systemd-networkd now brings it up at 35 s after power. Read-only overlay root:
+planned last (`sudo raspi-config nonint enable_overlayfs`), after the panel work settles.

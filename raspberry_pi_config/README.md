@@ -82,7 +82,8 @@ Measured on the Pi with `systemd-analyze` / `critical-chain` / journal (times fr
 Left: kernel 11 s, SD card at 11 MB/s (`mmc0: Problem switching card into high-speed mode!` — a
 faster/other card is the only lever; the Zero 2 W used the same card), `dev-mmcblk0p2` ≈14 s to
 settle, python + pygame import ≈12 s cold. A read-only overlay root (user: nothing needs persisting)
-is planned as the last step for power-cut robustness; it does not shorten boot.
+is planned as the last step for power-cut robustness; it does not shorten boot. Enable with
+`sudo raspi-config nonint enable_overlayfs` (+ reboot), disable with `disable_overlayfs` before deploying code.
 
 Laptop side: NM profile `prius-usb0` (`match.driver cdc_ether`, 192.168.100.1/24, method shared) — the Pi
 gets its backend address and internet; `prius_mfd` in `~/.ssh/config` jumps via the Poco, so on the bench use
