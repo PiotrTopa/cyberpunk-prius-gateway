@@ -116,3 +116,8 @@ laptop backend (`00 25 58 84 04 00` DEST press/release, then touch `00 21 24 78 
 (240,203) = engine-menu row 6, release): frontend logged `MFD button 'dest' -> engine_menu`, the AVC-LAN STATUS
 screen opened on fb0 showing TOUCH UP 241,203 / LAST BTN DEST / STALE 28s / all signals "--". Engine-menu rows:
 first_y 34, stride 31, row_h 28 (a tap at y=180 hits row 5 = SOLICITED MONITOR).
+
+**Port test (18:56).** User: "android phone will do?" → POCO F6 (2717:ff40) plugged into the same laptop
+port 2 enumerated at high speed on the first attempt, state configured. So the port was stuck in the xHCI
+controller's state, not damaged; the driver unbind/rebind at 18:41 cleared it. Verdict: laptop-side host
+controller fault (software-recoverable), trigger at 14:50:46 unknown; Pi, cable and config exonerated.
