@@ -55,4 +55,19 @@ old (skewed) timings — neither was what the card ran.
    run `build-chroot-step.sh <rootfs>`.
 5. `dd if=prius-mfd-zero13.img of=/dev/mmcblkX bs=4M conv=fsync`; first boot expands the root partition.
 
-Image kept at `~/backups/raspios/prius-mfd-zero13-2026-10-14.img` (laptop only).
+Image kept at `~/backups/raspios/prius-mfd-zero13-2026-10-14.img` (laptop only; includes the usb0-managed
+override and the housekeeping below).
+
+### Bench test 2026-10-15 (`captures/2026-10-15/CAPTURES.md`)
+
+Enumerates as `cdc_ether`, usb0 192.168.100.2 up ≈2 min after power, SSH OK, `/dev/fb0` = BCM2708 FB
+480×240 with `dpi_output_format=5` and the 15 kHz timings confirmed by the firmware, GPIO 2–21 in DPI
+mode. Frontend renders at **21 fps** with the backend connected (replay from the laptop), ≈10 fps without a
+backend; `/dev/fb0` dump = the real dashboard (`captures/2026-10-15/zero13_fb0_replay.png`). Second boot:
+first frames ≈130 s after power (NetworkManager 40 s, console/keyboard-setup 43 s, swap resize 26 s —
+untouched, see the capture log for the measured chain). Housekeeping on the card and in the image:
+cloud-init disabled, journald persistent, userconf ssh banner removed.
+
+Laptop side: NM profile `prius-usb0` (`match.driver cdc_ether`, 192.168.100.1/24, method shared) — the Pi
+gets its backend address and internet; `prius_mfd` in `~/.ssh/config` jumps via the Poco, so on the bench use
+`ssh piotr@192.168.100.2` directly.
