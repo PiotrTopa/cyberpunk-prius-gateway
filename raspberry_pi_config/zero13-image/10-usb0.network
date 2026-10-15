@@ -1,0 +1,16 @@
+# /etc/systemd/network/10-usb0.network
+# USB Ethernet gadget link to the car computer (Poco) / bench laptop.
+# systemd-networkd replaces NetworkManager on this board (NM took 24-40 s per boot on ARMv6,
+# 22 s of it inside its netplan generator). Measured 2026-10-15.
+[Match]
+Name=usb0
+
+[Network]
+Address=192.168.100.2/24
+Gateway=192.168.100.1
+DNS=192.168.100.1
+IPv6AcceptRA=no
+LinkLocalAddressing=no
+
+[Link]
+RequiredForOnline=no

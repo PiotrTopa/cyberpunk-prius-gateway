@@ -1,6 +1,6 @@
 [Unit]
 Description=CyberPunk Prius Gen 2 - MFD Frontend
-After=network.target
+After=basic.target
 
 [Service]
 Type=simple

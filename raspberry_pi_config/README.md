@@ -68,6 +68,22 @@ first frames ≈130 s after power (NetworkManager 40 s, console/keyboard-setup 4
 untouched, see the capture log for the measured chain). Housekeeping on the card and in the image:
 cloud-init disabled, journald persistent, userconf ssh banner removed.
 
+### Boot time — measured and tuned 2026-10-15 (`zero13-image/boot-tune.sh`)
+
+Measured on the Pi with `systemd-analyze` / `critical-chain` / journal (times from kernel start):
+
+| Step | first frontend frames | what changed |
+|---|---|---|
+| as built | ≈130 s (mfd.service at 116 s) | keyboard-setup (43 s) sat in the critical chain before local-fs; NetworkManager 40 s (22 s inside its netplan generator); logrotate/apt timers firing at every boot (clock jumps in the car); rpi-swap resize job 26 s; udisks2, wpa_supplicant, bluetooth with no hardware |
+| round 1 | ≈95 s (mfd at 69 s) | mask keyboard/console-setup + swap resize, disable timers and unused services |
+| round 2 | ≈60 s (usb0 at 35 s, mfd at 45 s, pygame at 57 s) | systemd-networkd for usb0 instead of NetworkManager; mfd after basic.target |
+| round 3 | no change | running the frontend as root gained nothing (reverted to piotr) |
+
+Left: kernel 11 s, SD card at 11 MB/s (`mmc0: Problem switching card into high-speed mode!` — a
+faster/other card is the only lever; the Zero 2 W used the same card), `dev-mmcblk0p2` ≈14 s to
+settle, python + pygame import ≈12 s cold. A read-only overlay root (user: nothing needs persisting)
+is planned as the last step for power-cut robustness; it does not shorten boot.
+
 Laptop side: NM profile `prius-usb0` (`match.driver cdc_ether`, 192.168.100.1/24, method shared) — the Pi
 gets its backend address and internet; `prius_mfd` in `~/.ssh/config` jumps via the Poco, so on the bench use
 `ssh piotr@192.168.100.2` directly.
