@@ -70,3 +70,20 @@ Boot: 130 s → 60 s to first frames (`raspberry_pi_config/README.md`, `zero13-i
 network was slow because NetworkManager (40 s start, 22 s of it in its netplan generator) only configured
 usb0 at the end of its startup; systemd-networkd now brings it up at 35 s after power. Read-only overlay root:
 planned last (`sudo raspi-config nonint enable_overlayfs`), after the panel work settles.
+
+## 14:50 USB link loss on the bench (user said)
+
+"btw nothing changed with pi, noone was close it, i can see power led green, nobody touched it whatsoever,
+its software caused." Later: "replugged" (≈18:22).
+
+Laptop kernel log (all times CEST): every Pi boot since 14 Oct enumerated the same way (full-speed attempt,
+descriptor error -110, then high-speed `2e8a:0013` ≈18 s later). At 14:50:46 the laptop's root hub logged
+`usb1-port2: disabled by hub (EMI?), re-enabling...` → `USB disconnect` → `attempt power cycle` →
+`unable to enumerate USB device`. That first line is the hub's port-enable bit being cleared by hardware
+(signal error on the link), not a software disconnect on either side: the laptop did not suspend, no backend
+was running, uhubctl is not installed. Since then every connect attempt (17:06:11, 18:22:52, 18:23:03 after
+the replug, 18:28:07 and 18:29:01 after a port power cycle from the laptop via sysfs `usb1-port2/disable`)
+fails at port reset, before any device descriptor is read. The Pi does react to the power cycle (connect
+attempts ≈6 s and ≈54 s after power returned), so the SoC boots; the USB data link does not negotiate.
+Pending: different cable / different laptop port; ACT LED pattern at power-up; `journalctl -b -1` on the Pi
+around 14:50:46 once the link is back (persistent journal enabled 10:1x).
