@@ -263,3 +263,19 @@ User, after the analysis page (https://claude.ai/artifact/NPgnt8R8qT3urXzqXrvQCg
 plan mynown implemntstio of flowpilot anyway later" → scene understanding deferred to a future flowpilot
 (openpilot-on-Android) port; auto-lights stay with the cheap rule: sun elevation + sky-band Y + sky chroma
 with hysteresis, no ML.
+User: "build a model for lightd + also plan details for roadsigns reading if openpilot dows not do it, make it
+isna giod place for that." → lane (Opus, host repo worktree): `cyberpunk_computer/vision/` (frame sources,
+ffmpeg-based light features, solar elevation, AutoLightModel state machine, tests on the drive-home CSV,
+optional backend ingest); main thread: `docs/VISION_ROADMAP.md` (sign reading plan and its place next to a
+future flowpilot port).
+User: "flowpilot will get its own poco f1 full stack, we are not sharing" → roadmap updated: flowpilot on a
+separate Poco F1 with its own camera; the car computer's vision uses the dashcam through one shared grabber
+(RTSP allows one client) or an own road-facing camera; flowpilot outputs optionally received over the network.
+Lights model folded (host repo main 2e531fe): `cyberpunk_computer/vision/` (ffmpeg.py, frames.py,
+light_features.py with exact sky clip share, sun.py NOAA elevation, auto_lights.py state machine + CLI),
+`io/dashcam_ingest.py` (env BACKEND_DASHCAM_URL, interval, BACKEND_HOME_LATLON default Gdańsk),
+`AppState.vision`; 189 tests pass (47 new). Replay of the drive: ON in the garage from 15:22:14, OFF at
+15:25:21 ("daylight", 13 s after the user's "outside" note), no flapping afterwards. Rule change vs the
+doc: the open sunny sky is 10–40 % clipped almost all the time (garage ≤4 %), so clipping now blocks only
+switching ON (`LightThresholds(clip_blocks_off=True)` restores the literal rule). Recommendation only —
+nothing switches the lamps yet.
