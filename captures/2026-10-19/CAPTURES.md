@@ -300,3 +300,19 @@ mount = main false positive (29 % of frames); sign model (StreetSignSense YOLO12
 no speed-limit sign in this drive; signs 17–25 px only within ~5–8 m → digits unreadable at 640×360.
 Timings: ONNX RT 416 14–23 ms (4 cores), ncnn Vulkan Quadro 7–9 ms; TFLite int8 3.1 MB. No GPU via torch
 (Pascal unsupported). Phone not measured.
+User: "we use this stream only for lights, 1fps, proper environmwnt model, we wi be capcuting int he furure
+moee samoles.in diffeesnt conditikns or tt4y to fidn free samples in the ibternet to test - itd stsndard
+sahczm view in the end" → dashcam = lights/environment model only (1 fps); sign reading parked; next lane:
+environment model (day/dusk/night/enclosed + weather flags) fitted on public dashcam datasets with labels +
+our drives, ML-free runtime. Laptop now on home Wi-Fi (downloads no longer over the tether).
+Environment model folded (host main 9f20d07, 263 tests): fitted on BDD100K val (10 000 labelled frames,
+866 MB under ~/datasets/dashcam/, non-commercial licence; +DAWN fog/rain/snow as test): `vision/
+scene_features.py` + `vision/environment.py` (depth-3 tree, 8 features, embedded as data; 10 s vote; sun prior
+−6°/+10°): time of day acc 0.874 (night recall 0.96, day 0.87, dusk 0.52 — weak/label noise), enclosed =
+4-threshold rule (82 % of our garage frames, 2.8 % false positives on BDD day, fog also triggers it),
+weather only clear/overcast/None (rain/snow/fog not separable from statistics). Lights vs BDD truth 0.881
+(old thresholds 0.786); thresholds 120/150 kept as fallback; on our drive lights off at 15:25:11 (3 s after
+"outside"). New default `DashcamStreamSource` (one long ffmpeg writing latest.jpg at 1 fps; the camera refuses
+back-to-back RTSP sessions) — untested on the real camera; `BACKEND_DASHCAM_SOURCE=grab` = old path.
+User asked "deterministic algorithm vs some tensorflow — which would work better for lights?" → answered:
+deterministic (fitted thresholds), a tiny CNN only for conditions the statistics prove blind to.
