@@ -205,3 +205,6 @@ Mbit/s, no authentication; DESCRIBE answers 200 for any path. `ffmpeg -rtsp_tran
 rtsp://192.168.0.1/liveRTSP/av4 -frames:v 1 frame.jpg` works (frame in `70mai/frame1_live.jpg`); 5 s clip =
 127 frames. ffmpeg installed on the laptop (apt). The camera must be switched on by hand for the hotspot
 to appear (user).
+User, after seeing the frames in ~/Pictures: "good, looks perfect for my usecase. good, lets make sure we
+have all that documented for future work." → host repo `docs/DASHCAM_70MAI.md`, `tools/dashcam_brightness.py`,
+README index of peripheral docs; frames also in `~/Pictures/70mai_live_2026-10-19_*.jpg`.
