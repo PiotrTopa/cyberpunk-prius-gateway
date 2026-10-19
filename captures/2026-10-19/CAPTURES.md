@@ -42,3 +42,28 @@ pinout online (techno-fandom teardown covers only AVC-LAN; pinoutguide covers he
 no Toyota RGB link carries a pixel clock or a second sync; the behaviour fits a floating signal ground /
 shield of the RGB group (tie it to the DAC ground, not to RED). To discriminate: ohm the pin to MFD ground
 unpowered (≈0 Ω = ground/shield; kΩ–MΩ = a logic input such as YS, the RGB/video select line).
+
+## Head unit over USB → ADB works (user said)
+
+"New topic. I just connected my android chinese haedunit form car, I want to take control of it thorugh our
+computer. But lets start with reaching device mode and adb. test" → "focus on usb for now, phone is connected
+wia USB thethering, dont bother with that. We still trying USB, next port now, figure out if that works for now."
+
+13:34:02 the head unit's *second* USB port enumerated on the laptop as `0e8d:201c MediaTek "9520"`, one
+interface class ff/42/01 "ADB Interface" (device mode, ADB only — no MTP). `adb` (Debian package, udev rule
+51-android.rules) installed on the laptop; `adb devices` → `MJU8DY59WS8LMB85 device product:full_8227L_demo
+model:9520 device:8227L_demo` with NO authorisation prompt. Facts from the shell: MediaTek Autochips **AC8227L**
+(`ro.hardware`/`ro.board.platform` ac8227l), build `9520_00033_V001`, manufacturer `alps`, `ro.build.version.
+release` claims 10.0 but SDK 27 (= Android 8.1 API), `ro.debuggable=1`, `ro.secure=1`, `/system/xbin/su` present,
+USB config `adb`, screen 1280×720 @160 dpi, 115 packages, foreground app `com.zjinnova.zlink` (ZLink CarPlay /
+Android Auto), uptime 4 d 21 h, load ≈7. (The 14 Oct note "B9520B Android 9 kernel 4.14.116" is the same unit.)
+
+Side note, same morning: the Pi on laptop port 6 hit `usb usb1-port6: disabled by hub (EMI?)` again at
+12:39:44, 23 s after enumerating (then descriptor errors -71 at 12:40:43) — the 15 Oct port-2 event was not a
+one-off; it recurs with this Pi gadget on this laptop. Not investigated today (user: focus on the head unit).
+Root: `adb root` refused ("unable to connect for root: closed"), but `adb shell su 0 <cmd>` / `echo cmd | su`
+give uid 0; SELinux **Permissive**; /system ext4 ro on mmcblk0p22. Screenshot via `adb exec-out screencap -p`
+works (1280×720, ZLink "X-Car CarPlay/AA — please connect your phone with Bluetooth", BT name CarBT).
+Control test: `adb shell input keyevent KEYCODE_HOME` → launcher `com.android.launcher/com.xyauto.common.
+activity.MainActivity` came to the front (screenshot). Vendor packages: com.autochips.* (quickbootmanager,
+bluetooth, backcar), com.mediatek.mtklogger, com.xy.zlinkactivationcode, com.zjinnova.zlink.
