@@ -1,0 +1,13 @@
+14:24:45 auto slot 0 set
+14:24:45 auto slot 1 set
+14:24:45 nav_emu up (pol hi); waiting for the display's roll call
+14:24:50 display screen -> 5F
+14:24:55 our TX echoed OK (NAK): 00 01 12 30 81 FF
+14:25:21 roll call 12 01 00 (gateway auto-reply slot 0 answers)
+14:25:21 our TX echoed OK: 00 01 12 10 58 24 85
+14:25:22 our TX echoed OK: 00 01 12 12 58 28 29 32 60 74 A4 56
+14:25:22 display screen -> 00
+14:25:22 setup done -> initial burst
+14:25:22 our TX NAKed: 00 58 34 E0
+14:25:25 display screen -> 5F
+14:26:10 stopping; tx=40, echoes=42, display->178 NAKed=0

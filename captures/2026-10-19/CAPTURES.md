@@ -139,3 +139,27 @@ set through broadcasts), `com.acloud.intent.android.MAINUI_UPDATE`, `update.widg
 the I2C devices permanently (only z-link keeps /dev/i2c-4); system_server owns both ttyMT2 (MCU) and ttyMT3.
 Volume/source are therefore applied in the audio HAL / vendor services, not through the MCU — to be read
 from the dumped system+vendor images. Screenshots `headunit/hu_01…03.png`. Unit unplugged after this.
+
+**Volume API test (20:14 unit clock):** `media volume --stream 3 --get` → "35 in range [0..63]" (reads the
+TDA7729 scale). `media volume --stream 3 --set 30` and `input keyevent KEYCODE_VOLUME_UP` did NOT change it
+(still 35) → the vendor volume path bypasses the standard stream API; the setter is vendor-specific (to be
+found in the decompiled framework). System setting `Amp_Power=0` exists (the on-screen amplifier button),
+`sysinfo_android_amplifier_isshow=1`.
+**JBL amp vs AVC-LAN (user asked):** across ALL our bus captures the only addresses are 110 (EMV display),
+1C6 (G/W: climate/trip gateway), 178 (nav), broadcasts 1FF/FFF — no 440 DSP-AMP / 480 AMP frames at all
+(AVC_MAP.md mark10: "aftermarket radio + its amp on/off button … no AVC frames"). Published Prius frames
+(softservice.com.pl/corolla/avc/avclan.php): head unit 190 → DSP-AMP 440 `00 25 74 91 bb` balance, `92 ff`
+fade, `93 bb` bass, `94 mm` mid; EMV 110 → 440 `00 5E 29 60 dd` beep via speakers; Corolla broadcast
+`160→1FF 74 31 F1 90 vv bal fade 10 bass 10 treb 0 0 0 3 0` carries volume vv 0–FF. No published amp
+power-on or Prius volume frame.
+
+## Is the JBL amplifier on the bus? (user: "Are you sure it is not connected anymore at all to the bus? How do we now that?")
+
+Test 14:24–14:26 (`emu2_amp_on.ndjson`): head unit amplifier button ON (`Amp_Power=1`), gateway logging with
+nav_emu, user power-cycled the car. Roll call `110→FFF 12 01 00` at 14:25:21.08 answered ONLY by 178 (our nav
+emulator: `00 01 12 10 58 24 85`) and 1C6 (`00 01 12 10 E0 E4 E5`); device tables `12 01 01` → 178 `58 28 29 32
+60 74 A4 56` (the recorded real nav's table — it claims tuner 60 and audio amplifier 74 logical devices), 1C6
+`5D 00 5F 32`. No 440/480, no other address, over the whole file (masters 110/178/1C6 only). Conclusion: with
+the amp powered, nothing answers for it → the JBL amp is NOT connected to the AVC-LAN pair we tap (or is not
+powered by that button). Note: the stock nav box's device table includes logical 74 (amplifier) and 60
+(tuner): in this car the nav/audio ECU hosted those functions on the bus.
