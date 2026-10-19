@@ -1,0 +1,32 @@
+MEDIA SESSION SERVICE (dumpsys media_session)
+
+2 sessions listeners.
+Global priority session is null
+User Records:
+Record for full_user=0
+  Volume key long-press listener: null
+  Volume key long-press listener package: 
+  Media key listener: null
+  Media key listener package: 
+  Callback: null
+  Last MediaButtonReceiver: null
+  Restored MediaButtonReceiver: ComponentInfo{com.zjinnova.zlink/com.zjinnova.android.zlink.features.broadcast.MediaButtonReceiver}
+  Media button session is null
+  Sessions Stack - have 1 sessions:
+    A2dpMediaBrowserService com.android.bluetooth/A2dpMediaBrowserService (userId=0)
+      ownerPid=13379, ownerUid=1002, userId=0
+      package=com.android.bluetooth
+      launchIntent=null
+      mediaButtonReceiver=null
+      active=true
+      flags=3
+      rating type=0
+      controllers: 1
+      state=null
+      audioAttrs=AudioAttributes: usage=USAGE_MEDIA content=CONTENT_TYPE_UNKNOWN flags=0x0 tags= bundle=null
+      volumeType=1, controlType=2, max=0, current=0
+      metadata:size=0, description=null
+      queueTitle=null, size=0
+
+Audio playback (lastly played comes first)
+  uid=10032 packages=com.acloud.stub.localmusic 

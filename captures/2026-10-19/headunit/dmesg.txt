@@ -1,0 +1,1101 @@
+[ 6703.850210] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099878):7-0-0,bf00bce8,0,0
+[ 6703.992389] (0)[13520:tx_thread][CNN][HIF-SDIO][I]wmt_lib_get_fwinfor_from_emi:vir addr(0xf3187583)
+[ 6704.372832] -(0)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6704.791289] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097c70):2
+[ 6704.791359] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0999c8):7-0-1,bf00bce8,0,0
+[ 6704.793048] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:342
+[ 6704.793061] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6704.850160] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097d18):0
+[ 6704.850209] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099488):7-0-0,bf00bce8,0,0
+[ 6705.730159] (2)[164:wdtk-2][WDK],local_bit:0x4,cpu:2,check bit0x:f,3,1,5642958985828,RT[6705730149592]
+[ 6705.731338] (0)[162:wdtk-0][WDK],local_bit:0x5,cpu:0,check bit0x:f,3,1,5642958985828,RT[6705731332362]
+[ 6705.750151] (1)[163:wdtk-1][WDK],local_bit:0x7,cpu:1,check bit0x:f,3,1,5642958985828,RT[6705750142054]
+[ 6705.760209] (3)[165:wdtk-3][WDK],local_bit:0xf,cpu:3,check bit0x:f,3,1,5642958985828,RT[6705760199439]
+[ 6705.761380] (3)[165:wdtk-3][WDK]: kick Ex WDT,RT[6705761376900]
+[ 6705.791131] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097340):2
+[ 6705.791200] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099920):7-0-1,bf00bce8,0,0
+[ 6705.850158] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0973e8):0
+[ 6705.850217] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0991e8):7-0-0,bf00bce8,0,0
+[ 6706.373430] -(1)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6706.791128] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097490):2
+[ 6706.791192] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099a70):7-0-1,bf00bce8,0,0
+[ 6706.792893] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:212
+[ 6706.792907] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6706.850163] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097538):0
+[ 6706.850215] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099530):7-0-0,bf00bce8,0,0
+[ 6707.190876] (0)[735:watchdog]AEEIOCTL_RT_MON_Kick ( 300)
+[ 6707.191141] (0)[735:watchdog][Hang_Detect] hang_detect enabled 10
+[ 6707.791147] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0975e0):2
+[ 6707.791211] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099338):7-0-1,bf00bce8,0,0
+[ 6707.850118] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097688):0
+[ 6707.850193] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0993e0):7-0-0,bf00bce8,0,0
+[ 6708.791282] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097730):2
+[ 6708.791352] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0995d8):7-0-1,bf00bce8,0,0
+[ 6708.793011] (1)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:212
+[ 6708.793023] (1)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6708.850171] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0977d8):0
+[ 6708.850220] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099680):7-0-0,bf00bce8,0,0
+[ 6709.791278] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097880):2
+[ 6709.791347] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099728):7-0-1,bf00bce8,0,0
+[ 6709.793590] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:171
+[ 6709.793603] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6709.850163] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097928):0
+[ 6709.850212] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0997d0):7-0-0,bf00bce8,0,0
+[ 6710.377112] -(1)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6710.791131] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0979d0):2
+[ 6710.791198] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099290):7-0-1,bf00bce8,0,0
+[ 6710.850164] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097a78):0
+[ 6710.850213] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099140):7-0-0,bf00bce8,0,0
+[ 6710.980339] (3)[594:AlarmManager]alarm_dev: alarm 2 set 423702.271000000
+[ 6710.980355] -(3)[594:AlarmManager]alarmtimer_enqueue, 423702271000000
+[ 6710.981754] (2)[611:WifiStateMachin]alarm_dev: alarm 2 set 423433.223000000
+[ 6710.981771] -(2)[611:WifiStateMachin]alarmtimer_enqueue, 423433223000000
+[ 6710.982071] (1)[13520:tx_thread][wlan]aisFsmSteps:(AIS STATE) [13] TRANSITION: [0] -> [2]
+[ 6710.982117] (1)[13520:tx_thread][wlan]scnFsmSteps:(SCN STATE) [19] TRANSITION: [0] -> [1]
+[ 6710.988011] (0)[13520:tx_thread][CNN][HIF-SDIO][I]wmt_lib_get_fwinfor_from_emi:vir addr(0xf31875f1)
+[ 6711.791132] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097b20):2
+[ 6711.791201] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099b18):7-0-1,bf00bce8,0,0
+[ 6711.792849] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:171
+[ 6711.792894] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6711.850305] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097bc8):0
+[ 6711.850368] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099878):7-0-0,bf00bce8,0,0
+[ 6712.739696] (0)[13520:tx_thread][wlan]scnFsmSteps:(SCN STATE) [19] TRANSITION: [1] -> [0]
+[ 6712.739724] (0)[13520:tx_thread][wlan]wlanCheckConnectedAP:(SCN WARN) disconnect state, no need to report!
+[ 6712.739835] (0)[13520:tx_thread][wlan]aisFsmSteps:(AIS STATE) [13] TRANSITION: [2] -> [0]
+[ 6712.760288] -(0)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6712.791150] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097c70):2
+[ 6712.791220] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0999c8):7-0-1,bf00bce8,0,0
+[ 6712.850164] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097d18):0
+[ 6712.850221] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099488):7-0-0,bf00bce8,0,0
+[ 6713.366010] -(0)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6713.600208] -(0)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6713.791146] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097340):2
+[ 6713.791214] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099920):7-0-1,bf00bce8,0,0
+[ 6713.792936] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:212
+[ 6713.792949] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6713.850168] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0973e8):0
+[ 6713.850216] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0991e8):7-0-0,bf00bce8,0,0
+[ 6713.995890] (0)[13520:tx_thread][CNN][HIF-SDIO][I]wmt_lib_get_fwinfor_from_emi:vir addr(0xf3187623)
+[ 6714.365622] -(1)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6714.791323] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097490):2
+[ 6714.791396] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099a70):7-0-1,bf00bce8,0,0
+[ 6714.850110] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097538):0
+[ 6714.850166] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099530):7-0-0,bf00bce8,0,0
+[ 6715.791280] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0975e0):2
+[ 6715.791352] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099338):7-0-1,bf00bce8,0,0
+[ 6715.793032] (1)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:212
+[ 6715.793047] (1)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6715.850161] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097688):0
+[ 6715.850209] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0993e0):7-0-0,bf00bce8,0,0
+[ 6716.367307] -(1)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6716.791289] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097730):2
+[ 6716.791355] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0995d8):7-0-1,bf00bce8,0,0
+[ 6716.850108] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0977d8):0
+[ 6716.850159] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099680):7-0-0,bf00bce8,0,0
+[ 6717.791125] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097880):2
+[ 6717.791195] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099728):7-0-1,bf00bce8,0,0
+[ 6717.792780] (1)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:212
+[ 6717.792792] (1)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6717.850187] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097928):0
+[ 6717.850239] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0997d0):7-0-0,bf00bce8,0,0
+[ 6718.791288] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0979d0):2
+[ 6718.791362] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099290):7-0-1,bf00bce8,0,0
+[ 6718.793247] (2)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:171
+[ 6718.793260] (2)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6718.850161] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097a78):0
+[ 6718.850215] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099140):7-0-0,bf00bce8,0,0
+[ 6719.791282] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097b20):2
+[ 6719.791356] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099b18):7-0-1,bf00bce8,0,0
+[ 6719.850165] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097bc8):0
+[ 6719.850216] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099878):7-0-0,bf00bce8,0,0
+[ 6720.369118] -(3)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6720.791287] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097c70):2
+[ 6720.791355] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0999c8):7-0-1,bf00bce8,0,0
+[ 6720.793226] (1)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:301
+[ 6720.793238] (1)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6720.850165] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097d18):0
+[ 6720.850215] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099488):7-0-0,bf00bce8,0,0
+[ 6720.981326] (3)[594:AlarmManager]alarm_dev: alarm 2 set 423702.271000000
+[ 6720.981342] -(3)[594:AlarmManager]alarmtimer_enqueue, 423702271000000
+[ 6720.982740] (0)[611:WifiStateMachin]alarm_dev: alarm 2 set 423443.224000000
+[ 6720.982757] -(0)[611:WifiStateMachin]alarmtimer_enqueue, 423443224000000
+[ 6720.983069] (2)[13520:tx_thread][wlan]aisFsmSteps:(AIS STATE) [13] TRANSITION: [0] -> [2]
+[ 6720.983115] (2)[13520:tx_thread][wlan]scnFsmSteps:(SCN STATE) [19] TRANSITION: [0] -> [1]
+[ 6720.989018] (2)[13520:tx_thread][CNN][HIF-SDIO][I]wmt_lib_get_fwinfor_from_emi:vir addr(0xf3187691)
+[ 6721.791148] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097340):2
+[ 6721.791216] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099920):7-0-1,bf00bce8,0,0
+[ 6721.850161] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0973e8):0
+[ 6721.850216] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0991e8):7-0-0,bf00bce8,0,0
+[ 6722.749445] (0)[13520:tx_thread][wlan]scnFsmSteps:(SCN STATE) [19] TRANSITION: [1] -> [0]
+[ 6722.749473] (0)[13520:tx_thread][wlan]wlanCheckConnectedAP:(SCN WARN) disconnect state, no need to report!
+[ 6722.749584] (0)[13520:tx_thread][wlan]aisFsmSteps:(AIS STATE) [13] TRANSITION: [2] -> [0]
+[ 6722.770409] -(1)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6722.791192] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097490):2
+[ 6722.791255] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099a70):7-0-1,bf00bce8,0,0
+[ 6722.792891] (1)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:171
+[ 6722.792903] (1)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6722.850226] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097538):0
+[ 6722.850284] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099530):7-0-0,bf00bce8,0,0
+[ 6723.377003] -(3)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6723.500116] (1)[86:hang_detect][Hang_Detect] hang_detect thread counts down 10:10, status 1.
+[ 6723.570210] -(3)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6723.791469] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0975e0):2
+[ 6723.791533] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099338):7-0-1,bf00bce8,0,0
+[ 6723.793178] (1)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:41
+[ 6723.793189] (1)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6723.850128] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097688):0
+[ 6723.860146] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0993e0):7-0-0,bf00bce8,0,0
+[ 6723.997759] (0)[13520:tx_thread][CNN][HIF-SDIO][I]wmt_lib_get_fwinfor_from_emi:vir addr(0xf31876c3)
+[ 6724.378051] -(2)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6724.791216] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097730):2
+[ 6724.791284] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0995d8):7-0-1,bf00bce8,0,0
+[ 6724.850175] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0977d8):0
+[ 6724.850328] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099680):7-0-0,bf00bce8,0,0
+[ 6725.740151] (0)[162:wdtk-0][WDK],local_bit:0x1,cpu:0,check bit0x:f,3,1,5642958985828,RT[6725740142025]
+[ 6725.741341] (2)[164:wdtk-2][WDK],local_bit:0x5,cpu:2,check bit0x:f,3,1,5642958985828,RT[6725741334717]
+[ 6725.760163] (1)[163:wdtk-1][WDK],local_bit:0x7,cpu:1,check bit0x:f,3,1,5642958985828,RT[6725760153563]
+[ 6725.770198] (3)[165:wdtk-3][WDK],local_bit:0xf,cpu:3,check bit0x:f,3,1,5642958985828,RT[6725770188717]
+[ 6725.771369] (3)[165:wdtk-3][WDK]: kick Ex WDT,RT[6725771365563]
+[ 6725.791141] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097880):2
+[ 6725.791210] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099728):7-0-1,bf00bce8,0,0
+[ 6725.792859] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:212
+[ 6725.792870] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6725.850169] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097928):0
+[ 6725.850224] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0997d0):7-0-0,bf00bce8,0,0
+[ 6726.380410] -(0)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6726.791136] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0979d0):2
+[ 6726.791201] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099290):7-0-1,bf00bce8,0,0
+[ 6726.850165] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097a78):0
+[ 6726.850222] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099140):7-0-0,bf00bce8,0,0
+[ 6727.791141] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097b20):2
+[ 6727.791213] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099b18):7-0-1,bf00bce8,0,0
+[ 6727.792836] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:212
+[ 6727.792848] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6727.850158] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097bc8):0
+[ 6727.850218] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099878):7-0-0,bf00bce8,0,0
+[ 6728.791222] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097c70):2
+[ 6728.791297] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0999c8):7-0-1,bf00bce8,0,0
+[ 6728.793515] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:171
+[ 6728.793530] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6728.850173] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097d18):0
+[ 6728.850229] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099488):7-0-0,bf00bce8,0,0
+[ 6729.791159] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097340):2
+[ 6729.791234] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099920):7-0-1,bf00bce8,0,0
+[ 6729.850108] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0973e8):0
+[ 6729.850167] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0991e8):7-0-0,bf00bce8,0,0
+[ 6730.380478] -(2)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6730.791283] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097490):2
+[ 6730.791361] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099a70):7-0-1,bf00bce8,0,0
+[ 6730.793064] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:171
+[ 6730.793077] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6730.850171] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097538):0
+[ 6730.850281] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099530):7-0-0,bf00bce8,0,0
+[ 6730.982322] (3)[594:AlarmManager]alarm_dev: alarm 2 set 423702.271000000
+[ 6730.982338] -(3)[594:AlarmManager]alarmtimer_enqueue, 423702271000000
+[ 6730.982352] (3)[594:AlarmManager]alarm_dev: alarm 3 set 423501.763000000
+[ 6730.983765] (2)[611:WifiStateMachin]alarm_dev: alarm 2 set 423453.225000000
+[ 6730.983782] -(2)[611:WifiStateMachin]alarmtimer_enqueue, 423453225000000
+[ 6730.984030] (1)[13520:tx_thread][wlan]aisFsmSteps:(AIS STATE) [13] TRANSITION: [0] -> [2]
+[ 6730.984077] (1)[13520:tx_thread][wlan]scnFsmSteps:(SCN STATE) [19] TRANSITION: [0] -> [1]
+[ 6730.991247] (1)[13520:tx_thread][CNN][HIF-SDIO][I]wmt_lib_get_fwinfor_from_emi:vir addr(0xf3187731)
+[ 6731.637813] (1)[1:init]init: PropSet [sys.xy.audio.start.pid]=[0] Done
+[ 6731.791151] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0975e0):2
+[ 6731.791218] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099338):7-0-1,bf00bce8,0,0
+[ 6731.850160] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097688):0
+[ 6731.850255] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0993e0):7-0-0,bf00bce8,0,0
+[ 6732.180981] (2)[1:init]init: PropSet [sys.xy.audio.start.pid]=[0] Done
+[ 6732.577368] -(0)[0:swapper/0]afe_dl1_interrupt_handler underflow
+[ 6732.687574] (1)[1:init]init: PropSet [sys.xy.audio.start.pid]=[0] Done
+[ 6732.732950] (3)[485:system_server][CD3313] cd3313_ioctl cd3313_ioctl ------ ---- ------ ----
+[ 6732.733163] (2)[217:logd.auditd]type=1400 audit(1792410222.880:1797): avc: denied { read } for pid=13238 comm="z-link" scontext=u:r:shell:s0 tcontext=u:r:shell:s0 tclass=netlink_kobject_uevent_socket permissive=1
+[ 6732.733181] (2)[217:logd.auditd]type=1400 audit(1792410423.200:1798): avc: denied { ioctl } for pid=485 comm="system_server" path="/dev/adau1701" dev="tmpfs" ino=8883 ioctlcmd=566b scontext=u:r:system_server:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+[ 6732.734030] (3)[485:system_server][CD3313] cd3313dacmute flag  1 dacIn_flag 0
+[ 6732.735891] (0)[485:system_server][CD3313] cd3313  cd3313  ret 8 flag 0  num 63 wtite 0x3f 
+[ 6732.736407] (1)[265:metalogo@1.0-se][MTZ] enter mtz_ioctl.
+[ 6732.736418] (1)[265:metalogo@1.0-se][MTZ] Read Reserved u4Size(325).
+[ 6732.737228] (0)[485:system_server][CD3313] cd3313  cd3313  0x3f, 0x80, 0xa0, 0xc0, 0xe0 , 0x40, 0x67, 0x7e
+[ 6732.749675] (1)[13520:tx_thread][wlan]scnFsmSteps:(SCN STATE) [19] TRANSITION: [1] -> [0]
+[ 6732.749706] (1)[13520:tx_thread][wlan]wlanCheckConnectedAP:(SCN WARN) disconnect state, no need to report!
+[ 6732.749821] (1)[13520:tx_thread][wlan]aisFsmSteps:(AIS STATE) [13] TRANSITION: [2] -> [0]
+[ 6732.770212] -(3)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6732.785007] (1)[1:init]init: PropSet [sys.xy.audio.start.pid]=[310] Done
+[ 6732.791139] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097730):2
+[ 6732.791222] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0995d8):7-0-1,bf00bce8,0,0
+[ 6732.793353] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:212
+[ 6732.793367] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6732.850302] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0977d8):0
+[ 6732.850354] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099680):7-0-0,bf00bce8,0,0
+[ 6733.111095] (0)[485:system_server][CD3313] cd3313  cd3313  ret 8 flag 5  num 0 wtite 0x40 
+[ 6733.112194] (0)[485:system_server][CD3313] cd3313  cd3313  0x3f, 0x80, 0xa0, 0xc0, 0xe0 , 0x40, 0x67, 0x7e
+[ 6733.113409] (0)[485:system_server][CD3313] cd3313_ioctl cd3313_ioctl ------ ---- ------ ----end 0  
+[ 6733.376932] -(0)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6733.750199] -(1)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6733.791188] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097880):2
+[ 6733.791257] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099728):7-0-1,bf00bce8,0,0
+[ 6733.850160] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097928):0
+[ 6733.850208] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0997d0):7-0-0,bf00bce8,0,0
+[ 6733.997521] (1)[13520:tx_thread][CNN][HIF-SDIO][I]wmt_lib_get_fwinfor_from_emi:vir addr(0xf3187763)
+[ 6734.110160] (0)[14126:kworker/0:1][CD3313] cd3313dacmute flag  0 dacIn_flag 1
+[ 6734.112819] (0)[14126:kworker/0:1][CD3313] cd3313  cd3313  ret 8 flag 0  num 18 wtite 0x12 
+[ 6734.113899] (0)[14126:kworker/0:1][CD3313] cd3313  cd3313  0x12, 0x80, 0xa0, 0xc0, 0xe0 , 0x40, 0x67, 0x7e
+[ 6734.378611] -(0)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6734.791285] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0979d0):2
+[ 6734.791354] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099290):7-0-1,bf00bce8,0,0
+[ 6734.793000] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:212
+[ 6734.793013] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6734.850158] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097a78):0
+[ 6734.850208] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099140):7-0-0,bf00bce8,0,0
+[ 6735.791299] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097b20):2
+[ 6735.791369] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099b18):7-0-1,bf00bce8,0,0
+[ 6735.793256] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:171
+[ 6735.793268] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6735.850164] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097bc8):0
+[ 6735.850213] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099878):7-0-0,bf00bce8,0,0
+[ 6736.379377] -(1)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6736.791147] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097c70):2
+[ 6736.791231] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0999c8):7-0-1,bf00bce8,0,0
+[ 6736.850182] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097d18):0
+[ 6736.850248] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099488):7-0-0,bf00bce8,0,0
+[ 6737.191675] (0)[735:watchdog]AEEIOCTL_RT_MON_Kick ( 300)
+[ 6737.191938] (0)[735:watchdog][Hang_Detect] hang_detect enabled 10
+[ 6737.791148] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097340):2
+[ 6737.791217] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099920):7-0-1,bf00bce8,0,0
+[ 6737.793024] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:171
+[ 6737.793036] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6737.850185] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0973e8):0
+[ 6737.850242] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0991e8):7-0-0,bf00bce8,0,0
+[ 6738.791293] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097490):2
+[ 6738.791366] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099a70):7-0-1,bf00bce8,0,0
+[ 6738.793348] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:171
+[ 6738.793360] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6738.850202] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097538):0
+[ 6738.850252] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099530):7-0-0,bf00bce8,0,0
+[ 6739.791281] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0975e0):2
+[ 6739.791350] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099338):7-0-1,bf00bce8,0,0
+[ 6739.850165] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097688):0
+[ 6739.850218] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0993e0):7-0-0,bf00bce8,0,0
+[ 6740.380414] -(2)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6740.791275] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097730):2
+[ 6740.791348] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0995d8):7-0-1,bf00bce8,0,0
+[ 6740.793315] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:301
+[ 6740.793328] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6740.850166] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0977d8):0
+[ 6740.850215] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099680):7-0-0,bf00bce8,0,0
+[ 6740.983327] (3)[594:AlarmManager]alarm_dev: alarm 2 set 423702.271000000
+[ 6740.983344] -(3)[594:AlarmManager]alarmtimer_enqueue, 423702271000000
+[ 6740.985511] (2)[13520:tx_thread][wlan]aisFsmSteps:(AIS STATE) [13] TRANSITION: [0] -> [2]
+[ 6740.985566] (2)[13520:tx_thread][wlan]scnFsmSteps:(SCN STATE) [19] TRANSITION: [0] -> [1]
+[ 6740.985971] (0)[611:WifiStateMachin]alarm_dev: alarm 2 set 423463.227000000
+[ 6740.985987] -(0)[611:WifiStateMachin]alarmtimer_enqueue, 423463227000000
+[ 6740.992374] (1)[13520:tx_thread][CNN][HIF-SDIO][I]wmt_lib_get_fwinfor_from_emi:vir addr(0xf31877d1)
+[ 6741.791124] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097880):2
+[ 6741.791202] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099728):7-0-1,bf00bce8,0,0
+[ 6741.850164] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097928):0
+[ 6741.850214] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0997d0):7-0-0,bf00bce8,0,0
+[ 6742.779769] (3)[13520:tx_thread][wlan]scnFsmSteps:(SCN STATE) [19] TRANSITION: [1] -> [0]
+[ 6742.779797] (3)[13520:tx_thread][wlan]wlanCheckConnectedAP:(SCN WARN) disconnect state, no need to report!
+[ 6742.779905] (3)[13520:tx_thread][wlan]aisFsmSteps:(AIS STATE) [13] TRANSITION: [2] -> [0]
+[ 6742.791179] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0979d0):2
+[ 6742.791252] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099290):7-0-1,bf00bce8,0,0
+[ 6742.793057] (1)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:171
+[ 6742.793070] (1)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6742.800218] -(3)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6742.850163] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097a78):0
+[ 6742.850213] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099140):7-0-0,bf00bce8,0,0
+[ 6743.010442] -(3)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6743.406777] -(1)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6743.791281] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097b20):2
+[ 6743.791352] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099b18):7-0-1,bf00bce8,0,0
+[ 6743.850162] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097bc8):0
+[ 6743.850212] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099878):7-0-0,bf00bce8,0,0
+[ 6743.997484] (3)[13520:tx_thread][CNN][HIF-SDIO][I]wmt_lib_get_fwinfor_from_emi:vir addr(0xf3187803)
+[ 6744.406953] -(3)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6744.791288] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097c70):2
+[ 6744.791362] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0999c8):7-0-1,bf00bce8,0,0
+[ 6744.793032] (1)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:213
+[ 6744.793047] (1)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6744.850160] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097d18):0
+[ 6744.850238] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099488):7-0-0,bf00bce8,0,0
+[ 6745.750162] (2)[164:wdtk-2][WDK],local_bit:0x4,cpu:2,check bit0x:f,3,1,5642958985828,RT[6745750152149]
+[ 6745.751340] (0)[162:wdtk-0][WDK],local_bit:0x5,cpu:0,check bit0x:f,3,1,5642958985828,RT[6745751334918]
+[ 6745.770166] (1)[163:wdtk-1][WDK],local_bit:0x7,cpu:1,check bit0x:f,3,1,5642958985828,RT[6745770156457]
+[ 6745.780195] (3)[165:wdtk-3][WDK],local_bit:0xf,cpu:3,check bit0x:f,3,1,5642958985828,RT[6745780186611]
+[ 6745.781363] (3)[165:wdtk-3][WDK]: kick Ex WDT,RT[6745781360611]
+[ 6745.791245] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097340):2
+[ 6745.791323] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099920):7-0-1,bf00bce8,0,0
+[ 6745.793341] (2)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:171
+[ 6745.793354] (2)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6745.850159] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0973e8):0
+[ 6745.850213] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0991e8):7-0-0,bf00bce8,0,0
+[ 6746.407438] -(1)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6746.791152] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097490):2
+[ 6746.791226] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099a70):7-0-1,bf00bce8,0,0
+[ 6746.850107] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097538):0
+[ 6746.850158] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099530):7-0-0,bf00bce8,0,0
+[ 6747.791128] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0975e0):2
+[ 6747.791201] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099338):7-0-1,bf00bce8,0,0
+[ 6747.793021] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:301
+[ 6747.793033] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6747.850156] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097688):0
+[ 6747.850204] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0993e0):7-0-0,bf00bce8,0,0
+[ 6748.791154] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097730):2
+[ 6748.791233] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0995d8):7-0-1,bf00bce8,0,0
+[ 6748.850168] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0977d8):0
+[ 6748.850220] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099680):7-0-0,bf00bce8,0,0
+[ 6749.791285] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097880):2
+[ 6749.791353] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099728):7-0-1,bf00bce8,0,0
+[ 6749.793123] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:171
+[ 6749.793135] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6749.850160] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097928):0
+[ 6749.850218] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0997d0):7-0-0,bf00bce8,0,0
+[ 6750.411229] -(0)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6750.791138] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0979d0):2
+[ 6750.791206] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099290):7-0-1,bf00bce8,0,0
+[ 6750.850169] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097a78):0
+[ 6750.850219] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099140):7-0-0,bf00bce8,0,0
+[ 6750.985314] (3)[594:AlarmManager]alarm_dev: alarm 2 set 423702.271000000
+[ 6750.985330] -(3)[594:AlarmManager]alarmtimer_enqueue, 423702271000000
+[ 6750.986791] (2)[611:WifiStateMachin]alarm_dev: alarm 2 set 423473.228000000
+[ 6750.986808] -(2)[611:WifiStateMachin]alarmtimer_enqueue, 423473228000000
+[ 6750.987111] (0)[13520:tx_thread][wlan]aisFsmSteps:(AIS STATE) [13] TRANSITION: [0] -> [2]
+[ 6750.987157] (0)[13520:tx_thread][wlan]scnFsmSteps:(SCN STATE) [19] TRANSITION: [0] -> [1]
+[ 6750.993159] (2)[13520:tx_thread][CNN][HIF-SDIO][I]wmt_lib_get_fwinfor_from_emi:vir addr(0xf318786f)
+[ 6751.791294] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097b20):2
+[ 6751.791360] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099b18):7-0-1,bf00bce8,0,0
+[ 6751.793154] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:212
+[ 6751.793167] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6751.850163] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097bc8):0
+[ 6751.850218] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099878):7-0-0,bf00bce8,0,0
+[ 6752.740628] (1)[13520:tx_thread][wlan]scnFsmSteps:(SCN STATE) [19] TRANSITION: [1] -> [0]
+[ 6752.740656] (1)[13520:tx_thread][wlan]wlanCheckConnectedAP:(SCN WARN) disconnect state, no need to report!
+[ 6752.740772] (1)[13520:tx_thread][wlan]aisFsmSteps:(AIS STATE) [13] TRANSITION: [2] -> [0]
+[ 6752.760233] -(0)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6752.791125] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097c70):2
+[ 6752.791210] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0999c8):7-0-1,bf00bce8,0,0
+[ 6752.850179] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097d18):0
+[ 6752.850284] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099488):7-0-0,bf00bce8,0,0
+[ 6753.040254] -(2)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6753.367053] -(2)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6753.510164] (1)[86:hang_detect][Hang_Detect] hang_detect thread counts down 10:10, status 1.
+[ 6753.791119] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097340):2
+[ 6753.791189] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099920):7-0-1,bf00bce8,0,0
+[ 6753.792968] (1)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:212
+[ 6753.792979] (1)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6753.850167] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0973e8):0
+[ 6753.850223] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0991e8):7-0-0,bf00bce8,0,0
+[ 6753.997556] (1)[13520:tx_thread][CNN][HIF-SDIO][I]wmt_lib_get_fwinfor_from_emi:vir addr(0xf31878a0)
+[ 6754.367042] -(1)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6754.791273] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097490):2
+[ 6754.791343] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099a70):7-0-1,bf00bce8,0,0
+[ 6754.793283] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:171
+[ 6754.793296] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6754.850171] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097538):0
+[ 6754.850223] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099530):7-0-0,bf00bce8,0,0
+[ 6755.791284] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0975e0):2
+[ 6755.791357] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099338):7-0-1,bf00bce8,0,0
+[ 6755.850120] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097688):0
+[ 6755.850169] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0993e0):7-0-0,bf00bce8,0,0
+[ 6756.368732] -(1)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6756.791063] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097730):2
+[ 6756.791138] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0995d8):7-0-1,bf00bce8,0,0
+[ 6756.850119] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0977d8):0
+[ 6756.850168] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099680):7-0-0,bf00bce8,0,0
+[ 6757.791229] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097880):2
+[ 6757.791294] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099728):7-0-1,bf00bce8,0,0
+[ 6757.792903] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:342
+[ 6757.792915] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6757.850115] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097928):0
+[ 6757.850166] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0997d0):7-0-0,bf00bce8,0,0
+[ 6758.791131] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0979d0):2
+[ 6758.791201] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099290):7-0-1,bf00bce8,0,0
+[ 6758.850175] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097a78):0
+[ 6758.850227] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099140):7-0-0,bf00bce8,0,0
+[ 6759.791282] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097b20):2
+[ 6759.791371] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099b18):7-0-1,bf00bce8,0,0
+[ 6759.793026] (2)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:212
+[ 6759.793038] (2)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6759.850148] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097bc8):0
+[ 6759.850201] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099878):7-0-0,bf00bce8,0,0
+[ 6760.370470] -(1)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6760.791285] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097c70):2
+[ 6760.791356] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0999c8):7-0-1,bf00bce8,0,0
+[ 6760.850175] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097d18):0
+[ 6760.850231] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099488):7-0-0,bf00bce8,0,0
+[ 6760.986326] (3)[594:AlarmManager]alarm_dev: alarm 2 set 423702.271000000
+[ 6760.986342] -(3)[594:AlarmManager]alarmtimer_enqueue, 423702271000000
+[ 6760.987760] (2)[611:WifiStateMachin]alarm_dev: alarm 2 set 423483.229000000
+[ 6760.987776] -(2)[611:WifiStateMachin]alarmtimer_enqueue, 423483229000000
+[ 6760.988023] (1)[13520:tx_thread][wlan]aisFsmSteps:(AIS STATE) [13] TRANSITION: [0] -> [2]
+[ 6760.988069] (1)[13520:tx_thread][wlan]scnFsmSteps:(SCN STATE) [19] TRANSITION: [0] -> [1]
+[ 6760.992933] (3)[13520:tx_thread][CNN][HIF-SDIO][I]wmt_lib_get_fwinfor_from_emi:vir addr(0xf318790c)
+[ 6761.791151] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097340):2
+[ 6761.791221] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099920):7-0-1,bf00bce8,0,0
+[ 6761.792818] (2)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:212
+[ 6761.792830] (2)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6761.850151] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0973e8):0
+[ 6761.850203] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0991e8):7-0-0,bf00bce8,0,0
+[ 6762.769758] (3)[13520:tx_thread][wlan]scnFsmSteps:(SCN STATE) [19] TRANSITION: [1] -> [0]
+[ 6762.769785] (3)[13520:tx_thread][wlan]wlanCheckConnectedAP:(SCN WARN) disconnect state, no need to report!
+[ 6762.769960] (3)[13520:tx_thread][wlan]aisFsmSteps:(AIS STATE) [13] TRANSITION: [2] -> [0]
+[ 6762.790406] -(1)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6762.791173] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097490):2
+[ 6762.791232] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099a70):7-0-1,bf00bce8,0,0
+[ 6762.793222] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:41
+[ 6762.793235] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6762.850169] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097538):0
+[ 6762.850228] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099530):7-0-0,bf00bce8,0,0
+[ 6763.397039] -(0)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6763.730249] -(0)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6763.791333] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0975e0):2
+[ 6763.791404] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099338):7-0-1,bf00bce8,0,0
+[ 6763.850174] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097688):0
+[ 6763.850222] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0993e0):7-0-0,bf00bce8,0,0
+[ 6763.997732] (0)[13520:tx_thread][CNN][HIF-SDIO][I]wmt_lib_get_fwinfor_from_emi:vir addr(0xf318793d)
+[ 6764.396950] -(1)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6764.791282] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097730):2
+[ 6764.791351] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0995d8):7-0-1,bf00bce8,0,0
+[ 6764.793094] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:212
+[ 6764.793106] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6764.850149] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0977d8):0
+[ 6764.850205] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099680):7-0-0,bf00bce8,0,0
+[ 6765.760087] (0)[162:wdtk-0][WDK],local_bit:0x1,cpu:0,check bit0x:f,3,1,5642958985828,RT[6765760077043]
+[ 6765.761276] (2)[164:wdtk-2][WDK],local_bit:0x5,cpu:2,check bit0x:f,3,1,5642958985828,RT[6765761270197]
+[ 6765.780151] (1)[163:wdtk-1][WDK],local_bit:0x7,cpu:1,check bit0x:f,3,1,5642958985828,RT[6765780141812]
+[ 6765.790156] (3)[165:wdtk-3][WDK],local_bit:0xf,cpu:3,check bit0x:f,3,1,5642958985828,RT[6765790147043]
+[ 6765.791296] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097880):2
+[ 6765.791329] (3)[165:wdtk-3][WDK]: kick Ex WDT,RT[6765791326505]
+[ 6765.791506] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099728):7-0-1,bf00bce8,0,0
+[ 6765.793463] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:171
+[ 6765.793474] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6765.850168] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097928):0
+[ 6765.850217] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0997d0):7-0-0,bf00bce8,0,0
+[ 6766.397766] -(0)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6766.791149] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0979d0):2
+[ 6766.791218] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099290):7-0-1,bf00bce8,0,0
+[ 6766.850164] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097a78):0
+[ 6766.850222] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099140):7-0-0,bf00bce8,0,0
+[ 6767.192433] (0)[735:watchdog]AEEIOCTL_RT_MON_Kick ( 300)
+[ 6767.192695] (0)[735:watchdog][Hang_Detect] hang_detect enabled 10
+[ 6767.791144] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097b20):2
+[ 6767.791214] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099b18):7-0-1,bf00bce8,0,0
+[ 6767.793011] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:171
+[ 6767.793023] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6767.850178] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097bc8):0
+[ 6767.850233] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099878):7-0-0,bf00bce8,0,0
+[ 6768.791281] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097c70):2
+[ 6768.791353] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0999c8):7-0-1,bf00bce8,0,0
+[ 6768.793316] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:171
+[ 6768.793328] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6768.850166] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097d18):0
+[ 6768.850217] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099488):7-0-0,bf00bce8,0,0
+[ 6769.791131] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097340):2
+[ 6769.791199] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099920):7-0-1,bf00bce8,0,0
+[ 6769.850163] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0973e8):0
+[ 6769.850213] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0991e8):7-0-0,bf00bce8,0,0
+[ 6770.401477] -(0)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6770.791321] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097490):2
+[ 6770.791393] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099a70):7-0-1,bf00bce8,0,0
+[ 6770.793163] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:171
+[ 6770.793175] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6770.850159] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097538):0
+[ 6770.850209] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099530):7-0-0,bf00bce8,0,0
+[ 6770.987338] (3)[594:AlarmManager]alarm_dev: alarm 2 set 423702.271000000
+[ 6770.987354] -(3)[594:AlarmManager]alarmtimer_enqueue, 423702271000000
+[ 6770.988890] (0)[611:WifiStateMachin]alarm_dev: alarm 2 set 423493.230000000
+[ 6770.988907] -(0)[611:WifiStateMachin]alarmtimer_enqueue, 423493230000000
+[ 6770.990859] (1)[13520:tx_thread][wlan]aisFsmSteps:(AIS STATE) [13] TRANSITION: [0] -> [2]
+[ 6770.990905] (1)[13520:tx_thread][wlan]scnFsmSteps:(SCN STATE) [19] TRANSITION: [0] -> [1]
+[ 6770.995784] (0)[13520:tx_thread][CNN][HIF-SDIO][I]wmt_lib_get_fwinfor_from_emi:vir addr(0xf31879a9)
+[ 6771.791282] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0975e0):2
+[ 6771.791355] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099338):7-0-1,bf00bce8,0,0
+[ 6771.850168] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097688):0
+[ 6771.850222] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0993e0):7-0-0,bf00bce8,0,0
+[ 6772.774371] (1)[13520:tx_thread][wlan]scnFsmSteps:(SCN STATE) [19] TRANSITION: [1] -> [0]
+[ 6772.774400] (1)[13520:tx_thread][wlan]wlanCheckConnectedAP:(SCN WARN) disconnect state, no need to report!
+[ 6772.774510] (1)[13520:tx_thread][wlan]aisFsmSteps:(AIS STATE) [13] TRANSITION: [2] -> [0]
+[ 6772.790404] -(2)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6772.791168] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097730):2
+[ 6772.791236] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0995d8):7-0-1,bf00bce8,0,0
+[ 6772.792968] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:212
+[ 6772.792983] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6772.850170] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0977d8):0
+[ 6772.850219] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099680):7-0-0,bf00bce8,0,0
+[ 6773.401273] -(0)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6773.660197] -(0)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6773.791149] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097880):2
+[ 6773.791212] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099728):7-0-1,bf00bce8,0,0
+[ 6773.850164] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097928):0
+[ 6773.850214] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0997d0):7-0-0,bf00bce8,0,0
+[ 6774.002381] (2)[13520:tx_thread][CNN][HIF-SDIO][I]wmt_lib_get_fwinfor_from_emi:vir addr(0xf31879da)
+[ 6774.401328] -(0)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6774.791282] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0979d0):2
+[ 6774.791361] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099290):7-0-1,bf00bce8,0,0
+[ 6774.793046] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:212
+[ 6774.793061] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6774.850177] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097a78):0
+[ 6774.850240] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099140):7-0-0,bf00bce8,0,0
+[ 6775.791298] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097b20):2
+[ 6775.791364] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099b18):7-0-1,bf00bce8,0,0
+[ 6775.793676] (1)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:171
+[ 6775.793691] (1)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6775.850155] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097bc8):0
+[ 6775.850208] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099878):7-0-0,bf00bce8,0,0
+[ 6776.403993] -(1)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6776.791226] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097c70):2
+[ 6776.791294] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0999c8):7-0-1,bf00bce8,0,0
+[ 6776.850161] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097d18):0
+[ 6776.850212] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099488):7-0-0,bf00bce8,0,0
+[ 6777.791125] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097340):2
+[ 6777.791198] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099920):7-0-1,bf00bce8,0,0
+[ 6777.793131] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:301
+[ 6777.793163] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6777.850164] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0973e8):0
+[ 6777.850216] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0991e8):7-0-0,bf00bce8,0,0
+[ 6778.791157] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097490):2
+[ 6778.791231] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099a70):7-0-1,bf00bce8,0,0
+[ 6778.850158] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097538):0
+[ 6778.850208] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099530):7-0-0,bf00bce8,0,0
+[ 6779.791279] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0975e0):2
+[ 6779.791343] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099338):7-0-1,bf00bce8,0,0
+[ 6779.792987] (1)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:171
+[ 6779.793000] (1)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6779.850163] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097688):0
+[ 6779.850220] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0993e0):7-0-0,bf00bce8,0,0
+[ 6780.403899] -(1)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6780.791278] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097730):2
+[ 6780.791347] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0995d8):7-0-1,bf00bce8,0,0
+[ 6780.850156] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0977d8):0
+[ 6780.850205] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099680):7-0-0,bf00bce8,0,0
+[ 6780.988316] (3)[594:AlarmManager]alarm_dev: alarm 2 set 423702.271000000
+[ 6780.988332] -(3)[594:AlarmManager]alarmtimer_enqueue, 423702271000000
+[ 6780.989824] (0)[611:WifiStateMachin]alarm_dev: alarm 2 set 423503.231000000
+[ 6780.989840] -(0)[611:WifiStateMachin]alarmtimer_enqueue, 423503231000000
+[ 6780.990136] (3)[13520:tx_thread][wlan]aisFsmSteps:(AIS STATE) [13] TRANSITION: [0] -> [2]
+[ 6780.990199] (3)[13520:tx_thread][wlan]scnFsmSteps:(SCN STATE) [19] TRANSITION: [0] -> [1]
+[ 6780.996878] (1)[13520:tx_thread][CNN][HIF-SDIO][I]wmt_lib_get_fwinfor_from_emi:vir addr(0xf3187a47)
+[ 6781.791136] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097880):2
+[ 6781.791205] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099728):7-0-1,bf00bce8,0,0
+[ 6781.792802] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:213
+[ 6781.792813] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6781.850192] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097928):0
+[ 6781.850245] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0997d0):7-0-0,bf00bce8,0,0
+[ 6782.735407] (0)[13520:tx_thread][wlan]scnFsmSteps:(SCN STATE) [19] TRANSITION: [1] -> [0]
+[ 6782.735435] (0)[13520:tx_thread][wlan]wlanCheckConnectedAP:(SCN WARN) disconnect state, no need to report!
+[ 6782.735547] (0)[13520:tx_thread][wlan]aisFsmSteps:(AIS STATE) [13] TRANSITION: [2] -> [0]
+[ 6782.750422] -(2)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6782.791163] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0979d0):2
+[ 6782.791237] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099290):7-0-1,bf00bce8,0,0
+[ 6782.793072] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:171
+[ 6782.793085] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6782.850174] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097a78):0
+[ 6782.850206] -(3)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6782.850225] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099140):7-0-0,bf00bce8,0,0
+[ 6783.361957] -(1)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6783.520108] (0)[86:hang_detect][Hang_Detect] hang_detect thread counts down 10:10, status 1.
+[ 6783.791293] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097b20):2
+[ 6783.791364] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099b18):7-0-1,bf00bce8,0,0
+[ 6783.850174] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097bc8):0
+[ 6783.850239] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099878):7-0-0,bf00bce8,0,0
+[ 6783.999784] (1)[13520:tx_thread][CNN][HIF-SDIO][I]wmt_lib_get_fwinfor_from_emi:vir addr(0xf3187a79)
+[ 6784.362659] -(1)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6784.791153] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097c70):2
+[ 6784.791224] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0999c8):7-0-1,bf00bce8,0,0
+[ 6784.793230] (1)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:301
+[ 6784.793243] (1)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6784.850175] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097d18):0
+[ 6784.850226] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099488):7-0-0,bf00bce8,0,0
+[ 6785.770164] (2)[164:wdtk-2][WDK],local_bit:0x4,cpu:2,check bit0x:f,3,1,5642958985828,RT[6785770153783]
+[ 6785.771342] (0)[162:wdtk-0][WDK],local_bit:0x5,cpu:0,check bit0x:f,3,1,5642958985828,RT[6785771336783]
+[ 6785.790099] (1)[163:wdtk-1][WDK],local_bit:0x7,cpu:1,check bit0x:f,3,1,5642958985828,RT[6785790088552]
+[ 6785.791176] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097340):2
+[ 6785.791287] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099920):7-0-1,bf00bce8,0,0
+[ 6785.800164] (3)[165:wdtk-3][WDK],local_bit:0xf,cpu:3,check bit0x:f,3,1,5642958985828,RT[6785800154322]
+[ 6785.801336] (3)[165:wdtk-3][WDK]: kick Ex WDT,RT[6785801332783]
+[ 6785.850190] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0973e8):0
+[ 6785.850249] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0991e8):7-0-0,bf00bce8,0,0
+[ 6786.364340] -(1)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6786.791284] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097490):2
+[ 6786.791351] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099a70):7-0-1,bf00bce8,0,0
+[ 6786.793232] (2)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:302
+[ 6786.793244] (2)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6786.850166] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097538):0
+[ 6786.850216] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099530):7-0-0,bf00bce8,0,0
+[ 6787.791147] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0975e0):2
+[ 6787.791219] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099338):7-0-1,bf00bce8,0,0
+[ 6787.850169] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097688):0
+[ 6787.850217] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0993e0):7-0-0,bf00bce8,0,0
+[ 6788.791068] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097730):2
+[ 6788.791141] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0995d8):7-0-1,bf00bce8,0,0
+[ 6788.792880] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:301
+[ 6788.792893] (3)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6788.850167] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0977d8):0
+[ 6788.850214] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099680):7-0-0,bf00bce8,0,0
+[ 6789.791412] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097880):2
+[ 6789.791482] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099728):7-0-1,bf00bce8,0,0
+[ 6789.850194] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097928):0
+[ 6789.850275] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0997d0):7-0-0,bf00bce8,0,0
+[ 6790.368996] -(1)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6790.791292] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0979d0):2
+[ 6790.791361] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099290):7-0-1,bf00bce8,0,0
+[ 6790.793284] (2)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:301
+[ 6790.793297] (2)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6790.850164] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097a78):0
+[ 6790.850222] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099140):7-0-0,bf00bce8,0,0
+[ 6790.989313] (3)[594:AlarmManager]alarm_dev: alarm 2 set 423702.271000000
+[ 6790.989329] -(3)[594:AlarmManager]alarmtimer_enqueue, 423702271000000
+[ 6790.989343] (3)[594:AlarmManager]alarm_dev: alarm 3 set 423561.763000000
+[ 6790.990841] (0)[611:WifiStateMachin]alarm_dev: alarm 2 set 423513.232000000
+[ 6790.990857] -(0)[611:WifiStateMachin]alarmtimer_enqueue, 423513232000000
+[ 6790.991110] (2)[13520:tx_thread][wlan]aisFsmSteps:(AIS STATE) [13] TRANSITION: [0] -> [2]
+[ 6790.991157] (2)[13520:tx_thread][wlan]scnFsmSteps:(SCN STATE) [19] TRANSITION: [0] -> [1]
+[ 6790.997947] (0)[13520:tx_thread][CNN][HIF-SDIO][I]wmt_lib_get_fwinfor_from_emi:vir addr(0xf3187ae7)
+[ 6791.674152] (3)[217:logd.auditd]type=1400 audit(1792410423.200:1798): avc: denied { ioctl } for pid=485 comm="system_server" path="/dev/adau1701" dev="tmpfs" ino=8883 ioctlcmd=566b scontext=u:r:system_server:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+[ 6791.674182] (3)[217:logd.auditd]type=1400 audit(1792410482.140:1799): avc: denied { execute } for pid=14336 comm="adbd" name="sh" dev="mmcblk0p22" ino=691 scontext=u:r:su:s0 tcontext=u:object_r:shell_exec:s0 tclass=file permissive=1
+[ 6791.674972] (3)[217:logd.auditd]type=1400 audit(1792410482.140:1799): avc: denied { execute } for pid=14336 comm="adbd" name="sh" dev="mmcblk0p22" ino=691 scontext=u:r:su:s0 tcontext=u:object_r:shell_exec:s0 tclass=file permissive=1
+[ 6791.675000] (3)[217:logd.auditd]type=1400 audit(1792410482.140:1800): avc: denied { read open } for pid=14336 comm="adbd" path="/system/bin/sh" dev="mmcblk0p22" ino=691 scontext=u:r:su:s0 tcontext=u:object_r:shell_exec:s0 tclass=file permissive=1
+[ 6791.675134] (3)[217:logd.auditd]type=1400 audit(1792410482.140:1800): avc: denied { read open } for pid=14336 comm="adbd" path="/system/bin/sh" dev="mmcblk0p22" ino=691 scontext=u:r:su:s0 tcontext=u:object_r:shell_exec:s0 tclass=file permissive=1
+[ 6791.675155] (3)[217:logd.auditd]type=1400 audit(1792410482.140:1801): avc: denied { execute_no_trans } for pid=14336 comm="adbd" path="/system/bin/sh" dev="mmcblk0p22" ino=691 scontext=u:r:su:s0 tcontext=u:object_r:shell_exec:s0 tclass=file permissive=1
+[ 6791.677631] (3)[217:logd.auditd]type=1400 audit(1792410482.140:1801): avc: denied { execute_no_trans } for pid=14336 comm="adbd" path="/system/bin/sh" dev="mmcblk0p22" ino=691 scontext=u:r:su:s0 tcontext=u:object_r:shell_exec:s0 tclass=file permissive=1
+[ 6791.677658] (3)[217:logd.auditd]type=1400 audit(1792410482.140:1802): avc: denied { getattr } for pid=14336 comm="sh" path="/system/bin/sh" dev="mmcblk0p22" ino=691 scontext=u:r:su:s0 tcontext=u:object_r:shell_exec:s0 tclass=file permissive=1
+[ 6791.691621] (3)[217:logd.auditd]type=1400 audit(1792410482.140:1802): avc: denied { getattr } for pid=14336 comm="sh" path="/system/bin/sh" dev="mmcblk0p22" ino=691 scontext=u:r:su:s0 tcontext=u:object_r:shell_exec:s0 tclass=file permissive=1
+[ 6791.691648] (3)[217:logd.auditd]type=1400 audit(1792410482.160:1803): avc: denied { getattr } for pid=14336 comm="sh" path="/system/bin/toybox" dev="mmcblk0p22" ino=732 scontext=u:r:su:s0 tcontext=u:object_r:toolbox_exec:s0 tclass=file permissive=1
+[ 6791.691789] (3)[217:logd.auditd]type=1400 audit(1792410482.160:1803): avc: denied { getattr } for pid=14336 comm="sh" path="/system/bin/toybox" dev="mmcblk0p22" ino=732 scontext=u:r:su:s0 tcontext=u:object_r:toolbox_exec:s0 tclass=file permissive=1
+[ 6791.691809] (3)[217:logd.auditd]type=1400 audit(1792410482.160:1804): avc: denied { execute } for pid=14336 comm="sh" name="toybox" dev="mmcblk0p22" ino=732 scontext=u:r:su:s0 tcontext=u:object_r:toolbox_exec:s0 tclass=file permissive=1
+[ 6791.691912] (3)[217:logd.auditd]type=1400 audit(1792410482.160:1804): avc: denied { execute } for pid=14336 comm="sh" name="toybox" dev="mmcblk0p22" ino=732 scontext=u:r:su:s0 tcontext=u:object_r:toolbox_exec:s0 tclass=file permissive=1
+[ 6791.691931] (3)[217:logd.auditd]type=1400 audit(1792410482.160:1805): avc: denied { read open } for pid=14336 comm="sh" path="/system/bin/toybox" dev="mmcblk0p22" ino=732 scontext=u:r:su:s0 tcontext=u:object_r:toolbox_exec:s0 tclass=file permissive=1
+[ 6791.692032] (3)[217:logd.auditd]type=1400 audit(1792410482.160:1805): avc: denied { read open } for pid=14336 comm="sh" path="/system/bin/toybox" dev="mmcblk0p22" ino=732 scontext=u:r:su:s0 tcontext=u:object_r:toolbox_exec:s0 tclass=file permissive=1
+[ 6791.692051] (3)[217:logd.auditd]type=1400 audit(1792410482.160:1806): avc: denied { execute_no_trans } for pid=14336 comm="sh" path="/system/bin/toybox" dev="mmcblk0p22" ino=732 scontext=u:r:su:s0 tcontext=u:object_r:toolbox_exec:s0 tclass=file permissive=1
+[ 6791.714662] (0)[14336:getprop]Dump cpuinfo
+[ 6791.716066] (3)[217:logd.auditd]type=1400 audit(1792410482.160:1806): avc: denied { execute_no_trans } for pid=14336 comm="sh" path="/system/bin/toybox" dev="mmcblk0p22" ino=732 scontext=u:r:su:s0 tcontext=u:object_r:toolbox_exec:s0 tclass=file permissive=1
+[ 6791.716093] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1807): avc: denied { open } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:mtk_thermal_config_prop:s0" dev="tmpfs" ino=6278 scontext=u:r:su:s0 tcontext=u:object_r:mtk_thermal_config_prop:s0 tclass=file permissive=1
+[ 6791.716244] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1807): avc: denied { open } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:mtk_thermal_config_prop:s0" dev="tmpfs" ino=6278 scontext=u:r:su:s0 tcontext=u:object_r:mtk_thermal_config_prop:s0 tclass=file permissive=1
+[ 6791.716263] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1808): avc: denied { getattr } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:mtk_thermal_config_prop:s0" dev="tmpfs" ino=6278 scontext=u:r:su:s0 tcontext=u:object_r:mtk_thermal_config_prop:s0 tclass=file permissive=1
+[ 6791.716365] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1808): avc: denied { getattr } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:mtk_thermal_config_prop:s0" dev="tmpfs" ino=6278 scontext=u:r:su:s0 tcontext=u:object_r:mtk_thermal_config_prop:s0 tclass=file permissive=1
+[ 6791.716385] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1809): avc: denied { open } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:tedongle_prop:s0" dev="tmpfs" ino=6279 scontext=u:r:su:s0 tcontext=u:object_r:tedongle_prop:s0 tclass=file permissive=1
+[ 6791.716487] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1809): avc: denied { open } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:tedongle_prop:s0" dev="tmpfs" ino=6279 scontext=u:r:su:s0 tcontext=u:object_r:tedongle_prop:s0 tclass=file permissive=1
+[ 6791.716504] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1810): avc: denied { getattr } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:tedongle_prop:s0" dev="tmpfs" ino=6279 scontext=u:r:su:s0 tcontext=u:object_r:tedongle_prop:s0 tclass=file permissive=1
+[ 6791.716599] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1810): avc: denied { getattr } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:tedongle_prop:s0" dev="tmpfs" ino=6279 scontext=u:r:su:s0 tcontext=u:object_r:tedongle_prop:s0 tclass=file permissive=1
+[ 6791.716617] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1811): avc: denied { open } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:mtk_em_video_log_sf_postbuffer_prop:s0" dev="tmpfs" ino=6281 scontext=u:r:su:s0 tcontext=u:object_r:mtk_em_video_log_sf_postbuffer_prop:s0 tclass=file permissive=1
+[ 6791.716716] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1811): avc: denied { open } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:mtk_em_video_log_sf_postbuffer_prop:s0" dev="tmpfs" ino=6281 scontext=u:r:su:s0 tcontext=u:object_r:mtk_em_video_log_sf_postbuffer_prop:s0 tclass=file permissive=1
+[ 6791.716735] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1812): avc: denied { getattr } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:mtk_em_video_log_sf_postbuffer_prop:s0" dev="tmpfs" ino=6281 scontext=u:r:su:s0 tcontext=u:object_r:mtk_em_video_log_sf_postbuffer_prop:s0 tclass=file permissive=1
+[ 6791.716831] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1812): avc: denied { getattr } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:mtk_em_video_log_sf_postbuffer_prop:s0" dev="tmpfs" ino=6281 scontext=u:r:su:s0 tcontext=u:object_r:mtk_em_video_log_sf_postbuffer_prop:s0 tclass=file permissive=1
+[ 6791.716849] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1813): avc: denied { open } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:graphics_config_prop:s0" dev="tmpfs" ino=6284 scontext=u:r:su:s0 tcontext=u:object_r:graphics_config_prop:s0 tclass=file permissive=1
+[ 6791.716941] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1813): avc: denied { open } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:graphics_config_prop:s0" dev="tmpfs" ino=6284 scontext=u:r:su:s0 tcontext=u:object_r:graphics_config_prop:s0 tclass=file permissive=1
+[ 6791.716959] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1814): avc: denied { getattr } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:graphics_config_prop:s0" dev="tmpfs" ino=6284 scontext=u:r:su:s0 tcontext=u:object_r:graphics_config_prop:s0 tclass=file permissive=1
+[ 6791.717056] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1814): avc: denied { getattr } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:graphics_config_prop:s0" dev="tmpfs" ino=6284 scontext=u:r:su:s0 tcontext=u:object_r:graphics_config_prop:s0 tclass=file permissive=1
+[ 6791.717075] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1815): avc: denied { open } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:mtk_em_ril_apnchange_prop:s0" dev="tmpfs" ino=6290 scontext=u:r:su:s0 tcontext=u:object_r:mtk_em_ril_apnchange_prop:s0 tclass=file permissive=1
+[ 6791.718074] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1815): avc: denied { open } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:mtk_em_ril_apnchange_prop:s0" dev="tmpfs" ino=6290 scontext=u:r:su:s0 tcontext=u:object_r:mtk_em_ril_apnchange_prop:s0 tclass=file permissive=1
+[ 6791.718097] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1816): avc: denied { getattr } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:mtk_em_ril_apnchange_prop:s0" dev="tmpfs" ino=6290 scontext=u:r:su:s0 tcontext=u:object_r:mtk_em_ril_apnchange_prop:s0 tclass=file permissive=1
+[ 6791.718210] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1816): avc: denied { getattr } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:mtk_em_ril_apnchange_prop:s0" dev="tmpfs" ino=6290 scontext=u:r:su:s0 tcontext=u:object_r:mtk_em_ril_apnchange_prop:s0 tclass=file permissive=1
+[ 6791.718228] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1817): avc: denied { open } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:mtk_telephony_sensitive_prop:s0" dev="tmpfs" ino=6296 scontext=u:r:su:s0 tcontext=u:object_r:mtk_telephony_sensitive_prop:s0 tclass=file permissive=1
+[ 6791.718328] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1817): avc: denied { open } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:mtk_telephony_sensitive_prop:s0" dev="tmpfs" ino=6296 scontext=u:r:su:s0 tcontext=u:object_r:mtk_telephony_sensitive_prop:s0 tclass=file permissive=1
+[ 6791.718347] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1818): avc: denied { getattr } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:mtk_telephony_sensitive_prop:s0" dev="tmpfs" ino=6296 scontext=u:r:su:s0 tcontext=u:object_r:mtk_telephony_sensitive_prop:s0 tclass=file permissive=1
+[ 6791.718443] (0)[14336:getprop]audit: audit_lost=395 audit_rate_limit=20 audit_backlog_limit=64
+[ 6791.718450] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1818): avc: denied { getattr } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:mtk_telephony_sensitive_prop:s0" dev="tmpfs" ino=6296 scontext=u:r:su:s0 tcontext=u:object_r:mtk_telephony_sensitive_prop:s0 tclass=file permissive=1
+[ 6791.718462] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1819): avc: denied { open } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:meta_connecttype_prop:s0" dev="tmpfs" ino=6309 scontext=u:r:su:s0 tcontext=u:object_r:meta_connecttype_prop:s0 tclass=file permissive=1
+[ 6791.718470] (0)[14336:getprop]audit: rate limit exceeded
+[ 6791.718550] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1819): avc: denied { open } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:meta_connecttype_prop:s0" dev="tmpfs" ino=6309 scontext=u:r:su:s0 tcontext=u:object_r:meta_connecttype_prop:s0 tclass=file permissive=1
+[ 6791.718562] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1820): avc: denied { getattr } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:meta_connecttype_prop:s0" dev="tmpfs" ino=6309 scontext=u:r:su:s0 tcontext=u:object_r:meta_connecttype_prop:s0 tclass=file permissive=1
+[ 6791.718656] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1820): avc: denied { getattr } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:meta_connecttype_prop:s0" dev="tmpfs" ino=6309 scontext=u:r:su:s0 tcontext=u:object_r:meta_connecttype_prop:s0 tclass=file permissive=1
+[ 6791.718668] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1821): avc: denied { open } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:carplay_prop:s0" dev="tmpfs" ino=6315 scontext=u:r:su:s0 tcontext=u:object_r:carplay_prop:s0 tclass=file permissive=1
+[ 6791.718765] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1821): avc: denied { open } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:carplay_prop:s0" dev="tmpfs" ino=6315 scontext=u:r:su:s0 tcontext=u:object_r:carplay_prop:s0 tclass=file permissive=1
+[ 6791.718776] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1822): avc: denied { getattr } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:carplay_prop:s0" dev="tmpfs" ino=6315 scontext=u:r:su:s0 tcontext=u:object_r:carplay_prop:s0 tclass=file permissive=1
+[ 6791.718865] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1822): avc: denied { getattr } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:carplay_prop:s0" dev="tmpfs" ino=6315 scontext=u:r:su:s0 tcontext=u:object_r:carplay_prop:s0 tclass=file permissive=1
+[ 6791.718877] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1823): avc: denied { open } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:appdetection_prop:s0" dev="tmpfs" ino=6320 scontext=u:r:su:s0 tcontext=u:object_r:appdetection_prop:s0 tclass=file permissive=1
+[ 6791.718962] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1823): avc: denied { open } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:appdetection_prop:s0" dev="tmpfs" ino=6320 scontext=u:r:su:s0 tcontext=u:object_r:appdetection_prop:s0 tclass=file permissive=1
+[ 6791.718974] (3)[217:logd.auditd]type=1400 audit(1792410482.180:1824): avc: denied { getattr } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:appdetection_prop:s0" dev="tmpfs" ino=6320 scontext=u:r:su:s0 tcontext=u:object_r:appdetection_prop:s0 tclass=file permissive=1
+[ 6791.791284] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097b20):2
+[ 6791.791353] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099b18):7-0-1,bf00bce8,0,0
+[ 6791.808401] (1)[14342:cmd]Dump cpuinfo
+[ 6791.850203] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097bc8):0
+[ 6791.850372] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099878):7-0-0,bf00bce8,0,0
+[ 6791.904113] (0)[14346:cmd]Dump cpuinfo
+[ 6792.003270] (3)[14350:cmd]Dump cpuinfo
+[ 6792.071687] (3)[14354:cat]Dump cpuinfo
+[ 6792.098357] (0)[14355:cat]Dump cpuinfo
+[ 6792.766278] (3)[14356:app_process]Dump cpuinfo
+[ 6792.775932] (1)[13520:tx_thread][wlan]scnFsmSteps:(SCN STATE) [19] TRANSITION: [1] -> [0]
+[ 6792.775960] (1)[13520:tx_thread][wlan]wlanCheckConnectedAP:(SCN WARN) disconnect state, no need to report!
+[ 6792.776198] (1)[13520:tx_thread][wlan]aisFsmSteps:(AIS STATE) [13] TRANSITION: [2] -> [0]
+[ 6792.790224] -(2)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6792.791176] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097c70):2
+[ 6792.791258] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0999c8):7-0-1,bf00bce8,0,0
+[ 6792.793435] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:301
+[ 6792.793449] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6792.798529] (0)[217:logd.auditd]type=1400 audit(1792410482.180:1824): avc: denied { getattr } for pid=14336 comm="getprop" path="/dev/__properties__/u:object_r:appdetection_prop:s0" dev="tmpfs" ino=6320 scontext=u:r:su:s0 tcontext=u:object_r:appdetection_prop:s0 tclass=file permissive=1
+[ 6792.798557] (0)[217:logd.auditd]type=1400 audit(1792410483.260:1901): avc: denied { getattr } for pid=14356 comm="app_process" path="/data" dev="mmcblk0p24" ino=2 scontext=u:r:su:s0 tcontext=u:object_r:system_data_file:s0 tclass=dir permissive=1
+[ 6792.798768] (3)[217:logd.auditd]type=1400 audit(1792410483.260:1901): avc: denied { getattr } for pid=14356 comm="app_process" path="/data" dev="mmcblk0p24" ino=2 scontext=u:r:su:s0 tcontext=u:object_r:system_data_file:s0 tclass=dir permissive=1
+[ 6792.798790] (3)[217:logd.auditd]type=1400 audit(1792410483.260:1902): avc: denied { getattr } for pid=14356 comm="app_process" path="/data/dalvik-cache/arm" dev="mmcblk0p24" ino=3264002 scontext=u:r:su:s0 tcontext=u:object_r:dalvikcache_data_file:s0 tclass=dir permissive=1
+[ 6792.798953] (3)[217:logd.auditd]type=1400 audit(1792410483.260:1902): avc: denied { getattr } for pid=14356 comm="app_process" path="/data/dalvik-cache/arm" dev="mmcblk0p24" ino=3264002 scontext=u:r:su:s0 tcontext=u:object_r:dalvikcache_data_file:s0 tclass=dir permissive=1
+[ 6792.798975] (3)[217:logd.auditd]type=1400 audit(1792410483.260:1903): avc: denied { getattr } for pid=14356 comm="app_process" path="/data/dalvik-cache/arm/system@framework@boot.art" dev="mmcblk0p24" ino=3264047 scontext=u:r:su:s0 tcontext=u:object_r:dalvikcache_data_file:s0 tclass=file permissive=1
+[ 6792.799146] (3)[217:logd.auditd]type=1400 audit(1792410483.260:1903): avc: denied { getattr } for pid=14356 comm="app_process" path="/data/dalvik-cache/arm/system@framework@boot.art" dev="mmcblk0p24" ino=3264047 scontext=u:r:su:s0 tcontext=u:object_r:dalvikcache_data_file:s0 tclass=file permissive=1
+[ 6792.799170] (3)[217:logd.auditd]type=1400 audit(1792410483.260:1904): avc: denied { read } for pid=14356 comm="app_process" name="system@framework@boot.art" dev="mmcblk0p24" ino=3264047 scontext=u:r:su:s0 tcontext=u:object_r:dalvikcache_data_file:s0 tclass=file permissive=1
+[ 6792.799318] (3)[217:logd.auditd]type=1400 audit(1792410483.260:1904): avc: denied { read } for pid=14356 comm="app_process" name="system@framework@boot.art" dev="mmcblk0p24" ino=3264047 scontext=u:r:su:s0 tcontext=u:object_r:dalvikcache_data_file:s0 tclass=file permissive=1
+[ 6792.799341] (3)[217:logd.auditd]type=1400 audit(1792410483.260:1905): avc: denied { open } for pid=14356 comm="app_process" path="/data/dalvik-cache/arm/system@framework@boot.art" dev="mmcblk0p24" ino=3264047 scontext=u:r:su:s0 tcontext=u:object_r:dalvikcache_data_file:s0 tclass=file permissive=1
+[ 6792.799482] (3)[217:logd.auditd]type=1400 audit(1792410483.260:1905): avc: denied { open } for pid=14356 comm="app_process" path="/data/dalvik-cache/arm/system@framework@boot.art" dev="mmcblk0p24" ino=3264047 scontext=u:r:su:s0 tcontext=u:object_r:dalvikcache_data_file:s0 tclass=file permissive=1
+[ 6792.799504] (3)[217:logd.auditd]type=1400 audit(1792410483.260:1906): avc: denied { lock } for pid=14356 comm="app_process" path="/data/dalvik-cache/arm/system@framework@boot.art" dev="mmcblk0p24" ino=3264047 scontext=u:r:su:s0 tcontext=u:object_r:dalvikcache_data_file:s0 tclass=file permissive=1
+[ 6792.799637] (3)[217:logd.auditd]type=1400 audit(1792410483.260:1906): avc: denied { lock } for pid=14356 comm="app_process" path="/data/dalvik-cache/arm/system@framework@boot.art" dev="mmcblk0p24" ino=3264047 scontext=u:r:su:s0 tcontext=u:object_r:dalvikcache_data_file:s0 tclass=file permissive=1
+[ 6792.799659] (3)[217:logd.auditd]type=1400 audit(1792410483.260:1907): avc: denied { read } for pid=14356 comm="app_process" name="system@framework@boot.vdex" dev="mmcblk0p24" ino=3264004 scontext=u:r:su:s0 tcontext=u:object_r:dalvikcache_data_file:s0 tclass=lnk_file permissive=1
+[ 6792.799900] (0)[217:logd.auditd]type=1400 audit(1792410483.260:1907): avc: denied { read } for pid=14356 comm="app_process" name="system@framework@boot.vdex" dev="mmcblk0p24" ino=3264004 scontext=u:r:su:s0 tcontext=u:object_r:dalvikcache_data_file:s0 tclass=lnk_file permissive=1
+[ 6792.799927] (0)[217:logd.auditd]type=1400 audit(1792410483.260:1908): avc: denied { getattr } for pid=14356 comm="app_process" path="/data/dalvik-cache/arm/system@framework@boot.oat" dev="mmcblk0p24" ino=3264003 scontext=u:r:su:s0 tcontext=u:object_r:dalvikcache_data_file:s0 tclass=lnk_file permissive=1
+[ 6792.824190] (3)[217:logd.auditd]type=1400 audit(1792410483.260:1908): avc: denied { getattr } for pid=14356 comm="app_process" path="/data/dalvik-cache/arm/system@framework@boot.oat" dev="mmcblk0p24" ino=3264003 scontext=u:r:su:s0 tcontext=u:object_r:dalvikcache_data_file:s0 tclass=lnk_file permissive=1
+[ 6792.824225] (3)[217:logd.auditd]type=1400 audit(1792410483.290:1909): avc: denied { read } for pid=14356 comm="app_process" path=2F6465762F6173686D656D2F64616C76696B2D6E6F6E206D6F76696E67207370616365202864656C6574656429 dev="tmpfs" ino=249489 scontext=u:r:su:s0 tcontext=u:object_r:tmpfs:s0 tclass=file permissive=1
+[ 6792.850134] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097d18):0
+[ 6792.850213] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099488):7-0-0,bf00bce8,0,0
+[ 6792.987983] (0)[217:logd.auditd]type=1400 audit(1792410483.290:1909): avc: denied { read } for pid=14356 comm="app_process" path=2F6465762F6173686D656D2F64616C76696B2D6E6F6E206D6F76696E67207370616365202864656C6574656429 dev="tmpfs" ino=249489 scontext=u:r:su:s0 tcontext=u:object_r:tmpfs:s0 tclass=file permissive=1
+[ 6792.988036] (0)[217:logd.auditd]type=1400 audit(1792410483.450:1910): avc: denied { execmem } for pid=14356 comm="main" scontext=u:r:su:s0 tcontext=u:r:su:s0 tclass=process permissive=1
+[ 6792.988218] (0)[217:logd.auditd]type=1400 audit(1792410483.450:1910): avc: denied { execmem } for pid=14356 comm="main" scontext=u:r:su:s0 tcontext=u:r:su:s0 tclass=process permissive=1
+[ 6792.988238] (0)[217:logd.auditd]type=1400 audit(1792410483.450:1911): avc: denied { execute } for pid=14356 comm="main" path="/dev/ashmem" dev="tmpfs" ino=197 scontext=u:r:su:s0 tcontext=u:object_r:ashmem_device:s0 tclass=chr_file permissive=1
+[ 6792.988344] (0)[217:logd.auditd]type=1400 audit(1792410483.450:1911): avc: denied { execute } for pid=14356 comm="main" path="/dev/ashmem" dev="tmpfs" ino=197 scontext=u:r:su:s0 tcontext=u:object_r:ashmem_device:s0 tclass=chr_file permissive=1
+[ 6792.988365] (0)[217:logd.auditd]type=1400 audit(1792410483.450:1912): avc: denied { execute } for pid=14356 comm="main" path=2F6465762F6173686D656D2F64616C76696B2D6A69742D636F64652D6361636865202864656C6574656429 dev="tmpfs" ino=249764 scontext=u:r:su:s0 tcontext=u:object_r:tmpfs:s0 tclass=file permissive=1
+[ 6793.055458] (1)[217:logd.auditd]type=1400 audit(1792410483.450:1912): avc: denied { execute } for pid=14356 comm="main" path=2F6465762F6173686D656D2F64616C76696B2D6A69742D636F64652D6361636865202864656C6574656429 dev="tmpfs" ino=249764 scontext=u:r:su:s0 tcontext=u:object_r:tmpfs:s0 tclass=file permissive=1
+[ 6793.055488] (1)[217:logd.auditd]type=1400 audit(1792410483.520:1913): avc: denied { getattr } for pid=204 comm="servicemanager" scontext=u:r:servicemanager:s0 tcontext=u:r:su:s0 tclass=process permissive=1
+[ 6793.057525] (1)[217:logd.auditd]type=1400 audit(1792410483.520:1913): avc: denied { getattr } for pid=204 comm="servicemanager" scontext=u:r:servicemanager:s0 tcontext=u:r:su:s0 tclass=process permissive=1
+[ 6793.057553] (1)[217:logd.auditd]type=1400 audit(1792410483.520:1914): avc: denied { transfer } for pid=485 comm="Binder:485_12" scontext=u:r:system_server:s0 tcontext=u:r:su:s0 tclass=binder permissive=1
+[ 6793.073692] (2)[217:logd.auditd]type=1400 audit(1792410483.520:1914): avc: denied { transfer } for pid=485 comm="Binder:485_12" scontext=u:r:system_server:s0 tcontext=u:r:su:s0 tclass=binder permissive=1
+[ 6793.073720] (2)[217:logd.auditd]type=1400 audit(1792410483.540:1915): avc: denied { call } for pid=485 comm="Binder:485_12" scontext=u:r:system_server:s0 tcontext=u:r:su:s0 tclass=binder permissive=1
+[ 6793.390253] -(2)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6793.403440] -(2)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6793.758922] (1)[14368:app_process]Dump cpuinfo
+[ 6793.791166] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097340):2
+[ 6793.791242] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099920):7-0-1,bf00bce8,0,0
+[ 6793.850136] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0973e8):0
+[ 6793.850213] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0991e8):7-0-0,bf00bce8,0,0
+[ 6793.978418] (1)[217:logd.auditd]type=1400 audit(1792410483.540:1915): avc: denied { call } for pid=485 comm="Binder:485_12" scontext=u:r:system_server:s0 tcontext=u:r:su:s0 tclass=binder permissive=1
+[ 6793.978458] (1)[217:logd.auditd]type=1400 audit(1792410484.440:1916): avc: denied { execmem } for pid=14368 comm="main" scontext=u:r:su:s0 tcontext=u:r:su:s0 tclass=process permissive=1
+[ 6794.002412] (1)[13520:tx_thread][CNN][HIF-SDIO][I]wmt_lib_get_fwinfor_from_emi:vir addr(0xf3187b19)
+[ 6794.042183] (3)[217:logd.auditd]type=1400 audit(1792410484.440:1916): avc: denied { execmem } for pid=14368 comm="main" scontext=u:r:su:s0 tcontext=u:r:su:s0 tclass=process permissive=1
+[ 6794.042211] (3)[217:logd.auditd]type=1400 audit(1792410484.510:1917): avc: denied { read write } for pid=14368 comm="main" name="binder" dev="tmpfs" ino=6450 scontext=u:r:su:s0 tcontext=u:object_r:binder_device:s0 tclass=chr_file permissive=1
+[ 6794.042361] (3)[217:logd.auditd]type=1400 audit(1792410484.510:1917): avc: denied { read write } for pid=14368 comm="main" name="binder" dev="tmpfs" ino=6450 scontext=u:r:su:s0 tcontext=u:object_r:binder_device:s0 tclass=chr_file permissive=1
+[ 6794.042386] (3)[217:logd.auditd]type=1400 audit(1792410484.510:1918): avc: denied { open } for pid=14368 comm="main" path="/dev/binder" dev="tmpfs" ino=6450 scontext=u:r:su:s0 tcontext=u:object_r:binder_device:s0 tclass=chr_file permissive=1
+[ 6794.042806] (3)[217:logd.auditd]type=1400 audit(1792410484.510:1918): avc: denied { open } for pid=14368 comm="main" path="/dev/binder" dev="tmpfs" ino=6450 scontext=u:r:su:s0 tcontext=u:object_r:binder_device:s0 tclass=chr_file permissive=1
+[ 6794.042831] (3)[217:logd.auditd]type=1400 audit(1792410484.510:1919): avc: denied { ioctl } for pid=14368 comm="main" path="/dev/binder" dev="tmpfs" ino=6450 ioctlcmd=6209 scontext=u:r:su:s0 tcontext=u:object_r:binder_device:s0 tclass=chr_file permissive=1
+[ 6794.137773] (3)[217:logd.auditd]type=1400 audit(1792410484.510:1919): avc: denied { ioctl } for pid=14368 comm="main" path="/dev/binder" dev="tmpfs" ino=6450 ioctlcmd=6209 scontext=u:r:su:s0 tcontext=u:object_r:binder_device:s0 tclass=chr_file permissive=1
+[ 6794.137805] (3)[217:logd.auditd]type=1400 audit(1792410484.600:1920): avc: denied { write } for pid=14380 comm="dumpsys" path="pipe:[249796]" dev="pipefs" ino=249796 scontext=u:r:system_server:s0 tcontext=u:r:su:s0 tclass=fifo_file permissive=1
+[ 6794.405135] -(3)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6794.791298] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097490):2
+[ 6794.791380] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099a70):7-0-1,bf00bce8,0,0
+[ 6794.793078] (2)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:172
+[ 6794.793091] (2)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6794.850276] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097538):0
+[ 6794.850328] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099530):7-0-0,bf00bce8,0,0
+[ 6794.978346] (3)[217:logd.auditd]type=1400 audit(1792410484.600:1920): avc: denied { write } for pid=14380 comm="dumpsys" path="pipe:[249796]" dev="pipefs" ino=249796 scontext=u:r:system_server:s0 tcontext=u:r:su:s0 tclass=fifo_file permissive=1
+[ 6794.978372] (3)[217:logd.auditd]type=1400 audit(1792410485.440:1921): avc: denied { call } for pid=14386 comm="dumpsys" scontext=u:r:su:s0 tcontext=u:r:audioserver:s0 tclass=binder permissive=1
+[ 6794.978837] (3)[217:logd.auditd]type=1400 audit(1792410485.440:1921): avc: denied { call } for pid=14386 comm="dumpsys" scontext=u:r:su:s0 tcontext=u:r:audioserver:s0 tclass=binder permissive=1
+[ 6794.978860] (3)[217:logd.auditd]type=1400 audit(1792410485.440:1922): avc: denied { use } for pid=14386 comm="dumpsys" path="pipe:[251940]" dev="pipefs" ino=251940 scontext=u:r:audioserver:s0 tcontext=u:r:su:s0 tclass=fd permissive=1
+[ 6794.978972] (3)[217:logd.auditd]type=1400 audit(1792410485.440:1922): avc: denied { use } for pid=14386 comm="dumpsys" path="pipe:[251940]" dev="pipefs" ino=251940 scontext=u:r:audioserver:s0 tcontext=u:r:su:s0 tclass=fd permissive=1
+[ 6794.978990] (3)[217:logd.auditd]type=1400 audit(1792410485.440:1923): avc: denied { write } for pid=14386 comm="dumpsys" path="pipe:[251940]" dev="pipefs" ino=251940 scontext=u:r:audioserver:s0 tcontext=u:r:su:s0 tclass=fifo_file permissive=1
+[ 6795.062010] (1)[217:logd.auditd]type=1400 audit(1792410485.440:1923): avc: denied { write } for pid=14386 comm="dumpsys" path="pipe:[251940]" dev="pipefs" ino=251940 scontext=u:r:audioserver:s0 tcontext=u:r:su:s0 tclass=fifo_file permissive=1
+[ 6795.062036] (1)[217:logd.auditd]type=1400 audit(1792410485.530:1924): avc: denied { use } for pid=296 comm="Binder:296_3" path="pipe:[247715]" dev="pipefs" ino=247715 scontext=u:r:mtk_hal_audio:s0 tcontext=u:r:su:s0 tclass=fd permissive=1
+[ 6795.062338] (1)[217:logd.auditd]type=1400 audit(1792410485.530:1924): avc: denied { use } for pid=296 comm="Binder:296_3" path="pipe:[247715]" dev="pipefs" ino=247715 scontext=u:r:mtk_hal_audio:s0 tcontext=u:r:su:s0 tclass=fd permissive=1
+[ 6795.062359] (1)[217:logd.auditd]type=1400 audit(1792410485.530:1925): avc: denied { write } for pid=296 comm="Binder:296_3" path="pipe:[247715]" dev="pipefs" ino=247715 scontext=u:r:mtk_hal_audio:s0 tcontext=u:r:su:s0 tclass=fifo_file permissive=1
+[ 6795.122196] (2)[217:logd.auditd]type=1400 audit(1792410485.530:1925): avc: denied { write } for pid=296 comm="Binder:296_3" path="pipe:[247715]" dev="pipefs" ino=247715 scontext=u:r:mtk_hal_audio:s0 tcontext=u:r:su:s0 tclass=fifo_file permissive=1
+[ 6795.122223] (2)[217:logd.auditd]type=1400 audit(1792410485.590:1926): avc: denied { read } for pid=14392 comm="sh" name="etc" dev="mmcblk0p22" ino=784 scontext=u:r:su:s0 tcontext=u:object_r:system_file:s0 tclass=dir permissive=1
+[ 6795.122624] (2)[217:logd.auditd]type=1400 audit(1792410485.590:1926): avc: denied { read } for pid=14392 comm="sh" name="etc" dev="mmcblk0p22" ino=784 scontext=u:r:su:s0 tcontext=u:object_r:system_file:s0 tclass=dir permissive=1
+[ 6795.122645] (2)[217:logd.auditd]type=1400 audit(1792410485.590:1927): avc: denied { open } for pid=14392 comm="sh" path="/system/etc" dev="mmcblk0p22" ino=784 scontext=u:r:su:s0 tcontext=u:object_r:system_file:s0 tclass=dir permissive=1
+[ 6795.145941] (1)[14394:ls]Dump cpuinfo
+[ 6795.219395] (1)[14397:cat]Dump cpuinfo
+[ 6795.245957] (3)[14398:cat]Dump cpuinfo
+[ 6795.272163] (1)[14399:cat]Dump cpuinfo
+[ 6795.349084] (0)[14400:cat]Dump cpuinfo
+[ 6795.350509] (2)[217:logd.auditd]type=1400 audit(1792410485.590:1927): avc: denied { open } for pid=14392 comm="sh" path="/system/etc" dev="mmcblk0p22" ino=784 scontext=u:r:su:s0 tcontext=u:object_r:system_file:s0 tclass=dir permissive=1
+[ 6795.350537] (2)[217:logd.auditd]type=1400 audit(1792410485.820:1928): avc: denied { read } for pid=14400 comm="cat" name="devices" dev="proc" ino=4026532008 scontext=u:r:su:s0 tcontext=u:object_r:proc:s0 tclass=file permissive=1
+[ 6795.350783] (2)[217:logd.auditd]type=1400 audit(1792410485.820:1928): avc: denied { read } for pid=14400 comm="cat" name="devices" dev="proc" ino=4026532008 scontext=u:r:su:s0 tcontext=u:object_r:proc:s0 tclass=file permissive=1
+[ 6795.350804] (2)[217:logd.auditd]type=1400 audit(1792410485.820:1929): avc: denied { open } for pid=14400 comm="cat" path="/proc/bus/input/devices" dev="proc" ino=4026532008 scontext=u:r:su:s0 tcontext=u:object_r:proc:s0 tclass=file permissive=1
+[ 6795.396578] (2)[217:logd.auditd]type=1400 audit(1792410485.820:1929): avc: denied { open } for pid=14400 comm="cat" path="/proc/bus/input/devices" dev="proc" ino=4026532008 scontext=u:r:su:s0 tcontext=u:object_r:proc:s0 tclass=file permissive=1
+[ 6795.396606] (2)[217:logd.auditd]type=1400 audit(1792410485.860:1930): avc: denied { read } for pid=14402 comm="getevent" name="input" dev="tmpfs" ino=169 scontext=u:r:su:s0 tcontext=u:object_r:input_device:s0 tclass=dir permissive=1
+[ 6795.397010] (2)[217:logd.auditd]type=1400 audit(1792410485.860:1930): avc: denied { read } for pid=14402 comm="getevent" name="input" dev="tmpfs" ino=169 scontext=u:r:su:s0 tcontext=u:object_r:input_device:s0 tclass=dir permissive=1
+[ 6795.397031] (2)[217:logd.auditd]type=1400 audit(1792410485.860:1931): avc: denied { open } for pid=14402 comm="getevent" path="/dev/input" dev="tmpfs" ino=169 scontext=u:r:su:s0 tcontext=u:object_r:input_device:s0 tclass=dir permissive=1
+[ 6795.612705] (2)[14409:ls]Dump cpuinfo
+[ 6795.791293] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0975e0):2
+[ 6795.791375] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099338):7-0-1,bf00bce8,0,0
+[ 6795.850189] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097688):0
+[ 6795.850238] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0993e0):7-0-0,bf00bce8,0,0
+[ 6796.092766] (2)[217:logd.auditd]type=1400 audit(1792410485.860:1931): avc: denied { open } for pid=14402 comm="getevent" path="/dev/input" dev="tmpfs" ino=169 scontext=u:r:su:s0 tcontext=u:object_r:input_device:s0 tclass=dir permissive=1
+[ 6796.092796] (2)[217:logd.auditd]type=1400 audit(1792410486.560:1932): avc: denied { call } for pid=14420 comm="dumpsys" scontext=u:r:su:s0 tcontext=u:r:surfaceflinger:s0 tclass=binder permissive=1
+[ 6796.093233] (2)[217:logd.auditd]type=1400 audit(1792410486.560:1932): avc: denied { call } for pid=14420 comm="dumpsys" scontext=u:r:su:s0 tcontext=u:r:surfaceflinger:s0 tclass=binder permissive=1
+[ 6796.093257] (2)[217:logd.auditd]type=1400 audit(1792410486.560:1933): avc: denied { use } for pid=14420 comm="dumpsys" path="pipe:[251978]" dev="pipefs" ino=251978 scontext=u:r:surfaceflinger:s0 tcontext=u:r:su:s0 tclass=fd permissive=1
+[ 6796.093364] (2)[217:logd.auditd]type=1400 audit(1792410486.560:1933): avc: denied { use } for pid=14420 comm="dumpsys" path="pipe:[251978]" dev="pipefs" ino=251978 scontext=u:r:surfaceflinger:s0 tcontext=u:r:su:s0 tclass=fd permissive=1
+[ 6796.093382] (2)[217:logd.auditd]type=1400 audit(1792410486.560:1934): avc: denied { write } for pid=14420 comm="dumpsys" path="pipe:[251978]" dev="pipefs" ino=251978 scontext=u:r:surfaceflinger:s0 tcontext=u:r:su:s0 tclass=fifo_file permissive=1
+[ 6796.287040] (0)[14432:head]Dump cpuinfo
+[ 6796.381985] (0)[212:logd.reader]logd: logdr: UID=1000 GID=1000 PID=14434 n tail=127 logMask=19 pid=0 start=0ns timeout=0ns
+[ 6796.382617] (0)[1:init]init: PropSet [log.tag]=[M] Done
+[ 6796.382744] (1)[14436:logd.reader.per]logd: logd first log reader, set log level to M!
+[ 6796.382767] (1)[14436:logd.reader.per]logd: logd.reader.per thread start.
+[ 6796.397393] (1)[1:init]init: PropSet [log.tag]=[I] Done
+[ 6796.398389] (1)[14436:logd.reader.per]logd: logd no log reader, set log level to I!
+[ 6796.398415] (1)[14436:logd.reader.per]logd: logd.reader.per thread stop.
+[ 6796.403694] (1)[14322:kworker/u8:0]binder: release 14431:14433 transaction 3077879 out, still active
+[ 6796.407266] -(0)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6796.409788] (1)[3256:Binder:485_14][name:trace&][ftrace]start reading trace file
+[ 6796.441022] (0)[3256:Binder:485_14][name:trace&][ftrace]end reading trace file
+[ 6796.462635] (0)[3256:Binder:485_14]binder: 485:3256 transaction failed 29189/0, size 4-0 line 2873
+[ 6796.462650] (0)[3256:Binder:485_14]binder: send failed reply for transaction 3077879, target dead
+[ 6796.468333] (3)[217:logd.auditd]type=1400 audit(1792410486.560:1934): avc: denied { write } for pid=14420 comm="dumpsys" path="pipe:[251978]" dev="pipefs" ino=251978 scontext=u:r:surfaceflinger:s0 tcontext=u:r:su:s0 tclass=fifo_file permissive=1
+[ 6796.468361] (3)[217:logd.auditd]type=1400 audit(1792410486.930:1935): avc: denied { search } for pid=204 comm="servicemanager" name="14437" dev="proc" ino=251654 scontext=u:r:servicemanager:s0 tcontext=u:r:su:s0 tclass=dir permissive=1
+[ 6796.468529] (3)[217:logd.auditd]type=1400 audit(1792410486.930:1935): avc: denied { search } for pid=204 comm="servicemanager" name="14437" dev="proc" ino=251654 scontext=u:r:servicemanager:s0 tcontext=u:r:su:s0 tclass=dir permissive=1
+[ 6796.468550] (3)[217:logd.auditd]type=1400 audit(1792410486.930:1936): avc: denied { read } for pid=204 comm="servicemanager" name="current" dev="proc" ino=252975 scontext=u:r:servicemanager:s0 tcontext=u:r:su:s0 tclass=file permissive=1
+[ 6796.468660] (3)[217:logd.auditd]type=1400 audit(1792410486.930:1936): avc: denied { read } for pid=204 comm="servicemanager" name="current" dev="proc" ino=252975 scontext=u:r:servicemanager:s0 tcontext=u:r:su:s0 tclass=file permissive=1
+[ 6796.468679] (3)[217:logd.auditd]type=1400 audit(1792410486.930:1937): avc: denied { open } for pid=204 comm="servicemanager" path="/proc/14437/attr/current" dev="proc" ino=252975 scontext=u:r:servicemanager:s0 tcontext=u:r:su:s0 tclass=file permissive=1
+[ 6796.548099] -(3)[3256:Binder:485_14][USB]state_show, state:CONFIGURED
+[ 6796.548457] (0)[14446:head][USB]functions_show: 
+[ 6796.614574] (0)[14446:head]Dump cpuinfo
+[ 6796.628266] (0)[217:logd.auditd]type=1400 audit(1792410486.930:1937): avc: denied { open } for pid=204 comm="servicemanager" path="/proc/14437/attr/current" dev="proc" ino=252975 scontext=u:r:servicemanager:s0 tcontext=u:r:su:s0 tclass=file permissive=1
+[ 6796.628295] (0)[217:logd.auditd]type=1400 audit(1792410487.090:1938): avc: denied { getattr } for pid=485 comm="Binder:485_14" path="pipe:[251691]" dev="pipefs" ino=251691 scontext=u:r:system_server:s0 tcontext=u:r:su:s0 tclass=fifo_file permissive=1
+[ 6796.628450] (0)[217:logd.auditd]type=1400 audit(1792410487.090:1938): avc: denied { getattr } for pid=485 comm="Binder:485_14" path="pipe:[251691]" dev="pipefs" ino=251691 scontext=u:r:system_server:s0 tcontext=u:r:su:s0 tclass=fifo_file permissive=1
+[ 6796.628506] (0)[217:logd.auditd]type=1400 audit(1792410487.090:1939): avc: denied { use } for pid=485 comm="Binder:485_14" path="pipe:[251691]" dev="pipefs" ino=251691 scontext=u:r:bluetooth:s0 tcontext=u:r:su:s0 tclass=fd permissive=1
+[ 6796.628636] (0)[217:logd.auditd]type=1400 audit(1792410487.090:1939): avc: denied { use } for pid=485 comm="Binder:485_14" path="pipe:[251691]" dev="pipefs" ino=251691 scontext=u:r:bluetooth:s0 tcontext=u:r:su:s0 tclass=fd permissive=1
+[ 6796.628658] (0)[217:logd.auditd]type=1400 audit(1792410487.090:1940): avc: denied { write } for pid=485 comm="Binder:485_14" path="pipe:[251691]" dev="pipefs" ino=251691 scontext=u:r:bluetooth:s0 tcontext=u:r:su:s0 tclass=fifo_file permissive=1
+[ 6796.692521] (3)[217:logd.auditd]type=1400 audit(1792410487.090:1940): avc: denied { write } for pid=485 comm="Binder:485_14" path="pipe:[251691]" dev="pipefs" ino=251691 scontext=u:r:bluetooth:s0 tcontext=u:r:su:s0 tclass=fifo_file permissive=1
+[ 6796.692550] (3)[217:logd.auditd]type=1400 audit(1792410487.160:1941): avc: denied { create } for pid=14450 comm="ip" scontext=u:r:su:s0 tcontext=u:r:su:s0 tclass=netlink_route_socket permissive=1
+[ 6796.692985] (3)[217:logd.auditd]type=1400 audit(1792410487.160:1941): avc: denied { create } for pid=14450 comm="ip" scontext=u:r:su:s0 tcontext=u:r:su:s0 tclass=netlink_route_socket permissive=1
+[ 6796.693006] (3)[217:logd.auditd]type=1400 audit(1792410487.160:1942): avc: denied { setopt } for pid=14450 comm="ip" scontext=u:r:su:s0 tcontext=u:r:su:s0 tclass=netlink_route_socket permissive=1
+[ 6796.693112] (3)[217:logd.auditd]type=1400 audit(1792410487.160:1942): avc: denied { setopt } for pid=14450 comm="ip" scontext=u:r:su:s0 tcontext=u:r:su:s0 tclass=netlink_route_socket permissive=1
+[ 6796.693129] (3)[217:logd.auditd]type=1400 audit(1792410487.160:1943): avc: denied { bind } for pid=14450 comm="ip" scontext=u:r:su:s0 tcontext=u:r:su:s0 tclass=netlink_route_socket permissive=1
+[ 6796.694146] (3)[217:logd.auditd]type=1400 audit(1792410487.160:1943): avc: denied { bind } for pid=14450 comm="ip" scontext=u:r:su:s0 tcontext=u:r:su:s0 tclass=netlink_route_socket permissive=1
+[ 6796.694169] (3)[217:logd.auditd]type=1400 audit(1792410487.160:1944): avc: denied { getattr } for pid=14450 comm="ip" scontext=u:r:su:s0 tcontext=u:r:su:s0 tclass=netlink_route_socket permissive=1
+[ 6796.694283] (3)[217:logd.auditd]type=1400 audit(1792410487.160:1944): avc: denied { getattr } for pid=14450 comm="ip" scontext=u:r:su:s0 tcontext=u:r:su:s0 tclass=netlink_route_socket permissive=1
+[ 6796.694302] (3)[217:logd.auditd]type=1400 audit(1792410487.160:1945): avc: denied { write } for pid=14450 comm="ip" scontext=u:r:su:s0 tcontext=u:r:su:s0 tclass=netlink_route_socket permissive=1
+[ 6796.694399] (3)[217:logd.auditd]type=1400 audit(1792410487.160:1945): avc: denied { write } for pid=14450 comm="ip" scontext=u:r:su:s0 tcontext=u:r:su:s0 tclass=netlink_route_socket permissive=1
+[ 6796.694418] (3)[217:logd.auditd]type=1400 audit(1792410487.160:1946): avc: denied { nlmsg_read } for pid=14450 comm="ip" scontext=u:r:su:s0 tcontext=u:r:su:s0 tclass=netlink_route_socket permissive=1
+[ 6796.694517] (3)[217:logd.auditd]type=1400 audit(1792410487.160:1946): avc: denied { nlmsg_read } for pid=14450 comm="ip" scontext=u:r:su:s0 tcontext=u:r:su:s0 tclass=netlink_route_socket permissive=1
+[ 6796.694534] (3)[217:logd.auditd]type=1400 audit(1792410487.160:1947): avc: denied { read } for pid=14450 comm="ip" scontext=u:r:su:s0 tcontext=u:r:su:s0 tclass=netlink_route_socket permissive=1
+[ 6796.737538] (3)[14452:cat]Dump cpuinfo
+[ 6796.738902] (0)[217:logd.auditd]type=1400 audit(1792410487.160:1947): avc: denied { read } for pid=14450 comm="ip" scontext=u:r:su:s0 tcontext=u:r:su:s0 tclass=netlink_route_socket permissive=1
+[ 6796.738927] (0)[217:logd.auditd]type=1400 audit(1792410487.200:1948): avc: denied { read } for pid=14452 comm="cat" name="dev" dev="proc" ino=4026532019 scontext=u:r:su:s0 tcontext=u:object_r:proc_net:s0 tclass=file permissive=1
+[ 6796.739435] (0)[217:logd.auditd]type=1400 audit(1792410487.200:1948): avc: denied { read } for pid=14452 comm="cat" name="dev" dev="proc" ino=4026532019 scontext=u:r:su:s0 tcontext=u:object_r:proc_net:s0 tclass=file permissive=1
+[ 6796.739459] (0)[217:logd.auditd]type=1400 audit(1792410487.200:1949): avc: denied { open } for pid=14452 comm="cat" path="/proc/14452/net/dev" dev="proc" ino=4026532019 scontext=u:r:su:s0 tcontext=u:object_r:proc_net:s0 tclass=file permissive=1
+[ 6796.791142] (1)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097730):2
+[ 6796.791220] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0995d8):7-0-1,bf00bce8,0,0
+[ 6796.793073] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:212
+[ 6796.793086] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6796.800268] (3)[14455:ls]Dump cpuinfo
+[ 6796.801605] (0)[217:logd.auditd]type=1400 audit(1792410487.200:1949): avc: denied { open } for pid=14452 comm="cat" path="/proc/14452/net/dev" dev="proc" ino=4026532019 scontext=u:r:su:s0 tcontext=u:object_r:proc_net:s0 tclass=file permissive=1
+[ 6796.801631] (0)[217:logd.auditd]type=1400 audit(1792410487.270:1950): avc: denied { read } for pid=14455 comm="ls" name="devices" dev="sysfs" ino=6714 scontext=u:r:su:s0 tcontext=u:object_r:sysfs:s0 tclass=dir permissive=1
+[ 6796.801879] (0)[217:logd.auditd]type=1400 audit(1792410487.270:1950): avc: denied { read } for pid=14455 comm="ls" name="devices" dev="sysfs" ino=6714 scontext=u:r:su:s0 tcontext=u:object_r:sysfs:s0 tclass=dir permissive=1
+[ 6796.801901] (0)[217:logd.auditd]type=1400 audit(1792410487.270:1951): avc: denied { open } for pid=14455 comm="ls" path="/sys/bus/usb/devices" dev="sysfs" ino=6714 scontext=u:r:su:s0 tcontext=u:object_r:sysfs:s0 tclass=dir permissive=1
+[ 6796.804152] (3)[217:logd.auditd]type=1400 audit(1792410487.270:1951): avc: denied { open } for pid=14455 comm="ls" path="/sys/bus/usb/devices" dev="sysfs" ino=6714 scontext=u:r:su:s0 tcontext=u:object_r:sysfs:s0 tclass=dir permissive=1
+[ 6796.804184] (3)[217:logd.auditd]type=1400 audit(1792410487.270:1952): avc: denied { getattr } for pid=14453 comm="sh" path="/sys/devices/platform/mt_usb/musb-hdrc.0.auto/usb1/idVendor" dev="sysfs" ino=7071 scontext=u:r:su:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+[ 6796.827652] (3)[14456:cat]Dump cpuinfo
+[ 6796.828996] (0)[217:logd.auditd]type=1400 audit(1792410487.270:1952): avc: denied { getattr } for pid=14453 comm="sh" path="/sys/devices/platform/mt_usb/musb-hdrc.0.auto/usb1/idVendor" dev="sysfs" ino=7071 scontext=u:r:su:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+[ 6796.829023] (0)[217:logd.auditd]type=1400 audit(1792410487.290:1953): avc: denied { read } for pid=14456 comm="cat" name="idVendor" dev="sysfs" ino=7071 scontext=u:r:su:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+[ 6796.829521] (0)[217:logd.auditd]type=1400 audit(1792410487.290:1953): avc: denied { read } for pid=14456 comm="cat" name="idVendor" dev="sysfs" ino=7071 scontext=u:r:su:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+[ 6796.829545] (0)[217:logd.auditd]type=1400 audit(1792410487.290:1954): avc: denied { open } for pid=14456 comm="cat" path="/sys/devices/platform/mt_usb/musb-hdrc.0.auto/usb1/idVendor" dev="sysfs" ino=7071 scontext=u:r:su:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+[ 6796.850174] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0977d8):0
+[ 6796.850277] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099680):7-0-0,bf00bce8,0,0
+[ 6796.853726] (1)[14457:cat]Dump cpuinfo
+[ 6796.879123] (2)[14458:cat]Dump cpuinfo
+[ 6796.904654] (1)[14459:cat]Dump cpuinfo
+[ 6796.930562] (0)[14460:cat]Dump cpuinfo
+[ 6796.956036] (1)[14461:cat]Dump cpuinfo
+[ 6797.015659] (0)[14462:ps]Dump cpuinfo
+[ 6797.017368] (1)[217:logd.auditd]type=1400 audit(1792410487.290:1954): avc: denied { open } for pid=14456 comm="cat" path="/sys/devices/platform/mt_usb/musb-hdrc.0.auto/usb1/idVendor" dev="sysfs" ino=7071 scontext=u:r:su:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+[ 6797.017395] (1)[217:logd.auditd]type=1400 audit(1792410487.480:1955): avc: denied { getattr } for pid=14462 comm="ps" path="/proc/1" dev="proc" ino=1221 scontext=u:r:su:s0 tcontext=u:r:init:s0 tclass=dir permissive=1
+[ 6797.017787] (1)[217:logd.auditd]type=1400 audit(1792410487.480:1955): avc: denied { getattr } for pid=14462 comm="ps" path="/proc/1" dev="proc" ino=1221 scontext=u:r:su:s0 tcontext=u:r:init:s0 tclass=dir permissive=1
+[ 6797.017808] (1)[217:logd.auditd]type=1400 audit(1792410487.480:1956): avc: denied { search } for pid=14462 comm="ps" name="1" dev="proc" ino=1221 scontext=u:r:su:s0 tcontext=u:r:init:s0 tclass=dir permissive=1
+[ 6797.017925] (1)[217:logd.auditd]type=1400 audit(1792410487.480:1956): avc: denied { search } for pid=14462 comm="ps" name="1" dev="proc" ino=1221 scontext=u:r:su:s0 tcontext=u:r:init:s0 tclass=dir permissive=1
+[ 6797.017944] (1)[217:logd.auditd]type=1400 audit(1792410487.480:1957): avc: denied { getattr } for pid=14462 comm="ps" path="/proc/2" dev="proc" ino=11645 scontext=u:r:su:s0 tcontext=u:r:kernel:s0 tclass=dir permissive=1
+[ 6797.018051] (1)[217:logd.auditd]type=1400 audit(1792410487.480:1957): avc: denied { getattr } for pid=14462 comm="ps" path="/proc/2" dev="proc" ino=11645 scontext=u:r:su:s0 tcontext=u:r:kernel:s0 tclass=dir permissive=1
+[ 6797.018070] (1)[217:logd.auditd]type=1400 audit(1792410487.480:1958): avc: denied { search } for pid=14462 comm="ps" name="2" dev="proc" ino=11645 scontext=u:r:su:s0 tcontext=u:r:kernel:s0 tclass=dir permissive=1
+[ 6797.018161] (1)[217:logd.auditd]type=1400 audit(1792410487.480:1958): avc: denied { search } for pid=14462 comm="ps" name="2" dev="proc" ino=11645 scontext=u:r:su:s0 tcontext=u:r:kernel:s0 tclass=dir permissive=1
+[ 6797.018178] (1)[217:logd.auditd]type=1400 audit(1792410487.480:1959): avc: denied { read } for pid=14462 comm="ps" name="stat" dev="proc" ino=11742 scontext=u:r:su:s0 tcontext=u:r:kernel:s0 tclass=file permissive=1
+[ 6797.018272] (1)[217:logd.auditd]type=1400 audit(1792410487.480:1959): avc: denied { read } for pid=14462 comm="ps" name="stat" dev="proc" ino=11742 scontext=u:r:su:s0 tcontext=u:r:kernel:s0 tclass=file permissive=1
+[ 6797.018290] (1)[217:logd.auditd]type=1400 audit(1792410487.480:1960): avc: denied { open } for pid=14462 comm="ps" path="/proc/2/stat" dev="proc" ino=11742 scontext=u:r:su:s0 tcontext=u:r:kernel:s0 tclass=file permissive=1
+[ 6797.042114] (3)[14462:ps]audit: audit_lost=471 audit_rate_limit=20 audit_backlog_limit=64
+[ 6797.042128] (3)[14462:ps]audit: rate limit exceeded
+[ 6797.152923] (1)[14466:cat]Dump cpuinfo
+[ 6797.154103] (1)[14466:cat]Dump cpuinfo
+[ 6797.179137] (0)[14467:cat]Dump cpuinfo
+[ 6797.180487] (0)[14467:cat]t1 real_ddr_size = 2,available = 318050
+[ 6797.181254] (0)[14467:cat]t2 real_ddr_size = 2,available = 636100
+[ 6797.193363] (1)[735:watchdog]AEEIOCTL_RT_MON_Kick ( 300)
+[ 6797.193627] (1)[735:watchdog][Hang_Detect] hang_detect enabled 10
+[ 6797.207136] (0)[14468:cat]Dump cpuinfo
+[ 6797.260006] (1)[14471:mount]Dump cpuinfo
+[ 6797.288067] (0)[14472:df]Dump cpuinfo
+[ 6797.353476] (1)[14475:ls]Dump cpuinfo
+[ 6797.463280] (1)[14478:ls]Dump cpuinfo
+[ 6797.528089] (3)[14481:cat]Dump cpuinfo
+[ 6797.555370] (3)[14482:cat]Dump cpuinfo
+[ 6797.580637] (3)[14483:cat]Dump cpuinfo
+[ 6797.605920] (1)[14484:cat]Dump cpuinfo
+[ 6797.631275] (2)[14485:cat]Dump cpuinfo
+[ 6797.657016] (0)[14486:cat]Dump cpuinfo
+[ 6797.683297] (2)[14487:cat]Dump cpuinfo
+[ 6797.709506] (1)[14488:cat]Dump cpuinfo
+[ 6797.735905] (0)[14489:cat]Dump cpuinfo
+[ 6797.763058] (1)[14490:cat]Dump cpuinfo
+[ 6797.788760] (2)[14491:cat]Dump cpuinfo
+[ 6797.791127] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097880):2
+[ 6797.791196] (1)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099728):7-0-1,bf00bce8,0,0
+[ 6797.793391] (1)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:171
+[ 6797.793408] (1)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6797.816160] (0)[14492:cat]Dump cpuinfo
+[ 6797.842521] (2)[14493:cat]Dump cpuinfo
+[ 6797.850178] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097928):0
+[ 6797.850391] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0997d0):7-0-0,bf00bce8,0,0
+[ 6797.868755] (1)[14494:cat]Dump cpuinfo
+[ 6797.894835] (3)[14495:cat]Dump cpuinfo
+[ 6797.921277] (0)[14496:cat]Dump cpuinfo
+[ 6797.947702] (0)[14497:cat]Dump cpuinfo
+[ 6797.973757] (0)[14498:cat]Dump cpuinfo
+[ 6797.999962] (2)[14499:cat]Dump cpuinfo
+[ 6798.026266] (1)[14500:cat]Dump cpuinfo
+[ 6798.053254] (3)[14501:cat]Dump cpuinfo
+[ 6798.079409] (0)[14502:cat]Dump cpuinfo
+[ 6798.105741] (1)[14503:cat]Dump cpuinfo
+[ 6798.132109] (3)[14504:cat]Dump cpuinfo
+[ 6798.158065] (2)[14505:cat]Dump cpuinfo
+[ 6798.184057] (3)[14506:cat]Dump cpuinfo
+[ 6798.210416] (0)[14507:cat]Dump cpuinfo
+[ 6798.236698] (1)[14508:cat]Dump cpuinfo
+[ 6798.262804] (0)[14509:cat]Dump cpuinfo
+[ 6798.288741] (1)[14510:cat]Dump cpuinfo
+[ 6798.315092] (0)[14511:cat]Dump cpuinfo
+[ 6798.341371] (1)[14512:cat]Dump cpuinfo
+[ 6798.367519] (0)[14513:cat]Dump cpuinfo
+[ 6798.393718] (2)[14514:cat]Dump cpuinfo
+[ 6798.419916] (0)[14515:cat]Dump cpuinfo
+[ 6798.445962] (1)[14516:cat]Dump cpuinfo
+[ 6798.472466] (0)[14517:cat]Dump cpuinfo
+[ 6798.498810] (0)[14518:cat]Dump cpuinfo
+[ 6798.525205] (0)[14519:cat]Dump cpuinfo
+[ 6798.551251] (0)[14520:cat]Dump cpuinfo
+[ 6798.577515] (1)[14521:cat]Dump cpuinfo
+[ 6798.603500] (1)[14522:cat]Dump cpuinfo
+[ 6798.629495] (2)[14523:cat]Dump cpuinfo
+[ 6798.655761] (2)[14524:cat]Dump cpuinfo
+[ 6798.681872] (0)[14525:cat]Dump cpuinfo
+[ 6798.708322] (0)[14526:cat]Dump cpuinfo
+[ 6798.734864] (0)[14527:cat]Dump cpuinfo
+[ 6798.761301] (2)[14528:cat]Dump cpuinfo
+[ 6798.787782] (0)[14529:cat]Dump cpuinfo
+[ 6798.791184] (0)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf0979d0):2
+[ 6798.791316] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099290):7-0-1,bf00bce8,0,0
+[ 6798.815549] (0)[14530:cat]Dump cpuinfo
+[ 6798.842164] (0)[14531:cat]Dump cpuinfo
+[ 6798.850203] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097a78):0
+[ 6798.850293] (3)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099140):7-0-0,bf00bce8,0,0
+[ 6798.871568] (0)[14532:cat]Dump cpuinfo
+[ 6798.897733] (0)[14533:cat]Dump cpuinfo
+[ 6798.923795] (1)[14534:cat]Dump cpuinfo
+[ 6798.949916] (2)[14535:cat]Dump cpuinfo
+[ 6798.976067] (0)[14536:cat]Dump cpuinfo
+[ 6799.002287] (1)[14537:cat]Dump cpuinfo
+[ 6799.028435] (1)[14538:cat]Dump cpuinfo
+[ 6799.054583] (2)[14539:cat]Dump cpuinfo
+[ 6799.080904] (0)[14540:cat]Dump cpuinfo
+[ 6799.107029] (1)[14541:cat]Dump cpuinfo
+[ 6799.133089] (0)[14542:cat]Dump cpuinfo
+[ 6799.158971] (1)[14543:cat]Dump cpuinfo
+[ 6799.185857] (1)[14544:cat]Dump cpuinfo
+[ 6799.212152] (0)[14545:cat]Dump cpuinfo
+[ 6799.238429] (1)[14546:cat]Dump cpuinfo
+[ 6799.264578] (3)[14547:cat]Dump cpuinfo
+[ 6799.291109] (0)[14548:cat]Dump cpuinfo
+[ 6799.317222] (1)[14549:cat]Dump cpuinfo
+[ 6799.343315] (0)[14550:cat]Dump cpuinfo
+[ 6799.369397] (1)[14551:cat]Dump cpuinfo
+[ 6799.395435] (3)[14552:cat]Dump cpuinfo
+[ 6799.421920] (1)[14553:cat]Dump cpuinfo
+[ 6799.448044] (3)[14554:cat]Dump cpuinfo
+[ 6799.475340] (0)[14555:cat]Dump cpuinfo
+[ 6799.503106] (3)[14556:cat]Dump cpuinfo
+[ 6799.529088] (3)[14557:cat]Dump cpuinfo
+[ 6799.555640] (2)[14558:cat]Dump cpuinfo
+[ 6799.581794] (0)[14559:cat]Dump cpuinfo
+[ 6799.607983] (1)[14560:cat]Dump cpuinfo
+[ 6799.634303] (0)[14561:cat]Dump cpuinfo
+[ 6799.661636] (0)[14562:cat]Dump cpuinfo
+[ 6799.687657] (3)[14563:cat]Dump cpuinfo
+[ 6799.713623] (3)[14564:cat]Dump cpuinfo
+[ 6799.739891] (0)[14565:cat]Dump cpuinfo
+[ 6799.765991] (3)[14566:cat]Dump cpuinfo
+[ 6799.791288] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097b20):2
+[ 6799.791361] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099b18):7-0-1,bf00bce8,0,0
+[ 6799.792159] (1)[14567:cat]Dump cpuinfo
+[ 6799.793413] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: STP speed rx:0 tx:301
+[ 6799.793425] (0)[13471:mnld][CNN][STP-PSM] [I]stp_psm_disable_by_tx_rx_density: Low speed,Enable monitor
+[ 6799.819688] (0)[14568:cat]Dump cpuinfo
+[ 6799.845995] (2)[14569:cat]Dump cpuinfo
+[ 6799.850250] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097bc8):0
+[ 6799.850339] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099878):7-0-0,bf00bce8,0,0
+[ 6799.872111] (2)[14570:cat]Dump cpuinfo
+[ 6799.898027] (0)[14571:cat]Dump cpuinfo
+[ 6799.924146] (3)[14572:cat]Dump cpuinfo
+[ 6799.950876] (3)[14573:cat]Dump cpuinfo
+[ 6799.977095] (0)[14574:cat]Dump cpuinfo
+[ 6800.003495] (2)[14575:cat]Dump cpuinfo
+[ 6800.029927] (0)[14576:cat]Dump cpuinfo
+[ 6800.056179] (3)[14577:cat]Dump cpuinfo
+[ 6800.082637] (1)[14578:cat]Dump cpuinfo
+[ 6800.108589] (3)[14579:cat]Dump cpuinfo
+[ 6800.134527] (3)[14580:cat]Dump cpuinfo
+[ 6800.160993] (0)[14581:cat]Dump cpuinfo
+[ 6800.187104] (3)[14582:cat]Dump cpuinfo
+[ 6800.213215] (3)[14583:cat]Dump cpuinfo
+[ 6800.239264] (3)[14584:cat]Dump cpuinfo
+[ 6800.265698] (3)[14585:cat]Dump cpuinfo
+[ 6800.291996] (3)[14586:cat]Dump cpuinfo
+[ 6800.354104] (3)[14589:ls]Dump cpuinfo
+[ 6800.384668] (1)[217:logd.auditd]type=1400 audit(1792410487.480:1960): avc: denied { open } for pid=14462 comm="ps" path="/proc/2/stat" dev="proc" ino=11742 scontext=u:r:su:s0 tcontext=u:r:kernel:s0 tclass=file permissive=1
+[ 6800.384697] (1)[217:logd.auditd]type=1400 audit(1792410490.850:2478): avc: denied { getattr } for pid=14589 comm="ls" path="/system/etc/selinux/plat_and_mapping_sepolicy.cil.sha256" dev="mmcblk0p22" ino=1064 scontext=u:r:su:s0 tcontext=u:object_r:sepolicy_file:s0 tclass=file permissive=1
+[ 6800.384992] (1)[217:logd.auditd]type=1400 audit(1792410490.850:2478): avc: denied { getattr } for pid=14589 comm="ls" path="/system/etc/selinux/plat_and_mapping_sepolicy.cil.sha256" dev="mmcblk0p22" ino=1064 scontext=u:r:su:s0 tcontext=u:object_r:sepolicy_file:s0 tclass=file permissive=1
+[ 6800.385014] (1)[217:logd.auditd]type=1400 audit(1792410490.850:2479): avc: denied { getattr } for pid=14589 comm="ls" path="/system/etc/selinux/plat_file_contexts" dev="mmcblk0p22" ino=1065 scontext=u:r:su:s0 tcontext=u:object_r:file_contexts_file:s0 tclass=file permissive=1
+[ 6800.385122] (1)[217:logd.auditd]type=1400 audit(1792410490.850:2479): avc: denied { getattr } for pid=14589 comm="ls" path="/system/etc/selinux/plat_file_contexts" dev="mmcblk0p22" ino=1065 scontext=u:r:su:s0 tcontext=u:object_r:file_contexts_file:s0 tclass=file permissive=1
+[ 6800.385140] (1)[217:logd.auditd]type=1400 audit(1792410490.850:2480): avc: denied { getattr } for pid=14589 comm="ls" path="/system/etc/selinux/plat_hwservice_contexts" dev="mmcblk0p22" ino=1066 scontext=u:r:su:s0 tcontext=u:object_r:hwservice_contexts_file:s0 tclass=file permissive=1
+[ 6800.385242] (1)[217:logd.auditd]type=1400 audit(1792410490.850:2480): avc: denied { getattr } for pid=14589 comm="ls" path="/system/etc/selinux/plat_hwservice_contexts" dev="mmcblk0p22" ino=1066 scontext=u:r:su:s0 tcontext=u:object_r:hwservice_contexts_file:s0 tclass=file permissive=1
+[ 6800.385260] (1)[217:logd.auditd]type=1400 audit(1792410490.850:2481): avc: denied { getattr } for pid=14589 comm="ls" path="/system/etc/selinux/plat_mac_permissions.xml" dev="mmcblk0p22" ino=1067 scontext=u:r:su:s0 tcontext=u:object_r:mac_perms_file:s0 tclass=file permissive=1
+[ 6800.385362] (1)[217:logd.auditd]type=1400 audit(1792410490.850:2481): avc: denied { getattr } for pid=14589 comm="ls" path="/system/etc/selinux/plat_mac_permissions.xml" dev="mmcblk0p22" ino=1067 scontext=u:r:su:s0 tcontext=u:object_r:mac_perms_file:s0 tclass=file permissive=1
+[ 6800.385380] (1)[217:logd.auditd]type=1400 audit(1792410490.850:2482): avc: denied { getattr } for pid=14589 comm="ls" path="/system/etc/selinux/plat_seapp_contexts" dev="mmcblk0p22" ino=1069 scontext=u:r:su:s0 tcontext=u:object_r:seapp_contexts_file:s0 tclass=file permissive=1
+[ 6800.385482] (1)[217:logd.auditd]type=1400 audit(1792410490.850:2482): avc: denied { getattr } for pid=14589 comm="ls" path="/system/etc/selinux/plat_seapp_contexts" dev="mmcblk0p22" ino=1069 scontext=u:r:su:s0 tcontext=u:object_r:seapp_contexts_file:s0 tclass=file permissive=1
+[ 6800.385501] (1)[217:logd.auditd]type=1400 audit(1792410490.850:2483): avc: denied { getattr } for pid=14589 comm="ls" path="/system/etc/selinux/plat_service_contexts" dev="mmcblk0p22" ino=1071 scontext=u:r:su:s0 tcontext=u:object_r:service_contexts_file:s0 tclass=file permissive=1
+[ 6800.410367] (0)[217:logd.auditd]type=1400 audit(1792410490.850:2483): avc: denied { getattr } for pid=14589 comm="ls" path="/system/etc/selinux/plat_service_contexts" dev="mmcblk0p22" ino=1071 scontext=u:r:su:s0 tcontext=u:object_r:service_contexts_file:s0 tclass=file permissive=1
+[ 6800.410397] (0)[217:logd.auditd]type=1400 audit(1792410490.880:2484): avc: denied { getattr } for pid=14589 comm="ls" path="/vendor/etc/selinux/nonplat_service_contexts" dev="mmcblk0p17" ino=417 scontext=u:r:su:s0 tcontext=u:object_r:nonplat_service_contexts_file:s0 tclass=file permissive=1
+[ 6800.410543] -(2)[13520:tx_thread][wlan]qmEnqueueTxPackets:(QM WARN) Drop the Packet for inactive Bss 1
+[ 6800.410611] (0)[217:logd.auditd]type=1400 audit(1792410490.880:2484): avc: denied { getattr } for pid=14589 comm="ls" path="/vendor/etc/selinux/nonplat_service_contexts" dev="mmcblk0p17" ino=417 scontext=u:r:su:s0 tcontext=u:object_r:nonplat_service_contexts_file:s0 tclass=file permissive=1
+[ 6800.410632] (0)[217:logd.auditd]type=1400 audit(1792410490.880:2485): avc: denied { getattr } for pid=14589 comm="ls" path="/vendor/etc/selinux/vndservice_contexts" dev="mmcblk0p17" ino=421 scontext=u:r:su:s0 tcontext=u:object_r:vndservice_contexts_file:s0 tclass=file permissive=1
+[ 6800.483124] (1)[217:logd.auditd]type=1400 audit(1792410490.880:2485): avc: denied { getattr } for pid=14589 comm="ls" path="/vendor/etc/selinux/vndservice_contexts" dev="mmcblk0p17" ino=421 scontext=u:r:su:s0 tcontext=u:object_r:vndservice_contexts_file:s0 tclass=file permissive=1
+[ 6800.483152] (1)[217:logd.auditd]type=1400 audit(1792410490.950:2486): avc: denied { call } for pid=14590 comm="service" scontext=u:r:su:s0 tcontext=u:r:servicemanager:s0 tclass=binder permissive=1
+[ 6800.483584] (1)[217:logd.auditd]type=1400 audit(1792410490.950:2486): avc: denied { call } for pid=14590 comm="service" scontext=u:r:su:s0 tcontext=u:r:servicemanager:s0 tclass=binder permissive=1
+[ 6800.483605] (1)[217:logd.auditd]type=1400 audit(1792410490.950:2487): avc: denied { getattr } for pid=204 comm="servicemanager" scontext=u:r:servicemanager:s0 tcontext=u:r:su:s0 tclass=process permissive=1
+[ 6800.500239] (3)[217:logd.auditd]type=1400 audit(1792410490.950:2487): avc: denied { getattr } for pid=204 comm="servicemanager" scontext=u:r:servicemanager:s0 tcontext=u:r:su:s0 tclass=process permissive=1
+[ 6800.500268] (3)[217:logd.auditd]type=1400 audit(1792410490.960:2488): avc: denied { call } for pid=14590 comm="service" scontext=u:r:su:s0 tcontext=u:r:ged_srv:s0 tclass=binder permissive=1
+[ 6800.501535] (3)[217:logd.auditd]type=1400 audit(1792410490.960:2488): avc: denied { call } for pid=14590 comm="service" scontext=u:r:su:s0 tcontext=u:r:ged_srv:s0 tclass=binder permissive=1
+[ 6800.501559] (3)[217:logd.auditd]type=1400 audit(1792410490.970:2489): avc: denied { call } for pid=14590 comm="service" scontext=u:r:su:s0 tcontext=u:r:radio:s0 tclass=binder permissive=1
+[ 6800.506586] (3)[217:logd.auditd]type=1400 audit(1792410490.970:2489): avc: denied { call } for pid=14590 comm="service" scontext=u:r:su:s0 tcontext=u:r:radio:s0 tclass=binder permissive=1
+[ 6800.506612] (3)[217:logd.auditd]type=1400 audit(1792410490.970:2490): avc: denied { call } for pid=14590 comm="service" scontext=u:r:su:s0 tcontext=u:r:system_server:s0 tclass=binder permissive=1
+[ 6800.522025] (1)[217:logd.auditd]type=1400 audit(1792410490.970:2490): avc: denied { call } for pid=14590 comm="service" scontext=u:r:su:s0 tcontext=u:r:system_server:s0 tclass=binder permissive=1
+[ 6800.522052] (1)[217:logd.auditd]type=1400 audit(1792410490.990:2491): avc: denied { ioctl } for pid=14590 comm="service" path="/dev/binder" dev="tmpfs" ino=6450 ioctlcmd=6201 scontext=u:r:su:s0 tcontext=u:object_r:binder_device:s0 tclass=chr_file permissive=1
+[ 6800.588799] (1)[217:logd.auditd]type=1400 audit(1792410490.990:2491): avc: denied { ioctl } for pid=14590 comm="service" path="/dev/binder" dev="tmpfs" ino=6450 ioctlcmd=6201 scontext=u:r:su:s0 tcontext=u:object_r:binder_device:s0 tclass=chr_file permissive=1
+[ 6800.588827] (1)[217:logd.auditd]type=1400 audit(1792410491.050:2492): avc: denied { call } for pid=14590 comm="service" scontext=u:r:su:s0 tcontext=u:r:audioserver:s0 tclass=binder permissive=1
+[ 6800.591670] (3)[217:logd.auditd]type=1400 audit(1792410491.050:2492): avc: denied { call } for pid=14590 comm="service" scontext=u:r:su:s0 tcontext=u:r:audioserver:s0 tclass=binder permissive=1
+[ 6800.591695] (3)[217:logd.auditd]type=1400 audit(1792410491.060:2493): avc: denied { call } for pid=14590 comm="service" scontext=u:r:su:s0 tcontext=u:r:storaged:s0 tclass=binder permissive=1
+[ 6800.592710] (3)[217:logd.auditd]type=1400 audit(1792410491.060:2493): avc: denied { call } for pid=14590 comm="service" scontext=u:r:su:s0 tcontext=u:r:storaged:s0 tclass=binder permissive=1
+[ 6800.592733] (3)[217:logd.auditd]type=1400 audit(1792410491.060:2494): avc: denied { call } for pid=14590 comm="service" scontext=u:r:su:s0 tcontext=u:r:cameraserver:s0 tclass=binder permissive=1
+[ 6800.593699] (2)[217:logd.auditd]type=1400 audit(1792410491.060:2494): avc: denied { call } for pid=14590 comm="service" scontext=u:r:su:s0 tcontext=u:r:cameraserver:s0 tclass=binder permissive=1
+[ 6800.593722] (2)[217:logd.auditd]type=1400 audit(1792410491.060:2495): avc: denied { call } for pid=14590 comm="service" scontext=u:r:su:s0 tcontext=u:r:mediaserver:s0 tclass=binder permissive=1
+[ 6800.595694] (3)[217:logd.auditd]type=1400 audit(1792410491.060:2495): avc: denied { call } for pid=14590 comm="service" scontext=u:r:su:s0 tcontext=u:r:mediaserver:s0 tclass=binder permissive=1
+[ 6800.595719] (3)[217:logd.auditd]type=1400 audit(1792410491.060:2496): avc: denied { call } for pid=14590 comm="service" scontext=u:r:su:s0 tcontext=u:r:mediaextractor:s0 tclass=binder permissive=1
+[ 6800.596997] (0)[217:logd.auditd]type=1400 audit(1792410491.060:2496): avc: denied { call } for pid=14590 comm="service" scontext=u:r:su:s0 tcontext=u:r:mediaextractor:s0 tclass=binder permissive=1
+[ 6800.597020] (0)[217:logd.auditd]type=1400 audit(1792410491.060:2497): avc: denied { call } for pid=14590 comm="service" scontext=u:r:su:s0 tcontext=u:r:drmserver:s0 tclass=binder permissive=1
+[ 6800.599168] (3)[14590:service]audit: audit_lost=988 audit_rate_limit=20 audit_backlog_limit=64
+[ 6800.599180] (3)[14590:service]audit: rate limit exceeded
+[ 6800.671291] (3)[212:logd.reader]logd: logdr: UID=0 GID=0 PID=14592 n tail=0 logMask=19 pid=0 start=0ns timeout=0ns
+[ 6800.671906] (1)[1:init]init: PropSet [log.tag]=[M] Done
+[ 6800.672019] (0)[14594:logd.reader.per]logd: logd first log reader, set log level to M!
+[ 6800.672041] (0)[14594:logd.reader.per]logd: logd.reader.per thread start.
+[ 6800.745877] (3)[212:logd.reader]logd: logdr: UID=0 GID=0 PID=14595 b tail=0 logMask=19 pid=0 start=0ns timeout=0ns
+[ 6800.746125] (0)[14597:logd.reader.per]logd: logd.reader.per thread start.
+[ 6800.791295] (3)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097c70):2
+[ 6800.791386] (0)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf0999c8):7-0-1,bf00bce8,0,0
+[ 6800.860147] (2)[306:mtk_stp_psm][CNN][STP-PSM] [I]_stp_psm_proc: pOp(bf097d18):0
+[ 6800.860239] (2)[326:mtk_wmtd][CNN][HIF-SDIO][I]wmtd_thread:pOp(bf099488):7-0-0,bf00bce8,0,0
+[ 6800.887203] (1)[14594:logd.reader.per]logd: logd.reader.per thread stop.
+[ 6800.967730] (2)[14598:dmesg]Dump cpuinfo
+[ 6800.990395] (3)[594:AlarmManager]alarm_dev: alarm 2 set 423702.271000000
+[ 6800.990413] -(3)[594:AlarmManager]alarmtimer_enqueue, 423702271000000
+[ 6800.992602] (1)[611:WifiStateMachin]alarm_dev: alarm 2 set 423523.233000000
+[ 6800.992716] -(1)[611:WifiStateMachin]alarmtimer_enqueue, 423523233000000
+[ 6800.993838] (0)[13520:tx_thread][wlan]aisFsmSteps:(AIS STATE) [13] TRANSITION: [0] -> [2]
+[ 6800.993886] (0)[13520:tx_thread][wlan]scnFsmSteps:(SCN STATE) [19] TRANSITION: [0] -> [1]

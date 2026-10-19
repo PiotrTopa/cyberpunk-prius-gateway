@@ -1,0 +1,657 @@
+/system/etc:
+total 4084
+-rw-r--r-- 1 root root  183473 2009-01-01 01:00 NOTICE.xml.gz
+-rw-r--r-- 1 root root    2090 2009-01-01 01:00 a2dp_audio_policy_configuration.xml
+-rw-r--r-- 1 root root      28 2009-01-01 01:00 aee-config
+-rw-r--r-- 1 root root     931 2009-01-01 01:00 android_version_history.xml
+-rw-r--r-- 1 root root    1111 2009-01-01 01:00 android_version_history_en.xml
+drwxr-xr-x 2 root root    4096 2009-01-01 01:00 apdb
+-rw-r--r-- 1 root root  363154 2009-01-01 01:00 apns-conf.xml
+-rw-r--r-- 1 root root     300 2009-01-01 01:00 audioGisWhitelist.xml
+-rw-r--r-- 1 root root    5491 2009-01-01 01:00 audio_effects.conf
+-rw-r--r-- 1 root root    1881 2009-01-01 01:00 audio_policy.xml
+-rw-r--r-- 1 root root   12638 2009-01-01 01:00 audio_policy_configuration.xml
+-rw-r--r-- 1 root root    1141 2009-01-01 01:00 audio_policy_configuration_stub.xml
+-rw-r--r-- 1 root root   13725 2009-01-01 01:00 audio_policy_volumes.xml
+drwxr-xr-x 2 root root    4096 2009-01-01 01:00 bluetooth
+-rw-r--r-- 1 root root    4557 2009-01-01 01:00 canbus_version_history.xml
+-rw-r--r-- 1 root root    5297 2009-01-01 01:00 canbus_version_history_en.xml
+-rw-r--r-- 1 root root    1045 2009-01-01 01:00 clatd.conf
+-rw-r--r-- 1 root root     366 2009-01-01 01:00 com.iflytek.inputmethod_preferences.xml
+-rw-r--r-- 1 root root  354089 2009-01-01 01:00 compiled-classes
+-rw-r--r-- 1 root root    1077 2009-01-01 01:00 custom.conf
+-rw-r--r-- 1 root root    2610 2009-01-01 01:00 default_volume_tables.xml
+-rw-r--r-- 1 root root    6062 2009-01-01 01:00 dirty-image-objects
+-rw-r--r-- 1 root root      70 2009-01-01 01:00 dongle_supported_list.txt
+-rw-r--r-- 1 root root     522 2009-01-01 01:00 dongleselect.conf
+-rw-r--r-- 1 root root   21168 2009-01-01 01:00 event-log-tags
+-rw-r--r-- 1 root root    1026 2009-01-01 01:00 exit.png
+-rw-r--r-- 1 root root    2720 2009-01-01 01:00 factory.ini
+-rw-r--r-- 1 root root   23131 2009-01-01 01:00 fonts.xml
+-r--r--r-- 1 root root       0 2009-01-01 01:00 fs_config_dirs
+-r--r--r-- 1 root root     352 2009-01-01 01:00 fs_config_files
+-rw-r--r-- 1 root root     337 2009-01-01 01:00 hosts
+drwxr-xr-x 2 root root    4096 2009-01-01 01:00 init
+-rw-r--r-- 1 root root    7470 2009-01-01 01:00 ld.config.txt
+-rw-r--r-- 1 root root     457 2009-01-01 01:00 mcu_version_history.xml
+-rw-r--r-- 1 root root     403 2009-01-01 01:00 mcu_version_history_en.xml
+-rw-r--r-- 1 root root    2727 2009-01-01 01:00 media_profiles_V1_0.dtd
+-rw-r--r-- 1 root root    1156 2009-01-01 01:00 mke2fs.conf
+-rw-r--r-- 1 root root     495 2009-01-01 01:00 mkshrc
+-rw-r--r-- 1 root root     375 2009-01-01 01:00 mtklog-config.prop
+drwxr-xr-x 2 root root    4096 2009-01-01 01:00 permissions
+drwxr-xr-x 4 root root    4096 2009-01-01 01:00 ppp
+drwxr-xr-x 2 root root    4096 2009-01-01 01:00 preferred-apps
+-rw-r--r-- 1 root root  181628 2009-01-01 01:00 preloaded-classes
+-rw------- 1 root root     395 2009-01-01 01:00 prop.default
+-rw-r--r-- 1 root root     591 2009-01-01 01:00 public.libraries.txt
+-rw-r--r-- 1 root root    2444 2009-01-01 01:00 qb_list.xml
+-rw-r--r-- 1 root root    2105 2009-01-01 01:00 r_submix_audio_policy_configuration.xml
+-rw-r--r-- 1 root root 1335047 2009-01-01 01:00 recovery-resource.dat
+drwxr-xr-x 2 root root    4096 2009-01-01 01:00 seccomp_policy
+drwxr-xr-x 3 root root    4096 2009-01-01 01:00 security
+drwxr-xr-x 3 root root    4096 2009-01-01 01:00 selinux
+-rw-r--r-- 1 root root       0 2009-01-01 01:00 sepolicy_tests
+-rw-r--r-- 1 root root   54159 2009-01-01 01:00 spn-conf.xml
+drwxr-xr-x 2 root root    4096 2009-01-01 01:00 sysconfig
+-rw-r--r-- 1 root root 1387760 2009-01-01 01:00 tee.img
+-rw-r--r-- 1 root root       0 2009-01-01 01:00 treble_sepolicy_tests
+-rw-r--r-- 1 root root    2237 2009-01-01 01:00 usb_audio_policy_configuration.xml
+drwxr-xr-x 2 root root    4096 2009-01-01 01:00 usb_modeswitch.d
+-rw-r--r-- 1 root root   17619 2009-01-01 01:00 wifi-apns.xml
+-rw-r--r-- 1 root root       0 2009-01-01 01:00 xtables.lock
+drwxr-xr-x 2 root root    4096 2009-01-01 01:00 xy
+-rw-r--r-- 1 root root       7 2009-01-01 01:00 xyautoverno.ini
+
+/system/etc/apdb:
+total 152
+-rw-r--r-- 1 root root 132641 2009-01-01 01:00 APDB_AC8227L_S01_alps-mp-o1.mp5_W18.09
+-rw-r--r-- 1 root root  20213 2009-01-01 01:00 APDB_AC8227L_S01_alps-mp-o1.mp5_W18.09_ENUM
+
+/system/etc/bluetooth:
+total 16
+-rw-r--r-- 1 root root 2658 2009-01-01 01:00 bt_did.conf
+-rw-r--r-- 1 root root 1909 2009-01-01 01:00 bt_stack.conf
+-rw-r--r-- 1 root root 1475 2009-01-01 01:00 mtk_bt_fw.conf
+-rw-r--r-- 1 root root 1099 2009-01-01 01:00 mtk_bt_stack.conf
+
+/system/etc/init:
+total 240
+-rw-r--r-- 1 root root  277 2009-01-01 01:00 aee_aed.rc
+-rw-r--r-- 1 root root  117 2009-01-01 01:00 android.hidl.allocator@1.0-service.rc
+-rw-r--r-- 1 root root  322 2009-01-01 01:00 atci_service.rc
+-rw-r--r-- 1 root root  466 2009-01-01 01:00 atcid.rc
+-rw-r--r-- 1 root root 9731 2009-01-01 01:00 atrace.rc
+-rw-r--r-- 1 root root  154 2009-01-01 01:00 audiocmdservice_atci.rc
+-rw-r--r-- 1 root root  489 2009-01-01 01:00 audioserver.rc
+-rw-r--r-- 1 root root  120 2009-01-01 01:00 bootlogoupdater.rc
+-rw-r--r-- 1 root root 3981 2009-01-01 01:00 bootstat.rc
+-rw-r--r-- 1 root root  205 2009-01-01 01:00 cameraserver.rc
+-rw-r--r-- 1 root root  100 2009-01-01 01:00 dm_agent_binder.rc
+-rw-r--r-- 1 root root  231 2009-01-01 01:00 drmserver.rc
+-rw-r--r-- 1 root root  624 2009-01-01 01:00 dumpstate.rc
+-rw-r--r-- 1 root root  112 2009-01-01 01:00 einfo.rc
+-rw-r--r-- 1 root root  354 2009-01-01 01:00 em_svr.rc
+-rw-r--r-- 1 root root  152 2009-01-01 01:00 gatekeeperd.rc
+-rw-r--r-- 1 root root  933 2009-01-01 01:00 ged_srv.rc
+-rw-r--r-- 1 root root  334 2009-01-01 01:00 hwservicemanager.rc
+-rw-r--r-- 1 root root  338 2009-01-01 01:00 init-debug.rc
+-rw-r--r-- 1 root root   86 2009-01-01 01:00 init.thermald.rc
+-rw-r--r-- 1 root root 4674 2009-01-01 01:00 installd.rc
+-rw-r--r-- 1 root root  168 2009-01-01 01:00 keystore.rc
+-rw-r--r-- 1 root root  176 2009-01-01 01:00 lmkd.rc
+-rw-r--r-- 1 root root 2521 2009-01-01 01:00 logcatd.rc
+-rw-r--r-- 1 root root  535 2009-01-01 01:00 logd.rc
+-rw-r--r-- 1 root root  291 2009-01-01 01:00 logtagd.rc
+-rw-r--r-- 1 root root  142 2009-01-01 01:00 mdnsd.rc
+-rw-r--r-- 1 root root  158 2009-01-01 01:00 mediadrmserver.rc
+-rw-r--r-- 1 root root  166 2009-01-01 01:00 mediaextractor.rc
+-rw-r--r-- 1 root root  178 2009-01-01 01:00 mediametrics.rc
+-rw-r--r-- 1 root root  239 2009-01-01 01:00 mediaserver.rc
+-rw-r--r-- 1 root root  985 2009-01-01 01:00 mobile_log_d.rc
+-rw-r--r-- 1 root root  575 2009-01-01 01:00 mtkbootanim.rc
+-rw-r--r-- 1 root root  178 2009-01-01 01:00 mtpd.rc
+-rw-r--r-- 1 root root  286 2009-01-01 01:00 myspl.rc
+-rw-r--r-- 1 root root  209 2009-01-01 01:00 netd.rc
+-rw-r--r-- 1 root root 1194 2009-01-01 01:00 netdiag.rc
+-rw-r--r-- 1 root root  161 2009-01-01 01:00 perfprofd.rc
+-rw-r--r-- 1 root root  190 2009-01-01 01:00 pppd_btdun.rc
+-rw-r--r-- 1 root root  230 2009-01-01 01:00 racoon.rc
+-rw-r--r-- 1 root root  455 2009-01-01 01:00 servicemanager.rc
+-rw-r--r-- 1 root root  191 2009-01-01 01:00 storaged.rc
+-rw-r--r-- 1 root root  560 2009-01-01 01:00 surfaceflinger.rc
+-rw-r--r-- 1 root root  153 2009-01-01 01:00 terserver.rc
+-rw-r--r-- 1 root root   66 2009-01-01 01:00 thermalservice.rc
+-rw-r--r-- 1 root root  399 2009-01-01 01:00 tombstoned.rc
+-rw-r--r-- 1 root root  390 2009-01-01 01:00 uncrypt.rc
+-rw-r--r-- 1 root root  546 2009-01-01 01:00 vdc.rc
+-rw-r--r-- 1 root root  378 2009-01-01 01:00 vold.rc
+-rw-r--r-- 1 root root  805 2009-01-01 01:00 webview_zygote32.rc
+-rw-r--r-- 1 root root 3577 2009-01-01 01:00 wifi-events.rc
+-rw-r--r-- 1 root root  100 2009-01-01 01:00 wificond.rc
+-rw-r--r-- 1 root root  171 2009-01-01 01:00 xyautoupdatezip.rc
+-rw-r--r-- 1 root root  148 2009-01-01 01:00 xycommand.rc
+-rw-r--r-- 1 root root  483 2009-01-01 01:00 xycpdata.rc
+-rw-r--r-- 1 root root  131 2009-01-01 01:00 xylog.rc
+-rw-r--r-- 1 root root  633 2009-01-01 01:00 xyremfile.rc
+
+/system/etc/permissions:
+total 112
+-rw-r--r-- 1 root root   834 2009-01-01 01:00 android.hardware.ethernet.xml
+-rw-r--r-- 1 root root   748 2009-01-01 01:00 android.software.webview.xml
+-rw-r--r-- 1 root root   828 2009-01-01 01:00 com.android.location.provider.xml
+-rw-r--r-- 1 root root   828 2009-01-01 01:00 com.android.media.remotedisplay.xml
+-rw-r--r-- 1 root root   820 2009-01-01 01:00 com.android.mediadrm.signer.xml
+-rw-r--r-- 1 root root   816 2009-01-01 01:00 com.google.android.maps.xml
+-rw-r--r-- 1 root root   835 2009-01-01 01:00 com.google.android.media.effects.xml
+-rw-r--r-- 1 root root   826 2009-01-01 01:00 com.mediatek.op.ims.common.xml
+-rw-r--r-- 1 root root   193 2009-01-01 01:00 mediatek-packages-teleservice.xml
+-rw-r--r-- 1 root root   824 2009-01-01 01:00 org.simalliance.openmobileapi.xml
+-rw-r--r-- 1 root root  9244 2009-01-01 01:00 platform.xml
+-rw-r--r-- 1 root root   156 2009-01-01 01:00 pms_sysapp_removable_system_list.txt
+-rw-r--r-- 1 root root 22919 2009-01-01 01:00 privapp-permissions-google.xml
+-rw-r--r-- 1 root root  8149 2009-01-01 01:00 privapp-permissions-mediatek.xml
+-rw-r--r-- 1 root root 20848 2009-01-01 01:00 privapp-permissions-platform.xml
+
+/system/etc/ppp:
+total 32
+drwxr-xr-x 2 root root  4096 2009-01-01 01:00 chat
+-r-xr-xr-x 1 root root   391 2009-01-01 01:00 ip-down
+-r-xr-xr-x 1 root root   913 2009-01-01 01:00 ip-up
+-r-xr-xr-x 1 root root 16192 2009-01-01 01:00 ip-up-vpn
+drwxr-xr-x 2 root root  4096 2009-01-01 01:00 peers
+
+/system/etc/ppp/chat:
+total 4
+-r-xr-xr-x 1 root root 210 2009-01-01 01:00 chat_wcdma
+
+/system/etc/ppp/peers:
+total 4
+-r-xr-xr-x 1 root root 247 2009-01-01 01:00 gprs_pppd_wcdma
+
+/system/etc/preferred-apps:
+total 8
+-rw-r--r-- 1 root root 5131 2009-01-01 01:00 google.xml
+
+/system/etc/seccomp_policy:
+total 8
+-rw-r--r-- 1 root root 1357 2009-01-01 01:00 mediacodec.policy
+-rw-r--r-- 1 root root  911 2009-01-01 01:00 mediaextractor.policy
+
+/system/etc/security:
+total 8
+drwxr-xr-x 2 root root 4096 2009-01-01 01:00 cacerts
+-rw-r--r-- 1 root root 1073 2009-01-01 01:00 otacerts.zip
+
+/system/etc/security/cacerts:
+total 1024
+-rw-r--r-- 1 root root 4767 2009-01-01 01:00 00673b5b.0
+-rw-r--r-- 1 root root 7195 2009-01-01 01:00 02756ea4.0
+-rw-r--r-- 1 root root 2877 2009-01-01 01:00 04f60c28.0
+-rw-r--r-- 1 root root 4922 2009-01-01 01:00 0d5a4e1c.0
+-rw-r--r-- 1 root root 2308 2009-01-01 01:00 0d69c7e1.0
+-rw-r--r-- 1 root root 4614 2009-01-01 01:00 10531352.0
+-rw-r--r-- 1 root root 4716 2009-01-01 01:00 111e6273.0
+-rw-r--r-- 1 root root 4300 2009-01-01 01:00 12d55845.0
+-rw-r--r-- 1 root root 4578 2009-01-01 01:00 17b51fe6.0
+-rw-r--r-- 1 root root 4890 2009-01-01 01:00 1dac3003.0
+-rw-r--r-- 1 root root 7088 2009-01-01 01:00 1dcd6f4c.0
+-rw-r--r-- 1 root root 4923 2009-01-01 01:00 1df5a75f.0
+-rw-r--r-- 1 root root 4527 2009-01-01 01:00 1e1eab7c.0
+-rw-r--r-- 1 root root 4332 2009-01-01 01:00 1e8e7201.0
+-rw-r--r-- 1 root root 8405 2009-01-01 01:00 1eb37bdf.0
+-rw-r--r-- 1 root root 7076 2009-01-01 01:00 1f58a078.0
+-rw-r--r-- 1 root root 7060 2009-01-01 01:00 21855f49.0
+-rw-r--r-- 1 root root 4712 2009-01-01 01:00 219d9499.0
+-rw-r--r-- 1 root root 4747 2009-01-01 01:00 23f4c490.0
+-rw-r--r-- 1 root root 2961 2009-01-01 01:00 27af790d.0
+-rw-r--r-- 1 root root 2642 2009-01-01 01:00 2add47b6.0
+-rw-r--r-- 1 root root 7016 2009-01-01 01:00 2d9dafe4.0
+-rw-r--r-- 1 root root 4729 2009-01-01 01:00 2fa87019.0
+-rw-r--r-- 1 root root 4888 2009-01-01 01:00 31188b5e.0
+-rw-r--r-- 1 root root 4667 2009-01-01 01:00 343eb6cb.0
+-rw-r--r-- 1 root root 7337 2009-01-01 01:00 35105088.0
+-rw-r--r-- 1 root root 7204 2009-01-01 01:00 3929ec9f.0
+-rw-r--r-- 1 root root 4628 2009-01-01 01:00 399e7759.0
+-rw-r--r-- 1 root root 4706 2009-01-01 01:00 3a3b02ce.0
+-rw-r--r-- 1 root root 4361 2009-01-01 01:00 3ad48a91.0
+-rw-r--r-- 1 root root 4892 2009-01-01 01:00 3c58f906.0
+-rw-r--r-- 1 root root 7081 2009-01-01 01:00 3c6676aa.0
+-rw-r--r-- 1 root root 7432 2009-01-01 01:00 3c860d51.0
+-rw-r--r-- 1 root root 8642 2009-01-01 01:00 3c9a4d3b.0
+-rw-r--r-- 1 root root 7364 2009-01-01 01:00 3d441de8.0
+-rw-r--r-- 1 root root 4778 2009-01-01 01:00 3e7271e8.0
+-rw-r--r-- 1 root root 4997 2009-01-01 01:00 40dc992e.0
+-rw-r--r-- 1 root root 5512 2009-01-01 01:00 418595b9.0
+-rw-r--r-- 1 root root 4817 2009-01-01 01:00 455f1b52.0
+-rw-r--r-- 1 root root 7453 2009-01-01 01:00 48a195d8.0
+-rw-r--r-- 1 root root 7082 2009-01-01 01:00 4be590e0.0
+-rw-r--r-- 1 root root 4445 2009-01-01 01:00 4e18c148.0
+-rw-r--r-- 1 root root 7439 2009-01-01 01:00 5046c355.0
+-rw-r--r-- 1 root root 5165 2009-01-01 01:00 524d9b43.0
+-rw-r--r-- 1 root root 7076 2009-01-01 01:00 52b525c7.0
+-rw-r--r-- 1 root root 2747 2009-01-01 01:00 559f7c71.0
+-rw-r--r-- 1 root root 7089 2009-01-01 01:00 5a250ea7.0
+-rw-r--r-- 1 root root 4834 2009-01-01 01:00 5a3f0ff8.0
+-rw-r--r-- 1 root root 6031 2009-01-01 01:00 5cf9d536.0
+-rw-r--r-- 1 root root 3491 2009-01-01 01:00 5e4e69e7.0
+-rw-r--r-- 1 root root 7356 2009-01-01 01:00 5f47b495.0
+-rw-r--r-- 1 root root 4826 2009-01-01 01:00 60afe812.0
+-rw-r--r-- 1 root root 7094 2009-01-01 01:00 6187b673.0
+-rw-r--r-- 1 root root 6979 2009-01-01 01:00 63a2c897.0
+-rw-r--r-- 1 root root 4793 2009-01-01 01:00 67495436.0
+-rw-r--r-- 1 root root 4648 2009-01-01 01:00 69105f4f.0
+-rw-r--r-- 1 root root 3957 2009-01-01 01:00 6e8bf996.0
+-rw-r--r-- 1 root root 4484 2009-01-01 01:00 6fcc125d.0
+-rw-r--r-- 1 root root 4891 2009-01-01 01:00 75680d2e.0
+-rw-r--r-- 1 root root 4979 2009-01-01 01:00 76579174.0
+-rw-r--r-- 1 root root 7233 2009-01-01 01:00 7672ac4b.0
+-rw-r--r-- 1 root root 4312 2009-01-01 01:00 7999be0d.0
+-rw-r--r-- 1 root root 2231 2009-01-01 01:00 7a7c655d.0
+-rw-r--r-- 1 root root 7346 2009-01-01 01:00 7a819ef2.0
+-rw-r--r-- 1 root root 4524 2009-01-01 01:00 7d453d8f.0
+-rw-r--r-- 1 root root 4679 2009-01-01 01:00 81b9768f.0
+-rw-r--r-- 1 root root 7016 2009-01-01 01:00 82223c44.0
+-rw-r--r-- 1 root root 4571 2009-01-01 01:00 85cde254.0
+-rw-r--r-- 1 root root 4281 2009-01-01 01:00 86212b19.0
+-rw-r--r-- 1 root root 7170 2009-01-01 01:00 87753b0d.0
+-rw-r--r-- 1 root root 4262 2009-01-01 01:00 882de061.0
+-rw-r--r-- 1 root root 2863 2009-01-01 01:00 89c02a45.0
+-rw-r--r-- 1 root root 4479 2009-01-01 01:00 8d6437c3.0
+-rw-r--r-- 1 root root 4819 2009-01-01 01:00 91739615.0
+-rw-r--r-- 1 root root 7245 2009-01-01 01:00 9282e51c.0
+-rw-r--r-- 1 root root 8002 2009-01-01 01:00 9339512a.0
+-rw-r--r-- 1 root root 2971 2009-01-01 01:00 9479c8c3.0
+-rw-r--r-- 1 root root 7064 2009-01-01 01:00 9576d26b.0
+-rw-r--r-- 1 root root 4511 2009-01-01 01:00 95aff9e3.0
+-rw-r--r-- 1 root root 4150 2009-01-01 01:00 9685a493.0
+-rw-r--r-- 1 root root 4405 2009-01-01 01:00 9772ca32.0
+-rw-r--r-- 1 root root 7204 2009-01-01 01:00 9c3323d4.0
+-rw-r--r-- 1 root root 7223 2009-01-01 01:00 9d6523ce.0
+-rw-r--r-- 1 root root 4369 2009-01-01 01:00 9dbefe7b.0
+-rw-r--r-- 1 root root 8390 2009-01-01 01:00 9f533518.0
+-rw-r--r-- 1 root root 5461 2009-01-01 01:00 a0bc6fbb.0
+-rw-r--r-- 1 root root 7188 2009-01-01 01:00 a2c66da8.0
+-rw-r--r-- 1 root root 4284 2009-01-01 01:00 a3896b44.0
+-rw-r--r-- 1 root root 4123 2009-01-01 01:00 a7605362.0
+-rw-r--r-- 1 root root 2878 2009-01-01 01:00 a7d2cf64.0
+-rw-r--r-- 1 root root 4395 2009-01-01 01:00 a81e292b.0
+-rw-r--r-- 1 root root 4333 2009-01-01 01:00 ab5346f4.0
+-rw-r--r-- 1 root root 5675 2009-01-01 01:00 aeb67534.0
+-rw-r--r-- 1 root root 6863 2009-01-01 01:00 b0ed035a.0
+-rw-r--r-- 1 root root 4368 2009-01-01 01:00 b0f3e76e.0
+-rw-r--r-- 1 root root 3116 2009-01-01 01:00 b3fb433b.0
+-rw-r--r-- 1 root root 4355 2009-01-01 01:00 b7db1890.0
+-rw-r--r-- 1 root root 4566 2009-01-01 01:00 b872f2b4.0
+-rw-r--r-- 1 root root 7222 2009-01-01 01:00 b936d1c6.0
+-rw-r--r-- 1 root root 4515 2009-01-01 01:00 bc3f2570.0
+-rw-r--r-- 1 root root 4718 2009-01-01 01:00 bdacca6f.0
+-rw-r--r-- 1 root root 5229 2009-01-01 01:00 bf64f35b.0
+-rw-r--r-- 1 root root 2740 2009-01-01 01:00 c491639e.0
+-rw-r--r-- 1 root root 4386 2009-01-01 01:00 c51c224c.0
+-rw-r--r-- 1 root root 4700 2009-01-01 01:00 c7e2a638.0
+-rw-r--r-- 1 root root 7473 2009-01-01 01:00 c907e29b.0
+-rw-r--r-- 1 root root 4459 2009-01-01 01:00 c90bc37d.0
+-rw-r--r-- 1 root root 7717 2009-01-01 01:00 cb156124.0
+-rw-r--r-- 1 root root 7319 2009-01-01 01:00 cb1c3204.0
+-rw-r--r-- 1 root root 2552 2009-01-01 01:00 ccc52f49.0
+-rw-r--r-- 1 root root 4710 2009-01-01 01:00 cf701eeb.0
+-rw-r--r-- 1 root root 4527 2009-01-01 01:00 d06393bb.0
+-rw-r--r-- 1 root root 7539 2009-01-01 01:00 d16a5865.0
+-rw-r--r-- 1 root root 7068 2009-01-01 01:00 d18e9066.0
+-rw-r--r-- 1 root root 2562 2009-01-01 01:00 d41b5e2a.0
+-rw-r--r-- 1 root root 7323 2009-01-01 01:00 d4c339cb.0
+-rw-r--r-- 1 root root 4359 2009-01-01 01:00 d59297b8.0
+-rw-r--r-- 1 root root 4961 2009-01-01 01:00 d66b55d9.0
+-rw-r--r-- 1 root root 7234 2009-01-01 01:00 d6e6eab9.0
+-rw-r--r-- 1 root root 4957 2009-01-01 01:00 d7746a63.0
+-rw-r--r-- 1 root root 2736 2009-01-01 01:00 d8317ada.0
+-rw-r--r-- 1 root root 6999 2009-01-01 01:00 dbc54cab.0
+-rw-r--r-- 1 root root 7418 2009-01-01 01:00 dc99f41e.0
+-rw-r--r-- 1 root root 4582 2009-01-01 01:00 dfc0fe80.0
+-rw-r--r-- 1 root root 7076 2009-01-01 01:00 e442e424.0
+-rw-r--r-- 1 root root 4285 2009-01-01 01:00 e48193cf.0
+-rw-r--r-- 1 root root 7162 2009-01-01 01:00 e775ed2d.0
+-rw-r--r-- 1 root root 4860 2009-01-01 01:00 e8651083.0
+-rw-r--r-- 1 root root 7431 2009-01-01 01:00 ea169617.0
+-rw-r--r-- 1 root root 2723 2009-01-01 01:00 ed39abd0.0
+-rw-r--r-- 1 root root 5441 2009-01-01 01:00 ee7cd6fb.0
+-rw-r--r-- 1 root root 5219 2009-01-01 01:00 facacbc6.0
+-rw-r--r-- 1 root root 7022 2009-01-01 01:00 fb5fa911.0
+-rw-r--r-- 1 root root 4294 2009-01-01 01:00 fd08c599.0
+-rw-r--r-- 1 root root 4692 2009-01-01 01:00 fde84897.0
+
+/system/etc/selinux:
+total 952
+drwxr-xr-x 2 root root   4096 2009-01-01 01:00 mapping
+-rw-r--r-- 1 root root     65 2009-01-01 01:00 plat_and_mapping_sepolicy.cil.sha256
+-rw-r--r-- 1 root root  23077 2009-01-01 01:00 plat_file_contexts
+-rw-r--r-- 1 root root   5768 2009-01-01 01:00 plat_hwservice_contexts
+-rw-r--r-- 1 root root   4994 2009-01-01 01:00 plat_mac_permissions.xml
+-rw-r--r-- 1 root root   4500 2009-01-01 01:00 plat_property_contexts
+-rw-r--r-- 1 root root    965 2009-01-01 01:00 plat_seapp_contexts
+-rw-r--r-- 1 root root 891657 2009-01-01 01:00 plat_sepolicy.cil
+-rw-r--r-- 1 root root  16527 2009-01-01 01:00 plat_service_contexts
+
+/system/etc/selinux/mapping:
+total 128
+-rw-r--r-- 1 root root 41240 2009-01-01 01:00 26.0.cil
+-rw-r--r-- 1 root root 84771 2009-01-01 01:00 27.0.cil
+
+/system/etc/sysconfig:
+total 16
+-rw-r--r-- 1 root root 1757 2009-01-01 01:00 framework-sysconfig.xml
+-rw-r--r-- 1 root root 5021 2009-01-01 01:00 google.xml
+-rw-r--r-- 1 root root 1827 2009-01-01 01:00 power_save_whitelist.xml
+
+/system/etc/usb_modeswitch.d:
+total 48
+-rw-r--r-- 1 root root 285 2009-01-01 01:00 12d1_1446
+-rw-r--r-- 1 root root 308 2009-01-01 01:00 12d1_14fe
+-rw-r--r-- 1 root root 147 2009-01-01 01:00 12d1_1505
+-rw-r--r-- 1 root root 308 2009-01-01 01:00 12d1_15ca
+-rw-r--r-- 1 root root  49 2009-01-01 01:00 12d1_1d50
+-rw-r--r-- 1 root root 223 2009-01-01 01:00 12d1_1f01
+-rw-r--r-- 1 root root  85 2009-01-01 01:00 15eb_7153
+-rw-r--r-- 1 root root 159 2009-01-01 01:00 19d2_149
+-rw-r--r-- 1 root root 206 2009-01-01 01:00 19d2_2000
+-rw-r--r-- 1 root root 144 2009-01-01 01:00 19d2_fff5
+-rw-r--r-- 1 root root 142 2009-01-01 01:00 1e89_f016
+-rw-r--r-- 1 root root 142 2009-01-01 01:00 5c6_1000
+
+/system/etc/xy:
+total 28
+-rw-r--r-- 1 root root  510 2009-01-01 01:00 andsdk_animation_black_list_xyauto.conf
+-rw-r--r-- 1 root root   82 2009-01-01 01:00 andsdk_animation_white_list_xyauto.conf
+-rw-r--r-- 1 root root   10 2009-01-01 01:00 andsdk_cpu_list.conf
+-rw-r--r-- 1 root root  106 2009-01-01 01:00 andsdk_device_list.conf
+-rw-r--r-- 1 root root   66 2009-01-01 01:00 andsdk_effects.conf
+-rw-r--r-- 1 root root 2148 2009-01-01 01:00 andsdk_third_app_white_list_xyauto.conf
+-rw-r--r-- 1 root root  151 2009-01-01 01:00 auto_upgrade_xyauto.conf
+
+/vendor/etc:
+total 396
+-rw-r--r-- 1 root root    144 2009-01-01 01:00 ACCDET.kl
+-rw-r--r-- 1 root root    800 2009-01-01 01:00 MonitoredPathes.xml
+-rw-r--r-- 1 root root  31557 2009-01-01 01:00 NOTICE.xml.gz
+-rw-r--r-- 1 root root   2220 2009-01-01 01:00 a2dp_audio_policy_configuration.xml
+-rw-r--r-- 1 root root     28 2009-01-01 01:00 aee-config
+-rw-r--r-- 1 root root  18191 2009-01-01 01:00 agps_profiles_conf2.xml
+-rw-r--r-- 1 root root    768 2009-01-01 01:00 atc_camera_config.xml
+-rw-r--r-- 1 root root   9572 2009-01-01 01:00 audio_device.xml
+-rw-r--r-- 1 root root   2787 2009-01-01 01:00 audio_em.xml
+drwxr-xr-x 2 root shell  4096 2009-01-01 01:00 audio_param
+-rw-r--r-- 1 root root   5859 2009-01-01 01:00 audio_policy.conf
+-rw-r--r-- 1 root root  10973 2009-01-01 01:00 audio_policy_configuration.xml
+-rw-r--r-- 1 root root  15323 2009-01-01 01:00 audio_policy_volumes.xml
+-rw-r--r-- 1 root root    766 2009-01-01 01:00 cdma_ecc_list.xml
+-rw-r--r-- 1 root root    926 2009-01-01 01:00 cdma_ecc_list_OP01.xml
+-rw-r--r-- 1 root root    765 2009-01-01 01:00 cdma_ecc_list_OP09.xml
+-rw-r--r-- 1 root root    876 2009-01-01 01:00 cdma_ecc_list_OP12.xml
+-rw-r--r-- 1 root root    926 2009-01-01 01:00 cdma_ecc_list_ss.xml
+-rw-r--r-- 1 root root   2610 2009-01-01 01:00 default_volume_tables.xml
+-rw-r--r-- 1 root root   2857 2009-01-01 01:00 ecc_list.xml
+-rw-r--r-- 1 root root    873 2009-01-01 01:00 ecc_list_OP01.xml
+-rw-r--r-- 1 root root    873 2009-01-01 01:00 ecc_list_OP09.xml
+-rw-r--r-- 1 root root    929 2009-01-01 01:00 ecc_list_OP12.xml
+-rw-r--r-- 1 root root    818 2009-01-01 01:00 ecc_list_OP17.xml
+-rw-r--r-- 1 root root    981 2009-01-01 01:00 ecc_list_OP18.xml
+-r--r--r-- 1 root root      0 2009-01-01 01:00 fs_config_dirs
+-r--r--r-- 1 root root     96 2009-01-01 01:00 fs_config_files
+-rw-r--r-- 1 root root   1994 2009-01-01 01:00 fstab.ac8227l
+drwxr-xr-x 7 root shell  4096 2009-01-01 01:00 gallery
+drwxr-xr-x 3 root shell  4096 2009-01-01 01:00 init
+-rw-r--r-- 1 root root   3503 2009-01-01 01:00 media_codecs.xml
+-rw-r--r-- 1 root root   4830 2009-01-01 01:00 media_codecs_google_audio.xml
+-rw-r--r-- 1 root root   5693 2009-01-01 01:00 media_codecs_google_video_le.xml
+-rw-r--r-- 1 root root   4701 2009-01-01 01:00 media_codecs_mediatek_audio.xml
+-rw-r--r-- 1 root root   8315 2009-01-01 01:00 media_codecs_mediatek_video.xml
+-rw-r--r-- 1 root root   9164 2009-01-01 01:00 media_codecs_performance.xml
+-rw-r--r-- 1 root root  18744 2009-01-01 01:00 media_profiles.xml
+-rw-r--r-- 1 root root    459 2009-01-01 01:00 mkshrc
+-rw-r--r-- 1 root root   1735 2009-01-01 01:00 mtk_omx_core.cfg
+drwxr-xr-x 2 root shell  4096 2009-01-01 01:00 permissions
+-rw-r--r-- 1 root root    299 2009-01-01 01:00 power_whitelist_cfg.xml
+-rw-r--r-- 1 root root    448 2009-01-01 01:00 powerscntbl.cfg
+-rw-r--r-- 1 root root     12 2009-01-01 01:00 public.libraries.txt
+-rw-r--r-- 1 root root   2127 2009-01-01 01:00 r_submix_audio_policy_configuration.xml
+drwxr-xr-x 2 root shell  4096 2009-01-01 01:00 seccomp_policy
+drwxr-xr-x 2 root shell  4096 2009-01-01 01:00 selinux
+-rw-r--r-- 1 root root    220 2009-01-01 01:00 slp_conf
+-rw-r--r-- 1 root root    407 2009-01-01 01:00 smsdbvisitor.xml
+-rw-r--r-- 1 root root    209 2009-01-01 01:00 special_pws_channel.xml
+-rw-r--r-- 1 root root  54142 2009-01-01 01:00 spn-conf-op09.xml
+-rw-r--r-- 1 root root   2246 2009-01-01 01:00 usb_audio_policy_configuration.xml
+-rw-r--r-- 1 root root    186 2009-01-01 01:00 virtual-spn-conf-by-efgid1.xml
+-rw-r--r-- 1 root root    241 2009-01-01 01:00 virtual-spn-conf-by-efpnn.xml
+-rw-r--r-- 1 root root   3265 2009-01-01 01:00 virtual-spn-conf-by-efspn.xml
+-rw-r--r-- 1 root root    196 2009-01-01 01:00 virtual-spn-conf-by-imsi.xml
+drwxr-xr-x 3 root shell  4096 2009-01-01 01:00 voicecommand
+drwxr-xr-x 2 root shell  4096 2009-01-01 01:00 wifi
+
+/vendor/etc/audio_param:
+total 4
+-rw-r--r-- 1 root root 2682 2009-01-01 01:00 AudioParamOptions.xml
+
+/vendor/etc/gallery:
+total 20
+drwxr-xr-x 3 root shell 4096 2009-01-01 01:00 Gallery2Gif
+drwxr-xr-x 3 root shell 4096 2009-01-01 01:00 Gallery2Pq
+drwxr-xr-x 3 root shell 4096 2009-01-01 01:00 Gallery2PqTool
+drwxr-xr-x 3 root shell 4096 2009-01-01 01:00 Gallery2Raw
+drwxr-xr-x 3 root shell 4096 2009-01-01 01:00 Gallery2Root
+
+/vendor/etc/gallery/Gallery2Gif:
+total 12
+-rw-r--r-- 1 root root  5585 2009-01-01 01:00 Gallery2Gif.apk
+drwxr-xr-x 3 root shell 4096 2009-01-01 01:00 oat
+
+/vendor/etc/gallery/Gallery2Gif/oat:
+total 4
+drwxr-xr-x 2 root shell 4096 2009-01-01 01:00 arm
+
+/vendor/etc/gallery/Gallery2Gif/oat/arm:
+total 348
+-rw-r--r-- 1 root root  20960 2009-01-01 01:00 Gallery2Gif.odex
+-rw-r--r-- 1 root root 328224 2009-01-01 01:00 Gallery2Gif.vdex
+
+/vendor/etc/gallery/Gallery2Pq:
+total 12
+-rw-r--r-- 1 root root  5626 2009-01-01 01:00 Gallery2Pq.apk
+drwxr-xr-x 3 root shell 4096 2009-01-01 01:00 oat
+
+/vendor/etc/gallery/Gallery2Pq/oat:
+total 4
+drwxr-xr-x 2 root shell 4096 2009-01-01 01:00 arm
+
+/vendor/etc/gallery/Gallery2Pq/oat/arm:
+total 212
+-rw-r--r-- 1 root root  20960 2009-01-01 01:00 Gallery2Pq.odex
+-rw-r--r-- 1 root root 190648 2009-01-01 01:00 Gallery2Pq.vdex
+
+/vendor/etc/gallery/Gallery2PqTool:
+total 100
+-rw-r--r-- 1 root root  94762 2009-01-01 01:00 Gallery2PqTool.apk
+drwxr-xr-x 3 root shell  4096 2009-01-01 01:00 oat
+
+/vendor/etc/gallery/Gallery2PqTool/oat:
+total 4
+drwxr-xr-x 2 root shell 4096 2009-01-01 01:00 arm
+
+/vendor/etc/gallery/Gallery2PqTool/oat/arm:
+total 288
+-rw-r--r-- 1 root root  25056 2009-01-01 01:00 Gallery2PqTool.odex
+-rw-r--r-- 1 root root 266094 2009-01-01 01:00 Gallery2PqTool.vdex
+
+/vendor/etc/gallery/Gallery2Raw:
+total 16
+-rw-r--r-- 1 root root  8391 2009-01-01 01:00 Gallery2Raw.apk
+drwxr-xr-x 3 root shell 4096 2009-01-01 01:00 oat
+
+/vendor/etc/gallery/Gallery2Raw/oat:
+total 4
+drwxr-xr-x 2 root shell 4096 2009-01-01 01:00 arm
+
+/vendor/etc/gallery/Gallery2Raw/oat/arm:
+total 216
+-rw-r--r-- 1 root root  20960 2009-01-01 01:00 Gallery2Raw.odex
+-rw-r--r-- 1 root root 193884 2009-01-01 01:00 Gallery2Raw.vdex
+
+/vendor/etc/gallery/Gallery2Root:
+total 12
+-rw-r--r-- 1 root root  5979 2009-01-01 01:00 Gallery2Root.apk
+drwxr-xr-x 3 root shell 4096 2009-01-01 01:00 oat
+
+/vendor/etc/gallery/Gallery2Root/oat:
+total 4
+drwxr-xr-x 2 root shell 4096 2009-01-01 01:00 arm
+
+/vendor/etc/gallery/Gallery2Root/oat/arm:
+total 24
+-rw-r--r-- 1 root root 16864 2009-01-01 01:00 Gallery2Root.odex
+-rw-r--r-- 1 root root  1172 2009-01-01 01:00 Gallery2Root.vdex
+
+/vendor/etc/init:
+total 184
+-rw-r--r-- 1 root root   216 2009-01-01 01:00 aee_aedv.rc
+-rw-r--r-- 1 root root   835 2009-01-01 01:00 android.hardware.audio@2.0-service-mediatek.rc
+-rw-r--r-- 1 root root   546 2009-01-01 01:00 android.hardware.bluetooth@1.0-service-mediatek.rc
+-rw-r--r-- 1 root root   137 2009-01-01 01:00 android.hardware.broadcastradio@1.1-service.rc
+-rw-r--r-- 1 root root   181 2009-01-01 01:00 android.hardware.cas@1.0-service.rc
+-rw-r--r-- 1 root root   141 2009-01-01 01:00 android.hardware.configstore@1.0-service.rc
+-rw-r--r-- 1 root root   181 2009-01-01 01:00 android.hardware.drm@1.0-service.rc
+-rw-r--r-- 1 root root   199 2009-01-01 01:00 android.hardware.drm@1.0-service.widevine.rc
+-rw-r--r-- 1 root root   125 2009-01-01 01:00 android.hardware.gatekeeper@1.0-service.rc
+-rw-r--r-- 1 root root   212 2009-01-01 01:00 android.hardware.graphics.allocator@2.0-service.rc
+-rw-r--r-- 1 root root   282 2009-01-01 01:00 android.hardware.graphics.composer@2.1-service.rc
+-rw-r--r-- 1 root root   136 2009-01-01 01:00 android.hardware.keymaster@3.0-service.rc
+-rw-r--r-- 1 root root   127 2009-01-01 01:00 android.hardware.light@2.0-service-mediatek.rc
+-rw-r--r-- 1 root root   237 2009-01-01 01:00 android.hardware.media.omx@1.0-service.rc
+-rw-r--r-- 1 root root   125 2009-01-01 01:00 android.hardware.memtrack@1.0-service.rc
+-rw-r--r-- 1 root root   120 2009-01-01 01:00 android.hardware.wifi@1.0-service.rc
+-rw-r--r-- 1 root root   272 2009-01-01 01:00 camerahalserver.rc
+-rw-r--r-- 1 root root   264 2009-01-01 01:00 camhal3lite.rc
+-rw-r--r-- 1 root root   125 2009-01-01 01:00 chg_mcu_val.rc
+-rw-r--r-- 1 root root   512 2009-01-01 01:00 hostapd.android.rc
+drwxr-xr-x 2 root shell 4096 2009-01-01 01:00 hw
+-rw-r--r-- 1 root root   116 2009-01-01 01:00 init.bt_drv.rc
+-rw-r--r-- 1 root root   133 2009-01-01 01:00 init.fmradio_drv.rc
+-rw-r--r-- 1 root root   120 2009-01-01 01:00 init.gps_drv.rc
+-rw-r--r-- 1 root root    83 2009-01-01 01:00 init.thermal.rc
+-rw-r--r-- 1 root root   110 2009-01-01 01:00 init.thermal_manager.rc
+-rw-r--r-- 1 root root   189 2009-01-01 01:00 init.wlan_drv.rc
+-rw-r--r-- 1 root root    50 2009-01-01 01:00 init.wmt_drv.rc
+-rw-r--r-- 1 root root   714 2009-01-01 01:00 init_connectivity.rc
+-rw-r--r-- 1 root root   140 2009-01-01 01:00 lbs_hidl_service.rc
+-rw-r--r-- 1 root root   163 2009-01-01 01:00 netdagent.rc
+-rw-r--r-- 1 root root    97 2009-01-01 01:00 nvram_agent_binder.rc
+-rw-r--r-- 1 root root   103 2009-01-01 01:00 nvram_daemon.rc
+-rw-r--r-- 1 root root   780 2009-01-01 01:00 rilproxy.rc
+-rw-r--r-- 1 root root   210 2009-01-01 01:00 vendor.autochips.hardware.audio@1.0-service.rc
+-rw-r--r-- 1 root root   122 2009-01-01 01:00 vendor.autochips.hardware.backcar@1.0-service.rc
+-rw-r--r-- 1 root root   114 2009-01-01 01:00 vendor.autochips.hardware.dvr@1.0-service.rc
+-rw-r--r-- 1 root root   124 2009-01-01 01:00 vendor.autochips.hardware.metalogo@1.0-service.rc
+-rw-r--r-- 1 root root   133 2009-01-01 01:00 vendor.autochips.hardware.usb@1.1-service.rc
+-rw-r--r-- 1 root root   130 2009-01-01 01:00 vendor.mediatek.hardware.gnss@1.1-service.rc
+-rw-r--r-- 1 root root   131 2009-01-01 01:00 vendor.mediatek.hardware.keymanage@1.0-service.rc
+-rw-r--r-- 1 root root   168 2009-01-01 01:00 vendor.mediatek.hardware.keymaster_attestation@1.0-service.rc
+-rw-r--r-- 1 root root   157 2009-01-01 01:00 vendor.mediatek.hardware.mtkcodecservice@1.1-service.rc
+-rw-r--r-- 1 root root  4512 2009-01-01 01:00 vendor.mediatek.hardware.power@1.1-service.rc
+-rw-r--r-- 1 root root   199 2009-01-01 01:00 vndservicemanager.rc
+
+/vendor/etc/init/hw:
+total 136
+-rw-r--r-- 1 root root  2118 2009-01-01 01:00 factory_init.connectivity.rc
+-rw-r--r-- 1 root root    40 2009-01-01 01:00 factory_init.project.rc
+-rw-r--r-- 1 root root 25570 2009-01-01 01:00 factory_init.rc
+-rw-r--r-- 1 root root 26042 2009-01-01 01:00 init.ac8227l.rc
+-rw-r--r-- 1 root root 25041 2009-01-01 01:00 init.ac8227l.usb.rc
+-rw-r--r-- 1 root root  1809 2009-01-01 01:00 init.aee.rc
+-rw-r--r-- 1 root root  2180 2009-01-01 01:00 init.connectivity.rc
+-rw-r--r-- 1 root root  1576 2009-01-01 01:00 init.modem.rc
+-rw-r--r-- 1 root root  1624 2009-01-01 01:00 init.project.rc
+-rw-r--r-- 1 root root  1705 2009-01-01 01:00 meta_init.connectivity.rc
+-rw-r--r-- 1 root root   186 2009-01-01 01:00 meta_init.project.rc
+-rw-r--r-- 1 root root 16276 2009-01-01 01:00 meta_init.rc
+-rw-r--r-- 1 root root   948 2009-01-01 01:00 multi_init.rc
+
+/vendor/etc/permissions:
+total 68
+-rw-r--r-- 1 root root  820 2009-01-01 01:00 android.hardware.bluetooth.xml
+-rw-r--r-- 1 root root  987 2009-01-01 01:00 android.hardware.camera.xml
+-rw-r--r-- 1 root root  927 2009-01-01 01:00 android.hardware.faketouch.xml
+-rw-r--r-- 1 root root  942 2009-01-01 01:00 android.hardware.location.gps.xml
+-rw-r--r-- 1 root root  932 2009-01-01 01:00 android.hardware.telephony.gsm.xml
+-rw-r--r-- 1 root root 1076 2009-01-01 01:00 android.hardware.touchscreen.multitouch.distinct.xml
+-rw-r--r-- 1 root root 1144 2009-01-01 01:00 android.hardware.touchscreen.multitouch.jazzhand.xml
+-rw-r--r-- 1 root root 1035 2009-01-01 01:00 android.hardware.touchscreen.multitouch.xml
+-rw-r--r-- 1 root root  909 2009-01-01 01:00 android.hardware.touchscreen.xml
+-rw-r--r-- 1 root root  975 2009-01-01 01:00 android.hardware.usb.accessory.xml
+-rw-r--r-- 1 root root  868 2009-01-01 01:00 android.hardware.usb.host.xml
+-rw-r--r-- 1 root root  843 2009-01-01 01:00 android.hardware.wifi.direct.xml
+-rw-r--r-- 1 root root  829 2009-01-01 01:00 android.hardware.wifi.xml
+-rw-r--r-- 1 root root  745 2009-01-01 01:00 android.software.midi.xml
+-rw-r--r-- 1 root root 4840 2009-01-01 01:00 handheld_core_hardware.xml
+-rw-r--r-- 1 root root    0 2009-01-01 01:00 pms_sysapp_removable_vendor_list.txt
+-rw-r--r-- 1 root root 2706 2009-01-01 01:00 tablet_core_hardware.xml
+
+/vendor/etc/seccomp_policy:
+total 8
+-rw-r--r-- 1 root root 236 2009-01-01 01:00 mediacodec.policy
+-rw-r--r-- 1 root root 135 2009-01-01 01:00 mediaextractor.policy
+
+/vendor/etc/selinux:
+total 1592
+-rw-r--r-- 1 root root   45278 2009-01-01 01:00 nonplat_file_contexts
+-rw-r--r-- 1 root root    3076 2009-01-01 01:00 nonplat_hwservice_contexts
+-rw-r--r-- 1 root root     101 2009-01-01 01:00 nonplat_mac_permissions.xml
+-rw-r--r-- 1 root root    7437 2009-01-01 01:00 nonplat_property_contexts
+-rw-r--r-- 1 root root     112 2009-01-01 01:00 nonplat_seapp_contexts
+-rw-r--r-- 1 root root 1048889 2009-01-01 01:00 nonplat_sepolicy.cil
+-rw-r--r-- 1 root root       0 2009-01-01 01:00 nonplat_service_contexts
+-rw-r--r-- 1 root root       5 2009-01-01 01:00 plat_sepolicy_vers.txt
+-rw-r--r-- 1 root root  495388 2009-01-01 01:00 precompiled_sepolicy
+-rw-r--r-- 1 root root      65 2009-01-01 01:00 precompiled_sepolicy.plat_and_mapping.sha256
+-rw-r--r-- 1 root root      65 2009-01-01 01:00 vndservice_contexts
+
+/vendor/etc/voicecommand:
+total 4
+drwxr-xr-x 3 root shell 4096 2009-01-01 01:00 training
+
+/vendor/etc/voicecommand/training:
+total 4
+drwxr-xr-x 3 root shell 4096 2009-01-01 01:00 ubmfile
+
+/vendor/etc/voicecommand/training/ubmfile:
+total 8940
+-rw-r--r-- 1 root root   960000 2009-01-01 01:00 1.pcm
+-rw-r--r-- 1 root root    31748 2009-01-01 01:00 128.dat
+-rw-r--r-- 1 root root   960000 2009-01-01 01:00 2.pcm
+-rw-r--r-- 1 root root   960000 2009-01-01 01:00 3.pcm
+-rw-r--r-- 1 root root   960000 2009-01-01 01:00 4.pcm
+-rw-r--r-- 1 root root    15876 2009-01-01 01:00 64.dat
+drwxr-xr-x 2 root shell    4096 2009-01-01 01:00 antiCmds
+-rw-r--r-- 1 root root       78 2009-01-01 01:00 nl
+-rw-r--r-- 1 root root    24200 2009-01-01 01:00 ubmModel0.bin
+-rw-r--r-- 1 root root   161652 2009-01-01 01:00 ubmModel1.bin
+-rw-r--r-- 1 root root    24200 2009-01-01 01:00 ubmModel10.bin
+-rw-r--r-- 1 root root   161652 2009-01-01 01:00 ubmModel2.bin
+-rw-r--r-- 1 root root    24116 2009-01-01 01:00 ubmModel3.bin
+-rw-r--r-- 1 root root  4841720 2009-01-01 01:00 ubmModel4.bin
+
+/vendor/etc/voicecommand/training/ubmfile/antiCmds:
+total 17764
+-rw-r--r-- 1 root root  6564680 2009-01-01 01:00 Model1.bin
+-rw-r--r-- 1 root root 11588340 2009-01-01 01:00 Model4.bin
+-rw-r--r-- 1 root root        8 2009-01-01 01:00 c_e_dic.bin.f
+-rw-r--r-- 1 root root     7949 2009-01-01 01:00 c_e_dic.bin.gen
+-rw-r--r-- 1 root root     7843 2009-01-01 01:00 c_e_dic.bin.l
+-rw-r--r-- 1 root root        8 2009-01-01 01:00 c_e_dic.bin.p
+-rw-r--r-- 1 root root       98 2009-01-01 01:00 c_e_dic.bin.t
+-rw-r--r-- 1 root root       11 2009-01-01 01:00 commandfilr3.dic
+
+/vendor/etc/wifi:
+total 12
+-rw-r--r-- 1 root root 135 2009-01-01 01:00 p2p_supplicant_overlay.conf
+-rw-r--r-- 1 root root 312 2009-01-01 01:00 wpa_supplicant.conf
+-rw-r--r-- 1 root root 119 2009-01-01 01:00 wpa_supplicant_overlay.conf

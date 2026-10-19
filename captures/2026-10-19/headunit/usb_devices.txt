@@ -1,0 +1,7 @@
+total 0
+lrwxrwxrwx 1 root root 0 2018-08-01 08:00 1-0:1.0 -> ../../../devices/platform/mt_usb/musb-hdrc.0.auto/usb1/1-0:1.0
+lrwxrwxrwx 1 root root 0 2018-08-01 08:00 2-0:1.0 -> ../../../devices/platform/mt_usb1/musbh-hdrc.2.auto/usb2/2-0:1.0
+lrwxrwxrwx 1 root root 0 2018-08-01 08:00 usb1 -> ../../../devices/platform/mt_usb/musb-hdrc.0.auto/usb1
+lrwxrwxrwx 1 root root 0 2018-08-01 08:00 usb2 -> ../../../devices/platform/mt_usb1/musbh-hdrc.2.auto/usb2
+/sys/bus/usb/devices/usb1/ 1d6b:0002 MUSB HDRC host driver
+/sys/bus/usb/devices/usb2/ 1d6b:0002 MUSB HDRC host driver

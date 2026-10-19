@@ -1,0 +1,363 @@
+
+MediaFocusControl dump time: 7:48:05 PM
+
+Audio Focus stack entries (last is top of stack):
+  source:android.os.BinderProxy@d9916db -- pack: com.acloud.stub.localmusic -- client: android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 -- gain: GAIN -- flags:  -- loss: none -- notified: true -- uid: 10032 -- attr: AudioAttributes: usage=USAGE_MEDIA content=CONTENT_TYPE_MUSIC flags=0x0 tags= bundle=null -- sdk:30
+
+
+No external focus policy
+
+
+
+ Notify on duck:  true
+
+ In ring or call: false
+
+
+
+Audio event log: focus commands as seen by MediaFocusControl
+10-16 01:35:20:952 requestAudioFocus() from uid/pid 10032/5831 clientId=android.media.AudioManager@c3e82b2com.xyauto.common.manager.AudioFocusManager$1@a1c1203 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-16 01:37:58:227 requestAudioFocus() from uid/pid 10032/5831 clientId=android.media.AudioManager@c3e82b2com.xyauto.common.manager.AudioFocusManager$1@a1c1203 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-16 01:40:43:014 abandonAudioFocus() from uid/pid 10032/5831 clientId=android.media.AudioManager@c3e82b2com.xyauto.common.manager.AudioFocusManager$1@a1c1203
+10-16 01:40:59:195 requestAudioFocus() from uid/pid 10032/5831 clientId=android.media.AudioManager@c3e82b2com.xyauto.common.manager.AudioFocusManager$1@a1c1203 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-16 01:42:04:192 requestAudioFocus() from uid/pid 10032/5831 clientId=android.media.AudioManager@c3e82b2com.xyauto.common.manager.AudioFocusManager$1@a1c1203 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-16 01:48:14:321 requestAudioFocus() from uid/pid 10032/7654 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-16 01:52:01:338 requestAudioFocus() from uid/pid 10032/7654 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-16 01:52:58:681 abandonAudioFocus() from uid/pid 10068/8073 clientId=android.media.AudioManager@ad573d6org.chromium.content.browser.AudioFocusDelegate@3b1b657
+10-16 01:55:28:604 abandonAudioFocus() from uid/pid 10032/7654 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168
+10-16 01:55:36:130 requestAudioFocus() from uid/pid 10032/7654 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-16 01:55:38:844 abandonAudioFocus() from uid/pid 10032/7654 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168
+10-16 01:55:51:417 requestAudioFocus() from uid/pid 10032/7654 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-16 01:55:55:522 abandonAudioFocus() from uid/pid 10032/7654 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168
+10-16 01:55:58:644 requestAudioFocus() from uid/pid 10032/7654 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-16 01:57:17:990 abandonAudioFocus() from uid/pid 10032/7654 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168
+10-19 17:59:35:362 requestAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 17:59:51:715 requestAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 18:00:40:130 abandonAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168
+10-19 18:00:42:852 requestAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 18:03:36:889 requestAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 18:07:39:464 requestAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 18:11:24:290 abandonAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168
+10-19 18:11:41:438 requestAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 18:11:49:185 abandonAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168
+10-19 18:12:03:600 requestAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 18:12:34:890 requestAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 18:12:35:180 abandonAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168
+10-19 18:12:50:423 requestAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 18:14:43:723 abandonAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168
+10-19 18:14:52:235 requestAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 18:14:53:940 abandonAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168
+10-19 18:14:57:711 requestAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 18:16:51:997 requestAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 18:20:54:561 requestAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 18:25:18:571 requestAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 18:29:08:402 requestAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 18:33:11:135 requestAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 18:34:55:811 requestAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 18:37:38:885 requestAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 18:41:28:707 requestAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 18:45:31:266 requestAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 18:49:55:257 requestAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 18:53:45:096 requestAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 18:57:47:651 requestAudioFocus() from uid/pid 10032/8849 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 19:29:01:525 requestAudioFocus() from uid/pid 10032/13630 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 19:30:56:959 requestAudioFocus() from uid/pid 10032/13630 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 19:34:46:781 requestAudioFocus() from uid/pid 10032/13630 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 19:38:49:362 requestAudioFocus() from uid/pid 10032/13630 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 19:43:13:378 requestAudioFocus() from uid/pid 10032/13630 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+10-19 19:47:03:213 requestAudioFocus() from uid/pid 10032/13630 clientId=android.media.AudioManager@fce9c8bcom.xyauto.common.manager.AudioFocusManager$1@d2d3168 callingPack=com.acloud.stub.localmusic req=1 flags=0x0 sdk=30
+
+Stream volumes (device: index)
+- STREAM_VOICE_CALL:
+   Muted: false
+   Min: 0
+   Max: 63
+   Current: 8 (headphone): 46, 40000000 (default): 47
+   Devices: headphone
+- STREAM_SYSTEM:
+   Muted: false
+   Min: 0
+   Max: 30
+   Current: 8 (headphone): 17, 40000000 (default): 14
+   Devices: headphone
+- STREAM_RING:
+   Muted: false
+   Min: 0
+   Max: 30
+   Current: 8 (headphone): 17, 40000000 (default): 14
+   Devices: headphone
+- STREAM_MUSIC:
+   Muted: false
+   Min: 0
+   Max: 63
+   Current: 8 (headphone): 35, 40000000 (default): 30
+   Devices: headphone
+- STREAM_ALARM:
+   Muted: false
+   Min: 0
+   Max: 30
+   Current: 8 (headphone): 17, 40000000 (default): 14
+   Devices: headphone
+- STREAM_NOTIFICATION:
+   Muted: false
+   Min: 0
+   Max: 30
+   Current: 8 (headphone): 17, 40000000 (default): 14
+   Devices: headphone
+- STREAM_BLUETOOTH_SCO:
+   Muted: false
+   Min: 0
+   Max: 30
+   Current: 40000000 (default): 25
+   Devices: headphone
+- STREAM_SYSTEM_ENFORCED:
+   Muted: false
+   Min: 0
+   Max: 30
+   Current: 8 (headphone): 17, 40000000 (default): 14
+   Devices: headphone
+- STREAM_DTMF:
+   Muted: false
+   Min: 0
+   Max: 30
+   Current: 8 (headphone): 17, 40000000 (default): 14
+   Devices: headphone
+- STREAM_TTS:
+   Muted: false
+   Min: 0
+   Max: 30
+   Current: 8 (headphone): 17, 40000000 (default): 14
+   Devices: headphone
+- STREAM_ACCESSIBILITY:
+   Muted: false
+   Min: 0
+   Max: 30
+   Current: 8 (headphone): 17, 40000000 (default): 14
+   Devices: headphone
+- STREAM_GIS:
+   Muted: false
+   Min: 0
+   Max: 30
+   Current: 8 (headphone): 17, 40000000 (default): 14
+   Devices: headphone
+- STREAM_BACKCAR:
+   Muted: false
+   Min: 0
+   Max: 30
+   Current: 8 (headphone): 17, 40000000 (default): 14
+   Devices: headphone
+- STREAM_AUXIN:
+   Muted: false
+   Min: 0
+   Max: 30
+   Current: 8 (headphone): 17, 40000000 (default): 14
+   Devices: headphone
+- STREAM_VOICE_ASSISTANT:
+   Muted: false
+   Min: 0
+   Max: 30
+   Current: 8 (headphone): 17, 40000000 (default): 14
+   Devices: headphone
+- STREAM_ALTERNATE:
+   Muted: false
+   Min: 0
+   Max: 30
+   Current: 8 (headphone): 17, 40000000 (default): 14
+   Devices: headphone
+
+- mute affected streams = 0xab2e
+
+Ringer mode: 
+- mode (internal) = NORMAL
+- mode (external) = NORMAL
+- ringer mode affected streams = 0xa6 (STREAM_SYSTEM,STREAM_RING,STREAM_NOTIFICATION,STREAM_SYSTEM_ENFORCED)
+- ringer mode muted streams = 0x0
+- delegate = ZenModeHelper
+
+Audio routes:
+  mMainType=0x0
+  mBluetoothName=null
+
+Other state:
+  mVolumeController=VolumeController(android.os.BinderProxy@787a578,mVisible=false)
+  mSafeMediaVolumeState=SAFE_MEDIA_VOLUME_ACTIVE
+  mSafeMediaVolumeIndex=100
+  mSafeUsbMediaVolumeIndex=0
+  sIndependentA11yVolume=false
+  mPendingVolumeCommand=null
+  mMusicActiveMs=0
+  mMcc=0
+  mCameraSoundForced=false
+  mHasVibrator=false
+  mVolumePolicy=VolumePolicy[volumeDownToEnterSilent=true,volumeUpToExitSilent=true,doNotDisturbWhenSilent=true,vibrateToSilentDebounce=400]
+  mAvrcpAbsVolSupported=false
+
+Audio policies:
+
+PlaybackActivityMonitor dump time: 7:48:05 PM
+
+  playback listeners:
+ (S)com.android.server.audio.PlaybackActivityMonitor$PlayMonitorClient@bfc3451
+
+
+  players:
+  ID:15 -- type:android.media.SoundPool -- u/pid:1000/485 -- state:idle -- attr:AudioAttributes: usage=USAGE_ASSISTANCE_SONIFICATION content=CONTENT_TYPE_SONIFICATION flags=0x0 tags= bundle=null
+  ID:23 -- type:android.media.SoundPool -- u/pid:10017/666 -- state:idle -- attr:AudioAttributes: usage=USAGE_ASSISTANCE_SONIFICATION content=CONTENT_TYPE_SONIFICATION flags=0x0 tags= bundle=null
+  ID:231 -- type:android.media.MediaPlayer -- u/pid:10032/13630 -- state:started -- attr:AudioAttributes: usage=USAGE_UNKNOWN content=CONTENT_TYPE_UNKNOWN flags=0x0 tags= bundle=null
+
+  ducked players piids:
+
+  muted player piids:
+
+  banned uids:
+
+Audio event log: playback activity as reported through PlayerBase
+10-16 01:55:28:600 player piid:167 state:paused
+10-16 01:55:36:116 player piid:167 state:started
+10-16 01:55:38:840 player piid:167 state:paused
+10-16 01:55:51:392 player piid:167 state:started
+10-16 01:55:55:520 player piid:167 state:paused
+10-16 01:55:58:625 player piid:167 state:started
+10-16 01:56:33:564 player piid:167 state:paused
+10-16 01:57:18:131 releasing player piid:167
+10-19 17:59:29:520 new player piid:175 uid/pid:1000/8570 type:android.media.MediaPlayer attr:AudioAttributes: usage=USAGE_UNKNOWN content=CONTENT_TYPE_UNKNOWN flags=0x0 tags= bundle=null
+10-19 17:59:29:539 releasing player piid:175
+10-19 17:59:29:561 new player piid:183 uid/pid:1000/8570 type:android.media.MediaPlayer attr:AudioAttributes: usage=USAGE_UNKNOWN content=CONTENT_TYPE_UNKNOWN flags=0x0 tags= bundle=null
+10-19 17:59:29:737 releasing player piid:183
+10-19 17:59:31:328 new player piid:191 uid/pid:1000/8570 type:android.media.MediaPlayer attr:AudioAttributes: usage=USAGE_UNKNOWN content=CONTENT_TYPE_UNKNOWN flags=0x0 tags= bundle=null
+10-19 17:59:31:344 releasing player piid:191
+10-19 17:59:35:283 new player piid:199 uid/pid:10032/8849 type:android.media.MediaPlayer attr:AudioAttributes: usage=USAGE_UNKNOWN content=CONTENT_TYPE_UNKNOWN flags=0x0 tags= bundle=null
+10-19 17:59:35:350 player piid:199 state:started
+10-19 17:59:51:158 player piid:199 state:stopped
+10-19 17:59:51:669 player piid:199 state:stopped
+10-19 17:59:51:703 player piid:199 state:started
+10-19 18:00:40:127 player piid:199 state:paused
+10-19 18:00:42:835 player piid:199 state:started
+10-19 18:03:36:337 player piid:199 state:stopped
+10-19 18:03:36:846 player piid:199 state:stopped
+10-19 18:03:36:882 player piid:199 state:started
+10-19 18:07:38:913 player piid:199 state:stopped
+10-19 18:07:39:418 player piid:199 state:stopped
+10-19 18:07:39:456 player piid:199 state:started
+10-19 18:11:24:287 player piid:199 state:paused
+10-19 18:11:41:420 player piid:199 state:started
+10-19 18:11:49:182 player piid:199 state:paused
+10-19 18:12:03:587 player piid:199 state:started
+10-19 18:12:34:344 player piid:199 state:stopped
+10-19 18:12:34:847 player piid:199 state:stopped
+10-19 18:12:34:880 player piid:199 state:started
+10-19 18:12:35:178 player piid:199 state:paused
+10-19 18:12:50:407 player piid:199 state:started
+10-19 18:14:43:717 player piid:199 state:paused
+10-19 18:14:52:216 player piid:199 state:started
+10-19 18:14:53:936 player piid:199 state:paused
+10-19 18:14:57:698 player piid:199 state:started
+10-19 18:16:51:446 player piid:199 state:stopped
+10-19 18:16:51:950 player piid:199 state:stopped
+10-19 18:16:51:987 player piid:199 state:started
+10-19 18:20:53:998 player piid:199 state:stopped
+10-19 18:20:54:503 player piid:199 state:stopped
+10-19 18:20:54:550 player piid:199 state:started
+10-19 18:25:18:024 player piid:199 state:stopped
+10-19 18:25:18:528 player piid:199 state:stopped
+10-19 18:25:18:557 player piid:199 state:started
+10-19 18:29:07:851 player piid:199 state:stopped
+10-19 18:29:08:355 player piid:199 state:stopped
+10-19 18:29:08:390 player piid:199 state:started
+10-19 18:33:10:556 player piid:199 state:stopped
+10-19 18:33:11:063 player piid:199 state:stopped
+10-19 18:33:11:119 player piid:199 state:started
+10-19 18:34:52:013 player piid:199 state:paused
+10-19 18:34:55:778 player piid:199 state:started
+10-19 18:37:38:332 player piid:199 state:stopped
+10-19 18:37:38:838 player piid:199 state:stopped
+10-19 18:37:38:873 player piid:199 state:started
+10-19 18:41:28:159 player piid:199 state:stopped
+10-19 18:41:28:663 player piid:199 state:stopped
+10-19 18:41:28:698 player piid:199 state:started
+10-19 18:45:30:709 player piid:199 state:stopped
+10-19 18:45:31:214 player piid:199 state:stopped
+10-19 18:45:31:253 player piid:199 state:started
+10-19 18:49:54:715 player piid:199 state:stopped
+10-19 18:49:55:220 player piid:199 state:stopped
+10-19 18:49:55:249 player piid:199 state:started
+10-19 18:53:44:542 player piid:199 state:stopped
+10-19 18:53:45:046 player piid:199 state:stopped
+10-19 18:53:45:085 player piid:199 state:started
+10-19 18:57:47:095 player piid:199 state:stopped
+10-19 18:57:47:600 player piid:199 state:stopped
+10-19 18:57:47:639 player piid:199 state:started
+10-19 19:00:16:575 player piid:199 state:paused
+10-19 19:01:01:341 releasing player piid:199
+10-19 19:28:55:697 new player piid:207 uid/pid:1000/13353 type:android.media.MediaPlayer attr:AudioAttributes: usage=USAGE_UNKNOWN content=CONTENT_TYPE_UNKNOWN flags=0x0 tags= bundle=null
+10-19 19:28:55:730 releasing player piid:207
+10-19 19:28:55:741 new player piid:215 uid/pid:1000/13353 type:android.media.MediaPlayer attr:AudioAttributes: usage=USAGE_UNKNOWN content=CONTENT_TYPE_UNKNOWN flags=0x0 tags= bundle=null
+10-19 19:28:55:869 releasing player piid:215
+10-19 19:28:57:414 new player piid:223 uid/pid:1000/13353 type:android.media.MediaPlayer attr:AudioAttributes: usage=USAGE_UNKNOWN content=CONTENT_TYPE_UNKNOWN flags=0x0 tags= bundle=null
+10-19 19:28:57:446 releasing player piid:223
+10-19 19:29:01:444 new player piid:231 uid/pid:10032/13630 type:android.media.MediaPlayer attr:AudioAttributes: usage=USAGE_UNKNOWN content=CONTENT_TYPE_UNKNOWN flags=0x0 tags= bundle=null
+10-19 19:29:01:510 player piid:231 state:started
+10-19 19:30:56:408 player piid:231 state:stopped
+10-19 19:30:56:916 player piid:231 state:stopped
+10-19 19:30:56:950 player piid:231 state:started
+10-19 19:34:46:231 player piid:231 state:stopped
+10-19 19:34:46:740 player piid:231 state:stopped
+10-19 19:34:46:773 player piid:231 state:started
+10-19 19:38:48:806 player piid:231 state:stopped
+10-19 19:38:49:310 player piid:231 state:stopped
+10-19 19:38:49:348 player piid:231 state:started
+10-19 19:43:12:831 player piid:231 state:stopped
+10-19 19:43:13:335 player piid:231 state:stopped
+10-19 19:43:13:366 player piid:231 state:started
+10-19 19:47:02:658 player piid:231 state:stopped
+10-19 19:47:03:163 player piid:231 state:stopped
+10-19 19:47:03:197 player piid:231 state:started
+
+RecordActivityMonitor dump time: 7:48:05 PM
+
+
+
+Event logs:
+Audio event log: phone state (logged after successfull call to AudioSystem.setPhoneState(int))
+
+
+Audio event log: wired device connection (logged before onSetWiredDeviceConnectionState() is executed)
+
+
+Audio event log: force use (logged before setForceUse() is executed)
+10-19 18:45:30:709 setForceUse(FOR_MEDIA, FORCE_NO_BT_A2DP) due to setBluetoothA2dpOn(false) from u/pid:1000/485
+10-19 18:45:31:254 setForceUse(FOR_MEDIA, FORCE_NO_BT_A2DP) due to setBluetoothA2dpOn(false) from u/pid:1000/485
+10-19 18:49:54:715 setForceUse(FOR_MEDIA, FORCE_NO_BT_A2DP) due to setBluetoothA2dpOn(false) from u/pid:1000/485
+10-19 18:49:55:251 setForceUse(FOR_MEDIA, FORCE_NO_BT_A2DP) due to setBluetoothA2dpOn(false) from u/pid:1000/485
+10-19 18:53:44:542 setForceUse(FOR_MEDIA, FORCE_NO_BT_A2DP) due to setBluetoothA2dpOn(false) from u/pid:1000/485
+10-19 18:53:45:086 setForceUse(FOR_MEDIA, FORCE_NO_BT_A2DP) due to setBluetoothA2dpOn(false) from u/pid:1000/485
+10-19 18:57:47:097 setForceUse(FOR_MEDIA, FORCE_NO_BT_A2DP) due to setBluetoothA2dpOn(false) from u/pid:1000/485
+10-19 18:57:47:640 setForceUse(FOR_MEDIA, FORCE_NO_BT_A2DP) due to setBluetoothA2dpOn(false) from u/pid:1000/485
+10-19 19:00:16:575 setForceUse(FOR_MEDIA, FORCE_NO_BT_A2DP) due to setBluetoothA2dpOn(false) from u/pid:1000/485
+10-19 19:29:01:511 setForceUse(FOR_MEDIA, FORCE_NO_BT_A2DP) due to setBluetoothA2dpOn(false) from u/pid:1000/485
+10-19 19:30:56:408 setForceUse(FOR_MEDIA, FORCE_NO_BT_A2DP) due to setBluetoothA2dpOn(false) from u/pid:1000/485
+10-19 19:30:56:951 setForceUse(FOR_MEDIA, FORCE_NO_BT_A2DP) due to setBluetoothA2dpOn(false) from u/pid:1000/485
+10-19 19:34:46:232 setForceUse(FOR_MEDIA, FORCE_NO_BT_A2DP) due to setBluetoothA2dpOn(false) from u/pid:1000/485
+10-19 19:34:46:774 setForceUse(FOR_MEDIA, FORCE_NO_BT_A2DP) due to setBluetoothA2dpOn(false) from u/pid:1000/485
+10-19 19:38:48:806 setForceUse(FOR_MEDIA, FORCE_NO_BT_A2DP) due to setBluetoothA2dpOn(false) from u/pid:1000/485
+10-19 19:38:49:348 setForceUse(FOR_MEDIA, FORCE_NO_BT_A2DP) due to setBluetoothA2dpOn(false) from u/pid:1000/485
+10-19 19:43:12:832 setForceUse(FOR_MEDIA, FORCE_NO_BT_A2DP) due to setBluetoothA2dpOn(false) from u/pid:1000/485
+10-19 19:43:13:366 setForceUse(FOR_MEDIA, FORCE_NO_BT_A2DP) due to setBluetoothA2dpOn(false) from u/pid:1000/485
+10-19 19:47:02:658 setForceUse(FOR_MEDIA, FORCE_NO_BT_A2DP) due to setBluetoothA2dpOn(false) from u/pid:1000/485
+10-19 19:47:03:197 setForceUse(FOR_MEDIA, FORCE_NO_BT_A2DP) due to setBluetoothA2dpOn(false) from u/pid:1000/485
+
+
+Audio event log: volume changes (logged when command received by AudioService)
+08-01 08:00:24:162 setStreamVolume(stream:STREAM_MUSIC index:35 flags:0x0) from android
+10-15 00:45:43:508 setStreamVolume(stream:STREAM_MUSIC index:35 flags:0x0) from android
+10-15 00:45:45:870 setStreamVolume(stream:STREAM_MUSIC index:35 flags:0x0) from android
+10-16 01:21:30:311 setStreamVolume(stream:STREAM_MUSIC index:35 flags:0x0) from android
+10-16 01:21:33:043 setStreamVolume(stream:STREAM_MUSIC index:35 flags:0x0) from android
+10-16 01:35:08:357 setStreamVolume(stream:STREAM_MUSIC index:35 flags:0x0) from android
+10-16 01:35:10:925 setStreamVolume(stream:STREAM_MUSIC index:35 flags:0x0) from android
+10-16 01:48:07:190 setStreamVolume(stream:STREAM_MUSIC index:35 flags:0x0) from android
+10-16 01:48:09:899 setStreamVolume(stream:STREAM_MUSIC index:35 flags:0x0) from android
+10-19 17:59:29:399 setStreamVolume(stream:STREAM_MUSIC index:35 flags:0x0) from android
+10-19 17:59:31:955 setStreamVolume(stream:STREAM_MUSIC index:35 flags:0x0) from android
+10-19 19:28:55:385 setStreamVolume(stream:STREAM_MUSIC index:35 flags:0x0) from android
+10-19 19:28:58:034 setStreamVolume(stream:STREAM_MUSIC index:35 flags:0x0) from android

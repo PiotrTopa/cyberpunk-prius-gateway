@@ -1,0 +1,162 @@
+Bluetooth Status
+  enabled: true
+  state: ON
+  address: FE:B1:46:00:00:1D
+  name: CarBT
+  time since enabled: 00:19:11.880
+
+Enable log:
+  08-01 08:00:23  Enabled  by airplane mode
+  10-14 22:11:52 Disabled  by airplane mode
+  10-14 22:11:52 Disabled  by quick boot
+  10-15 00:45:42  Enabled  by com.autochips.bluetooth
+  10-15 00:45:43  Enabled  by airplane mode
+  10-15 00:52:12 Disabled  by airplane mode
+  10-15 00:52:13 Disabled  by quick boot
+  10-16 01:21:30  Enabled  by airplane mode
+  10-16 01:27:35 Disabled  by airplane mode
+  10-16 01:27:36 Disabled  by quick boot
+  10-16 01:35:08  Enabled  by airplane mode
+  10-16 01:43:04 Disabled  by airplane mode
+  10-16 01:43:05 Disabled  by quick boot
+  10-16 01:48:07  Enabled  by airplane mode
+  10-16 01:57:17 Disabled  by airplane mode
+  10-16 01:57:18 Disabled  by quick boot
+  10-19 17:59:29  Enabled  by airplane mode
+  10-19 19:01:01 Disabled  by airplane mode
+  10-19 19:01:01 Disabled  by quick boot
+  10-19 19:28:55  Enabled  by airplane mode
+Bluetooth crashed 0 times
+
+No BLE Apps registered.
+
+Bonded devices:
+  0C:ED:C8:27:94:26 [BR/EDR] Xiaomi 14T
+  B0:9C:63:C1:DF:A2 [BR/EDR] POCO F6
+
+Profile: BtGatt.GattService
+  mAdvertisingServiceUuids:
+  mMaxScanFilters: 0
+
+GATT Scanner Map
+  Entries: 0
+
+GATT Client Map
+  Entries: 0
+
+GATT Server Map
+  Entries: 0
+
+GATT Handle Map
+  Entries: 0
+  Requests: 0
+
+Profile: A2dpSinkService
+  mCurrentDevice: null
+  mTargetDevice: null
+  mIncomingDevice: null
+  StateMachine: name=A2dpSinkStateMachine state=Disconnected
+
+Profile: HeadsetClientService
+
+Profile: AvrcpControllerService
+  StateMachine: name=AvrcpControllerSM state=Disconnected
+
+Profile: PbapClientService
+
+Profile: BluetoothOppService
+
+Connection Events:
+  None
+
+Bond Events: 
+  Total Number of events: 0
+
+A2DP State:
+  TxQueue:
+  Counts (enqueue/dequeue/readbuf)                        : 0 / 0 / 0
+  Last update time ago in ms (enqueue/dequeue/readbuf)    : 0 / 0 / 0
+  Frames per packet (total/max/ave)                       : 0 / 0 / 0
+  Counts (flushed/dropped/dropouts)                       : 0 / 0 / 0
+  Counts (max dropped)                                    : 0
+  Last update time ago in ms (flushed/dropped)            : 0 / 0
+  Counts (underflow)                                      : 0
+  Bytes (underflow)                                       : 0
+  Last update time ago in ms (underflow)                  : 0
+  Enqueue deviation counts (overdue/premature)            : 0 / 0
+  Enqueue overdue scheduling time in ms (total/max/ave)   : 0 / 0 / 0
+  Enqueue premature scheduling time in ms (total/max/ave) : 0 / 0 / 0
+  Dequeue deviation counts (overdue/premature)            : 0 / 0
+  Dequeue overdue scheduling time in ms (total/max/ave)   : 0 / 0 / 0
+  Dequeue premature scheduling time in ms (total/max/ave) : 0 / 0 / 0
+
+A2DP Codecs State:
+  Current Codec: None
+
+A2DP LDAC State:
+  Priority: 5001
+  Encoder interval (ms): 20
+  Config: Invalid
+  Selectable: Invalid
+  Local capability: Rate=44100|48000|88200|96000 Bits=16|24|32 Mode=STEREO
+  Packet counts (expected/dropped)                        : 0 / 0
+  PCM read counts (expected/actual)                       : 0 / 0
+  PCM read bytes (expected/actual)                        : 0 / 0
+  LDAC quality mode                                       : HIGH
+  LDAC transmission bitrate (Kbps)                        : -1
+  LDAC saved transmit queue length                        : 0
+
+A2DP AAC State:
+  Priority: 2001
+  Encoder interval (ms): 20
+  Config: Invalid
+  Selectable: Invalid
+  Local capability: Rate=44100 Bits=16 Mode=STEREO
+  Packet counts (expected/dropped)                        : 0 / 0
+  PCM read counts (expected/actual)                       : 0 / 0
+  PCM read bytes (expected/actual)                        : 0 / 0
+
+A2DP SBC State:
+  Priority: 1001
+  Encoder interval (ms): 20
+  Config: Invalid
+  Selectable: Invalid
+  Local capability: Rate=44100 Bits=16 Mode=MONO|STEREO
+  Packet counts (expected/dropped)                        : 0 / 0
+  PCM read counts (expected/actual)                       : 0 / 0
+  PCM read bytes (expected/actual)                        : 0 / 0
+  Frames counts (expected/dropped)                        : 0 / 0
+
+Bluetooth Config:
+  Config Source: Original file
+  Devices loaded: 2
+  File created/tagged: 2018-08-01 08:03:11
+  File source: Backup
+
+Bluetooth HF Client BTA Statistics
+
+Bluetooth Wakelock Statistics:
+  Is acquired                    : false
+  Acquired/released count        : 27 / 27
+  Acquired/released error count  : 0 / 0
+  Last acquire/release error code: 0 / 0
+  Last acquired time (ms)        : 0
+  Acquired time min/max/avg (ms) : 0 / 11 / 2
+  Total acquired time (ms)       : 63
+  Total run time (ms)            : 1148672
+
+Bluetooth Memory Allocation Statistics:
+  Total allocated/free/used counts : 0 / 0 / 0
+  Total allocated/free/used octets : 0 / 0 / 0
+
+Bluetooth Alarms Statistics:
+  Total Alarms: 0
+
+--- BEGIN:BTSNOOP_LOG_SUMMARY (3717 bytes in) ---
+AgDjO+LhHrtheJztVsFKG1EUvXfeTGZirsmMcTGRGl8xKC6thdRNtaYaQQIlBFyUQt34AS79gRakdCnYRaF/0F03xQ9ou/IL3EgXbkRLu4i+3pmp8b2pYAQhkHjPYric
+M2dmzr08xgYbopKCwGVE5edt5Na+pBwf8oyEyiG35+KLCwg5RqyYI/dDRo3CkOExp3mgD8SIKZWdcdySrJZCKDASOSFLMqXQWwHH7dyW9WGYkUiGkNtxgJXPFx2B5UOd
+kQieI7dKKfFdRdX+eFr4qRZ+v1cPWI6RJoQby2HE1raPEDAS7zzaPgDuP313saNevumoJL+4/tGSDAdMOSD+95xlQkt3WNYc6in3usbVUlztaoKyQsKzpc5WCDKMmA3J
+AoMMNbLgWY4xxoJ3NcZRAsVIqDZy22ityUbryeyjqpycvzndvqk2IypZpD+1ja2lVo/fpxelb0mR4BcjKtmkE8xk41RQoPPQ3dwjCd7Z16PgWxO2DxsHE/svXq1P735a
+fPZjtfb2uJcfcUelZ9G8PgshYGQg0ugiC0dQMBBppLIwT+hK6oS+LilX5IKByKqLrcnGWeT7P40ussj9y6Lc72mksuj8qEyR9dogp+6XJr7eL83tlsZjxGSZbPBGDLqs
+/XCPERrcmMlZKc486h93cdQPCycYiPmkpvMXKPbxMg==
+--- END:BTSNOOP_LOG_SUMMARY ---

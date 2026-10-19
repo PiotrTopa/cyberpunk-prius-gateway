@@ -1,0 +1,24 @@
+add device 1: /dev/input/event1
+  name:     "mtk-tpd"
+  events:
+    KEY (0001): KEY_HOME              KEY_MUTE              KEY_VOLUMEDOWN        KEY_VOLUMEUP         
+                KEY_BACK              KEY_HOMEPAGE          BTN_TOUCH             02ab                 
+                02ae                  02af                  02b0                  02b1                 
+                02b2                  02b3                  02b4                  02b5                 
+                02b6                  02b7                 
+    ABS (0003): ABS_X                 : value 0, min 0, max 720, fuzz 0, flat 0, resolution 720
+                ABS_Y                 : value 0, min 0, max 1280, fuzz 0, flat 0, resolution 1280
+                ABS_PRESSURE          : value 0, min 0, max 255, fuzz 0, flat 0, resolution 0
+                ABS_MT_TOUCH_MAJOR    : value 0, min 0, max 100, fuzz 0, flat 0, resolution 0
+                ABS_MT_TOUCH_MINOR    : value 0, min 0, max 100, fuzz 0, flat 0, resolution 0
+                ABS_MT_POSITION_X     : value 0, min 0, max 1024, fuzz 0, flat 0, resolution 0
+                ABS_MT_POSITION_Y     : value 0, min 0, max 600, fuzz 0, flat 0, resolution 0
+                ABS_MT_TRACKING_ID    : value 0, min 0, max 10, fuzz 0, flat 0, resolution 0
+  input props:
+    INPUT_PROP_DIRECT
+add device 2: /dev/input/event0
+  name:     "mtk-kpd"
+  events:
+    KEY (0001): KEY_VOLUMEDOWN        KEY_VOLUMEUP          KEY_POWER            
+  input props:
+    <none>

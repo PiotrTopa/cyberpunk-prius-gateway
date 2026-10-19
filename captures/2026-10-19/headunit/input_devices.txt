@@ -1,0 +1,21 @@
+I: Bus=0019 Vendor=2454 Product=6500 Version=0010
+N: Name="mtk-kpd"
+P: Phys=
+S: Sysfs=/devices/soc/10011000.keypad/input/input0
+U: Uniq=
+H: Handlers=event0 
+B: PROP=0
+B: EV=3
+B: KEY=1c0000 0 0 0
+
+I: Bus=0000 Vendor=0000 Product=0911 Version=1060
+N: Name="mtk-tpd"
+P: Phys=
+S: Sysfs=/devices/virtual/input/input1
+U: Uniq=
+H: Handlers=event1 
+B: PROP=2
+B: EV=b
+B: KEY=ffc800 0 0 0 0 0 0 0 0 0 0 400 0 0 0 0 1000 40000000 e0040 0 0 0
+B: ABS=2630000 1000003
+

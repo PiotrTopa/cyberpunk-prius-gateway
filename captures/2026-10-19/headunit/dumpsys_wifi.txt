@@ -1,0 +1,400 @@
+Wi-Fi is enabled
+Stay-awake conditions: 0
+mInIdleMode false
+mScanPending false
+WifiController:
+ total records=61
+ rec[0]: time=08-01 08:00:19.709 processed=DefaultState org=ApStaDisabledState dest=<null> what=155652(0x26004)
+ rec[1]: time=08-01 08:00:19.736 processed=DefaultState org=ApStaDisabledState dest=<null> what=155652(0x26004)
+ rec[2]: time=08-01 08:00:21.555 processed=DefaultState org=ApStaDisabledState dest=<null> what=155660(0x2600c)
+ rec[3]: time=08-01 08:00:22.614 processed=ApStaDisabledState org=ApStaDisabledState dest=DeviceActiveState what=155657(0x26009)
+ rec[4]: time=08-01 08:00:33.315 processed=DeviceActiveState org=DeviceActiveState dest=<null> what=155660(0x2600c)
+ rec[5]: time=08-01 08:00:33.494 processed=StaEnabledState org=DeviceActiveState dest=<null> what=155657(0x26009)
+ rec[6]: time=10-14 22:11:51.641 processed=StaEnabledState org=DeviceActiveState dest=ApStaDisabledState what=155657(0x26009)
+ rec[7]: time=10-14 22:11:53.711 processed=ApStaDisabledState org=ApStaDisabledState dest=<null> what=8216(0x2018)
+ rec[8]: time=10-14 22:11:53.961 processed=DefaultState org=ApStaDisabledState dest=<null> what=155651(0x26003)
+ rec[9]: time=10-15 00:45:42.409 processed=DefaultState org=ApStaDisabledState dest=<null> what=155660(0x2600c)
+ rec[10]: time=10-15 00:45:42.430 processed=DefaultState org=ApStaDisabledState dest=<null> what=155650(0x26002)
+ rec[11]: time=10-15 00:45:42.793 processed=ApStaDisabledState org=ApStaDisabledState dest=DeviceActiveState what=155657(0x26009)
+ rec[12]: time=10-15 00:45:43.001 processed=StaEnabledState org=DeviceActiveState dest=<null> what=155657(0x26009)
+ rec[13]: time=10-15 00:45:43.372 processed=StaEnabledState org=DeviceActiveState dest=<null> what=155657(0x26009)
+ rec[14]: time=10-15 00:45:45.690 processed=StaEnabledState org=DeviceActiveState dest=<null> what=155657(0x26009)
+ rec[15]: time=10-15 00:52:12.050 processed=StaEnabledState org=DeviceActiveState dest=ApStaDisabledState what=155657(0x26009)
+ rec[16]: time=10-15 00:52:13.612 processed=ApStaDisabledState org=ApStaDisabledState dest=<null> what=8216(0x2018)
+ rec[17]: time=10-15 00:52:13.850 processed=DefaultState org=ApStaDisabledState dest=<null> what=155651(0x26003)
+ rec[18]: time=10-16 01:21:29.184 processed=DefaultState org=ApStaDisabledState dest=<null> what=155660(0x2600c)
+ rec[19]: time=10-16 01:21:29.237 processed=DefaultState org=ApStaDisabledState dest=<null> what=155650(0x26002)
+ rec[20]: time=10-16 01:21:29.578 processed=ApStaDisabledState org=ApStaDisabledState dest=DeviceActiveState what=155657(0x26009)
+ rec[21]: time=10-16 01:21:29.829 processed=StaEnabledState org=DeviceActiveState dest=<null> what=155657(0x26009)
+ rec[22]: time=10-16 01:21:29.969 processed=StaEnabledState org=DeviceActiveState dest=<null> what=155657(0x26009)
+ rec[23]: time=10-16 01:21:32.889 processed=StaEnabledState org=DeviceActiveState dest=<null> what=155657(0x26009)
+ rec[24]: time=10-16 01:27:34.890 processed=StaEnabledState org=DeviceActiveState dest=ApStaDisabledState what=155657(0x26009)
+ rec[25]: time=10-16 01:27:36.807 processed=ApStaDisabledState org=ApStaDisabledState dest=<null> what=8216(0x2018)
+ rec[26]: time=10-16 01:27:37.040 processed=DefaultState org=ApStaDisabledState dest=<null> what=155651(0x26003)
+ rec[27]: time=10-16 01:35:07.119 processed=DefaultState org=ApStaDisabledState dest=<null> what=155660(0x2600c)
+ rec[28]: time=10-16 01:35:07.165 processed=DefaultState org=ApStaDisabledState dest=<null> what=155650(0x26002)
+ rec[29]: time=10-16 01:35:07.630 processed=ApStaDisabledState org=ApStaDisabledState dest=DeviceActiveState what=155657(0x26009)
+ rec[30]: time=10-16 01:35:07.781 processed=StaEnabledState org=DeviceActiveState dest=<null> what=155657(0x26009)
+ rec[31]: time=10-16 01:35:07.994 processed=StaEnabledState org=DeviceActiveState dest=<null> what=155657(0x26009)
+ rec[32]: time=10-16 01:35:10.786 processed=StaEnabledState org=DeviceActiveState dest=<null> what=155657(0x26009)
+ rec[33]: time=10-16 01:43:04.417 processed=StaEnabledState org=DeviceActiveState dest=ApStaDisabledState what=155657(0x26009)
+ rec[34]: time=10-16 01:43:06.265 processed=ApStaDisabledState org=ApStaDisabledState dest=<null> what=8216(0x2018)
+ rec[35]: time=10-16 01:43:06.507 processed=DefaultState org=ApStaDisabledState dest=<null> what=155651(0x26003)
+ rec[36]: time=10-16 01:48:06.251 processed=DefaultState org=ApStaDisabledState dest=<null> what=155660(0x2600c)
+ rec[37]: time=10-16 01:48:06.329 processed=DefaultState org=ApStaDisabledState dest=<null> what=155650(0x26002)
+ rec[38]: time=10-16 01:48:06.638 processed=ApStaDisabledState org=ApStaDisabledState dest=DeviceActiveState what=155657(0x26009)
+ rec[39]: time=10-16 01:48:06.782 processed=StaEnabledState org=DeviceActiveState dest=<null> what=155657(0x26009)
+ rec[40]: time=10-16 01:48:06.980 processed=StaEnabledState org=DeviceActiveState dest=<null> what=155657(0x26009)
+ rec[41]: time=10-16 01:48:09.739 processed=StaEnabledState org=DeviceActiveState dest=<null> what=155657(0x26009)
+ rec[42]: time=10-16 01:57:17.364 processed=StaEnabledState org=DeviceActiveState dest=ApStaDisabledState what=155657(0x26009)
+ rec[43]: time=10-16 01:57:19.096 processed=ApStaDisabledState org=ApStaDisabledState dest=<null> what=8216(0x2018)
+ rec[44]: time=10-16 01:57:19.348 processed=DefaultState org=ApStaDisabledState dest=<null> what=155651(0x26003)
+ rec[45]: time=10-19 17:59:28.163 processed=DefaultState org=ApStaDisabledState dest=<null> what=155660(0x2600c)
+ rec[46]: time=10-19 17:59:28.252 processed=DefaultState org=ApStaDisabledState dest=<null> what=155650(0x26002)
+ rec[47]: time=10-19 17:59:28.669 processed=ApStaDisabledState org=ApStaDisabledState dest=DeviceActiveState what=155657(0x26009)
+ rec[48]: time=10-19 17:59:28.886 processed=StaEnabledState org=DeviceActiveState dest=<null> what=155657(0x26009)
+ rec[49]: time=10-19 17:59:29.090 processed=StaEnabledState org=DeviceActiveState dest=<null> what=155657(0x26009)
+ rec[50]: time=10-19 17:59:31.824 processed=StaEnabledState org=DeviceActiveState dest=<null> what=155657(0x26009)
+ rec[51]: time=10-19 18:34:55.255 processed=StaEnabledState org=DeviceActiveState dest=<null> what=155657(0x26009)
+ rec[52]: time=10-19 19:01:00.711 processed=StaEnabledState org=DeviceActiveState dest=ApStaDisabledState what=155657(0x26009)
+ rec[53]: time=10-19 19:01:02.422 processed=ApStaDisabledState org=ApStaDisabledState dest=<null> what=8216(0x2018)
+ rec[54]: time=10-19 19:01:02.662 processed=DefaultState org=ApStaDisabledState dest=<null> what=155651(0x26003)
+ rec[55]: time=10-19 19:28:54.266 processed=DefaultState org=ApStaDisabledState dest=<null> what=155660(0x2600c)
+ rec[56]: time=10-19 19:28:54.327 processed=DefaultState org=ApStaDisabledState dest=<null> what=155650(0x26002)
+ rec[57]: time=10-19 19:28:54.734 processed=ApStaDisabledState org=ApStaDisabledState dest=DeviceActiveState what=155657(0x26009)
+ rec[58]: time=10-19 19:28:54.887 processed=StaEnabledState org=DeviceActiveState dest=<null> what=155657(0x26009)
+ rec[59]: time=10-19 19:28:55.082 processed=StaEnabledState org=DeviceActiveState dest=<null> what=155657(0x26009)
+ rec[60]: time=10-19 19:28:57.891 processed=StaEnabledState org=DeviceActiveState dest=<null> what=155657(0x26009)
+curState=DeviceActiveState
+mScreenOff false
+mDeviceIdle false
+mPluggedType 0
+mIdleMillis 900000
+mSleepPolicy 2
+mPersistWifiState 3
+mAirplaneModeOn false
+mEnableTrafficStatsPoll false
+mTrafficStatsPollToken 45
+mTxPkts 8860
+mRxPkts 13163
+mDataActivity 3
+
+Locks held:
+Locks acquired: 0 full, 0 full high perf, 0 scan
+Locks released: 0 full, 0 full high perf, 0 scan
+
+Locks held:
+
+mMulticastEnabled 2
+mMulticastDisabled 2
+Multicast Locks held:
+
+WifiStateMachine:
+ total records=3286
+ rec[0]: time=10-19 19:36:22.986 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092498/422804750 0 0
+ rec[1]: time=10-19 19:36:22.993 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092505/422804757 0 0
+ rec[2]: time=10-19 19:36:23.008 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092519/422804771 0 0
+ rec[3]: time=10-19 19:36:23.032 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092544/422804796 0 0
+ rec[4]: time=10-19 19:36:23.040 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092552/422804804 0 0
+ rec[5]: time=10-19 19:36:23.049 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092561/422804813 0 0
+ rec[6]: time=10-19 19:36:23.058 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092570/422804822 0 0
+ rec[7]: time=10-19 19:36:23.066 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092578/422804830 0 0
+ rec[8]: time=10-19 19:36:23.190 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092702/422804954 0 0
+ rec[9]: time=10-19 19:36:23.203 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092715/422804967 0 0
+ rec[10]: time=10-19 19:36:23.204 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6092716/422804968 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[11]: time=10-19 19:36:23.227 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092739/422804991 0 0
+ rec[12]: time=10-19 19:36:23.235 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092747/422804998 0 0
+ rec[13]: time=10-19 19:36:23.243 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092756/422805007 0 0
+ rec[14]: time=10-19 19:36:23.257 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092769/422805020 0 0
+ rec[15]: time=10-19 19:36:23.266 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092778/422805030 0 0
+ rec[16]: time=10-19 19:36:23.286 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092798/422805050 0 0
+ rec[17]: time=10-19 19:36:23.296 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092808/422805060 0 0
+ rec[18]: time=10-19 19:36:23.308 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092820/422805072 0 0
+ rec[19]: time=10-19 19:36:23.317 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092829/422805080 0 0
+ rec[20]: time=10-19 19:36:23.324 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092836/422805088 0 0
+ rec[21]: time=10-19 19:36:23.333 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092845/422805097 0 0
+ rec[22]: time=10-19 19:36:23.341 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092853/422805105 0 0
+ rec[23]: time=10-19 19:36:23.350 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092862/422805114 0 0
+ rec[24]: time=10-19 19:36:23.363 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092875/422805127 0 0
+ rec[25]: time=10-19 19:36:23.372 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092884/422805136 0 0
+ rec[26]: time=10-19 19:36:23.380 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092892/422805144 0 0
+ rec[27]: time=10-19 19:36:23.389 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092901/422805153 0 0
+ rec[28]: time=10-19 19:36:23.398 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092910/422805162 0 0
+ rec[29]: time=10-19 19:36:23.406 processed=DefaultState org=DisconnectedState dest=<null> what=131133(0x2003d) !CMD_GET_SUPPORTED_FEATURES uid=10069 rt=6092918/422805170 0 0
+ rec[30]: time=10-19 19:36:33.218 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6102730/422814982 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[31]: time=10-19 19:36:43.198 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6112710/422824961 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[32]: time=10-19 19:36:53.223 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6122735/422834987 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[33]: time=10-19 19:37:03.190 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6132702/422844953 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[34]: time=10-19 19:37:13.197 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6142709/422854961 0 0 found=0 known=0 got=0 bcn=0 con=5 untrustedcn=0 last=
+ rec[35]: time=10-19 19:37:23.210 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6152722/422864974 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[36]: time=10-19 19:37:33.172 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6162684/422874935 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[37]: time=10-19 19:37:43.154 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6172666/422884917 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[38]: time=10-19 19:37:53.186 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6182698/422894950 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[39]: time=10-19 19:38:03.181 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6192693/422904945 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[40]: time=10-19 19:38:13.160 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6202672/422914924 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[41]: time=10-19 19:38:23.255 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6212767/422925019 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[42]: time=10-19 19:38:33.186 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6222698/422934950 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[43]: time=10-19 19:38:43.208 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6232720/422944972 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[44]: time=10-19 19:38:53.188 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6242700/422954952 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[45]: time=10-19 19:39:03.201 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6252713/422964964 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[46]: time=10-19 19:39:13.210 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6262722/422974974 0 0 found=0 known=0 got=0 bcn=0 con=5 untrustedcn=0 last=
+ rec[47]: time=10-19 19:39:23.225 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6272737/422984989 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[48]: time=10-19 19:39:33.199 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6282711/422994963 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[49]: time=10-19 19:39:43.285 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6292797/423005049 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[50]: time=10-19 19:39:53.254 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6302766/423015018 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[51]: time=10-19 19:40:03.177 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6312689/423024940 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[52]: time=10-19 19:40:13.190 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6322702/423034954 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[53]: time=10-19 19:40:23.198 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6332710/423044962 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[54]: time=10-19 19:40:33.189 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6342701/423054953 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[55]: time=10-19 19:40:43.190 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6352702/423064954 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[56]: time=10-19 19:40:53.201 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6362713/423074965 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[57]: time=10-19 19:41:03.221 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6372733/423084985 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[58]: time=10-19 19:41:13.175 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6382687/423094938 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[59]: time=10-19 19:41:23.205 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6392717/423104969 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[60]: time=10-19 19:41:33.230 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6402742/423114994 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[61]: time=10-19 19:41:43.187 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6412699/423124951 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[62]: time=10-19 19:41:53.221 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6422733/423134985 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[63]: time=10-19 19:42:03.198 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6432710/423144962 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[64]: time=10-19 19:42:13.191 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6442703/423154955 0 0 found=0 known=0 got=0 bcn=0 con=5 untrustedcn=0 last=
+ rec[65]: time=10-19 19:42:23.237 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6452749/423165001 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[66]: time=10-19 19:42:33.229 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6462741/423174993 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[67]: time=10-19 19:42:43.229 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6472741/423184993 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[68]: time=10-19 19:42:53.250 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6482762/423195014 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[69]: time=10-19 19:43:03.213 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6492725/423204977 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[70]: time=10-19 19:43:13.231 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6502743/423214995 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[71]: time=10-19 19:43:23.214 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6512726/423224978 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[72]: time=10-19 19:43:33.216 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6522728/423234980 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[73]: time=10-19 19:43:43.192 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6532704/423244956 0 0 found=2 known=0 got=2 bcn=0 con=5 untrustedcn=0 last=
+ rec[74]: time=10-19 19:43:53.230 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6542742/423254994 0 0 found=3 known=0 got=3 bcn=0 con=5 untrustedcn=0 last=
+ rec[75]: time=10-19 19:44:03.241 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6552753/423265005 0 0 found=2 known=0 got=2 bcn=0 con=5 untrustedcn=0 last=
+ rec[76]: time=10-19 19:44:13.221 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6562733/423274985 0 0 found=2 known=0 got=2 bcn=0 con=5 untrustedcn=0 last=
+ rec[77]: time=10-19 19:44:23.225 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6572737/423284989 0 0 found=2 known=0 got=2 bcn=0 con=5 untrustedcn=0 last=
+ rec[78]: time=10-19 19:44:33.216 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6582728/423294980 0 0 found=2 known=0 got=2 bcn=0 con=5 untrustedcn=0 last=
+ rec[79]: time=10-19 19:44:43.242 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6592754/423305006 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[80]: time=10-19 19:44:53.205 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6602717/423314969 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[81]: time=10-19 19:45:03.227 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6612739/423324991 0 0 found=0 known=0 got=0 bcn=0 con=5 untrustedcn=0 last=
+ rec[82]: time=10-19 19:45:13.217 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6622729/423334980 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[83]: time=10-19 19:45:23.265 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6632777/423345029 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[84]: time=10-19 19:45:33.230 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6642742/423354994 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[85]: time=10-19 19:45:43.220 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6652732/423364984 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[86]: time=10-19 19:45:53.261 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6662773/423375025 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[87]: time=10-19 19:46:03.264 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6672776/423385028 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[88]: time=10-19 19:46:13.234 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6682746/423394997 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[89]: time=10-19 19:46:23.265 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6692777/423405029 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[90]: time=10-19 19:46:33.227 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6702739/423414990 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[91]: time=10-19 19:46:43.220 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6712732/423424984 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[92]: time=10-19 19:46:53.230 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6722742/423434994 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[93]: time=10-19 19:47:03.231 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6732743/423444995 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[94]: time=10-19 19:47:13.260 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6742772/423455024 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[95]: time=10-19 19:47:23.221 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6752733/423464985 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[96]: time=10-19 19:47:33.250 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6762762/423475014 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[97]: time=10-19 19:47:43.255 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6772767/423485019 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[98]: time=10-19 19:47:53.215 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6782727/423494979 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+ rec[99]: time=10-19 19:48:03.257 processed=SupplicantStartedState org=DisconnectedState dest=<null> what=147461(0x24005) !SCAN_RESULTS_EVENT rt=6792769/423505021 0 0 found=1 known=0 got=1 bcn=0 con=5 untrustedcn=0 last=
+curState=DisconnectedState
+SupplicantStateTracker:
+ total records=21
+ rec[0]: time=08-01 08:00:26.602 processed=DefaultState org=UninitializedState dest=UninitializedState what=131183(0x2006f)
+ rec[1]: time=10-14 22:11:52.525 processed=DefaultState org=UninitializedState dest=UninitializedState what=131183(0x2006f)
+ rec[2]: time=10-15 00:45:47.193 processed=DefaultState org=UninitializedState dest=UninitializedState what=131183(0x2006f)
+ rec[3]: time=10-15 00:52:12.742 processed=DefaultState org=UninitializedState dest=UninitializedState what=131183(0x2006f)
+ rec[4]: time=10-16 01:21:34.405 processed=DefaultState org=UninitializedState dest=UninitializedState what=131183(0x2006f)
+ rec[5]: time=10-16 01:27:35.636 processed=DefaultState org=UninitializedState dest=UninitializedState what=131183(0x2006f)
+ rec[6]: time=10-16 01:35:11.765 processed=DefaultState org=UninitializedState dest=UninitializedState what=131183(0x2006f)
+ rec[7]: time=10-16 01:43:05.420 processed=DefaultState org=UninitializedState dest=UninitializedState what=131183(0x2006f)
+ rec[8]: time=10-16 01:48:11.518 processed=DefaultState org=UninitializedState dest=UninitializedState what=131183(0x2006f)
+ rec[9]: time=10-16 01:57:18.084 processed=DefaultState org=UninitializedState dest=UninitializedState what=131183(0x2006f)
+ rec[10]: time=10-19 17:59:32.872 processed=DefaultState org=UninitializedState dest=UninitializedState what=131183(0x2006f)
+ rec[11]: time=10-19 18:32:59.633 processed=DefaultState org=UninitializedState dest=HandshakeState what=147462(0x24006)
+ rec[12]: time=10-19 18:32:59.763 processed=DefaultState org=HandshakeState dest=CompletedState what=147462(0x24006)
+ rec[13]: time=10-19 19:01:01.524 processed=DefaultState org=CompletedState dest=UninitializedState what=131183(0x2006f)
+ rec[14]: time=10-19 19:28:59.182 processed=DefaultState org=UninitializedState dest=UninitializedState what=131183(0x2006f)
+ rec[15]: time=10-19 19:30:42.983 processed=DefaultState org=UninitializedState dest=HandshakeState what=147462(0x24006)
+ rec[16]: time=10-19 19:30:43.217 processed=DefaultState org=HandshakeState dest=CompletedState what=147462(0x24006)
+ rec[17]: time=10-19 19:31:16.481 processed=CompletedState org=CompletedState dest=DisconnectedState what=147462(0x24006)
+ rec[18]: time=10-19 19:31:21.203 processed=DefaultState org=DisconnectedState dest=HandshakeState what=147462(0x24006)
+ rec[19]: time=10-19 19:31:21.371 processed=DefaultState org=HandshakeState dest=DisconnectedState what=147462(0x24006)
+ rec[20]: time=10-19 19:31:22.331 processed=DefaultState org=DisconnectedState dest=ScanState what=147462(0x24006)
+curState=ScanState
+mAuthFailureInSupplicantBroadcast false
+mAuthFailureReason 0
+mNetworksDisabledDuringConnect false
+
+mLinkProperties {InterfaceName: wlan0 LinkAddresses: []  Routes: [] DnsAddresses: [] Domains: null MTU: 0}
+mWifiInfo SSID: , BSSID: 00:00:00:00:00:00, MAC: 00:08:22:94:fc:fb, Supplicant state: SCANNING, RSSI: -127, Link speed: -1Mbps, Frequency: -1MHz, Net ID: -1, Metered hint: false, score: 0
+mDhcpResults IP address Gateway  DNS servers: [ ] Domains  DHCP server /10.54.202.94 Vendor info null lease 0 seconds
+mNetworkInfo [type: WIFI[], state: DISCONNECTED/SCANNING, reason: (unspecified), extra: "inward", failover: false, available: true, roaming: false]
+mLastSignalLevel 4
+mLastBssid null
+mLastNetworkId -1
+mOperationalMode 1
+mUserWantsSuspendOpt true
+mSuspendOptNeedsDisabled 4
+CountryCode sent to driver CN
+mConnectionReqCount 5
+mUntrustedReqCount 0
+Wlan Wake Reasons: totalCmdEventWake 0 totalDriverFwLocalWake 0 totalRxDataWake 0 rxUnicast 0 rxMulticast 0 rxBroadcast 0 icmp 0 icmp6 0 icmp6Ra 0 icmp6Na 0 icmp6Ns 0 ipv4RxMulticast 0 ipv6Multicast 0 otherRxMulticast 0
+
+Dump of WifiConfigManager
+WifiConfigManager - Log Begin ----
+2018-08-01T08:00:22.607 - clearInternalData: Clearing all internal data
+WifiConfigManager - Log End ----
+WifiConfigManager - Configured networks Begin ----
+ID: 0 SSID: "7260_5G" PROVIDER-NAME: null BSSID: null FQDN: null PRIO: 0 HIDDEN: true
+ NetworkSelectionStatus NETWORK_SELECTION_ENABLED
+ hasEverConnected: true
+ numAssociation 2
+ creation time=11-11 09:42:44.228
+ KeyMgmt: WPA_PSK Protocols: WPA RSN
+ AuthAlgorithms: OPEN
+ PairwiseCiphers: TKIP CCMP
+ GroupCiphers: TKIP CCMP
+ PSK: *
+Enterprise config:
+IP config:
+IP assignment: DHCP
+Proxy settings: NONE
+ cuid=1000 cname=android.uid.system:1000 luid=1000 lname=android.uid.system:1000 lcuid=1000 userApproved=USER_UNSPECIFIED noInternetAccessExpected=false roamingFailureBlackListTimeMilli: 1000
+recentFailure: Association Rejection code: 0
+ simSlot: null
+ID: 1 SSID: "inward" PROVIDER-NAME: null BSSID: null FQDN: null PRIO: 0 HIDDEN: false
+ NetworkSelectionStatus NETWORK_SELECTION_ENABLED
+ hasEverConnected: true
+ numAssociation 88
+ creation time=01-08 21:25:10.858
+ validatedInternetAccess
+ KeyMgmt: WPA_PSK Protocols: WPA RSN
+ AuthAlgorithms: OPEN
+ PairwiseCiphers: TKIP CCMP
+ GroupCiphers: WEP40 WEP104 TKIP CCMP
+ PSK: *
+Enterprise config:
+IP config:
+IP assignment: DHCP
+Proxy settings: NONE
+ cuid=1000 cname=android.uid.system:1000 luid=1000 lname=android.uid.system:1000 lcuid=1000 userApproved=USER_UNSPECIFIED noInternetAccessExpected=false 
+lastConnected: 1043sec roamingFailureBlackListTimeMilli: 1000
+recentFailure: Association Rejection code: 65522
+ simSlot: null
+WifiConfigManager - Configured networks End ----
+WifiConfigManager - Next network ID to be allocated 2
+WifiConfigManager - Last selected network ID -1
+
+Dump of PasspointManager
+PasspointManager - Providers Begin ---
+PasspointManager - Providers End ---
+PasspointManager - Next provider ID to be assigned 0
+Last sweep 117:38:13.488 ago.
+e4:f7:5b:32:40:8d:<2.4G-Vectra-WiFi-F1B8F4>: 0 elements,  expires in -0:48:19.132 x
+36:90:ea:4c:8f:48:<My Skoda 1462>: 0 elements,  expires in -0:44:59.161 x
+5c:7b:5c:47:72:d8:<PLAY_Swiatlowodowy_72D3_5G>: 0 elements,  expires in -0:39:27.041 x
+2e:d1:c6:ff:4a:05:<My VW 4689>: 0 elements,  expires in -89:24:09.171 x
+0e:80:2f:49:fd:55:<My Skoda 7783>: 0 elements,  expires in -89:25:09.168 x
+b8:d4:bc:f4:11:ba:<ZTE_F411BA>: 0 elements,  expires in -113:58:15.813 x
+54:1f:8d:b4:42:08:<PLAY_Internet_B44208>: 5 elements,  expires in -89:08:29.419 x
+2c:ec:f7:13:f8:04:<Lowicka>: 0 elements,  expires in -0:40:39.046 x
+00:54:af:69:7b:ed:<Hotspot7BED>: 0 elements,  expires in -113:58:45.842 x
+12:32:2c:97:7b:f7:<My VW 1728>: 0 elements,  expires in -113:59:55.875 x
+3e:93:54:9b:3d:93:<Audi_MMI_5566>: 0 elements,  expires in -0:46:29.232 x
+
+Chipset information :-----------------------------------------------
+FW Version is: 0
+Driver Version is: 0
+Supported Feature set: -1
+--------------------------------------------------------------------
+Bug dump 0
+system time = 10-19 19:31:16.977
+kernel time = 5786.489
+reason = 1
+kernel log: 
+
+
+system log: 
+--------- beginning of main
+10-19 19:31:03.402  1216  1216 E eee     : action===com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO3
+10-19 19:31:03.404  1216  1216 E eee     : action===com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO1
+10-19 19:31:03.524   272   332 I BufferQueueProducer: [StatusBar#0](this:0xa9010000,id:3,api:1,p:666,c:272) queueBuffer: fps=1.08 dur=1849.14 max=998.50 min=850.64
+10-19 19:31:03.542   272   272 I DisplayDevice: [Built-in Screen (type:0)] fps:1.622290,dur:1849.24,max:998.59,min:407.02
+10-19 19:31:03.663   269   280 I vendor.mediatek.hardware.power@1.1-impl: querySysInfo cmd:6, param:0
+10-19 19:31:03.663   269   279 I libPerfService: perfUserGetCapability - cmd:6, id:0, value:13264
+10-19 19:31:04.205  1216  1216 E eee     : action===update.widget.update_proBar
+10-19 19:31:04.206  1216  1216 E eee     : action===com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO3
+10-19 19:31:04.208  1216  1216 E eee     : action===com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO1
+--------- beginning of system
+10-19 19:31:04.696 13613 13613 I chatty  : uid=1000(system) com.xygala.pvcanset expire 3 lines
+10-19 19:31:05.009  1216  1216 E eee     : action===update.widget.update_proBar
+10-19 19:31:05.010  1216  1216 E eee     : action===com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO3
+10-19 19:31:05.011  1216  1216 E eee     : action===com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO1
+10-19 19:31:05.667   269   280 I vendor.mediatek.hardware.power@1.1-impl: querySysInfo cmd:6, param:0
+10-19 19:31:05.667   269   279 I libPerfService: perfUserGetCapability - cmd:6, id:0, value:13264
+10-19 19:31:05.698 13613 13613 W ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.sendBroadcast:989 android.content.ContextWrapper.sendBroadcast:437 com.xygala.pvcanset.PvcanSetService.SendToMcu:194 com.xygala.pvcanset.PvcanSetService$1.run:61 android.os.Handler.handleCallback:790 
+10-19 19:31:05.813  1216  1216 E eee     : action===update.widget.update_proBar
+10-19 19:31:05.814  1216  1216 E eee     : action===com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO3
+10-19 19:31:05.816  1216  1216 E eee     : action===com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO1
+10-19 19:31:06.180  1138  1283 W BusClient : comautochipsbluetoothsdk	create failed: Connection refused
+10-19 19:31:06.455   759   759 I com.android.phone: Looking for service android.hardware.radio@1.0::IRadio/slot1
+10-19 19:31:06.456   759   759 I com.android.phone: Looking for service android.hardware.radio.deprecated@1.0::IOemHook/slot1
+10-19 19:31:06.618  1216  1216 E eee     : action===update.widget.update_proBar
+10-19 19:31:06.618  1216  1216 E eee     : action===com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO3
+10-19 19:31:06.620  1216  1216 E eee     : action===com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO1
+10-19 19:31:06.666   485 13337 E NewkeypadMonitor: key_dev_read105
+10-19 19:31:06.667   485 13337 W ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.sendBroadcast:989 com.mediatek.server.NewkeypadMonitor.key_dev_read:9803 com.mediatek.server.NewkeypadMonitor.parse_uart_data:9826 com.mediatek.server.NewkeypadMonitor.onDataReceived:9909 com.mediatek.server.NewkeypadMonitor$ReadThread.run:13897 
+10-19 19:31:06.687   272   332 I BufferQueueProducer: [StatusBar#0](this:0xa9010000,id:3,api:1,p:666,c:272) queueBuffer: fps=0.63 dur=3162.45 max=2163.89 min=998.56
+10-19 19:31:06.700 13613 13613 W ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.sendBroadcast:989 android.content.ContextWrapper.sendBroadcast:437 com.xygala.pvcanset.PvcanSetService.SendToMcu:194 com.xygala.pvcanset.PvcanSetService$1.run:61 android.os.Handler.handleCallback:790 
+10-19 19:31:06.704   272   272 I DisplayDevice: [Built-in Screen (type:0)] fps:0.632458,dur:3162.27,max:2163.65,min:998.62
+10-19 19:31:06.895 13748 13748 E mDNSResponder: mDNSPlatformSendUDP got error 101 (Network is unreachable) sending packet to FF02:0000:0000:0000:0000:0000:0000:00FB on interface FE80:0000:0000:0000:0008:22FF:FE94:FCFB/p2p0/19
+10-19 19:31:07.099   272   332 I BufferQueueProducer: [com.zjinnova.zlink/com.zjinnova.android.zlink.features.main.MainActivity#0](this:0xa8d25000,id:183,api:1,p:13264,c:272) queueBuffer: fps=0.20 dur=5011.50 max=5011.50 min=5011.50
+10-19 19:31:07.422  1216  1216 E eee     : action===update.widget.update_proBar
+10-19 19:31:07.422  1216  1216 E eee     : action===com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO3
+10-19 19:31:07.424  1216  1216 E eee     : action===com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO1
+10-19 19:31:07.671   269   280 I vendor.mediatek.hardware.power@1.1-impl: querySysInfo cmd:6, param:0
+10-19 19:31:07.672   269   279 I libPerfService: perfUserGetCapability - cmd:6, id:0, value:13264
+10-19 19:31:07.703 13613 13613 I chatty  : uid=1000(system) com.xygala.pvcanset identical 1 line
+10-19 19:31:08.226  1216  1216 E eee     : action===update.widget.update_proBar
+10-19 19:31:08.226  1216  1216 E eee     : action===com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO3
+10-19 19:31:08.228  1216  1216 E eee     : action===com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO1
+10-19 19:31:08.536   272   332 I BufferQueueProducer: [StatusBar#0](this:0xa9010000,id:3,api:1,p:666,c:272) queueBuffer: fps=1.08 dur=1849.29 max=998.78 min=850.51
+10-19 19:31:08.553   272   272 I DisplayDevice: [Built-in Screen (type:0)] fps:1.622252,dur:1849.28,max:998.57,min:406.95
+10-19 19:31:08.705 13613 13613 W ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.sendBroadcast:989 android.content.ContextWrapper.sendBroadcast:437 com.xygala.pvcanset.PvcanSetService.SendToMcu:194 com.xygala.pvcanset.PvcanSetService$1.run:61 android.os.Handler.handleCallback:790 
+10-19 19:31:09.029  1216  1216 E eee     : action===update.widget.update_proBar
+10-19 19:31:09.030  1216  1216 E eee     : action===com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO3
+10-19 19:31:09.031  1216  1216 E eee     : action===com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO1
+10-19 19:31:09.184  1138  1283 W BusClient : comautochipsbluetoothsdk	create failed: Connection refused
+10-19 19:31:09.268   316   316 E wificond: Failed to get BSSID from scan result packet
+10-19 19:31:09.268   316   316 E wificond: Failed to get BSSID from scan result packet
+10-19 19:31:09.676   269   280 I vendor.mediatek.hardware.power@1.1-impl: querySysInfo cmd:6, param:0
+10-19 19:31:09.676   269   279 I libPerfService: perfUserGetCapability - cmd:6, id:0, value:13264
+10-19 19:31:09.707 13613 13613 W ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.sendBroadcast:989 android.content.ContextWrapper.sendBroadcast:437 com.xygala.pvcanset.PvcanSetService.SendToMcu:194 com.xygala.pvcanset.PvcanSetService$1.run:61 android.os.Handler.handleCallback:790 
+10-19 19:31:09.832  1216  1216 E eee     : action===update.widget.update_proBar
+10-19 19:31:09.833  1216  1216 E eee     : action===com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO3
+10-19 19:31:09.834  1216  1216 E eee     : action===com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO1
+10-19 19:31:09.893 13748 13748 E mDNSResponder: mDNSPlatformSendUDP got error 101 (Network is unreachable) sending packet to FF02:0000:0000:0000:0000:0000:0000:00FB on interface FE80:0000:0000:0000:0008:22FF:FE94:FCFB/p2p0/19
+10-19 19:31:10.461   759   759 I com.android.phone: Looking for service android.hardware.radio@1.0::IRadio/slot1
+10-19 19:31:10.462   759   759 I com.android.phone: Looking for service android.hardware.radio.deprecated@1.0::IOemHook/slot1
+10-19 19:31:10.533   272   332 I BufferQueueProducer: [StatusBar#0](this:0xa9010000,id:3,api:1,p:666,c:272) queueBuffer: fps=1.00 dur=1997.02 max=998.58 min=998.44
+10-19 19:31:10.551   272   272 I DisplayDevice: [Built-in Screen (type:0)] fps:1.001369,dur:1997.27,max:998.66,min:998.60
+10-19 19:31:10.636  1216  1216 E eee     : action===update.widget.update_proBar
+10-19 19:31:10.636  1216  1216 E eee     : action===com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO3
+10-19 19:31:10.638  1216  1216 E eee     : action===com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO1
+10-19 19:31:10.709 13613 13613 W ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.sendBroadcast:989 android.content.ContextWrapper.sendBroadcast:437 com.xygala.pvcanset.PvcanSetService.SendToMcu:194 com.xygala.pvcanset.PvcanSetService$1.run:61 android.os.Handler.handleCallback:790 
+10-19 19:31:10.894 13748 13748 E mDNSResponder: mDNSPlatformSendUDP got error 101 (Network is unreachable) sending packet to FF02:0000:0000:0000:0000:0000:0000:00FB on interface FE80:0000:0000:0000:0008:22FF:FE94:FCFB/p2p0/19
+10-19 19:31:11.439  1216  1216 E eee     : action===update.widget.update_proBar
+10-19 19:31:11.440  1216  1216 E eee     : action===com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO3
+10-19 19:31:11.441  1216  1216 E eee     : action===com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO1
+10-19 19:31:11.664   485 13337 E NewkeypadMonitor: key_dev_read105
+10-19 19:31:11.664   485 13337 W ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.sendBroadcast:989 com.mediatek.server.NewkeypadMonitor.key_dev_read:9803 com.mediatek.server.NewkeypadMonitor.parse_uart_data:9826 com.mediatek.server.NewkeypadMonitor.onDataReceived:9909 com.mediatek.server.NewkeypadMonitor$ReadThread.run:13897 
+10-19 19:31:11.680   272   332 I BufferQueueProducer: [StatusBar#0](this:0xa9010000,id:3,api:1,p:666,c:272) queueBuffer: fps=0.87 dur=1146.57 max=1146.57 min=1146.57
+10-19 19:31:11.680   269   280 I vendor.mediatek.hardware.power@1.1-impl: querySysInfo cmd:6, param:0
+10-19 19:31:11.681   269   279 I libPerfService: perfUserGetCapability - cmd:6, id:0, value:13264
+10-19 19:31:11.697   272   272 I DisplayDevice: [Built-in Screen (type:0)] fps:0.872273,dur:1146.43,max:1146.43,min:1146.43
+10-19 19:31:11.711 13613 13613 W ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.sendBroadcast:989 android.content.ContextWrapper.sendBroadcast:437 com.xygala.pvcanset.PvcanSetService.SendToMcu:194 com.xygala.pvcanset.PvcanSetService$1.run:61 android.os.Handler.handleCallback:790 
+10-19 19:31:12.116   272  1007 I BufferQueueProducer: [com.zjinnova.zlink/com.zjinnova.android.zlink.features.main.MainActivity#0](this:0xa8d25000,id:183,api:1,p:13264,c:272) queueBuffer: fps=0.20 dur=5017.55 max=5017.55 min=5017.55
+10-19 19:31:12.186  1138  1283 W BusClient : comautochipsbluetoothsdk	create failed: Connection refused
+10-19 19:31:12.243  1216  1216 E eee     : action===update.widget.update_proBar
+10-19 19:31:12.243  1216  1216 E eee     : action===com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO3
+10-19 19:31:12.245  1216  1216 E eee     : action===com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO1
+10-19 19:31:12.895 13748 13748 E mDNSResponder: mDNSPlatformSendUDP got error 101 (Network is unreachable) sending packet to FF02:0000:0000:0000:0000:0000:0000:00FB on interface FE80:0000:0000:0000:0008:22FF:FE94:FCFB/p2p0/19
+10-19 19:31:13.047  1216  1216 E eee     : action===update.widget.update_proBar
+10-19 19:31:13.048  1216  1216 E eee     : action===com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO3
+10-19 19:31:13.050  1216  1216 E eee     : action===com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO1
+10-19 19:31:13.548   272   332 I BufferQueueProducer: [StatusBar#0](this:0xa9010000,id:3,api:1,p:666,c:272) queueBuffer: fps=1.07 dur=1868.15 max=1017.67 min=850.49

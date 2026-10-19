@@ -1,0 +1,32 @@
+USB Manager State:
+  USB Device State:
+    mCurrentFunctions: adb
+    mCurrentOemFunctions: null
+    mCurrentFunctionsApplied: true
+    mConnected: true
+    mConfigured: true
+    mUsbDataUnlocked: false
+    mCurrentAccessory: null
+    mHostConnected: false
+    mSourcePower: true
+    mSinkPower: false
+    mUsbCharging: false
+    mHideUsbNotification: false
+    mAudioAccessoryConnected: false
+    Kernel state: CONFIGURED
+    Kernel function list: ffs
+  USB Debugging State:
+    Connected to adbd: true
+    Last key received: null
+    User keys:
+  IOException: java.io.FileNotFoundException: /data/misc/adb/adb_keys (No such file or directory)
+    System keys:
+  IOException: java.io.FileNotFoundException: /adb_keys (No such file or directory)
+  USB Host State:
+  USB Port State:
+    otg: port=UsbPort{id=otg, supportedModes=dual}, status=UsbPortStatus{connected=true, currentMode=dfp, currentPowerRole=source, currentDataRole=device, supportedRoleCombinations=[source:host, source:device, sink:host, sink:device]}, canChangeMode=true, canChangePowerRole=true, canChangeDataRole=true
+  USB Audio Devices:
+  USB MIDI Devices:
+  Settings for profile group 0:
+    Device preferences:
+    Accessory preferences:

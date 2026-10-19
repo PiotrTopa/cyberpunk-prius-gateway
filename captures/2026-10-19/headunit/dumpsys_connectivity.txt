@@ -1,0 +1,328 @@
+NetworkFactories for: PhoneSwitcherNetworkRequstListener WIFI WIFI_UT Ethernet TelephonyNetworkFactory[0]
+
+Active default network: none
+
+Current Networks:
+
+Network Requests:
+  uid/pid:10069/13264 NetworkRequest [ TRACK_DEFAULT id=101, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN] ]
+  uid/pid:10017/666 NetworkRequest [ LISTEN id=7, [] ]
+  uid/pid:1000/485 NetworkRequest [ TRACK_DEFAULT id=6, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN] ]
+  uid/pid:10009/13287 NetworkRequest [ TRACK_DEFAULT id=102, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN] ]
+  uid/pid:1000/485 NetworkRequest [ LISTEN id=4, [ Capabilities: NOT_RESTRICTED&TRUSTED&NOT_VPN] ]
+  uid/pid:1000/485 NetworkRequest [ REQUEST id=1, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN] ]
+  uid/pid:1000/485 NetworkRequest [ TRACK_DEFAULT id=3, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN] ]
+  uid/pid:1000/485 NetworkRequest [ LISTEN id=5, [ Transports: CELLULAR|WIFI Capabilities: NOT_RESTRICTED&TRUSTED&NOT_VPN] ]
+  uid/pid:10041/647 NetworkRequest [ LISTEN id=10, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&FOREGROUND] ]
+  
+mLegacyTypeTracker:
+  Supported types: 0 1 9 13 17 29
+  Current state:
+
+
+Tethering:
+  Configuration:
+    tetherableUsbRegexs: [rndis\d]
+    tetherableWifiRegexs: [ap\d]
+    tetherableBluetoothRegexs: []
+    isDunRequired: false
+    preferredUpstreamIfaceTypes: [ETHERNET, WIFI, BLUETOOTH, MOBILE]
+    dhcpRanges: [192.168.42.2, 192.168.42.254, 192.168.43.2, 192.168.43.254, 192.168.44.2, 192.168.44.254, 192.168.45.2, 192.168.45.254, 192.168.46.2, 192.168.46.254, 192.168.47.2, 192.168.47.254, 192.168.48.2, 192.168.48.254, 192.168.49.2, 192.168.49.254]
+    defaultIPv4DNS: [8.8.4.4, 8.8.8.8]
+  Tether state:
+    Upstream wanted: false
+    Current upstream interface: null
+  Hardware offload:
+    Offload HALs not started
+    Current upstream: null
+    Exempt prefixes: []
+    NAT timeout update callbacks received during the last offload session: 0
+    NAT timeout update netlink errors during the last offload session: 0
+  Log:
+    2018-08-01T08:00:17.920 - MARK constructed
+    2018-08-01T08:00:17.930 - [config] DUN check returned: DUN_UNSPECIFIED
+    2018-08-01T08:00:17.931 - [config] TetheringConfiguration{tetherableUsbRegexs:[rndis\d] tetherableWifiRegexs:[ap\d] tetherableBluetoothRegexs:[] isDunRequired:false preferredUpstreamIfaceTypes:[ETHERNET,WIFI,BLUETOOTH,MOBILE]}
+    2018-08-01T08:00:22.244 - USB bcast connected:false configured:false rndis:false
+    2018-08-01T08:00:25.004 - wlan0 is not a tetherable iface, ignoring
+    2018-08-01T08:00:25.015 - p2p0 is not a tetherable iface, ignoring
+    2018-08-01T08:00:26.113 - p2p0 is not a tetherable iface, ignoring
+    2018-08-01T08:00:26.119 - p2p0 is not a tetherable iface, ignoring
+    2018-08-01T08:00:26.126 - p2p0 is not a tetherable iface, ignoring
+    2018-08-01T08:00:26.127 - p2p0 is not a tetherable iface, ignoring
+    2026-10-14T22:11:52.106 - attempting to remove unknown iface (p2p0), ignoring
+    2026-10-14T22:11:52.446 - attempting to remove unknown iface (wlan0), ignoring
+    2026-10-15T00:45:46.673 - wlan0 is not a tetherable iface, ignoring
+    2026-10-15T00:45:46.681 - p2p0 is not a tetherable iface, ignoring
+    2026-10-15T00:45:47.020 - p2p0 is not a tetherable iface, ignoring
+    2026-10-15T00:45:47.025 - p2p0 is not a tetherable iface, ignoring
+    2026-10-15T00:45:47.025 - p2p0 is not a tetherable iface, ignoring
+    2026-10-15T00:52:12.422 - attempting to remove unknown iface (p2p0), ignoring
+    2026-10-15T00:52:12.661 - attempting to remove unknown iface (wlan0), ignoring
+    2026-10-16T01:21:33.491 - wlan0 is not a tetherable iface, ignoring
+    2026-10-16T01:21:33.500 - p2p0 is not a tetherable iface, ignoring
+    2026-10-16T01:21:34.150 - p2p0 is not a tetherable iface, ignoring
+    2026-10-16T01:21:34.151 - p2p0 is not a tetherable iface, ignoring
+    2026-10-16T01:21:34.152 - p2p0 is not a tetherable iface, ignoring
+    2026-10-16T01:27:35.276 - attempting to remove unknown iface (p2p0), ignoring
+    2026-10-16T01:27:35.554 - attempting to remove unknown iface (wlan0), ignoring
+    2026-10-16T01:35:11.074 - wlan0 is not a tetherable iface, ignoring
+    2026-10-16T01:35:11.080 - p2p0 is not a tetherable iface, ignoring
+    2026-10-16T01:35:11.536 - p2p0 is not a tetherable iface, ignoring
+    2026-10-16T01:35:11.542 - p2p0 is not a tetherable iface, ignoring
+    2026-10-16T01:35:11.544 - p2p0 is not a tetherable iface, ignoring
+    2026-10-16T01:43:05.047 - attempting to remove unknown iface (p2p0), ignoring
+    2026-10-16T01:43:05.342 - attempting to remove unknown iface (wlan0), ignoring
+    2026-10-16T01:48:09.960 - wlan0 is not a tetherable iface, ignoring
+    2026-10-16T01:48:09.970 - p2p0 is not a tetherable iface, ignoring
+    2026-10-16T01:48:11.185 - p2p0 is not a tetherable iface, ignoring
+    2026-10-16T01:48:11.206 - p2p0 is not a tetherable iface, ignoring
+    2026-10-16T01:48:11.206 - p2p0 is not a tetherable iface, ignoring
+    2026-10-16T01:50:08.489 - USB bcast connected:false configured:false rndis:false
+    2026-10-16T01:57:17.727 - attempting to remove unknown iface (p2p0), ignoring
+    2026-10-16T01:57:17.999 - attempting to remove unknown iface (wlan0), ignoring
+    2026-10-19T17:59:32.198 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T17:59:32.207 - p2p0 is not a tetherable iface, ignoring
+    2026-10-19T17:59:32.625 - p2p0 is not a tetherable iface, ignoring
+    2026-10-19T17:59:32.632 - p2p0 is not a tetherable iface, ignoring
+    2026-10-19T17:59:32.633 - p2p0 is not a tetherable iface, ignoring
+    2026-10-19T18:32:59.698 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:32:59.722 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:33:00.021 - InitialState got CMD_UPSTREAM_CHANGED
+    2026-10-19T18:33:05.986 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:33:15.993 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:33:25.995 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:33:36 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:33:46.006 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:33:56.006 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:34:06.006 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:34:16.006 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:34:28.401 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:34:36.010 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:34:48.420 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:34:58.404 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:35:06.013 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:35:16.016 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:35:26.016 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:35:36.017 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:35:48.419 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:35:58.450 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:36:08.429 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:36:18.403 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:36:28.431 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:36:38.411 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:36:48.396 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:36:58.416 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:37:08.413 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:37:18.405 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:37:28.420 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:37:38.431 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:37:48.414 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:37:58.417 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:38:08.425 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:38:18.415 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:38:26.035 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:38:36.036 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:38:48.415 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:38:58.429 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:39:08.379 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:39:18.447 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:39:26.041 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:39:38.435 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:39:48.443 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:39:58.437 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:40:08.437 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:40:16.047 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:40:28.439 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:40:38.425 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:40:48.433 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:40:58.441 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:41:08.462 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:41:18.456 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:41:28.428 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:41:38.456 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:41:48.441 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:41:58.455 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:42:08.435 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:42:18.441 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:42:28.475 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:42:38.477 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:42:48.450 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:42:58.432 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:43:08.423 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:43:18.461 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:43:28.434 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:43:38.482 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:43:48.450 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:43:58.436 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:44:08.457 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:44:18.473 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:44:28.449 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:44:38.479 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:44:48.451 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:44:58.452 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:45:08.451 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:45:18.493 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:45:28.482 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:45:38.441 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:45:48.467 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:45:58.469 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:46:08.479 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:46:18.452 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:46:28.446 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:46:38.487 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:46:48.469 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:46:58.465 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:47:08.492 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:47:18.488 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:47:28.485 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:47:38.490 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:47:48.494 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:47:58.497 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:48:08.453 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:48:18.491 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:48:28.494 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:48:38.531 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:48:48.460 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:48:58.468 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:49:08.506 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:49:18.518 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:49:28.489 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:49:38.506 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:49:48.500 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:49:58.521 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:50:08.521 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:50:18.521 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:50:28.529 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:50:38.503 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:50:48.497 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:50:58.534 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:51:08.512 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:51:18.509 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:51:26.118 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:51:38.522 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:51:48.513 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:51:58.524 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:52:08.478 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:52:18.508 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:52:28.480 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:52:38.506 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:52:48.492 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:52:58.480 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:53:08.502 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:53:18.525 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:53:28.540 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:53:38.494 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:53:48.542 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:53:58.517 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:54:08.507 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:54:18.565 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:54:28.505 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:54:38.518 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:54:48.504 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:54:58.542 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:55:08.506 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:55:18.541 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:55:28.507 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:55:38.544 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:55:48.546 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:55:58.521 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:56:08.529 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:56:18.556 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:56:28.533 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:56:38.534 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:56:48.538 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:56:58.573 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:57:08.565 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:57:18.552 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:57:28.539 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:57:38.585 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:57:48.565 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:57:58.555 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:58:08.587 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:58:18.562 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:58:28.553 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:58:38.543 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:58:48.554 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:58:58.537 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:59:08.559 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:59:18.565 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:59:28.545 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:59:38.539 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:59:48.577 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T18:59:58.561 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T19:00:08.555 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T19:00:18.556 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T19:00:28.557 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T19:00:36.176 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T19:00:48.578 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T19:00:58.594 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T19:01:00.777 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T19:01:00.843 - InitialState got CMD_UPSTREAM_CHANGED
+    2026-10-19T19:01:01.166 - attempting to remove unknown iface (p2p0), ignoring
+    2026-10-19T19:01:01.431 - attempting to remove unknown iface (wlan0), ignoring
+    2026-10-19T19:28:58.295 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T19:28:58.305 - p2p0 is not a tetherable iface, ignoring
+    2026-10-19T19:28:58.942 - p2p0 is not a tetherable iface, ignoring
+    2026-10-19T19:28:58.954 - p2p0 is not a tetherable iface, ignoring
+    2026-10-19T19:28:58.954 - p2p0 is not a tetherable iface, ignoring
+    2026-10-19T19:30:43.040 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T19:30:43.194 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T19:30:43.531 - InitialState got CMD_UPSTREAM_CHANGED
+    2026-10-19T19:30:49.265 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T19:30:59.268 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T19:31:09.267 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T19:31:16.475 - wlan0 is not a tetherable iface, ignoring
+    2026-10-19T19:31:20.515 - InitialState got CMD_UPSTREAM_CHANGED
+    2026-10-19T19:34:02.394 - USB bcast connected:true configured:false rndis:false
+    2026-10-19T19:34:02.518 - USB bcast connected:true configured:true rndis:false
+    2026-10-19T19:38:59.220 - USB bcast connected:true configured:false rndis:false
+    2026-10-19T19:38:59.345 - USB bcast connected:true configured:true rndis:false
+
+Packet keepalives:
+
+Bad Wi-Fi avoidance: unrestricted
+
+mValidationLogs (most recent first):
+101 - "inward"
+  2026-10-19T19:30:43.576 - PROBE_DNS captive.apple.com 64ms OK 17.253.73.203
+  2026-10-19T19:30:43.704 - PROBE_HTTP http://captive.apple.com time=127ms ret=200 request={User-Agent=[Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.32 Safari/537.36]} headers={null=[HTTP/1.1 200 OK], Access-Control-Allow-Origin=[*], Age=[8438619], Cache-Control=[max-age=31536000], CDNUUID=[b2847c46-2483-44b5-a91a-97bc4faddb01-3424209001], Connection=[close], Content-Length=[69], Content-Type=[text/html], Date=[Mon, 13 Jul 2026 19:27:06 GMT], Last-Modified=[Mon, 13 Jul 2026 19:27:06 GMT], Via=[http/1.1 deber5-edge-bx-015.ts.apple.com (acdn/302.16436), http/1.1 deber5-edge-bx-015.ts.apple.com (acdn/23.17695)], X-Android-Received-Millis=[1792409443703], X-Android-Response-Source=[NETWORK 200], X-Android-Selected-Protocol=[http/1.1], X-Android-Sent-Millis=[1792409443622], X-Cache=[miss, hit-fresh]}
+  2026-10-19T19:30:43.705 - urlConnection.getContent() = <HTML><HEAD><TITLE>Success</TITLE></HEAD><BODY>Success</BODY></HTML>
+100 - "inward"
+  2026-10-19T18:33:00.037 - PROBE_DNS captive.apple.com 57ms OK 17.253.73.208
+  2026-10-19T18:33:00.497 - PROBE_HTTP http://captive.apple.com time=268ms ret=200 request={User-Agent=[Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.32 Safari/537.36]} headers={null=[HTTP/1.1 200 OK], Access-Control-Allow-Origin=[*], Age=[8433142], Cache-Control=[max-age=31536000], CDNUUID=[a214499c-6abb-4ea3-a0b6-0211cb15d408-3339886802], Connection=[close], Content-Length=[69], Content-Type=[text/html], Date=[Mon, 13 Jul 2026 20:00:39 GMT], Last-Modified=[Mon, 13 Jul 2026 20:00:39 GMT], Via=[http/1.1 deber5-edge-bx-026.ts.apple.com (acdn/4.16518), http/1.1 deber5-edge-bx-026.ts.apple.com (acdn/23.17695)], X-Android-Received-Millis=[1792405980496], X-Android-Response-Source=[NETWORK 200], X-Android-Selected-Protocol=[http/1.1], X-Android-Sent-Millis=[1792405980183], X-Cache=[miss, hit-fresh]}
+  2026-10-19T18:33:00.501 - urlConnection.getContent() = <HTML><HEAD><TITLE>Success</TITLE></HEAD><BODY>Success</BODY></HTML>
+
+mNetworkRequestInfoLogs (most recent first):
+  2026-10-19T19:30:43.570 - REGISTER uid/pid:10009/13287 NetworkRequest [ TRACK_DEFAULT id=102, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN] ]
+  2026-10-19T19:29:00.262 - REGISTER uid/pid:10069/13264 NetworkRequest [ TRACK_DEFAULT id=101, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN] ]
+  2026-10-19T19:01:02.608 - RELEASE uid/pid:10021/11553 NetworkRequest [ LISTEN id=92, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED] ]
+  2026-10-19T19:01:02.508 - RELEASE uid/pid:10021/11736 NetworkRequest [ TRACK_DEFAULT id=93, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN] ]
+  2026-10-19T19:01:02.505 - RELEASE uid/pid:10021/11736 NetworkRequest [ TRACK_DEFAULT id=97, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN] ]
+  2026-10-19T19:01:02.504 - RELEASE uid/pid:10063/11313 NetworkRequest [ TRACK_DEFAULT id=86, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN] ]
+  2026-10-19T19:01:02.500 - RELEASE uid/pid:10063/11313 NetworkRequest [ LISTEN id=87, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&FOREGROUND] ]
+  2026-10-19T19:01:02.484 - RELEASE uid/pid:10063/11313 NetworkRequest [ TRACK_DEFAULT id=88, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN] ]
+  2026-10-19T19:01:02.482 - RELEASE uid/pid:10063/11313 NetworkRequest [ TRACK_DEFAULT id=90, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN] ]
+  2026-10-19T19:01:02.475 - RELEASE uid/pid:10069/8534 NetworkRequest [ TRACK_DEFAULT id=70, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN] ]
+  2026-10-19T19:01:02.430 - RELEASE uid/pid:10043/11273 NetworkRequest [ TRACK_DEFAULT id=85, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN] ]
+  2026-10-19T19:01:02.278 - RELEASE uid/pid:10009/11414 NetworkRequest [ LISTEN id=89, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED] ]
+  2026-10-19T19:01:01.433 - RELEASE uid/pid:10068/11530 NetworkRequest [ LISTEN id=95, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&FOREGROUND] ]
+  2026-10-19T19:01:01.432 - RELEASE uid/pid:10068/11530 NetworkRequest [ LISTEN id=91, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&FOREGROUND] ]
+  2026-10-19T18:34:01.769 - RELEASE uid/pid:10009/8399 NetworkRequest [ LISTEN id=69, [ Transports: WIFI Capabilities: NOT_RESTRICTED&TRUSTED&NOT_VPN] ]
+  2026-10-19T18:34:01.769 - RELEASE uid/pid:10009/8399 NetworkRequest [ LISTEN id=83, [ Transports: WIFI Capabilities: NOT_RESTRICTED&TRUSTED&NOT_VPN] ]
+  2026-10-19T18:34:01.767 - RELEASE uid/pid:10009/8399 NetworkRequest [ TRACK_DEFAULT id=82, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN] ]
+  2026-10-19T18:34:01.764 - RELEASE uid/pid:10009/8399 NetworkRequest [ LISTEN id=84, [ Transports: WIFI Capabilities: NOT_RESTRICTED&TRUSTED&NOT_VPN] ]
+  2026-10-19T18:34:01.763 - RELEASE uid/pid:10009/8399 NetworkRequest [ LISTEN id=78, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED] ]
+  2026-10-19T18:34:01.763 - RELEASE uid/pid:10009/8399 NetworkRequest [ LISTEN id=98, [ Transports: WIFI Capabilities: NOT_RESTRICTED&TRUSTED&NOT_VPN] ]
+
+mNetworkInfoBlockingLogs (most recent first):
+  2026-10-19T18:33:00.029 - BLOCKED 10063
+
+NetTransition WakeLock activity (most recent first):
+  total acquisitions: 2
+  total releases: 2
+  cumulative duration: 6s
+  longest duration: 3s
+  2026-10-19T19:31:23.517 - RELEASE (EVENT_EXPIRE_NET_TRANSITION_WAKELOCK)
+  2026-10-19T19:31:20.513 - ACQUIRE for NetworkAgentInfo [WIFI () - 101]
+  2026-10-19T19:01:03.841 - RELEASE (EVENT_EXPIRE_NET_TRANSITION_WAKELOCK)
+  2026-10-19T19:01:00.840 - ACQUIRE for NetworkAgentInfo [WIFI () - 100]

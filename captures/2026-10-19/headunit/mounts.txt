@@ -1,0 +1,34 @@
+rootfs on / type rootfs (ro,seclabel)
+tmpfs on /dev type tmpfs (rw,seclabel,nosuid,relatime,size=990504k,nr_inodes=166805,mode=755)
+devpts on /dev/pts type devpts (rw,seclabel,relatime,mode=600)
+proc on /proc type proc (rw,relatime,gid=3009,hidepid=2)
+sysfs on /sys type sysfs (rw,seclabel,relatime)
+selinuxfs on /sys/fs/selinux type selinuxfs (rw,relatime)
+/dev/block/mmcblk0p22 on /system type ext4 (ro,seclabel,relatime,data=ordered)
+/dev/block/mmcblk0p17 on /vendor type ext4 (ro,seclabel,relatime,data=ordered)
+none on /acct type cgroup (rw,relatime,cpuacct)
+debugfs on /sys/kernel/debug type debugfs (rw,seclabel,relatime)
+tmpfs on /mnt type tmpfs (rw,seclabel,relatime,size=990504k,nr_inodes=166805,mode=755,gid=1000)
+none on /config type configfs (rw,relatime)
+none on /dev/cpuctl type cgroup (rw,relatime,cpu)
+pstore on /sys/fs/pstore type pstore (rw,seclabel,relatime)
+/dev/block/mmcblk0p3 on /protect_f type ext4 (rw,seclabel,nosuid,nodev,noatime,nodelalloc,noauto_da_alloc,commit=1,data=ordered)
+/dev/block/mmcblk0p24 on /data type ext4 (rw,seclabel,nosuid,nodev,noatime,discard,noauto_da_alloc,data=ordered)
+/dev/block/mmcblk0p23 on /cache type ext4 (rw,seclabel,nosuid,nodev,noatime,discard,noauto_da_alloc,data=ordered)
+adb on /dev/usb-ffs/adb type functionfs (rw,relatime)
+tmpfs on /storage type tmpfs (rw,seclabel,relatime,size=990504k,nr_inodes=166805,mode=755,gid=1000)
+tracefs on /sys/kernel/debug/tracing type tracefs (rw,seclabel,relatime)
+/data/media on /mnt/runtime/default/emulated type sdcardfs (rw,nosuid,nodev,noexec,noatime,fsuid=1023,fsgid=1023,gid=1015,multiuser,mask=6,derive_gid)
+/data/media on /storage/emulated type sdcardfs (rw,nosuid,nodev,noexec,noatime,fsuid=1023,fsgid=1023,gid=1015,multiuser,mask=6,derive_gid)
+/data/media on /mnt/runtime/read/emulated type sdcardfs (rw,nosuid,nodev,noexec,noatime,fsuid=1023,fsgid=1023,gid=9997,multiuser,mask=23,derive_gid)
+/data/media on /mnt/runtime/write/emulated type sdcardfs (rw,nosuid,nodev,noexec,noatime,fsuid=1023,fsgid=1023,gid=9997,multiuser,mask=7,derive_gid)
+
+Filesystem            Size  Used Avail Use% Mounted on
+tmpfs                 967M  824K  966M   1% /dev
+/dev/block/mmcblk0p22 2.9G  1.9G  0.9G  66% /system
+/dev/block/mmcblk0p17 496M  252M  244M  51% /vendor
+tmpfs                 967M     0  967M   0% /mnt
+/dev/block/mmcblk0p3  5.6M   56K  5.6M   1% /protect_f
+/dev/block/mmcblk0p24 111G  2.9G  108G   3% /data
+/dev/block/mmcblk0p23 248M  304K  248M   1% /cache
+/data/media           111G  2.9G  108G   3% /mnt/runtime/default/emulated

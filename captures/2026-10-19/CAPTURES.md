@@ -80,3 +80,62 @@ put in /system/build.prop. Apps still cannot call su (4750) — chmod 4755 or Ma
 Partitions (`/dev/block/platform/soc/11230000.mmc/by-name`): ANDROID=p22 (/system 2.9 G, 0.9 G free),
 BOOTIMG=p10, RECOVERY=p11, LK=p6, LOGO=p14, VENDOR=p17, NVRAM=p2, userdata=p24 (111 G, 108 G free), TEE1/2=p7/8,
 SECCFG=p5, SEC_RO=p12, MISC=p13, FRP=p21, CACHE=p23. /system/build.prop 0600 root.
+
+## Steering wheel keys and audio path (user said: "thee is no panel, just wheel; 3 times volume up, 4 time vol down")
+
+Linux input layer (`getevent`, devices mtk-kpd/mtk-tpd) shows ONLY touch events — wheel keys do not pass
+through it. They come from the MCU over `/dev/ttyMT2` (held open by system_server, fd 223; ttyMT3 fd 159
+also held by system_server), read by the vendor class `NewkeypadMonitor` in system_server (log
+`E/NewkeypadMonitor: key_dev_read16` per press AND per release = 2 reads per press; `key_dev_read105` every 5 s
+is a status frame → `xy.android.B.vibration.voltage` broadcast). Wheel VOL+ ×3 at 19:52:03.6–04.2 (unit
+clock, laptop 13:52): TDA7729 master volume 35→36→37→38; VOL− from 19:52:11: 38→37→36… Each step:
+`AudioSettings: setTDA7729MasterVolume enter value>N`, `VolumeDialog vlevel=N`, broadcast
+`xy.android.volume.change` (+ `android.media.VOLUME_CHANGED_ACTION`), then AudioService mirrors N (and N/2)
+onto every stream type for device 8. Earlier (19:50:04/05) two wheel presses were forwarded to ZLink instead
+(`D/zj: [keycode]keyCode 5 / 6`) via `NewkeypadMonitor.onReceive action=com.zjinnova.zlink` — ZLink's own key
+codes when it is in front; ZLink reports `status=MAIN_PAGE_SHOW` to the framework. Vendor framework also tries
+to start `com.suding.speedplay` (absent). CAN box app: `com.xygala.canbus` (pid 1216, broadcasts
+`com.acloud.intent.android.XY.ANDROID.CANBUSDISPINFO1/3` ~1 Hz), settings app `com.xygala.pvcanset`.
+MCU reader threads in system_server: tid 13337 "Thread-136" blocks in read(fd 223=/dev/ttyMT2, 255 bytes);
+tid 13330 "Thread-135" in read(fd 159=/dev/ttyMT3, 64 bytes). Device has /system/xbin/strace, tcpdump,
+gdbserver, toybox. SYSTEM_ALERT_WINDOW appop for zlink = default (overlays grantable). Raw serial frames
+traced with strace below.
+
+**MCU serial protocol (strace on system_server tid 13337, /dev/ttyMT2):** frames `5A A5 LEN CMD DATA… CHK`,
+LEN = bytes after it including CHK, CHK = (−(CMD + DATA…)) mod 256 (two's complement of the sum; verified on
+3 frames). Every 5 s the MCU sends `5A A5 04 69 0E 17 72` / `… 69 0E 0C 7D` (cmd 0x69 status, data 0E 17 /
+0E 0C = probably battery voltage, cf. `xy.android.B.vibration.voltage`). First key frame seen 19:54:43 (unit
+clock): `5A A5 04 10 01 0C E3` → cmd 0x10 = key, data 01 0C.
+
+**Wheel key map (user: "3 short clics/relesaes, 1 long click on volup;;; 3 short 1 long on vol down"; strace
+file log, unit clock):** key frame `5A A5 04 10 SS KK CHK`, SS = 01 press / 02 release, KK = key code.
+VOL+ = **0x0C** (19:56:34–42), VOL− = **0x0D** (19:56:59–57:07). Short click = one 01 frame + one 02 frame on
+release; long press = 01 frames repeated every ≈100 ms (MCU auto-repeat) until the 02 release frame.
+User "1x mode, 2x previous, 3x next" (19:57:54–58:05): MODE = **0x06**, PREVIOUS (seek−) = **0x0B**, NEXT (seek+) =
+**0x0A**. Full wheel map so far: 06 MODE, 0A NEXT, 0B PREV, 0C VOL+, 0D VOL−.
+User: MAP and INFO (the MFD bezel buttons on the wheel side) pressed 19:58:05–59:40 → NOTHING on either serial
+port, nothing in the CAN-box app or logcat; user: "i think they just internaly rpelicate thse buttons" (they
+act on the Toyota MFD/AVC-LAN side, not the head unit). Then "1x SPEAK, 2x ODBIERZ (answer), 3x
+ZAKONCZ_POLACZENIE (end call)" (20:00:30–01:15): SPEAK (voice) = **0x50** (only a press frame logged, no
+release), ANSWER = **0x0F**, END CALL = **0x10**.
+
+**Android → MCU writes (strace -f on system_server, 20:03:03–20:04:59 unit clock, user pressed VOL+/VOL− then
+switched sources on screen):** only two commands ever written to /dev/ttyMT2 by system_server: `5A A5 08 0B 01
+RR GG BB 05 64 CHK` once per second cycling red/orange/yellow/green/cyan/blue/white = **key backlight RGB LED
+colour cycle** (cmd 0x0B, 7 steps, brightness 0x64), and `5A A5 03 05 03 F8` (once `05 04`) in bursts while
+the screen was being tapped = **touch beep** (cmd 0x05). NO volume or source command goes to the MCU from
+system_server, and system_server touches no I2C device → the TDA7729 volume/source path is in the audio HAL
+process (see fd scan below). Wheel presses in this window arrived as reads (`10 02 0C` 20:03:26, `10 02 0D`
+20:03:30 releases). Trace files: `headunit/mcu_trace.txt` (reads), `headunit/mcu_rw_trace.txt` (all).
+
+**Audio / source facts (user: "done" after VOL+, VOL−, Radio→Music→back; radio tuned 95.90→88.10):**
+volume broadcast `xy.android.volume.change` carries extra `volume=N` (0–63 TDA7729 scale; a companion
+broadcast carries `vol=N`). Source-related vendor broadcasts seen in `dumpsys activity broadcasts history`
+(saved as `headunit/dumpsys_broadcast_history.txt`): `xy.notify.cur.mediasource`, `xy.kill.mediaapp`,
+`xy.release.mediaappres`, `xy.android.radio.isplay`, `xy.fmradio.quit`, `xy.android.hw.fmpower.enable`,
+`xy.android.4735.fm` (Si4735 tuner), `xy.android.galaxradio.setaudiotogps`, `xy.btmusic.stop`,
+`xy.media.ringer.mode.change`, `com.autochips.adau1701set` (×144 — an ADAU1701 SigmaDSP audio processor is
+set through broadcasts), `com.acloud.intent.android.MAINUI_UPDATE`, `update.widget.*`. No process holds
+the I2C devices permanently (only z-link keeps /dev/i2c-4); system_server owns both ttyMT2 (MCU) and ttyMT3.
+Volume/source are therefore applied in the audio HAL / vendor services, not through the MCU — to be read
+from the dumped system+vendor images. Screenshots `headunit/hu_01…03.png`. Unit unplugged after this.

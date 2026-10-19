@@ -1,0 +1,61 @@
+Processor	: ARMv7 Processor rev 3 (v7l)
+processor	: 0
+model name	: ARMv7 Processor rev 3 (v7l)
+Features	: half thumb fastmult vfp edsp thumbee neon vfpv3 tls vfpv4 idiva idivt vfpd32 lpae evtstrm 
+CPU architecture: 7
+
+processor	: 1
+model name	: ARMv7 Processor rev 3 (v7l)
+Features	: half thumb fastmult vfp edsp thumbee neon vfpv3 tls vfpv4 idiva idivt vfpd32 lpae evtstrm 
+CPU architecture: 7
+
+processor	: 2
+model name	: ARMv7 Processor rev 3 (v7l)
+Features	: half thumb fastmult vfp edsp thumbee neon vfpv3 tls vfpv4 idiva idivt vfpd32 lpae evtstrm 
+CPU architecture: 7
+
+processor	: 3
+model name	: ARMv7 Processor rev 3 (v7l)
+Features	: half thumb fastmult vfp edsp thumbee neon vfpv3 tls vfpv4 idiva idivt vfpd32 lpae evtstrm 
+CPU architecture: 7
+
+Hardware	: AC8227L
+Revision	: 0000
+Serial		: 0000000000000000
+
+MemTotal:        4194304 kB
+MemFree:          330808 kB
+MemAvailable:    2544400 kB
+Buffers:           28376 kB
+Cached:          2152288 kB
+SwapCached:          344 kB
+Active:           915296 kB
+Inactive:         613940 kB
+Active(anon):     230604 kB
+Inactive(anon):   198208 kB
+Active(file):     684692 kB
+Inactive(file):   415732 kB
+Unevictable:        1956 kB
+Mlocked:             256 kB
+SwapTotal:       1048572 kB
+SwapFree:        1039892 kB
+Dirty:                40 kB
+Writeback:             0 kB
+AnonPages:        426340 kB
+Mapped:           338540 kB
+Shmem:              2396 kB
+Slab:              56608 kB
+SReclaimable:      25320 kB
+SUnreclaim:        31288 kB
+KernelStack:        8912 kB
+PageTables:        22908 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:     2042148 kB
+Committed_AS:   24308816 kB
+VmallocTotal:     245760 kB
+VmallocUsed:      155956 kB
+VmallocChunk:      23556 kB
+
+Linux version 4.14.116 (AndroidOS@localhost) (gcc version 6.3.1 20170404 (Linaro GCC 6.3-2017.05) ) #1 SMP PREEMPT Wed Jul 2 20:11:05 CST 2025

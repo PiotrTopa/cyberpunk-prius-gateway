@@ -1,0 +1,45 @@
+/system/usr/keychars:
+total 76
+-rw-r--r-- 1 root root 14689 2009-01-01 01:00 Generic.kcm
+-rw-r--r-- 1 root root  8318 2009-01-01 01:00 Vendor_18d1_Product_5018.kcm
+-rw-r--r-- 1 root root 14464 2009-01-01 01:00 Virtual.kcm
+-rw-r--r-- 1 root root 15840 2009-01-01 01:00 qwerty.kcm
+-rw-r--r-- 1 root root 15959 2009-01-01 01:00 qwerty2.kcm
+
+/system/usr/keylayout:
+total 148
+-rw-r--r-- 1 root root  811 2009-01-01 01:00 AVRCP.kl
+-rw-r--r-- 1 root root 9406 2009-01-01 01:00 Generic.kl
+-rw-r--r-- 1 root root  810 2009-01-01 01:00 Vendor_0079_Product_0011.kl
+-rw-r--r-- 1 root root 1277 2009-01-01 01:00 Vendor_045e_Product_028e.kl
+-rw-r--r-- 1 root root 1277 2009-01-01 01:00 Vendor_045e_Product_02d1.kl
+-rw-r--r-- 1 root root 1416 2009-01-01 01:00 Vendor_046d_Product_b501.kl
+-rw-r--r-- 1 root root 1027 2009-01-01 01:00 Vendor_046d_Product_c216.kl
+-rw-r--r-- 1 root root  943 2009-01-01 01:00 Vendor_046d_Product_c219.kl
+-rw-r--r-- 1 root root  925 2009-01-01 01:00 Vendor_046d_Product_c21d.kl
+-rw-r--r-- 1 root root  950 2009-01-01 01:00 Vendor_046d_Product_c21f.kl
+-rw-r--r-- 1 root root 1325 2009-01-01 01:00 Vendor_046d_Product_c294.kl
+-rw-r--r-- 1 root root 1392 2009-01-01 01:00 Vendor_046d_Product_c299.kl
+-rw-r--r-- 1 root root 2793 2009-01-01 01:00 Vendor_046d_Product_c532.kl
+-rw-r--r-- 1 root root 1454 2009-01-01 01:00 Vendor_054c_Product_0268.kl
+-rw-r--r-- 1 root root  788 2009-01-01 01:00 Vendor_0583_Product_2060.kl
+-rw-r--r-- 1 root root 2399 2009-01-01 01:00 Vendor_05ac_Product_0239.kl
+-rw-r--r-- 1 root root 1021 2009-01-01 01:00 Vendor_0b05_Product_4500.kl
+-rw-r--r-- 1 root root  850 2009-01-01 01:00 Vendor_1038_Product_1412.kl
+-rw-r--r-- 1 root root  805 2009-01-01 01:00 Vendor_12bd_Product_d015.kl
+-rw-r--r-- 1 root root 1021 2009-01-01 01:00 Vendor_1532_Product_0900.kl
+-rw-r--r-- 1 root root  988 2009-01-01 01:00 Vendor_1689_Product_fd00.kl
+-rw-r--r-- 1 root root  942 2009-01-01 01:00 Vendor_1689_Product_fd01.kl
+-rw-r--r-- 1 root root  942 2009-01-01 01:00 Vendor_1689_Product_fe00.kl
+-rw-r--r-- 1 root root 1013 2009-01-01 01:00 Vendor_18d1_Product_2c40.kl
+-rw-r--r-- 1 root root 1544 2009-01-01 01:00 Vendor_18d1_Product_5018.kl
+-rw-r--r-- 1 root root  831 2009-01-01 01:00 Vendor_1949_Product_0401.kl
+-rw-r--r-- 1 root root  935 2009-01-01 01:00 Vendor_1bad_Product_f016.kl
+-rw-r--r-- 1 root root  940 2009-01-01 01:00 Vendor_1bad_Product_f023.kl
+-rw-r--r-- 1 root root  935 2009-01-01 01:00 Vendor_1bad_Product_f027.kl
+-rw-r--r-- 1 root root  951 2009-01-01 01:00 Vendor_1bad_Product_f036.kl
+-rw-r--r-- 1 root root 1017 2009-01-01 01:00 Vendor_1d79_Product_0009.kl
+-rw-r--r-- 1 root root 1994 2009-01-01 01:00 Vendor_22b8_Product_093d.kl
+-rw-r--r-- 1 root root  968 2009-01-01 01:00 Vendor_2378_Product_1008.kl
+-rw-r--r-- 1 root root  955 2009-01-01 01:00 Vendor_2378_Product_100a.kl
+-rw-r--r-- 1 root root 2650 2009-01-01 01:00 qwerty.kl
