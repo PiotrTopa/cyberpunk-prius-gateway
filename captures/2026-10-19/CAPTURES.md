@@ -259,3 +259,7 @@ JPEGs). User notes while driving: 15:25:08 "outside, sunny afternoon", 15:29:54 
 now chrck pictures, figure out a good alogirhm for cheap corelating them tomauto lights, maybe also figure
 out ifnwe could tepreticslly inomwmnt some envirnent understanding eith doem AI tensor works - any good tolls
 thwre to read street signs, lights etc?" 9 grab failures (camera off before start / hotspot lost at the end).
+User, after the analysis page (https://claude.ai/artifact/NPgnt8R8qT3urXzqXrvQCg): "msybe somethong simpler, i
+plan mynown implemntstio of flowpilot anyway later" → scene understanding deferred to a future flowpilot
+(openpilot-on-Android) port; auto-lights stay with the cheap rule: sun elevation + sky-band Y + sky chroma
+with hysteresis, no ML.
