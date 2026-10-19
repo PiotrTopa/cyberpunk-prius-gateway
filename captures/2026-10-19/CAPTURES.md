@@ -67,3 +67,16 @@ works (1280×720, ZLink "X-Car CarPlay/AA — please connect your phone with Blu
 Control test: `adb shell input keyevent KEYCODE_HOME` → launcher `com.android.launcher/com.xyauto.common.
 activity.MainActivity` came to the front (screenshot). Vendor packages: com.autochips.* (quickbootmanager,
 bluetooth, backcar), com.mediatek.mtklogger, com.xy.zlinkactivationcode, com.zjinnova.zlink.
+
+## Root inventory (user: "can we get full root access to that device, and how ?")
+
+Already full root: `/system/xbin/su` is mode 4750 root:shell (adb shell may call it; apps may not), `su 0`
+gives uid 0 with CapEff/CapBnd 3fffffffff (all capabilities), SELinux Permissive, dm-verity disabled
+(`ro.boot.veritymode=disabled`, verifiedbootstate green), `/system` remounts rw (tested, remounted ro again),
+build `user` with test-keys, kernel 3.18.79 armv7l, `ro.debuggable=1`. `adb root` is refused by this adbd,
+but `su 0 setprop service.adb.root 1; su 0 setprop ctl.restart adbd` restarted adbd as root → `adb shell`
+is now uid 0 directly (adbd pid 14278 root). Not persistent across reboot unless `service.adb.root=1` is
+put in /system/build.prop. Apps still cannot call su (4750) — chmod 4755 or Magisk would change that.
+Partitions (`/dev/block/platform/soc/11230000.mmc/by-name`): ANDROID=p22 (/system 2.9 G, 0.9 G free),
+BOOTIMG=p10, RECOVERY=p11, LK=p6, LOGO=p14, VENDOR=p17, NVRAM=p2, userdata=p24 (111 G, 108 G free), TEE1/2=p7/8,
+SECCFG=p5, SEC_RO=p12, MISC=p13, FRP=p21, CACHE=p23. /system/build.prop 0600 root.
