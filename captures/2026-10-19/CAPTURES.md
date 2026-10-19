@@ -174,3 +174,17 @@ Vendor key names: 06 PLAY_PAUSE (our "MODE"), 0A FORWARD, 0B BACKWARD, 0C/0D VOL
 VOICE. `settings put system newkeypad_debug 1` logs raw MCU bytes. Volume chain: `setStreamVolume(STREAM_MUSIC,
 0..63)` → `autosetTDA7729MasterVolume` → vendor.autochips audio HAL → ALSA `TDA7729*_Switch`; the plain
 `media volume --set` test at 20:14 did not take, the vendor setter is broadcast `xy.android.gtpkey.volset`.
+
+## Wrap-up 19 Oct (user said)
+
+"dtop it, i have som picture, its not my top priority, with full contorl over the head unit android and JBL
+bascially working I think I am fine. It works. lets wrap it up, make sure we have all documented and praepare
+for next fun step."
+
+State at close: nav emulation re-verified on the car (emu1, emu2); head unit fully reachable (ADB over its
+OTG port, su root, adbd restarted as root until next reboot), wheel keys and MCU protocol mapped, vendor
+control broadcasts documented in the host repo `docs/HEADUNIT_INTEGRATION.md`; full partition images +
+decompiled framework in `~/backups/headunit-9520-2026-10-19/`; JBL amp confirmed off the AVC-LAN; head-unit
+integration PARKED (user: not top priority). Left on the unit: `/data/local/tmp/mcu_trace.txt`,
+`mcu_rw_trace.txt`, `amp_trace.txt` (amp-button toggle never traced). Pending hardware: 74HC86 back into the
+VGA666 sync socket (MFD picture), then Pi-in-car test; unmapped MFD wire test (ground vs YS).
