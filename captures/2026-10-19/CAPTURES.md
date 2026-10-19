@@ -163,3 +163,14 @@ emulator: `00 01 12 10 58 24 85`) and 1C6 (`00 01 12 10 E0 E4 E5`); device table
 the amp powered, nothing answers for it → the JBL amp is NOT connected to the AVC-LAN pair we tap (or is not
 powered by that button). Note: the stock nav box's device table includes logical 74 (amplifier) and 60
 (tuner): in this car the nav/audio ECU hosted those functions on the bus.
+
+**Corrections from the decompiled framework (offline lane, mediatek-services `NewkeypadMonitor`):** the
+`05 03`/`05 04` frames are NOT a touch beep — they are `dosetRadioPower` (cmd 0x05 = power control: 06 power
+off, 15 ACC-off ack, 16 sleep, 0C reboot, 13/14 lock/unlock, A2/A3 amp), triggered by a `CANBUSDISPINFO1`
+broadcast; the 5 s `69 0E xx` frame is `B_vibration_voltage_left/right`, not battery (battery comes in cmd
+0x82 → `sys.xy.mcu.battery`). `/dev/ttyMT3` is the CAN-box UART (`CanbusMonitor`, 38400 baud), not a second
+MCU port; the unit writes `2E C4 01 vv chk` (volume) to it on every volume change and nothing answers.
+Vendor key names: 06 PLAY_PAUSE (our "MODE"), 0A FORWARD, 0B BACKWARD, 0C/0D VOL, 0F PHONE, 10 HANGUP, 50
+VOICE. `settings put system newkeypad_debug 1` logs raw MCU bytes. Volume chain: `setStreamVolume(STREAM_MUSIC,
+0..63)` → `autosetTDA7729MasterVolume` → vendor.autochips audio HAL → ALSA `TDA7729*_Switch`; the plain
+`media volume --set` test at 20:14 did not take, the vendor setter is broadcast `xy.android.gtpkey.volset`.
