@@ -290,3 +290,13 @@ drivable ways, 8 582 with explicit maxspeed, PL:zone30/urban/living_street/rural
 sign limit ends at next junction / 3 km / 10 min; 2 sightings to override), `fusion/service.py` GPS hook,
 VisionState speed-limit fields; 222 tests. Replay fixture 30→50→70→(camera 60)→70→80→50→100 along Armii
 Krajowej. No GPS ingest exists yet.
+Detector experiment folded (host main 240d4e5): `.venv-vision` (torch 2.13 + ultralytics 8.4 + onnxruntime +
+LiteRT + ncnn; 6.6 GB, moved to the main checkout; lane overran the 2 GB download budget by ~3 GB over the
+tether because the TFLite exporter auto-installed CUDA torch), `vision/detectors/` (Detection/Detector,
+NullDetector, SubprocessDetector JSON-lines helper, filter_detections with the phone-mount region, TfliteDetector
+stub), `tools/vision/` (yolo_detect, yolo_bench, contact_sheet), results `docs/VISION_DETECTOR_EXPERIMENT_
+2026-10-19.md` + contact sheets; 236 tests. yolo11n@640: cars in 157/174 frames, traffic lights in 30, phone
+mount = main false positive (29 % of frames); sign model (StreetSignSense YOLO12n): 13 correct of 21 boxes,
+no speed-limit sign in this drive; signs 17–25 px only within ~5–8 m → digits unreadable at 640×360.
+Timings: ONNX RT 416 14–23 ms (4 cores), ncnn Vulkan Quadro 7–9 ms; TFLite int8 3.1 MB. No GPU via torch
+(Pascal unsupported). Phone not measured.
