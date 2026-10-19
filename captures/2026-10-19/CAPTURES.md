@@ -188,3 +188,20 @@ decompiled framework in `~/backups/headunit-9520-2026-10-19/`; JBL amp confirmed
 integration PARKED (user: not top priority). Left on the unit: `/data/local/tmp/mcu_trace.txt`,
 `mcu_rw_trace.txt`, `amp_trace.txt` (amp-button toggle never traced). Pending hardware: 74HC86 back into the
 VGA666 sync socket (MFD picture), then Pi-in-car test; unmapped MFD wire test (ground vs YS).
+
+## 70mai dashcam over its hotspot (user said)
+
+"now i want to get access to 70main in my prius to get porssiblity of connecitn to this device and
+potenatially useit later for detecting the weather / auto light based on the picutre. Password to wifi i
+12345678" … "It is myown car, my own dashcam, and I now the password for it, as well I have had to manually
+switch it on".
+
+Laptop joined `70mai_S410_814b` (WPA2, ch 10, BSSID B8:59:C8:2B:81:4B) with NM profile set to
+`ipv4.never-default yes` (internet stays on the phone tether); DHCP gave 192.168.0.2/24, camera = 192.168.0.1.
+Open TCP ports: 80 (HTTP, `/cgi-bin/Config.cgi` answers `{"ResultCode":"-4444"}` to every property, root
+gives an empty reply), 554 (RTSP), 3333 (silent on connect; the 70mai app's control channel). RTSP: Novatek
+("Nvt RTSP, LIVE555 v2013.07.03"), `rtsp://192.168.0.1/liveRTSP/av4`, H.264 High, **640×360 @ 30 fps**, ≈0.7
+Mbit/s, no authentication; DESCRIBE answers 200 for any path. `ffmpeg -rtsp_transport tcp -i
+rtsp://192.168.0.1/liveRTSP/av4 -frames:v 1 frame.jpg` works (frame in `70mai/frame1_live.jpg`); 5 s clip =
+127 frames. ffmpeg installed on the laptop (apt). The camera must be switched on by hand for the hotspot
+to appear (user).
