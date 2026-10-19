@@ -279,3 +279,14 @@ light_features.py with exact sky clip share, sun.py NOAA elevation, auto_lights.
 doc: the open sunny sky is 10–40 % clipped almost all the time (garage ≤4 %), so clipping now blocks only
 switching ON (`LightThresholds(clip_blocks_off=True)` restores the literal rule). Recommendation only —
 nothing switches the lamps yet.
+User: "and how abit buidling a roadsigns and road awerness?" → two Opus lanes in host-repo worktrees:
+(1) detector experiment: pretrained nano YOLO (COCO + a traffic-sign model) over the 174 drive frames,
+timings CPU/GPU, TFLite/ONNX export, `vision/detectors/` interface + subprocess detector, results doc;
+(2) Phase A: OSM `maxspeed` extract (Overpass, Gdańsk box) + map matching + Polish implicit limits +
+`vision/fusion/speed_limit.py` (map prior + sightings), VisionState speed-limit fields, GPS hook.
+Phase A folded (host main 01b7581): OSM extract `vision/maps/data/gdansk_15km.json.gz` (1.0 MB, 28 512
+drivable ways, 8 582 with explicit maxspeed, PL:zone30/urban/living_street/rural/expressway tags), matcher
+(grid index, 0.04 ms/lookup), Polish implicit limits, `vision/fusion/speed_limit.py` (map prior + sightings;
+sign limit ends at next junction / 3 km / 10 min; 2 sightings to override), `fusion/service.py` GPS hook,
+VisionState speed-limit fields; 222 tests. Replay fixture 30→50→70→(camera 60)→70→80→50→100 along Armii
+Krajowej. No GPS ingest exists yet.
