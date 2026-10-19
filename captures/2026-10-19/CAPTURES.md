@@ -208,3 +208,54 @@ to appear (user).
 User, after seeing the frames in ~/Pictures: "good, looks perfect for my usecase. good, lets make sure we
 have all that documented for future work." → host repo `docs/DASHCAM_70MAI.md`, `tools/dashcam_brightness.py`,
 README index of peripheral docs; frames also in `~/Pictures/70mai_live_2026-10-19_*.jpg`.
+
+## Rear camera via adb (user: "1. can we get picture form rear camera? 2. can we force it to witch to rea camera view via adb?")
+
+Open-air brightness check for lights management: pending the next drive (user).
+From the decompiled framework (`NewkeypadMonitor`): broadcasts `xy.android.force.back.in` / `xy.android.force.back.out`
+send MCU `07 05` / `07 06` (force reverse view in/out); the MCU answers with state cmd `12` value 8/7 → the
+framework sets `sys.xy.backcar.status`, `SerialPort.setBackcarStatus(1/0)`, mutes audio (`forcebackcar_mute`)
+and broadcasts `android.backcar.action.PREPARE_START` / `FINISH` (`xy.android.mcu.backcar.in` when ARM1 is
+ready). `canbus.intent.action.cmd` extra `mcu_cmd` is a byte array whose FIRST byte is the payload length,
+followed by CMD+DATA (no 5A A5/LEN/CHK — the native sender frames it); max 16 bytes; sends are queued 20 ms
+apart. Backcar app `com.autochips.android.backcar`: service `.BackCarService` (action
+`android.intent.action.BACKCAR_SERVICE`), activities `.BackCarActivity`, `.DVRActivity` (action
+`com.autochips.android.backcar.dvr`, exported), `.AVInActivity` and `.RightAVInActivity` (MAIN, exported),
+`.BackCarEmptyActivity` (action `android.media.action.IMAGE_CAMERA`, exported); its code is odexed (the pulled
+APK has no classes.dex), native `SerialPort.setAvinVideo(int)`. Video input constant `VIDEO_INPUT_REARVIEW = 5`.
+
+**Forced camera view (user: "lets then force it to camera view, so i can adjast camera safetly with car being
+parked"):** `am broadcast -a xy.android.force.back.in` → `sys.xy.backcar.status` 0→1, `BackCarEmptyActivity`
+in front, BackCarService "xy.android.mcu.backcar.in"; `screencap` shows only the app's icons, the video plane
+is black (hardware overlay, not capturable). User: "it shows some camera view... but i dont think it is rear
+camera" / "its another camera. I swtched to R and it switchted to dirrefernt camrea (same UI) then on parked
+it goes back to black screen". Tried `xy.android.avin.path --ei path 0..5` (→ `SerialPort.setAvinVideo`): no
+change. Direct serial writes to /dev/ttyMT2 as root work (`5A A5 03 07 06 F4` = back out, `…07 05 F4`… = back
+in, verified 15:05:48/52). MCU cmd 07 = "mcu cvbs route" (`action.mcucvbs.route.set` extra `bcroute` byte
+array → `07 RR`): routes 0x00–0x04 twice: no change; 0x0A–0x14 (15:06:05–15:07:25): user: "the screen now
+exited to normal view, then back to cam - balck screen". Interpretation: the unit has two camera inputs; the
+forced view shows the always-powered one, the rear camera (shown in R) is powered from the reverse-lamp
+circuit and is dark when parked — consistent with the black screen after leaving R. Other 07-family codes
+from the framework: 07 = main volume, 08 = QuickBoot on, 09 = HW backcar first. Direct-write recipe: frame
+`5A A5 LEN CMD DATA CHK`, CHK = (256 − ΣCMD..DATA) mod 256, `printf` as root into /dev/ttyMT2.
+
+## Dashcam light samples for the drive home (user said)
+
+"AHHHH, YEAP. MAKES SENSE! oK, GOT IT, nOW PREPARE FOR PICTURE CAPTURING WHEN I DRIVE HOE. i WANT TO HAVE
+DATA FORM MYGARAGE, AND DURING THE DRIVE. nOT LIKA AMOVIE, BUT LIEK SAMPLES WITH different lightning
+conditions, so i can start figuring out values and image processing required to get that in the future - so
+to corelate sky color / brighnets / values."
+
+Sampler: host repo `tools/dashcam_sampler.py` (one JPEG every 10 s from the RTSP live stream, one RTSP session
+per frame; CSV `samples.csv` with full-frame Y avg/min/max, U/V avg, top-third "sky" Y/U/V, bottom-half
+"road" Y; `sampler.log`), run under `systemd-inhibit --what=sleep:idle:handle-lid-switch` so the laptop keeps
+sampling with the lid closed; output `captures/2026-10-19/70mai/drive_home/`. NM profile for the hotspot set
+to autoconnect (priority 10, never-default) so the link comes back whenever the camera is on.
+
+**Drive home (15:22–15:52 laptop clock; camera clock runs ≈ +5 min 57 s ahead, visible in the burned-in
+timestamps):** 174 frames, 10 s apart, `70mai/drive_home/` (`samples.csv`, `annotations.txt`, `sampler.log`,
+JPEGs). User notes while driving: 15:25:08 "outside, sunny afternoon", 15:29:54 "directly into the sun now",
+15:35:27 "now it is straight in", 15:39:12 "used screen wipers", 15:48:10 "shade". Then: "back home, lets
+now chrck pictures, figure out a good alogirhm for cheap corelating them tomauto lights, maybe also figure
+out ifnwe could tepreticslly inomwmnt some envirnent understanding eith doem AI tensor works - any good tolls
+thwre to read street signs, lights etc?" 9 grab failures (camera off before start / hotspot lost at the end).
