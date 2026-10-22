@@ -331,3 +331,7 @@ A1 hardware appendix, examples (6 CSV excerpts), standalone firmware `avclan_rp2
 ORIGINAL netlist values 4.7k/1k/10k/47Ω/1N4007W because no log records the upgrade set being fitted; 2 MΩ
 3V3→pin 6 not drawn, presence to confirm). Not pushed; user's go pending. Legal: own-car observation for
 interoperability, no Toyota material, trademarks nominative.
+User 2026-10-22: "1. upgraded, 2. its there, not really leftover it was decision 3. yes" → driver side on the
+board = upgrade set (R4 2.2k, R5 2.2k, R6 1k, R7/R8 68 Ω, BAT54); the 2 MΩ 3V3→pin 6 is a deliberate second
+bias path (drawn as R2M). Schematics regenerated; repo PUBLISHED: https://github.com/PiotrTopa/prius-gen2-avclan
+(public, main at 286c743).

@@ -229,3 +229,10 @@ MCP2515 at 5 V needs the MISO divider/level shifter (see wiring.md); CAN
 | R6  | 1 kΩ | 0603 | Q2 base pull-up to 5 V (rapid charge sweep-out) |
 | R7, R8 | 68 Ω (or 82 Ω) | 0603 | bus drive impedance ($V_{diff} \approx 0.8\text{ V} - 1.0\text{ V}$) |
 | H1  | 2-pin header | Data+, Data− | Wire by function (pin labels on v1 silk were swapped) |
+
+## Owner confirmation 2026-10-22 (supersedes the open points above)
+
+- Driver side on the built board = the **upgraded set**: R4 2.2 kΩ, R5 2.2 kΩ, R6 1 kΩ, R7/R8 68 Ω, D1/D2 BAT54.
+- The **2 MΩ from 3V3 to pin 6 is fitted by design** (second bias path next to the 220 kΩ to 5 V), not a leftover.
+- Corrected as-built schematics (RX measured 2026-10-14, TX as confirmed) and a value cross-check live in the
+  public repo https://github.com/PiotrTopa/prius-gen2-avclan (`hardware/VALUES.md`, `hardware/draw_schematics.py`).
