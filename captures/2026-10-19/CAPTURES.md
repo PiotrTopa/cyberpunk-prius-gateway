@@ -316,3 +316,18 @@ weather only clear/overcast/None (rain/snow/fog not separable from statistics). 
 back-to-back RTSP sessions) — untested on the real camera; `BACKEND_DASHCAM_SOURCE=grab` = old path.
 User asked "deterministic algorithm vs some tensorflow — which would work better for lights?" → answered:
 deterministic (fitted thresholds), a tiny CNN only for conditions the statistics prove blind to.
+
+## 2026-10-22: public AVC-LAN documentation repo (user said)
+
+"make separate MIT repo with just prous gen II full avc lan mapping, seperate to my other projects, just
+documentation of reversed engineered protocol (if it is legal to public it) with all the findings we
+established." + "maybe also add hardwafe design of the transiver as small appendix + our firmware from
+rp2049, butnjust avc-lan part, so standalone avc-lan rp2040 firmwsre" + "make new drawings of.schemstics
+pls, with uodated values make sure theybate.correct, there were some miscrepancies before."
+→ `~/projects/prius-gen2-avclan/` (local git, main, 3 commits to a87e0f3, 63 files, 1.5 MB, MIT): docs 01–08 +
+A1 hardware appendix, examples (6 CSV excerpts), standalone firmware `avclan_rp2040` 3.2.0 (builds RP2040-Zero
+123 KB / RP2350-Zero 118 KB; fixes: ts wrap 71 min→49 d, LED bit-bang no longer blocks ACK stretch), tools
+(avcctl/avc_capture/nav_emu/touch_console), new schematics (schemdraw, RX as measured 10-14; TX drawn with the
+ORIGINAL netlist values 4.7k/1k/10k/47Ω/1N4007W because no log records the upgrade set being fitted; 2 MΩ
+3V3→pin 6 not drawn, presence to confirm). Not pushed; user's go pending. Legal: own-car observation for
+interoperability, no Toyota material, trademarks nominative.
