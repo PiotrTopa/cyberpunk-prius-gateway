@@ -1,5 +1,5 @@
 #!/bin/bash
-# Boot-time tuning for the Prius MFD board (Pi Zero v1.3, Raspberry Pi OS Lite 32-bit).
+# Boot-time tuning and USB gadget setup for the Prius MFD board (Pi Zero v1.3, Raspberry Pi OS Lite 32-bit).
 # Idempotent. Run on the Pi (sudo) or inside the image with: chroot <rootfs> /path/boot-tune.sh
 # Measured 2026-10-15 (journal monotonic, i.e. from kernel start):
 #   before: first frontend frames at ~130 s (mfd.service started at 116 s)
@@ -38,5 +38,15 @@ printf 'nameserver 192.168.100.1\n' > /etc/resolv.conf
 # 7. Frontend: start right after basic.target (it reconnects to the backend by itself).
 sed -i 's/^After=network.target$/After=basic.target/' /etc/systemd/system/mfd.service
 rm -f /etc/systemd/system/mfd.service.d/early-start.conf
+# 8. USB gadget: configfs ECM bound late (xHCI hosts wedge on a pulled-up device that cannot
+#    answer, or on host traffic before usb0 is up). dwc2 is blacklisted (also in the initramfs)
+#    and loaded by the gadget script right before binding; cmdline.txt has no modules-load.
+install -m 755 "$D/usb-gadget-ecm.sh" /usr/local/sbin/usb-gadget-ecm.sh
+install -m 644 "$D/g-ether.service" /etc/systemd/system/g-ether.service
+install -m 644 "$D/modprobe-dwc2-late.conf" /etc/modprobe.d/dwc2-late.conf
+systemctl enable g-ether.service
+sed -i 's/ modules-load=dwc2,g_ether//; s/ modules-load=dwc2//' /boot/firmware/cmdline.txt
+update-initramfs -u -k "$(ls /lib/modules | grep -- '-rpi-v6$' | head -1)"
+
 systemctl daemon-reload 2>/dev/null || true
 echo "boot-tune applied"

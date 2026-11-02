@@ -1,0 +1,13 @@
+[Unit]
+Description=USB Ethernet gadget (configfs ECM), dwc2 loaded and bound late
+# xHCI hosts can wedge the bulk-OUT path if they transmit before usb0 is up.
+Wants=systemd-networkd.service
+After=systemd-networkd.service systemd-udev-trigger.service sys-kernel-config.mount
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/sbin/usb-gadget-ecm.sh
+
+[Install]
+WantedBy=multi-user.target
