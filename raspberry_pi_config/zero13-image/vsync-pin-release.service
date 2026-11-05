@@ -1,0 +1,13 @@
+[Unit]
+Description=Release GPIO2: VSYNC pin is stuck high, composite sync comes from GPIO1
+DefaultDependencies=no
+After=local-fs.target
+Before=mfd.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/pinctrl set 2 ip
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

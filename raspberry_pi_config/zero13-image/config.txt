@@ -26,7 +26,9 @@ display_default_lcd=1
 # saturated green/blue/pink (the "green cast", fixed 2026-09-08). Never 0x06.
 dpi_group=2
 dpi_mode=87
-dpi_output_format=0x05
+dpi_output_format=0x105
+# 2026-11-05 combined sync on GPIO1/DE (pin 28): GPIO2 VSYNC is stuck high, GPIO2 is released by vsync-pin-release.service
+gpio=1=a2
 
 # --- CUSTOM TIMINGS (15 kHz for Prius MFD, 480x240@60.07 Hz, 9.6 MHz pixel clock) ---
 dpi_timings=480 1 24 46 60 240 1 4 3 15 0 0 0 60 0 9600000 1

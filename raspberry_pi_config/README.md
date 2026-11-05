@@ -18,9 +18,10 @@ The exact files written into the image (and running on the card):
 
 | File | Installed as | Notes |
 |---|---|---|
-| `config.txt` | `/boot/firmware/config.txt` | **`dpi_output_format=0x05`** (RGB666 config 1 — the VGA666 is wired for config 1; `0x06` scrambles the bit lanes), `dtoverlay=vga666` (not `-6bpc`), `dpi_timings=480 1 24 46 60 240 1 4 3 15 0 0 0 60 0 9600000 1`, `disable_fw_kms_setup=1`, `max_framebuffers=2`, `enable_dpi_lcd=1`, `display_default_lcd=1`, `dpi_group=2`, `dpi_mode=87`, `dtoverlay=dwc2,dr_mode=peripheral`, `arm_boost=1`, `enable_uart=1`. No `vc4-kms-v3d` (the app writes to the firmware framebuffer `/dev/fb0`). |
+| `config.txt` | `/boot/firmware/config.txt` | **`dpi_output_format=0x105`** + `gpio=1=a2` (combined sync on GPIO1, pin 28, since 2026-11-05; RGB666 config 1 — the VGA666 is wired for config 1; `0x06` scrambles the bit lanes), `dtoverlay=vga666` (not `-6bpc`), `dpi_timings=480 1 24 46 60 240 1 4 3 15 0 0 0 60 0 9600000 1`, `disable_fw_kms_setup=1`, `max_framebuffers=2`, `enable_dpi_lcd=1`, `display_default_lcd=1`, `dpi_group=2`, `dpi_mode=87`, `dtoverlay=dwc2,dr_mode=peripheral`, `arm_boost=1`, `enable_uart=1`. No `vc4-kms-v3d` (the app writes to the firmware framebuffer `/dev/fb0`). |
 | `cmdline.txt` | `/boot/firmware/cmdline.txt` | `net.ifnames=0 fbcon=map:99 logo.nologo` (+ `resize` for the first boot). **No `modules-load`** (see USB gadget). PARTUUID is the image's. |
 | `usb-gadget-ecm.sh` | `/usr/local/sbin/` | creates and binds the configfs ECM gadget (see below) |
+| `vsync-pin-release.service` | `/etc/systemd/system/` | sets the stuck GPIO2 to input at boot (enabled) |
 | `g-ether.service` | `/etc/systemd/system/` | runs the gadget script after networkd and udev trigger |
 | `modprobe-dwc2-late.conf` | `/etc/modprobe.d/dwc2-late.conf` | `blacklist dwc2` (must also be in the initramfs) |
 | `10-usb0.network` | `/etc/systemd/network/` | static 192.168.100.2/24, gw/DNS .1, no IPv6/link-local, `ConfigureWithoutCarrier=yes` |
