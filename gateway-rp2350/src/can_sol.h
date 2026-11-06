@@ -56,7 +56,8 @@ typedef struct {
     uint32_t sniff_out;         /* frames emitted to the host */
     uint32_t sniff_ovr;         /* controller receive-buffer overflows */
     uint32_t mode_fixes;        /* controller found in the wrong mode and put back */
-    uint32_t reinits;           /* controller re-initialised after it stopped responding */
+    uint32_t reinits;
+    uint32_t tx_mloa, tx_berr, tx_abort_to;   /* TX outcome causes */           /* controller re-initialised after it stopped responding */
 } can_sol_stats_t;
 
 #define CAN_SNIFF_MAX_IDS 32

@@ -335,7 +335,7 @@ bool mcp_init(void)
      * frames are all polls the engine retries on its own schedule; without
      * OSM an unanswered request becomes a continuous retransmission storm
      * (3.6 k frames/s measured on the bench 2026-11-05). */
-    mcp_bit_modify(R_CANCTRL, 0x08, 0x08);
+    mcp_bit_modify(R_CANCTRL, 0x08, 0x00);   /* OSM off: arbitration losses are retried by the chip; the engine aborts after 30 ms */
     mcp_write_reg(R_CANINTF, 0x00);
     mcp_write_reg(R_CANINTE, 0x03);          /* RX0IE | RX1IE drive the INT pin */
 
@@ -427,6 +427,14 @@ bool mcp_tx(int txb, const can_frame_t *f)
     cs_low();
     spi_write_blocking(SPI_PORT, tx, 6 + tx[5]);
     cs_high();
+    /* Read the buffer back: a frame goes out only if ID, DLC and data are
+     * exactly what we meant to send (a misframed SPI write must never put a
+     * foreign ID or payload on the car bus). */
+    {
+        uint8_t rq[2 + 13] = { I_READ, (uint8_t)(R_TXB0CTRL + 0x10 * txb + 1) }, rb[2 + 13];
+        cs_low(); spi_write_read_blocking(SPI_PORT, rq, rb, (size_t)(2 + 5 + tx[5])); cs_high();
+        if (memcmp(rb + 2, tx + 1, (size_t)(5 + tx[5])) != 0) { s_tx_blocked++; return false; }
+    }
     uint8_t rts = (uint8_t)(I_RTS | (1 << txb));
     cs_low();
     spi_write_blocking(SPI_PORT, &rts, 1);

@@ -437,20 +437,15 @@ void can_sol_task(void)
 
     case ENG_SENDING:
         if (!mcp_tx_busy(TXB_ENGINE)) {
+            s_eng.state = ENG_WAIT_RESP;
+        } else if ((int32_t)(now - (s_eng.start_ms + 30)) >= 0) {
+            /* not on the bus within 30 ms: count why, abort, let the engine retry later */
             uint8_t res = mcp_tx_result(TXB_ENGINE);
-            if (res == 0) {
-                s_eng.state = ENG_WAIT_RESP;
-            } else {
-                /* one-shot mode: lost arbitration / no ACK / error -> not sent */
-                g_can.tx_errors++;
-                ilog("TX lost (ctrl 0x%02X) attempt=%u", res, s_eng.attempt + 1);
-                if (s_eng.attempt < 2) { s_eng.attempt++; if (job_send_request()) break; }
-                job_finish(false, "TX_LOST");
-            }
-        } else if ((int32_t)(now - s_eng.deadline_ms) >= 0) {
+            if (res & 0x20) g_can.tx_mloa++;
+            if (res & 0x10) g_can.tx_berr++;
+            g_can.tx_abort_to++;
             mcp_tx_abort(TXB_ENGINE);
             g_can.tx_errors++;
-            ilog("TX timeout");
             job_finish(false, "TX_TIMEOUT");
         }
         break;
@@ -618,11 +613,11 @@ void can_sol_emit_diag(void)
     int nsubs = 0;
     for (int i = 0; i < CAN_MAX_SUBS; i++) if (g_can_subs[i].used) nsubs++;
     out_json("{\"id\":0,\"d\":{\"can_diag\":{\"mode\":\"%s\",\"tec\":%u,\"rec\":%u,\"eflg\":\"%02X\","
-             "\"req\":%lu,\"resp\":%lu,\"to\":%lu,\"txerr\":%lu,\"isotp_err\":%lu,\"other\":%lu,\"subs\":%d,\"eng\":%d,\"mode_fix\":%lu,\"reinit\":%lu,\"alive\":%s,\"resync\":%lu,\"tx_blocked\":%lu}}}",
+             "\"req\":%lu,\"resp\":%lu,\"to\":%lu,\"txerr\":%lu,\"isotp_err\":%lu,\"other\":%lu,\"subs\":%d,\"eng\":%d,\"mode_fix\":%lu,\"reinit\":%lu,\"alive\":%s,\"resync\":%lu,\"tx_blocked\":%lu,\"mloa\":%lu,\"berr\":%lu,\"tx_to\":%lu}}}",
              mcp_mode_name(mcp_get_mode()), tec, rec, eflg,
              (unsigned long)g_can.requests, (unsigned long)g_can.responses, (unsigned long)g_can.timeouts,
              (unsigned long)g_can.tx_errors, (unsigned long)g_can.isotp_errors, (unsigned long)g_can.rx_other,
-             nsubs, (int)s_eng.state, (unsigned long)g_can.mode_fixes, (unsigned long)g_can.reinits, mcp_alive() ? "true" : "false", (unsigned long)mcp_spi_resyncs(), (unsigned long)mcp_tx_blocked());
+             nsubs, (int)s_eng.state, (unsigned long)g_can.mode_fixes, (unsigned long)g_can.reinits, mcp_alive() ? "true" : "false", (unsigned long)mcp_spi_resyncs(), (unsigned long)mcp_tx_blocked(), (unsigned long)g_can.tx_mloa, (unsigned long)g_can.tx_berr, (unsigned long)g_can.tx_abort_to);
     if (g_can.sniff)
         out_json("{\"id\":0,\"d\":{\"can_sniff\":{\"rx\":%lu,\"out\":%lu,\"ovr\":%lu}}}",
                  (unsigned long)g_can.sniff_rx, (unsigned long)g_can.sniff_out, (unsigned long)g_can.sniff_ovr);
