@@ -25,6 +25,8 @@ void     mcp_bit_modify(uint8_t reg, uint8_t mask, uint8_t val);
 uint8_t  mcp_read_status(void);          /* READ STATUS  (0xA0) */
 uint8_t  mcp_rx_status(void);            /* RX STATUS    (0xB0) */
 
+bool     mcp_mode_valid(uint8_t mode);
+bool     mcp_alive(void);              /* mode valid and CNF1 intact */
 bool     mcp_set_mode(uint8_t mode);     /* waits up to ~5 ms for the switch */
 uint8_t  mcp_get_mode(void);
 const char *mcp_mode_name(uint8_t mode);
@@ -41,6 +43,7 @@ void     mcp_flush_rx(void);
 
 bool     mcp_tx(int txb, const can_frame_t *f);   /* false if that buffer is busy */
 bool     mcp_tx_busy(int txb);
+uint8_t  mcp_tx_result(int txb);        /* 0 = sent; else TXERR/MLOA/ABTF bits */
 void     mcp_tx_abort(int txb);
 
 /*

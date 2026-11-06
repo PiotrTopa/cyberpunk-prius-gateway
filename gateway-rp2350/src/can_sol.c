@@ -359,9 +359,68 @@ static void sniff_task(void)
     }
 }
 
+/* Controller supervision, once a second.
+ *  - chip not responding / configuration lost  -> hardware re-init (SPI RESET,
+ *    bit timing, filters, LISTEN). TX stays disabled until the host asks for
+ *    NORMAL again (its solicited watchdog does that by itself).
+ *  - valid but unexpected mode -> put it back; three failures -> re-init.
+ * Nothing here ever drives the bus; the worst case is a silent gateway. */
+static uint32_t s_guard_ms, s_reinit_ms;
+static int s_guard_dead, s_guard_fail;
+
+static void can_reinit(const char *why)
+{
+    uint32_t now = now_ms();
+    if ((uint32_t)(now - s_reinit_ms) < 5000) return;     /* at most one per 5 s */
+    s_reinit_ms = now;
+    g_can.tx_enabled = false;
+    s_eng.state = ENG_IDLE;
+    s_reqq_head = s_reqq_tail = 0;
+    g_can.ready = mcp_init();                               /* LISTEN, OBD filters */
+    led_set_can_ok(g_can.ready);
+    if (g_can.ready) refresh_filters(true, NULL);
+    g_can.reinits++;
+    s_guard_dead = s_guard_fail = 0;
+    out_json("{\"id\":0,\"d\":{\"msg\":\"CAN_REINIT\",\"why\":\"%s\",\"ok\":%s,\"n\":%lu}}",
+             why, g_can.ready ? "true" : "false", (unsigned long)g_can.reinits);
+}
+
+static void mode_guard(uint32_t now)
+{
+    if ((uint32_t)(now - s_guard_ms) < 1000) return;
+    s_guard_ms = now;
+    if (!mcp_alive()) {
+        if (s_guard_dead == 0)
+            out_json("{\"id\":0,\"d\":{\"msg\":\"CAN_NOT_ALIVE\",\"canstat\":\"%02X\",\"cnf\":\"%02X%02X%02X\",\"canctrl\":\"%02X\"}}",
+                     mcp_read_reg(0x0E), mcp_read_reg(0x2A), mcp_read_reg(0x29), mcp_read_reg(0x28), mcp_read_reg(0x0F));
+        if (++s_guard_dead >= 2) can_reinit("DEAD");
+        return;
+    }
+    s_guard_dead = 0;
+    if (g_can.tx_enabled && (mcp_read_reg(0x2D /*EFLG*/) & 0x20 /*TXBO*/)) {
+        can_reinit("BUSOFF");       /* we were hurting the bus: silence until the host re-enables TX */
+        return;
+    }
+    uint8_t want = (g_can.tx_enabled && !g_can.sniff) ? MCP_MODE_NORMAL : MCP_MODE_LISTEN;
+    uint8_t have = mcp_get_mode();
+    if (have == want) { s_guard_fail = 0; return; }
+    bool ok = mcp_set_mode(want);
+    g_can.mode_fixes++;
+    out_json("{\"id\":0,\"d\":{\"msg\":\"CAN_MODE_FIX\",\"from\":\"%s\",\"to\":\"%s\",\"ok\":%s,\"n\":%lu}}",
+             mcp_mode_name(have), mcp_mode_name(want), ok ? "true" : "false", (unsigned long)g_can.mode_fixes);
+    if (ok) s_guard_fail = 0;
+    else if (++s_guard_fail >= 3) can_reinit("MODE_STUCK");
+}
+
 void can_sol_task(void)
 {
-    if (!g_can.ready) return;
+    if (!g_can.ready) {
+        /* controller absent or dead: keep trying to bring it back (LISTEN only) */
+        if (mcp_present()) mode_guard(now_ms());
+        else can_reinit("ABSENT");
+        return;
+    }
+    mode_guard(now_ms());
     if (g_can.sniff) { sniff_task(); return; }
     uint32_t now = now_ms();
 
@@ -376,7 +435,16 @@ void can_sol_task(void)
 
     case ENG_SENDING:
         if (!mcp_tx_busy(TXB_ENGINE)) {
-            s_eng.state = ENG_WAIT_RESP;
+            uint8_t res = mcp_tx_result(TXB_ENGINE);
+            if (res == 0) {
+                s_eng.state = ENG_WAIT_RESP;
+            } else {
+                /* one-shot mode: lost arbitration / no ACK / error -> not sent */
+                g_can.tx_errors++;
+                ilog("TX lost (ctrl 0x%02X) attempt=%u", res, s_eng.attempt + 1);
+                if (s_eng.attempt < 2) { s_eng.attempt++; if (job_send_request()) break; }
+                job_finish(false, "TX_LOST");
+            }
         } else if ((int32_t)(now - s_eng.deadline_ms) >= 0) {
             mcp_tx_abort(TXB_ENGINE);
             g_can.tx_errors++;
@@ -495,6 +563,9 @@ void can_sol_action_mode(bool normal)
 {
     if (!g_can.ready) { out_sys_err("CAN_OFFLINE"); return; }
     if (normal) {
+        if (g_can.tx_enabled && mcp_get_mode() == MCP_MODE_NORMAL) {   /* already there: no mode flip */
+            out_json("{\"id\":0,\"d\":{\"msg\":\"CAN_MODE\",\"m\":\"NORMAL\"}}"); return;
+        }
         if (mcp_enable_tx()) { g_can.tx_enabled = true; out_json("{\"id\":0,\"d\":{\"msg\":\"CAN_MODE\",\"m\":\"NORMAL\"}}"); }
         else out_sys_err("MODE_SWITCH_FAIL");
     } else {
@@ -539,17 +610,17 @@ void can_sol_action_sniff(bool on, bool chg, const uint32_t *ids, int n)
 
 void can_sol_emit_diag(void)
 {
-    if (!g_can.ready) return;
+    if (!mcp_present()) { out_json("{\"id\":0,\"d\":{\"can_diag\":{\"mode\":\"ABSENT\"}}}"); return; }
     uint8_t tec, rec, eflg;
     mcp_get_errors(&tec, &rec, &eflg);
     int nsubs = 0;
     for (int i = 0; i < CAN_MAX_SUBS; i++) if (g_can_subs[i].used) nsubs++;
     out_json("{\"id\":0,\"d\":{\"can_diag\":{\"mode\":\"%s\",\"tec\":%u,\"rec\":%u,\"eflg\":\"%02X\","
-             "\"req\":%lu,\"resp\":%lu,\"to\":%lu,\"txerr\":%lu,\"isotp_err\":%lu,\"other\":%lu,\"subs\":%d,\"eng\":%d}}}",
+             "\"req\":%lu,\"resp\":%lu,\"to\":%lu,\"txerr\":%lu,\"isotp_err\":%lu,\"other\":%lu,\"subs\":%d,\"eng\":%d,\"mode_fix\":%lu,\"reinit\":%lu,\"alive\":%s}}}",
              mcp_mode_name(mcp_get_mode()), tec, rec, eflg,
              (unsigned long)g_can.requests, (unsigned long)g_can.responses, (unsigned long)g_can.timeouts,
              (unsigned long)g_can.tx_errors, (unsigned long)g_can.isotp_errors, (unsigned long)g_can.rx_other,
-             nsubs, (int)s_eng.state);
+             nsubs, (int)s_eng.state, (unsigned long)g_can.mode_fixes, (unsigned long)g_can.reinits, mcp_alive() ? "true" : "false");
     if (g_can.sniff)
         out_json("{\"id\":0,\"d\":{\"can_sniff\":{\"rx\":%lu,\"out\":%lu,\"ovr\":%lu}}}",
                  (unsigned long)g_can.sniff_rx, (unsigned long)g_can.sniff_out, (unsigned long)g_can.sniff_ovr);

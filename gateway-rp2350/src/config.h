@@ -1,14 +1,14 @@
 /* Build-time configuration: pins, bus parameters, protocol constants. */
 #pragma once
 
-#define FW_VERSION      "3.2.0"
+#define FW_VERSION      "3.2.9"
 #define FW_ROLE         "gateway"
 
 #ifndef PICO_BOARD
 #define PICO_BOARD      "unknown"
 #endif
 
-/* ---- Pin map (identical to the RP2040-Zero gateway v2.x) ---------------- */
+/* ---- Pin map (v2.x gateway pinout, except the RS485 DE pin) -------------- */
 #define PIN_AVC_RX      0    /* LM339 comparator output, open collector + 4k7 to 3V3 */
 #define PIN_AVC_TX      1    /* -> 2k2 -> BC547 base; HIGH = drive dominant */
 
@@ -18,7 +18,8 @@
 #define PIN_CAN_CS      29
 #define PIN_CAN_INT     15   /* MCP2515 INT, active low */
 
-#define PIN_RS485_DE    7    /* MAX485 DE/RE, HIGH = transmit */
+#define PIN_RS485_DE    10   /* MAX485 DE/RE, HIGH = transmit (as built: same as the satellites) */
+#define PIN_RS485_DE_V2 7    /* v2.x wiring; driven in parallel so either build works */
 #define PIN_RS485_TX    8    /* UART1 */
 #define PIN_RS485_RX    9
 

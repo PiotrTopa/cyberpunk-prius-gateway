@@ -30,10 +30,19 @@ static char   s_line[RS485_MAX_LINE + 1];
 static size_t s_line_len;
 static bool   s_discarding;
 
+/* bench hold */
+static bool     s_hold;
+static uint32_t s_hold_end_ms;
+
 static void __isr uart_rx_irq(void)
 {
     while (uart_is_readable(UART_ID)) {
-        uint8_t c = (uint8_t)uart_get_hw(UART_ID)->dr;
+        uint32_t dr = uart_get_hw(UART_ID)->dr;
+        uint8_t c = (uint8_t)dr;
+        g_rs485.rx_bytes++;
+        if (dr & UART_UARTDR_FE_BITS) g_rs485.rx_framing++;
+        if (dr & UART_UARTDR_BE_BITS) g_rs485.rx_break++;
+        if (dr & UART_UARTDR_OE_BITS) g_rs485.rx_fifo_ovr++;
         uint16_t next = (uint16_t)((s_rx_head + 1) % RS485_RX_RING);
         if (next == s_rx_tail) { g_rs485.rx_overrun++; continue; }
         s_rx_ring[s_rx_head] = c;
@@ -42,11 +51,19 @@ static void __isr uart_rx_irq(void)
     s_last_rx_us = time_us_32();
 }
 
+static inline void de_set(bool on)
+{
+    gpio_put_masked((1u << PIN_RS485_DE) | (1u << PIN_RS485_DE_V2),
+                    on ? ((1u << PIN_RS485_DE) | (1u << PIN_RS485_DE_V2)) : 0);
+}
+
 void rs485_init(void)
 {
     gpio_init(PIN_RS485_DE);
+    gpio_init(PIN_RS485_DE_V2);
+    de_set(false);
     gpio_set_dir(PIN_RS485_DE, GPIO_OUT);
-    gpio_put(PIN_RS485_DE, 0);
+    gpio_set_dir(PIN_RS485_DE_V2, GPIO_OUT);
 
     uart_init(UART_ID, RS485_BAUD);
     gpio_set_function(PIN_RS485_TX, GPIO_FUNC_UART);
@@ -87,6 +104,47 @@ bool rs485_send(const char *line, size_t len)
     if (!nl) { uint8_t c = '\n'; tx_ring_put(&c, 1); }
     g_rs485.tx_lines++;
     return true;
+}
+
+void rs485_hold(bool tx_level, uint32_t ms)
+{
+    gpio_init(PIN_RS485_TX);
+    gpio_put(PIN_RS485_TX, tx_level);
+    gpio_set_dir(PIN_RS485_TX, GPIO_OUT);
+    de_set(true);
+    s_hold = true;
+    s_hold_end_ms = now_ms() + ms;
+}
+
+void rs485_probe(bool drive, unsigned pin, bool level, uint32_t ms)
+{
+    if (pin != PIN_RS485_TX && pin != PIN_RS485_RX) pin = PIN_RS485_TX;
+    /* both data pins to plain inputs first, then the one being driven */
+    gpio_init(PIN_RS485_TX); gpio_pull_up(PIN_RS485_TX);
+    gpio_init(PIN_RS485_RX); gpio_pull_up(PIN_RS485_RX);
+    if (drive) {
+        gpio_put(pin, level);
+        gpio_set_dir(pin, GPIO_OUT);
+    }
+    de_set(drive);
+    s_hold = true;
+    s_hold_end_ms = now_ms() + ms;
+}
+
+bool rs485_holding(void) { return s_hold; }
+
+void rs485_diag(uint8_t lv[6])
+{
+    for (int de = 0; de < 2; de++) {
+        de_set(de);
+        for (int pull = 0; pull < 3; pull++) {
+            gpio_set_pulls(PIN_RS485_RX, pull == 1, pull == 2);
+            busy_wait_us(150);
+            lv[de * 3 + pull] = gpio_get(PIN_RS485_RX) ? 1 : 0;
+        }
+    }
+    de_set(s_de_on);
+    gpio_pull_up(PIN_RS485_RX);
 }
 
 int rs485_test_pattern(void)
@@ -151,7 +209,7 @@ static void pump_tx(void)
         if (s_tx_head == s_tx_tail) return;
         /* light arbitration: don't key up while a satellite is mid-frame */
         if ((uint32_t)(now - s_last_rx_us) < RS485_IDLE_BEFORE_TX_US) return;
-        gpio_put(PIN_RS485_DE, 1);
+        de_set(true);
         s_de_on = true;
         s_de_on_us = now;
         return;
@@ -163,8 +221,12 @@ static void pump_tx(void)
         s_tx_tail = (uint16_t)((s_tx_tail + 1) % RS485_TX_RING);
         g_rs485.tx_bytes++;
     }
-    if (s_tx_head == s_tx_tail && !(uart_get_hw(UART_ID)->fr & UART_UARTFR_BUSY_BITS)) {
-        gpio_put(PIN_RS485_DE, 0);     /* last stop bit is on the wire */
+    /* Release only when the FIFO is empty AND the shifter is idle: TXFE clears
+     * on the write itself, so a BUSY flag that lags the write cannot end the
+     * frame early. */
+    uint32_t fr = uart_get_hw(UART_ID)->fr;
+    if (s_tx_head == s_tx_tail && (fr & UART_UARTFR_TXFE_BITS) && !(fr & UART_UARTFR_BUSY_BITS)) {
+        de_set(false);                 /* last stop bit is on the wire */
         s_de_on = false;
     }
 }
@@ -173,5 +235,16 @@ void rs485_task(void)
 {
     if (!g_rs485.ready) return;
     pump_rx();
+    if (s_hold) {
+        if ((int32_t)(now_ms() - s_hold_end_ms) < 0) return;
+        de_set(false);
+        gpio_set_dir(PIN_RS485_RX, GPIO_IN);
+        gpio_disable_pulls(PIN_RS485_TX);
+        gpio_set_function(PIN_RS485_TX, GPIO_FUNC_UART);
+        gpio_set_function(PIN_RS485_RX, GPIO_FUNC_UART);
+        gpio_pull_up(PIN_RS485_RX);
+        s_hold = false;
+        s_de_on = false;
+    }
     pump_tx();
 }

@@ -6,6 +6,7 @@
 #include "avclan.h"
 #include "can_sol.h"
 #include "rs485.h"
+#include "hardware/gpio.h"
 #include "usb_cdc.h"
 #include "led.h"
 
@@ -134,6 +135,42 @@ static void handle_sys(const json_t *j, int d)
         sys_emit_ident();
     } else if (json_str_eq(j, a, "stats")) {
         sys_emit_stats();
+    } else if (json_str_eq(j, a, "rs485_pins")) {
+        /* Pad levels as the MCU reads them back, plus direction and function. */
+        out_json("{\"id\":0,\"d\":{\"rs485_pins\":{\"hold\":%d,\"gp10_de\":%d,\"gp7_de\":%d,\"gp8_tx\":%d,\"gp9_rx\":%d,"
+                 "\"out10\":%d,\"out7\":%d,\"out8\":%d,\"fn8\":%d,\"fn9\":%d,\"fn10\":%d}}}",
+                 rs485_holding() ? 1 : 0, gpio_get(PIN_RS485_DE), gpio_get(PIN_RS485_DE_V2),
+                 gpio_get(PIN_RS485_TX), gpio_get(PIN_RS485_RX),
+                 gpio_is_dir_out(PIN_RS485_DE), gpio_is_dir_out(PIN_RS485_DE_V2), gpio_is_dir_out(PIN_RS485_TX),
+                 (int)gpio_get_function(PIN_RS485_TX), (int)gpio_get_function(PIN_RS485_RX), (int)gpio_get_function(PIN_RS485_DE));
+    } else if (json_str_eq(j, a, "rs485_probe")) {
+        /* {"a":"rs485_probe","drive":true|false,"pin":8|9,"lvl":0|1,"s":1..120} */
+        bool drive = false; long pin = PIN_RS485_TX, lvl = 0, s = 5;
+        json_get_bool(j, json_obj_get(j, d, "drive"), &drive);
+        json_get_long(j, json_obj_get(j, d, "pin"), &pin);
+        json_get_long(j, json_obj_get(j, d, "lvl"), &lvl);
+        json_get_long(j, json_obj_get(j, d, "s"), &s);
+        if (s < 1) s = 1;
+        if (s > 120) s = 120;
+        rs485_probe(drive, (unsigned)pin, lvl != 0, (uint32_t)s * 1000u);
+        out_json("{\"id\":0,\"d\":{\"rs485_probe\":{\"drive\":%d,\"pin\":%ld,\"lvl\":%d,\"s\":%ld}}}", drive ? 1 : 0, pin, lvl ? 1 : 0, s);
+    } else if (json_str_eq(j, a, "gpio_all")) {
+        out_json("{\"id\":0,\"d\":{\"gpio_all\":\"%08lX\"}}", (unsigned long)gpio_get_all());
+    } else if (json_str_eq(j, a, "rs485_hold")) {
+        /* {"a":"rs485_hold","tx":0|1,"s":1..120} */
+        long tx = 1, s = 10;
+        json_get_long(j, json_obj_get(j, d, "tx"), &tx);
+        json_get_long(j, json_obj_get(j, d, "s"), &s);
+        if (s < 1) s = 1;
+        if (s > 120) s = 120;
+        rs485_hold(tx != 0, (uint32_t)s * 1000u);
+        out_json("{\"id\":0,\"d\":{\"rs485_hold\":{\"de\":1,\"tx\":%d,\"s\":%ld}}}", tx ? 1 : 0, s);
+    } else if (json_str_eq(j, a, "rs485_diag")) {
+        if (rs485_holding()) { out_sys_err("RS485_HOLD_ACTIVE"); return; }
+        uint8_t lv[6];
+        rs485_diag(lv);
+        out_json("{\"id\":0,\"d\":{\"rs485_diag\":{\"rx_de0\":[%d,%d,%d],\"rx_de1\":[%d,%d,%d],\"pulls\":\"none,up,down\"}}}",
+                 lv[0], lv[1], lv[2], lv[3], lv[4], lv[5]);
     } else if (json_str_eq(j, a, "avc_raw")) {
         bool on = true;
         json_get_bool(j, json_obj_get(j, d, "on"), &on);
@@ -391,7 +428,8 @@ void sys_emit_ready(void)
 
 void sys_emit_ident(void)
 {
-    out_json("{\"id\":0,\"d\":{\"msg\":\"IDENT\",\"role\":\"" FW_ROLE "\",\"ver\":\"" FW_VERSION "\"}}");
+    out_json("{\"id\":0,\"d\":{\"msg\":\"IDENT\",\"role\":\"" FW_ROLE "\",\"ver\":\"" FW_VERSION "\","
+             "\"board\":\"" PICO_BOARD "\",\"wdt\":%d}}", watchdog_enable_caused_reboot() ? 1 : 0);
 }
 
 void sys_emit_heartbeat(void)
@@ -412,7 +450,7 @@ void sys_emit_stats(void)
              "\"avc\":{\"frames\":%lu,\"echo\":%lu,\"parity\":%lu,\"length\":%lu,\"aborted\":%lu,\"timeouts\":%lu,"
              "\"stray\":%lu,\"glitch\":%lu,\"ring_ovf\":%lu,\"words\":%lu,\"tx\":%lu,\"tx_deferred\":%lu,\"tx_qfull\":%lu,\"tx_auto\":%lu,\"acks\":%lu,\"ack\":\"%03X\",\"pol\":\"%s\"},"
              "\"can\":{\"ready\":%d,\"tx_en\":%d,\"req\":%lu,\"resp\":%lu,\"to\":%lu,\"txerr\":%lu,\"isotp_err\":%lu,\"other\":%lu,\"raw_tx\":%lu},"
-             "\"rs485\":{\"tx_lines\":%lu,\"tx_bytes\":%lu,\"tx_full\":%lu,\"rx_lines\":%lu,\"rx_bad\":%lu,\"rx_ovr\":%lu},"
+             "\"rs485\":{\"tx_lines\":%lu,\"tx_bytes\":%lu,\"tx_full\":%lu,\"rx_lines\":%lu,\"rx_bad\":%lu,\"rx_ovr\":%lu,\"rx_bytes\":%lu,\"rx_fe\":%lu,\"rx_brk\":%lu,\"rx_fifo_ovr\":%lu},"
              "\"usb\":{\"lines\":%lu,\"dropped\":%lu,\"rx_lines\":%lu,\"rx_overlong\":%lu,\"connected\":%d}}}}",
              (unsigned long)g_avc.frames_out, (unsigned long)g_avc.frames_echo,
              (unsigned long)g_avc_rx.parity_errors, (unsigned long)g_avc_rx.length_errors,
@@ -426,6 +464,7 @@ void sys_emit_stats(void)
              (unsigned long)g_can.rx_other, (unsigned long)g_can.raw_tx,
              (unsigned long)g_rs485.tx_lines, (unsigned long)g_rs485.tx_bytes, (unsigned long)g_rs485.tx_ring_full,
              (unsigned long)g_rs485.rx_lines, (unsigned long)g_rs485.rx_bad, (unsigned long)g_rs485.rx_overrun,
+             (unsigned long)g_rs485.rx_bytes, (unsigned long)g_rs485.rx_framing, (unsigned long)g_rs485.rx_break, (unsigned long)g_rs485.rx_fifo_ovr,
              (unsigned long)g_out.lines, (unsigned long)g_out.dropped, (unsigned long)g_usb.rx_lines,
              (unsigned long)g_usb.rx_overlong, usb_cdc_host_connected() ? 1 : 0);
 }

@@ -115,15 +115,55 @@ const char *mcp_mode_name(uint8_t mode)
     }
 }
 
+static uint8_t s_mode_shadow = MCP_MODE_CONFIG;   /* last mode we set successfully */
+
+bool mcp_mode_valid(uint8_t mode)
+{
+    switch (mode & 0xE0) {
+    case MCP_MODE_NORMAL: case MCP_MODE_SLEEP: case MCP_MODE_LOOPBACK:
+    case MCP_MODE_LISTEN: case MCP_MODE_CONFIG: return true;
+    default: return false;
+    }
+}
+
+/* Cheap liveness/integrity check: a responding, correctly configured chip
+ * reports one of the five modes and still holds our CNF1 (0xC0). A dead SPI
+ * link reads 0xFF everywhere (mode 0xE0 = reserved), a reset or corrupted
+ * chip loses CNF1. Either way the caller must not drive the bus. */
+bool mcp_alive(void)
+{
+    uint8_t stat = mcp_read_reg(R_CANSTAT);
+    if (!mcp_mode_valid(stat)) return false;
+    if (mcp_read_reg(R_CNF1) != 0xC0) return false;
+    if (mcp_read_reg(R_CNF2) != 0xD8) return false;
+    if ((mcp_read_reg(R_CNF3) & 0x07) != 0x01) return false;
+    return true;
+}
+
+/* The MCP2515 honours a REQOP change only once every pending transmission has
+ * completed (datasheet 10.0), so: abort pending TX before asking for CONFIG
+ * and wait up to 20 ms. Only the five valid modes are ever written, and a
+ * failed request is undone by writing back the last mode we KNOW we set
+ * (never a value read from the chip: a corrupted read must not become a
+ * reserved REQOP). 2026-11-06: 3.2.7 wrote a read-back value here and the
+ * controller ended up in an undefined state on the road. */
 bool mcp_set_mode(uint8_t mode)
 {
+    mode &= 0xE0;
+    if (!mcp_mode_valid(mode)) return false;
+    if (mcp_get_mode() == mode) { s_mode_shadow = mode; return true; }
+    if (mode == MCP_MODE_CONFIG) {
+        for (int b = 0; b < 3; b++) mcp_bit_modify((uint8_t)(R_TXB0CTRL + 0x10 * b), TXREQ, 0);
+    }
     mcp_bit_modify(R_CANCTRL, 0xE0, mode);
     uint32_t t0 = time_us_32();
-    while ((uint32_t)(time_us_32() - t0) < 5000) {
-        if (mcp_get_mode() == mode) return true;
+    while ((uint32_t)(time_us_32() - t0) < 20000) {
+        if (mcp_get_mode() == mode) { s_mode_shadow = mode; return true; }
         sleep_us(50);
     }
-    return mcp_get_mode() == mode;
+    if (mcp_get_mode() == mode) { s_mode_shadow = mode; return true; }
+    mcp_bit_modify(R_CANCTRL, 0xE0, s_mode_shadow);   /* withdraw the request */
+    return false;
 }
 
 bool mcp_enable_tx(void)
@@ -195,7 +235,9 @@ void mcp_set_filters(const uint32_t *ids, int n, bool accept_all)
         mcp_write_reg(R_RXB1CTRL, 0x00);
     }
     mcp_write_reg(R_CANINTF, 0x00);
-    if (prev != MCP_MODE_CONFIG) mcp_set_mode(prev);
+    if (prev != MCP_MODE_CONFIG) {
+        for (int i = 0; i < 3 && !mcp_set_mode(prev); i++) sleep_us(200);
+    }
 }
 
 bool mcp_present(void) { return s_present; }
@@ -224,8 +266,15 @@ bool mcp_init(void)
         else sleep_ms(50);
     }
     if (!s_present) return false;
+    s_mode_shadow = MCP_MODE_CONFIG;
 
     set_bit_timing();
+    /* One-shot mode: a frame that is not acknowledged, loses arbitration or
+     * hits an error is dropped, never retransmitted by the controller. Our
+     * frames are all polls the engine retries on its own schedule; without
+     * OSM an unanswered request becomes a continuous retransmission storm
+     * (3.6 k frames/s measured on the bench 2026-11-05). */
+    mcp_bit_modify(R_CANCTRL, 0x08, 0x08);
     mcp_write_reg(R_CANINTF, 0x00);
     mcp_write_reg(R_CANINTE, 0x03);          /* RX0IE | RX1IE drive the INT pin */
 
@@ -269,8 +318,18 @@ bool mcp_read_rx(int buf, can_frame_t *f)
 
 void mcp_flush_rx(void)
 {
+    /* Bounded: a controller that answers 0xFF on SPI (lost power, loose
+     * wire) reports "frame pending" forever and would hang the main loop
+     * until the watchdog fires. Two buffers, so a few rounds are plenty. */
     can_frame_t f;
-    while (mcp_read_rx(0, &f) || mcp_read_rx(1, &f)) { }
+    for (int i = 0; i < 16; i++)
+        if (!mcp_read_rx(0, &f) && !mcp_read_rx(1, &f)) break;
+}
+
+/* After TXREQ cleared: 0 = sent, else TXBnCTRL error bits (TXERR 0x10, MLOA 0x20, ABTF 0x40). */
+uint8_t mcp_tx_result(int txb)
+{
+    return mcp_read_reg((uint8_t)(R_TXB0CTRL + 0x10 * txb)) & 0x70;
 }
 
 bool mcp_tx_busy(int txb)
