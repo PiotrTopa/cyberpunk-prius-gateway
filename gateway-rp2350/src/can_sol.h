@@ -62,6 +62,7 @@ typedef struct {
 #define CAN_SNIFF_MAX_IDS 32
 
 extern can_sol_stats_t g_can;
+extern bool g_can_guard_on;
 extern can_sub_t       g_can_subs[CAN_MAX_SUBS];
 
 void can_sol_init(void);

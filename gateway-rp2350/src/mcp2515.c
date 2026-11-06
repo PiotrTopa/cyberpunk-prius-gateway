@@ -2,6 +2,7 @@
 #include "config.h"
 #include "pico/stdlib.h"
 #include "hardware/spi.h"
+#include "hardware/watchdog.h"
 #include "hardware/gpio.h"
 #include <string.h>
 
@@ -41,17 +42,47 @@
 #define TXREQ 0x08
 
 static bool s_present;
+static uint32_t s_spi_hz = CAN_SPI_HZ;   /* runtime-adjustable (can_spi), survives re-init */
 
-static inline void cs_low(void)  { gpio_put(PIN_CAN_CS, 0); }
-static inline void cs_high(void) { gpio_put(PIN_CAN_CS, 1); }
+/* MCP2515 SPI timing: CS setup before the first clock (tCSS) and, above all,
+ * CS disable time between two commands (tCSH, 50 ns min). Back-to-back
+ * transactions from the 125 MHz core violated tCSH; the chip then lost its
+ * command framing and answered 0xFF (or shifted data) until a long pause
+ * resynchronised it - the "controller dead / in CONFIG" episodes of 2026-11-06. */
+static uint32_t s_last_cs_high_us;
+static uint32_t s_min_gap_us = 20;        /* idle time enforced between two commands */
+static inline void cs_low(void)
+{
+    while ((uint32_t)(time_us_32() - s_last_cs_high_us) < s_min_gap_us) tight_loop_contents();
+    gpio_put(PIN_CAN_CS, 0); busy_wait_us_32(1);
+}
+static inline void cs_high(void) { busy_wait_us_32(1); gpio_put(PIN_CAN_CS, 1); s_last_cs_high_us = time_us_32(); }
+void mcp_set_gap_us(uint32_t us) { s_min_gap_us = us; }
+void mcp_spi_pause(uint32_t us) { busy_wait_us_32(us); s_last_cs_high_us = time_us_32() - s_min_gap_us; }
 
-uint8_t mcp_read_reg(uint8_t reg)
+static uint32_t s_resyncs;        /* reads that came back 0xFF and were retried after a pause */
+uint32_t mcp_spi_resyncs(void) { return s_resyncs; }
+
+static uint8_t read_reg_raw(uint8_t reg)
 {
     uint8_t tx[3] = { I_READ, reg, 0 }, rx[3];
     cs_low();
     spi_write_read_blocking(SPI_PORT, tx, rx, 3);
     cs_high();
     return rx[2];
+}
+
+/* A register that reads 0xFF is almost always a controller that lost its SPI
+ * command framing (seen 2026-11-06 right after transmissions: every read
+ * answers 0xFF until the bus idles for ~2 ms). Pause and read again; genuine
+ * 0xFF values (TEC/REC at 255) only cost the pause. */
+uint8_t mcp_read_reg(uint8_t reg)
+{
+    uint8_t v = read_reg_raw(reg);
+    if (v != 0xFF) return v;
+    mcp_spi_pause(2000);
+    s_resyncs++;
+    return read_reg_raw(reg);
 }
 
 void mcp_write_reg(uint8_t reg, uint8_t val)
@@ -130,7 +161,7 @@ bool mcp_mode_valid(uint8_t mode)
  * reports one of the five modes and still holds our CNF1 (0xC0). A dead SPI
  * link reads 0xFF everywhere (mode 0xE0 = reserved), a reset or corrupted
  * chip loses CNF1. Either way the caller must not drive the bus. */
-bool mcp_alive(void)
+static bool alive_once(void)
 {
     uint8_t stat = mcp_read_reg(R_CANSTAT);
     if (!mcp_mode_valid(stat)) return false;
@@ -138,6 +169,13 @@ bool mcp_alive(void)
     if (mcp_read_reg(R_CNF2) != 0xD8) return false;
     if ((mcp_read_reg(R_CNF3) & 0x07) != 0x01) return false;
     return true;
+}
+
+bool mcp_alive(void)
+{
+    if (alive_once()) return true;
+    mcp_spi_pause(2000);           /* lost SPI framing recovers after an idle pause (2026-11-06) */
+    return alive_once();
 }
 
 /* The MCP2515 honours a REQOP change only once every pending transmission has
@@ -242,9 +280,31 @@ void mcp_set_filters(const uint32_t *ids, int n, bool accept_all)
 
 bool mcp_present(void) { return s_present; }
 
+/* SPI read-integrity test: read fixed registers n times, count bytes that
+ * do not match. mode errors count CANSTAT reads that are not a valid mode. */
+void mcp_spi_test(unsigned n, unsigned *bad_cnf, unsigned *bad_mode, unsigned *bad_stat)
+{
+    *bad_cnf = *bad_mode = *bad_stat = 0;
+    for (unsigned i = 0; i < n; i++) {
+        if (mcp_read_reg(R_CNF1) != 0xC0) (*bad_cnf)++;
+        if (mcp_read_reg(R_CNF2) != 0xD8) (*bad_cnf)++;
+        if ((mcp_read_reg(R_CNF3) & 0x07) != 0x01) (*bad_cnf)++;
+        if (!mcp_mode_valid(mcp_read_reg(R_CANSTAT))) (*bad_mode)++;
+        uint8_t a = mcp_read_reg(R_CANCTRL), b = mcp_read_reg(R_CANCTRL);
+        if (a != b) (*bad_stat)++;
+    }
+}
+
+uint32_t mcp_spi_set_hz(uint32_t hz)
+{
+    s_spi_hz = hz;
+    return spi_set_baudrate(SPI_PORT, hz);
+}
+
+
 bool mcp_init(void)
 {
-    spi_init(SPI_PORT, CAN_SPI_HZ);
+    spi_init(SPI_PORT, s_spi_hz);
     spi_set_format(SPI_PORT, 8, SPI_CPOL_0, SPI_CPHA_0, SPI_MSB_FIRST);
     gpio_set_function(PIN_CAN_SCK, GPIO_FUNC_SPI);
     gpio_set_function(PIN_CAN_MOSI, GPIO_FUNC_SPI);
@@ -262,8 +322,9 @@ bool mcp_init(void)
         cs_low(); spi_write_blocking(SPI_PORT, &rst, 1); cs_high();
         sleep_ms(10);
         mcp_write_reg(R_CNF1, 0x55);
-        if (mcp_read_reg(R_CNF1) == 0x55 && mcp_get_mode() == MCP_MODE_CONFIG) s_present = true;
+        if (read_reg_raw(R_CNF1) == 0x55 && mcp_get_mode() == MCP_MODE_CONFIG) s_present = true;
         else sleep_ms(50);
+        watchdog_update();
     }
     if (!s_present) return false;
     s_mode_shadow = MCP_MODE_CONFIG;
@@ -303,6 +364,11 @@ bool mcp_read_rx(int buf, can_frame_t *f)
     cs_high();
 
     const uint8_t *r = rx + 1;
+    if (r[0] == 0xFF && r[1] == 0xFF && r[4] == 0xFF) {   /* framing lost: not a frame */
+        mcp_spi_pause(2000);
+        s_resyncs++;
+        return false;
+    }
     f->ext = (r[1] & 0x08) != 0;
     if (f->ext) {
         f->id = ((uint32_t)r[0] << 21) | (((uint32_t)r[1] & 0xE0) << 13) |
@@ -340,10 +406,18 @@ bool mcp_tx_busy(int txb)
 void mcp_tx_abort(int txb)
 {
     mcp_bit_modify((uint8_t)(R_TXB0CTRL + 0x10 * txb), TXREQ, 0);
+    busy_wait_us_32(50);
 }
+
+static uint32_t s_tx_blocked;
+uint32_t mcp_tx_blocked(void) { return s_tx_blocked; }
 
 bool mcp_tx(int txb, const can_frame_t *f)
 {
+    /* Never put a frame on the bus unless the bit timing verifies right now:
+     * a misframed SPI write could have landed in CNF1..3, and a node at the
+     * wrong bit rate destroys every frame it sees. */
+    if (mcp_read_reg(R_CNF1) != 0xC0 || mcp_read_reg(R_CNF2) != 0xD8) { s_tx_blocked++; return false; }
     if (mcp_tx_busy(txb)) return false;
     uint8_t tx[1 + 5 + 8];
     tx[0] = (uint8_t)(I_LOAD_TXB0 | (txb << 1));
@@ -357,6 +431,7 @@ bool mcp_tx(int txb, const can_frame_t *f)
     cs_low();
     spi_write_blocking(SPI_PORT, &rts, 1);
     cs_high();
+    busy_wait_us_32(50);           /* let the controller take the request before the next command */
     return true;
 }
 

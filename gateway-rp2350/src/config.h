@@ -32,7 +32,7 @@
 /* ---- Buses -------------------------------------------------------------- */
 #define CAN_BITRATE     500000
 #define CAN_CRYSTAL_HZ  8000000     /* module marked 8.000 - CNF values below are for this */
-#define CAN_SPI_HZ      4000000     /* prototype wiring; MCP2515 tolerates 10 MHz on a PCB */
+#define CAN_SPI_HZ      1000000     /* as the 2.x firmware ran it; 4 MHz gave read errors on this wiring (2026-11-06) */
 
 #define RS485_BAUD      115200
 #define RS485_MAX_LINE  4096

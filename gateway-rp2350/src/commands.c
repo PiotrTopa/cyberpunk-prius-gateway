@@ -5,6 +5,7 @@
 #include "json_util.h"
 #include "avclan.h"
 #include "can_sol.h"
+#include "mcp2515.h"
 #include "rs485.h"
 #include "hardware/gpio.h"
 #include "usb_cdc.h"
@@ -154,6 +155,34 @@ static void handle_sys(const json_t *j, int d)
         if (s > 120) s = 120;
         rs485_probe(drive, (unsigned)pin, lvl != 0, (uint32_t)s * 1000u);
         out_json("{\"id\":0,\"d\":{\"rs485_probe\":{\"drive\":%d,\"pin\":%ld,\"lvl\":%d,\"s\":%ld}}}", drive ? 1 : 0, pin, lvl ? 1 : 0, s);
+    } else if (json_str_eq(j, a, "can_spitest")) {
+        long n = 1000; json_get_long(j, json_obj_get(j, d, "n"), &n);
+        if (n < 1) n = 1; if (n > 20000) n = 20000;
+        unsigned bc, bm, bs;
+        uint32_t t0 = time_us_32();
+        mcp_spi_test((unsigned)n, &bc, &bm, &bs);
+        out_json("{\"id\":0,\"d\":{\"can_spitest\":{\"n\":%ld,\"bad_cnf\":%u,\"bad_mode\":%u,\"unstable\":%u,\"us\":%lu}}}",
+                 n, bc, bm, bs, (unsigned long)(time_us_32() - t0));
+    } else if (json_str_eq(j, a, "can_peek")) {
+        /* raw register snapshot, no reset; "resync" = 2 ms CS-high pause first */
+        long rs = 0; json_get_long(j, json_obj_get(j, d, "resync"), &rs);   /* pause in us */
+        if (rs > 0) mcp_spi_pause((uint32_t)rs);
+        out_json("{\"id\":0,\"d\":{\"can_peek\":{\"canstat\":\"%02X\",\"canctrl\":\"%02X\",\"cnf\":\"%02X%02X%02X\",\"tec\":%u,\"eflg\":\"%02X\",\"txb0\":\"%02X\",\"int\":%d}}}",
+                 mcp_read_reg(0x0E), mcp_read_reg(0x0F), mcp_read_reg(0x2A), mcp_read_reg(0x29), mcp_read_reg(0x28),
+                 mcp_read_reg(0x1C), mcp_read_reg(0x2D), mcp_read_reg(0x30), mcp_int_asserted() ? 1 : 0);
+    } else if (json_str_eq(j, a, "can_guard")) {
+        bool on = true; json_get_bool(j, json_obj_get(j, d, "on"), &on);
+        g_can_guard_on = on;
+        out_json("{\"id\":0,\"d\":{\"msg\":\"CFG_UPDATED\",\"can_guard\":%s}}", on ? "true" : "false");
+    } else if (json_str_eq(j, a, "can_gap")) {
+        long us = 20; json_get_long(j, json_obj_get(j, d, "us"), &us);
+        if (us < 0) us = 0; if (us > 1000) us = 1000;
+        mcp_set_gap_us((uint32_t)us);
+        out_json("{\"id\":0,\"d\":{\"msg\":\"CFG_UPDATED\",\"can_gap_us\":%ld}}", us);
+    } else if (json_str_eq(j, a, "can_spi")) {
+        long hz = 0; json_get_long(j, json_obj_get(j, d, "hz"), &hz);
+        if (hz < 100000) hz = 100000; if (hz > 10000000) hz = 10000000;
+        out_json("{\"id\":0,\"d\":{\"msg\":\"CFG_UPDATED\",\"can_spi_hz\":%lu}}", (unsigned long)mcp_spi_set_hz((uint32_t)hz));
     } else if (json_str_eq(j, a, "gpio_all")) {
         out_json("{\"id\":0,\"d\":{\"gpio_all\":\"%08lX\"}}", (unsigned long)gpio_get_all());
     } else if (json_str_eq(j, a, "rs485_hold")) {

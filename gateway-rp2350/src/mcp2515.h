@@ -18,6 +18,12 @@ typedef struct {
 
 bool     mcp_init(void);                 /* reset, verify, bit timing, filters, listen-only */
 bool     mcp_present(void);
+void     mcp_spi_test(unsigned n, unsigned *bad_cnf, unsigned *bad_mode, unsigned *bad_stat);
+uint32_t mcp_spi_set_hz(uint32_t hz);
+void     mcp_set_gap_us(uint32_t us);
+void     mcp_spi_pause(uint32_t us);
+uint32_t mcp_spi_resyncs(void);
+uint32_t mcp_tx_blocked(void);
 
 uint8_t  mcp_read_reg(uint8_t reg);
 void     mcp_write_reg(uint8_t reg, uint8_t val);

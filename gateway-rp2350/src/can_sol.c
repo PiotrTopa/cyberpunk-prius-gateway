@@ -366,6 +366,7 @@ static void sniff_task(void)
  *  - valid but unexpected mode -> put it back; three failures -> re-init.
  * Nothing here ever drives the bus; the worst case is a silent gateway. */
 static uint32_t s_guard_ms, s_reinit_ms;
+bool g_can_guard_on = true;              /* bench: can_guard {"on":false} pauses supervision */
 static int s_guard_dead, s_guard_fail;
 
 static void can_reinit(const char *why)
@@ -387,6 +388,7 @@ static void can_reinit(const char *why)
 
 static void mode_guard(uint32_t now)
 {
+    if (!g_can_guard_on) return;
     if ((uint32_t)(now - s_guard_ms) < 1000) return;
     s_guard_ms = now;
     if (!mcp_alive()) {
@@ -616,11 +618,11 @@ void can_sol_emit_diag(void)
     int nsubs = 0;
     for (int i = 0; i < CAN_MAX_SUBS; i++) if (g_can_subs[i].used) nsubs++;
     out_json("{\"id\":0,\"d\":{\"can_diag\":{\"mode\":\"%s\",\"tec\":%u,\"rec\":%u,\"eflg\":\"%02X\","
-             "\"req\":%lu,\"resp\":%lu,\"to\":%lu,\"txerr\":%lu,\"isotp_err\":%lu,\"other\":%lu,\"subs\":%d,\"eng\":%d,\"mode_fix\":%lu,\"reinit\":%lu,\"alive\":%s}}}",
+             "\"req\":%lu,\"resp\":%lu,\"to\":%lu,\"txerr\":%lu,\"isotp_err\":%lu,\"other\":%lu,\"subs\":%d,\"eng\":%d,\"mode_fix\":%lu,\"reinit\":%lu,\"alive\":%s,\"resync\":%lu,\"tx_blocked\":%lu}}}",
              mcp_mode_name(mcp_get_mode()), tec, rec, eflg,
              (unsigned long)g_can.requests, (unsigned long)g_can.responses, (unsigned long)g_can.timeouts,
              (unsigned long)g_can.tx_errors, (unsigned long)g_can.isotp_errors, (unsigned long)g_can.rx_other,
-             nsubs, (int)s_eng.state, (unsigned long)g_can.mode_fixes, (unsigned long)g_can.reinits, mcp_alive() ? "true" : "false");
+             nsubs, (int)s_eng.state, (unsigned long)g_can.mode_fixes, (unsigned long)g_can.reinits, mcp_alive() ? "true" : "false", (unsigned long)mcp_spi_resyncs(), (unsigned long)mcp_tx_blocked());
     if (g_can.sniff)
         out_json("{\"id\":0,\"d\":{\"can_sniff\":{\"rx\":%lu,\"out\":%lu,\"ovr\":%lu}}}",
                  (unsigned long)g_can.sniff_rx, (unsigned long)g_can.sniff_out, (unsigned long)g_can.sniff_ovr);
