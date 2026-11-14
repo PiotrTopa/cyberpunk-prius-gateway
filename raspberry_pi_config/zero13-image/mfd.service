@@ -1,9 +1,12 @@
 [Unit]
 Description=CyberPunk Prius Gen 2 - MFD Frontend
-After=basic.target
+# Early start: needs only / (rw) and /dev/fb0; the ZMQ link reconnects by
+# itself once usb0 is up. (Was After=basic.target: ~12 s later on this board.)
+After=systemd-remount-fs.service
 
 [Service]
 Type=simple
+Nice=-10
 User=piotr
 WorkingDirectory=/home/piotr/cyberpunk_computer
 Environment="PYTHONUNBUFFERED=1"

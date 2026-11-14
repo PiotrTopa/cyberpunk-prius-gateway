@@ -1,0 +1,12 @@
+[Unit]
+Description=MFD boot splash (static image straight to the framebuffer)
+DefaultDependencies=no
+ConditionPathExists=/dev/fb0
+Before=mfd.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c "cat /usr/local/share/mfd-splash.raw > /dev/fb0"
+
+[Install]
+WantedBy=sysinit.target

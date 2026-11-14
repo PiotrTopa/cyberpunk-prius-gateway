@@ -19,6 +19,10 @@ install -m 644 "$D/zram-generator-50-prius.conf" /etc/systemd/zram-generator.con
 
 # 3. Hardware that does not exist / services an appliance does not need.
 systemctl disable udisks2.service wpa_supplicant.service bluetooth.service e2scrub_reap.service 2>/dev/null
+# 2026-11-14 boot-time pass: none of these is needed on the car
+systemctl disable avahi-daemon.service avahi-daemon.socket rpi-eeprom-update.service cron.service systemd-timesyncd.service systemd-networkd-wait-online.service apparmor.service sshswitch.service 2>/dev/null
+systemctl mask systemd-binfmt.service proc-sys-fs-binfmt_misc.automount
+systemctl enable mfd-splash.service 2>/dev/null   # unit + /usr/local/share/mfd-splash.raw from this directory
 # 4. Maintenance timers: with Persistent=yes they all fire at every boot in the car (clock jumps);
 #    logrotate alone took 39 s. The journal is size-capped and the app rotates its own log.
 for t in apt-daily.timer apt-daily-upgrade.timer man-db.timer dpkg-db-backup.timer e2scrub_all.timer logrotate.timer; do
