@@ -20,7 +20,7 @@ install -m 644 "$D/zram-generator-50-prius.conf" /etc/systemd/zram-generator.con
 # 3. Hardware that does not exist / services an appliance does not need.
 systemctl disable udisks2.service wpa_supplicant.service bluetooth.service e2scrub_reap.service 2>/dev/null
 # 2026-11-14 boot-time pass: none of these is needed on the car
-systemctl disable avahi-daemon.service avahi-daemon.socket rpi-eeprom-update.service cron.service systemd-timesyncd.service systemd-networkd-wait-online.service apparmor.service sshswitch.service 2>/dev/null
+systemctl disable avahi-daemon.service avahi-daemon.socket rpi-eeprom-update.service cron.service systemd-networkd-wait-online.service apparmor.service sshswitch.service 2>/dev/null
 systemctl mask systemd-binfmt.service proc-sys-fs-binfmt_misc.automount
 systemctl enable mfd-splash.service 2>/dev/null   # unit + /usr/local/share/mfd-splash.raw from this directory
 # 4. Maintenance timers: with Persistent=yes they all fire at every boot in the car (clock jumps);
@@ -38,6 +38,14 @@ systemctl enable systemd-networkd.service
 systemctl disable NetworkManager.service NetworkManager-wait-online.service 2>/dev/null
 systemctl mask NetworkManager.service
 printf 'nameserver 192.168.100.1\n' > /etc/resolv.conf
+# Wall clock (no RTC, no internet): timesyncd syncs from the backend's SNTP server on the phone
+# (192.168.100.1) and saves the time every 60 s, so a cold boot without the phone starts at the last
+# saved time. Same file as POCO/rootfs/usr/local/sbin/prius-deploy-mfd in cyberpank-prius-gen2-computer
+# writes on every deploy; keep both identical.
+install -d /etc/systemd/timesyncd.conf.d
+install -m 644 "$D/timesyncd-prius.conf" /etc/systemd/timesyncd.conf.d/prius.conf
+systemctl unmask systemd-timesyncd.service 2>/dev/null
+systemctl enable systemd-timesyncd.service
 
 # 7. Frontend: start right after basic.target (it reconnects to the backend by itself).
 sed -i 's/^After=network.target$/After=basic.target/' /etc/systemd/system/mfd.service

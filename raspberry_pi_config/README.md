@@ -28,6 +28,7 @@ The exact files written into the image (and running on the card):
 | `mfd.service` | `/etc/systemd/system/` | `--host 192.168.100.1 --fullscreen --scale 1 --production`, env `SDL_VIDEODRIVER=dummy SDL_FBDEV=/dev/fb0 SDL_AUDIODRIVER=dummy FRAMEBUFFER=/dev/fb0`, After=basic.target |
 | `mfd.service.d-equalizer.conf` | `/etc/systemd/system/mfd.service.d/equalizer.conf` | `MFD_GAIN_R/G/B=1.00` |
 | `99-framebuffer.rules` | `/etc/udev/rules.d/` | `KERNEL=="fb0", MODE="0666"` |
+| `timesyncd-prius.conf` | `/etc/systemd/timesyncd.conf.d/prius.conf` | `NTP=192.168.100.1` (the backend's SNTP server on the phone), no fallback servers, poll 32..64 s, `SaveIntervalSec=60` (no RTC: a cold boot without the phone starts at the last saved time); installed and `systemd-timesyncd` enabled by `boot-tune.sh`. Identical to what `prius-deploy-mfd` (cyberpank-prius-gen2-computer, `POCO/rootfs/usr/local/sbin/`) writes on every deploy: change both. Check: `timedatectl timesync-status` |
 | `zram-generator-50-prius.conf` | `/etc/systemd/zram-generator.conf.d/50-prius.conf` | 256 MB zram swap (rpi-swap removed) |
 | `test-pattern.service`, `test_pattern.py` | | colour bars straight to `/dev/fb0` (disabled; `systemctl start test-pattern` to check the panel) |
 | `build-chroot-step.sh` | | package install + user + venv inside the image via qemu-user |
